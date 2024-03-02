@@ -1,4 +1,4 @@
-﻿using LilsCareApp.Data;
+﻿using LilsCareApp.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
