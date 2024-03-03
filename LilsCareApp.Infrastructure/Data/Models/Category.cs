@@ -17,6 +17,6 @@ namespace LilsCareApp.Infrastructure.Data.Models
         public required string Name { get; set; }
 
         [Comment("Navigation property to the products in this category")]
-        public List<ProductsCategories> ProductsCategories { get; set; } = new List<ProductsCategories>();
+        public List<ProductCategory> ProductsCategories { get; set; } = new List<ProductCategory>();
     }
 }

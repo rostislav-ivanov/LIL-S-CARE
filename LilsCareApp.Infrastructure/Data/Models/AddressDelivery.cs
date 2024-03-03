@@ -25,6 +25,10 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("Phone Number Recipient")]
         public string? PhoneNumber { get; set; }
 
+        [MaxLength(PostCodeMaxLength)]
+        [Comment("Post Code")]
+        public string? PostCode { get; set; }
+
         [MaxLength(AddressMaxLength)]
         [Comment("Address")]
         public string? Address { get; set; }

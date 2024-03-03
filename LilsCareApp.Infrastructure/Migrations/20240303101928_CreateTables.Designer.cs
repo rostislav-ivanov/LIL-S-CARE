@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LilsCareApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240302161918_01")]
-    partial class _01
+    [Migration("20240303101928_CreateTables")]
+    partial class CreateTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,6 +68,11 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasComment("Phone Number Recipient");
 
+                    b.Property<string>("PostCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("Post Code");
+
                     b.Property<string>("Town")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
@@ -80,6 +85,82 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.ToTable("AddressDeliveries", t =>
                         {
                             t.HasComment("Address Delivery");
+                        });
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.AppUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ImageId")
+                        .HasColumnType("int")
+                        .HasComment("Image App User");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImageId")
+                        .IsUnique()
+                        .HasFilter("[ImageId] IS NOT NULL");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", null, t =>
+                        {
+                            t.HasComment("App User");
                         });
                 });
 
@@ -277,9 +358,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasComment("The product's name");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)")
                         .HasComment("The product's price");
@@ -300,15 +378,13 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
-
                     b.ToTable("Products", t =>
                         {
                             t.HasComment("The product model");
                         });
                 });
 
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ProductsCategories", b =>
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ProductCategory", b =>
                 {
                     b.Property<int>("ProductId")
                         .HasColumnType("int")
@@ -325,6 +401,24 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.ToTable("ProductsCategories", t =>
                         {
                             t.HasComment("Many to many relation between products and categories");
+                        });
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ProductOrder", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "OrderId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("ProductOrder", t =>
+                        {
+                            t.HasComment("Many to many relation between products and orders");
                         });
                 });
 
@@ -396,11 +490,19 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("Description duration of shipping");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasComment("Name of shipping provider");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)")
+                        .HasComment("Price of shipping");
 
                     b.HasKey("Id");
 
@@ -505,80 +607,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("nvarchar(13)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
-
-                    b.UseTphMappingStrategy();
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -664,26 +692,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.AppUser", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<int?>("ImageId")
-                        .HasColumnType("int")
-                        .HasComment("Image App User");
-
-                    b.HasIndex("ImageId")
-                        .IsUnique()
-                        .HasFilter("[ImageId] IS NOT NULL");
-
-                    b.ToTable(t =>
-                        {
-                            t.HasComment("App User");
-                        });
-
-                    b.HasDiscriminator().HasValue("AppUser");
-                });
-
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.AddressDelivery", b =>
                 {
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.AppUser", "AppUser")
@@ -691,6 +699,15 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasForeignKey("AppUserId");
 
                     b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.AppUser", b =>
+                {
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.Image", "Image")
+                        .WithOne("AppUser")
+                        .HasForeignKey("LilsCareApp.Infrastructure.Data.Models.AppUser", "ImageId");
+
+                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.BagUser", b =>
@@ -702,7 +719,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.Product", "Product")
-                        .WithMany()
+                        .WithMany("BagsUsers")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -764,14 +781,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Navigation("StatusOrder");
                 });
 
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Product", b =>
-                {
-                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.Order", null)
-                        .WithMany("Products")
-                        .HasForeignKey("OrderId");
-                });
-
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ProductsCategories", b =>
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ProductCategory", b =>
                 {
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.Category", "Category")
                         .WithMany("ProductsCategories")
@@ -780,12 +790,31 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.Product", "Product")
-                        .WithMany()
+                        .WithMany("ProductsCategories")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Category");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ProductOrder", b =>
+                {
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.Order", "Order")
+                        .WithMany("ProductsOrders")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.Product", "Product")
+                        .WithMany("ProductsOrders")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
 
                     b.Navigation("Product");
                 });
@@ -797,7 +826,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasForeignKey("AppUserId");
 
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.Product", "Product")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -816,7 +845,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.Product", "Product")
-                        .WithMany()
+                        .WithMany("WishesUsers")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -837,7 +866,7 @@ namespace LilsCareApp.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -846,7 +875,7 @@ namespace LilsCareApp.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -861,7 +890,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -870,24 +899,22 @@ namespace LilsCareApp.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.AppUser", b =>
-                {
-                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.Image", "Image")
-                        .WithOne("AppUser")
-                        .HasForeignKey("LilsCareApp.Infrastructure.Data.Models.AppUser", "ImageId");
-
-                    b.Navigation("Image");
-                });
-
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.AddressDelivery", b =>
                 {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.AppUser", b =>
+                {
+                    b.Navigation("AddressDelivery");
+
                     b.Navigation("Orders");
                 });
 
@@ -903,7 +930,7 @@ namespace LilsCareApp.Infrastructure.Migrations
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Order", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("ProductsOrders");
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.PaymentMethod", b =>
@@ -913,7 +940,17 @@ namespace LilsCareApp.Infrastructure.Migrations
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Product", b =>
                 {
+                    b.Navigation("BagsUsers");
+
                     b.Navigation("Images");
+
+                    b.Navigation("ProductsCategories");
+
+                    b.Navigation("ProductsOrders");
+
+                    b.Navigation("Reviews");
+
+                    b.Navigation("WishesUsers");
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Review", b =>
@@ -928,13 +965,6 @@ namespace LilsCareApp.Infrastructure.Migrations
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.StatusOrder", b =>
                 {
-                    b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.AppUser", b =>
-                {
-                    b.Navigation("AddressDelivery");
-
                     b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618

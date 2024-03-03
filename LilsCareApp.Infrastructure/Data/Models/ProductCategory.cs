@@ -7,7 +7,7 @@ namespace LilsCareApp.Infrastructure.Data.Models
 
     [Comment("Many to many relation between products and categories")]
     [PrimaryKey("ProductId", "CategoryId")]
-    public class ProductsCategories
+    public class ProductCategory
     {
         [Comment("The product id")]
         [Required]
