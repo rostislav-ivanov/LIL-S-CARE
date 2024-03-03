@@ -1,5 +1,5 @@
 ﻿using LilsCareApp.Infrastructure.Data;
-using Microsoft.AspNetCore.Identity;
+using LilsCareApp.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -23,7 +23,15 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static IServiceCollection AddAppIdentity(this IServiceCollection services)
         {
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<AppUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 8;
+            })
                     .AddEntityFrameworkStores<ApplicationDbContext>();
 
             return services;
