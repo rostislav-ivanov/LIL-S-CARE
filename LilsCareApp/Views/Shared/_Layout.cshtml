@@ -3,35 +3,33 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LIL'S CARE | @ViewData["Title"] </title>
+    <title>@ViewData["Title"] | LIL'S CARE</title>
     <link rel="icon"
           sizes="192x192"
           href="https://static.wixstatic.com/media/a6694c_487da19846414b3696763876d1233bd9%7Emv2.jpg"
           type="image/jpeg" />
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" asp-append-version="true" />
-
-    <!-- Font Awesome CSS -->
-    <link rel="stylesheet" href="~/lib/fontawesome/css/all.css" asp-append-version="true" />
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="~/css/site.css"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/LilsCareApp.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
         @await Component.InvokeAsync(nameof(HeaderComponent))
     </header>
-    <main role="main">
-        @RenderBody()
-    </main>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
     <footer class="border-top footer text-muted">
-        @await Component.InvokeAsync(nameof(FooterComponent))
+        <div class="container">
+            &copy; @DateTime.Today.Year - LilsCareApp
+        </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/fontawesome/js/all.js"></script>
-    <script src="~/js/site.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

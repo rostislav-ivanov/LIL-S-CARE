@@ -1,147 +1,22 @@
 ﻿@{
 }
-<!-- Top Bar Start -->
-<div class="text-center"
-     style="
-          background-color: rgb(var(--color_43));
-          font-size: 13px;
-          letter-spacing: 0.2em;
-        ">
-    <p class="mb-0">БЕЗПЛАТНА ДОСТАВКА НАД 35 ЛВ</p>
-    <p class="mb-0">-10% КОД ЗА ОТСТЪПКА ПРИ РЕГИСТРАЦИЯ</p>
-</div>
-<!-- Top Bar End -->
-
-<div class="d-flex justify-content-between p-3">
-    <div style="
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-          ">
-        <!-- Navbar Start -->
-        <nav class="navbar navbar-expand-md">
-            <div class="container-fluid">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" asp-controller="Home">НАЧАЛО</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Products">ПРОДУКТИ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Ingredients">СЪСТАВКИ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Skin">ЗА КОЖАТА</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <!-- Navbar End -->
-    </div>
-
-    <!-- Brand Logo Start -->
-    <a asp-controller="Home">
-        <img class="logo-img"
-             src="~/files/index/lils-care.jpg"
-             alt=""
-             width="83px"
-             height="65px"
-             style="object-fit: cover" />
-    </a>
-    <!-- Brand Logo End -->
-    <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <!-- Search Bar Start -->
-            <li class="nav-item">
-                <a class="nav-link py-2 px-0 px-lg-2"
-                   href="#"
-                   target="_blank"
-                   rel="noopener">
-                    <input type="search"
-                           style="border: 0; border-bottom: solid 1px"
-                           placeholder="Search..." />
-                    <svg width="20"
-                         height="20"
-                         class="DocSearch-Search-Icon"
-                         viewBox="0 0 20 20">
-                        <path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z"
-                              stroke="currentColor"
-                              fill="none"
-                              fill-rule="evenodd"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"></path>
-                    </svg>
-                </a>
-            </li>
-            <!-- Search Bar End -->
-            @if (User.Identity?.IsAuthenticated ?? false)
-            {
-            <!-- User Account Start -->
-                <li class="nav-item dropdown">
-                    <a href="#"
-                       class="nav-link dropdown-toggle"
-                       data-bs-toggle="dropdown">
-                        <i class="fa fa-circle-user fs-1"></i>
-                    </a>
-                    <div class="dropdown-menu m-0 rounded-0">
-                        <a class="dropdown-item" asp-controller="Account" asp-action="MyOrders">Моите поръчки</a>
-                        <a class="dropdown-item" asp-controller="Account" asp-action="MyAddresses">Адреси</a>
-                        <a class="dropdown-item" asp-controller="Account" asp-action="MyWishes">Желани продукти</a>
-                        <a class="dropdown-item" asp-controller="Account" asp-action="MyAccount">Моят акаунт</a>
-                        <hr class="dropdown-divider" />
-                        <form  asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                            <button class="dropdown-item" type="submit">Изход</button>
-                        </form>
-                    </div>
-                </li>
-            <!-- User Account End -->
-            }
-            else
-            {
-            <!-- Unlogin User Start-->
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">LilsCareApp</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
                 <li class="nav-item">
-                    <a class="nav-link py-2 px-0 px-lg-2"
-                       asp-area="Identity" asp-page="/Account/Login">
-                        <i class="fa fa-circle-user fs-4"></i>
-                        <span style="margin-left: 10px">Вход</span>
-                    </a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                 </li>
-            <!-- Unlogin User End -->
-            }
-
-
-            <!-- Shopping Bag Start -->
-            <li class="nav-item">
-                <a href="#"
-                   class="position-relative nav-link my-auto"
-                   data-bs-toggle="offcanvas"
-                   data-bs-target="#shopping-bag">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         viewBox="0 0 197.7 166"
-                         width="42px"
-                         height="35px">
-                        <path fill="currentColor"
-                              d="M197.9 55.9L169.9 127.4 64.5 127.4 27.6 29.8 0 29.8 0.2 16.7 36.5 16.7 73.4 114.3 160.9 114.3 183 55.9"></path>
-                        <circle fill="currentColor"
-                                cx="143.8"
-                                cy="153"
-                                r="13"></circle>
-                        <circle fill="currentColor"
-                                cx="90.8"
-                                cy="153"
-                                r="13"></circle>
-                    </svg>
-                    <span class="position-absolute d-flex px-1"
-                          style="top: -5px; left: 23px; font-size: 16px">
-                          0
-                    </span>
-                </a>
-            </li>
-            <!-- Shopping Bag End -->
-        </ul>
-    </nav>
-    <!-- Navbar End -->
-</div>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                </li>
+            </ul>
+            <partial name="_LoginPartial" />
+        </div>
+    </div>
+</nav>
