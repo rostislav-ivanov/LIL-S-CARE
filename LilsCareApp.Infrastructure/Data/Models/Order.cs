@@ -29,9 +29,6 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [ForeignKey(nameof(AddressDeliveryId))]
         public AddressDelivery AddressDelivery { get; set; } = null!;
 
-        [Comment("List of Products in Order")]
-        public List<Product> Products { get; set; } = new List<Product>();
-
         [Comment("App User Id")]
         public string? AppUserId { get; set; }
 
@@ -59,6 +56,9 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("Navigation Property to PaymentMethod")]
         [ForeignKey(nameof(PaymentMethodId))]
         public PaymentMethod PaymentMethod { get; set; } = null!;
+
+        [Comment("Navigation Property to Products")]
+        public List<ProductOrder> ProductsOrders { get; set; } = new List<ProductOrder>();
     }
 }
 

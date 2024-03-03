@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using static LilsCareApp.Infrastructure.DataConstants.Speditor;
 
 namespace LilsCareApp.Infrastructure.Data.Models
@@ -18,5 +19,12 @@ namespace LilsCareApp.Infrastructure.Data.Models
 
         [Comment("Navigation property to orders")]
         public List<Order> Orders { get; set; } = new List<Order>();
+
+        [Comment("Price of shipping")]
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal Price { get; set; }
+
+        [Comment("Description duration of shipping")]
+        public string? Description { get; set; }
     }
 }

@@ -23,9 +23,6 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("The product's quantity")]
         public int Quantity { get; set; }
 
-        [Comment("The product's images")]
-        public List<Image>? Images { get; set; }
-
         [Comment("The product's weight")]
         [MaxLength(WeightMaxLength)]
         public string? Weight { get; set; }
@@ -46,18 +43,23 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [MaxLength(IngredientsMaxLength)]
         public string? Ingredients { get; set; }
 
-        [Comment("Navigation property to the product's reviews")]
-        List<Review>? Reviews { get; set; }
+        [Comment("Navigation Property to product's images")]
+        public List<Image>? Images { get; set; }
 
-        [Comment("Navigation property to the product's categories")]
-        List<ProductsCategories> ProductsCategories { get; set; } = new List<ProductsCategories>();
+        [Comment("Navigation property to the product's Reviews")]
+        public List<Review>? Reviews { get; set; }
 
-        [Comment("Navigation property to the wishes products")]
-        List<WishUser> WishesUsers { get; set; } = new List<WishUser>();
+        [Comment("Navigation property to the product's Categories")]
+        public List<ProductCategory> ProductsCategories { get; set; } = new List<ProductCategory>();
 
-        [Comment("Navigation property to the sopping bags products")]
-        List<BagUser> BagsUsers { get; set; } = new List<BagUser>();
+        [Comment("Navigation property to the Wishes Products")]
+        public List<WishUser> WishesUsers { get; set; } = new List<WishUser>();
 
+        [Comment("Navigation property to the Sopping Bags Products")]
+        public List<BagUser> BagsUsers { get; set; } = new List<BagUser>();
+
+        [Comment("Navigation Property to Orders")]
+        public List<ProductOrder> ProductsOrders { get; set; } = new List<ProductOrder>();
     }
 }
 
