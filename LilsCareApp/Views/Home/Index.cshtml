@@ -1,6 +1,274 @@
-﻿@{
+﻿@using System.Security.Claims;
+@{
     ViewData["Title"] = "handmade natural skincare";
 }
 
-<h1>@ViewData["Title"]</h1>
+@section Styles {
+    <link rel="stylesheet" href="~/css/home2.css" />
+    <link rel="stylesheet" href="~/lib/owlcarousel/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" href="~/css/carousel-products.css" />
+}
+
+<!-- Carousel Start-->
+<section id="carouselId">
+    <div id="demo"
+         class="carousel slide carousel-fade"
+         data-bs-ride="carousel">
+        <!-- Indicators/dots -->
+        <div class="carousel-indicators">
+            <button type="button"
+                    data-bs-target="#demo"
+                    data-bs-slide-to="0"
+                    class="active"></button>
+            <button type="button"
+                    data-bs-target="#demo"
+                    data-bs-slide-to="1"></button>
+            <button type="button"
+                    data-bs-target="#demo"
+                    data-bs-slide-to="2"></button>
+        </div>
+
+        <!-- The slideshow/carousel -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <!-- class="carousel-item active" -->
+                <img src="~/files/home/carousel/image-01.webp"
+                     alt="Натурална грижа за кожата ръчно изработена български съставки и някои с био произход. Еко опаковки, нежни формули, без алкохол. Натурален екстракт от шипка или невен е крем, лосион за лице и тяло."
+                     width="1411"
+                     height="228"
+                     style="
+                width: 1573px;
+                height: 228px;
+                object-fit: cover;
+                object-position: 50% 50%;
+              "
+                     fetchpriority="high" />
+
+                <div class="carousel-caption">
+                    <h2 class="h2">ОПАКОВКИТЕ НИ</h2>
+                    <p class="fs-5">
+                        АЛУМИНИЕВИ И СТЪКЛЕНИ. А КАРТОНЕНИТЕ КУТИЙКИ И ПЪЛНЕЖА СА 100%
+                        РЕЦИКЛИРАН ПРОДУКТ ОТ БЪЛГАРИЯ
+                    </p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="~/files/home/carousel/image-02.webp"
+                     alt="1687301198446-L.png"
+                     width="1411"
+                     height="228"
+                     style="
+                width: 1573px;
+                height: 228px;
+                object-fit: cover;
+                object-position: 50% 50%;
+              "
+                     fetchpriority="high" />
+                <div class="carousel-caption">
+                    <p class="fs-5">
+                        <span style="font-size: 21px">100% НАТУРАЛНА ГРИЖА ЗА КОЖАТА</span>
+                    </p>
+                    <h2 class="h2">
+                        РЪЧНО ИЗРАБОТЕНА<br />
+                        С ЛЮБО
+                    </h2>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="~/files/home/carousel/image-03.webp"
+                     alt="IMG_20230907_190239.png"
+                     width="1411"
+                     height="228"
+                     style="
+                width: 1573px;
+                height: 228px;
+                object-fit: cover;
+                object-position: 50% 50%;
+              "
+                     fetchpriority="high" />
+                <div class="carousel-caption">
+                    <h2 class="h2">НЕЖНИ ФОРМУЛИ</h2>
+
+                    <p class="fs-5">
+                        СЪСТАВКИ ОТ БЪЛГАРИЯ И С БИО ПРОЗХОД. БЕЗ АЛКОХОЛ. СЪЗДАДЕНИ ДА
+                        ПОДХРАНВАТ, ХИДРАТИРАТ И ЗАЩИТАВАТ
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Left and right controls/icons -->
+        <button class="carousel-control-prev"
+                type="button"
+                data-bs-target="#demo"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next"
+                type="button"
+                data-bs-target="#demo"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+</section>
+<!-- Carousel End -->
+
+<div style="background: rgb(var(--app-bg-secondary)); height: 20px"></div>
+
+<!-- Section 1 Start -->
+<section>
+    <div class="d-flex justify-content-center p-0">
+        <div style="width: 40%">
+            <img src="~/files/home/section/image-section-01.webp"
+                 alt="Натурална грижа за кожата ръчно изработена български съставки и някои с био произход. Еко опаковки, нежни формули, без алкохол. Натурален дезодорант с аромат на сладък портокал и евкалипт от етерични масла и витамин Е. Био съставки."
+                 style="width: 100%; height: 228px; object-fit: cover" />
+        </div>
+        <div class="ps-5 pt-2" style="width: 60%">
+            <p class="fs-5">
+                LIL'S CARE e ръчно изработена натурална грижа за кожата. Домашно
+                приготвена с български съставки и такива с био произход. С нежни
+                формули и със старание за меко усещане.
+            </p>
+            <p></p>
+            <a class="btn" style="float: left" asp-controller="Products">РАЗГЛЕДАЙ</a>
+        </div>
+    </div>
+</section>
+<!-- Section 1 End -->
+
+<!-- Favorites Start -->
+<section id="favorites"
+         style="background-color: rgb(var(--app-bg-secondary))">
+    <div class="container w-75 fs-5 text-center p-5">
+        <p>
+            Постоянно обновявам и подобрявам продуктите. За това не е изненада,
+            ако вече не са налични същите или имат нов, малко по-различен етикет и
+            състав.
+        </p>
+        <h1 class="h1 p-5">ЛЮБИМИТЕ НИ</h1>
+    </div>
+    <!-- Articles 1 Start -->
+    <article id="article-1">
+        <div class="d-flex justify-content-center">
+            <div class="px-5" style="width: 40%; text-align: right">
+                <h2 class="h2 mb-0">СЕРУМ МАСЛО С ШИПКА И ЖОЖОБА</h2>
+
+                <p class="fs-5 mb-0">
+                    Има приятно действие и
+                    <strong> релаксиращ </strong>
+                    аромат.
+                </p>
+                <p class="fs-5 mb-0">
+                    С българско био масло от
+                    <strong> шипка </strong>
+                    , био масла от ягодови семки, арган и жожоба. Съдържа естествени
+                    серамиди и има антиоксидантен ефект с
+                    <strong> витамин Е </strong>
+                    , който се бори със свобдните радикали и увреждането на кожата от
+                    околната среда. Серума е некомедогенен и идеално "заключва"
+                    хидратацията и
+                    <strong> защитава кожата </strong>
+                    .
+                </p>
+                <p></p>
+                <a class="btn btn-primary" style="float: right" asp-controller="Products" asp-action="Details" asp-route-id="01">ВИЖ ТУК</a>
+            </div>
+            <div style="width: 40%">
+                <a asp-controller="Products" asp-action="Details" asp-route-id="01">
+                    <img src="~/files/home/favorites/home-favorites-image-01.webp"
+                         alt=""
+                         style="width: 100%; object-fit: cover" />
+                </a>
+            </div>
+        </div>
+    </article>
+    <!-- Articles 1 End -->
+    <!-- Articles 2 Start -->
+    <article id="article-2">
+        <div class="d-flex justify-content-center pt-4">
+            <div style="width: 40%; text-align: center; position: relative">
+                <div style="
+                background-color: rgb(var(--app-btn-bg));
+                position: absolute;
+                left: 0px;
+                width: 281px;
+                height: 370px;
+                transform: translate(20px, 20px);
+              "></div>
+                <a class="img-transition" asp-controller="Products" asp-action="Details" asp-route-id="02">
+                    <img src="~/files/home/favorites/home-favorites-image-02.webp"
+                         alt=""
+                         style="width: 100%; object-fit: cover" />
+                </a>
+            </div>
+            <div style="width: 40%">
+                <h2 class="h2 mb-0">ХИДРАТИРАЩ ЛОСИОН С НЕВЕН</h2>
+
+                <p class="fs-5 mb-0">
+                    Лосионът е подходящ за всеки тип кожа, включително и
+                    <strong> чувствителна </strong>
+                    . Деликатен, попива бързо и не оставя мазни следи. Има
+                    <strong> успокояващо </strong>
+                    действие благодарение на комбинацията от съставки като
+                    <strong> екстракт от невен </strong>
+                    ,
+                    <strong> масло от кайсиви ядки </strong>
+                    и
+                    <strong> витамин Е </strong>
+                    . Други важни съставки са
+                    <strong> хиалуроновата </strong>
+                    киселина, която помага за худратацията и
+                    <strong> ниацинамид </strong>
+                    (витамин B3), които има антиоксиднтно и балнсиращо действие.
+                </p>
+
+                <p></p>
+                <a class="btn btn-success" style="float: left" asp-controller="Products" asp-action="Details" asp-route-id="02">РАЗГЛЕДАЙ</a>
+            </div>
+        </div>
+    </article>
+    <!-- Articles 2 End -->
+</section>
+<!-- Favorites End -->
+
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 -3 1920 197"
+     fill="rgb(var(--app-bg-secondary))"
+     transform="scale(-1, -1)">
+    <path d="M0,200 v-5 A4000,4000 0 0 0 960,100  A4000,4000 0 0 1 1920,0 V200 h-1920 z" />
+</svg>
+
+<!-- Similar Products Start -->
+<vc:carousel-products-component user-id="@ViewBag.UserId"></vc:carousel-products-component>
+<!-- Similar Products End -->
+
+
+@section Scripts {
+    <script src="~/js/home.js"></script>
+    <!-- Validation form fields on client -->
+    <partial name="_ValidationScriptsPartial" />
+
+    <!-- Custom validation for the form -->
+    <script src="~/js/customValidations.js"></script>
+
+    <!-- Redirecting to a specific element on a page after form submission -->
+    <script>
+        // Check if there's a query parameter for scrolling
+        var scrollToElement = '@ViewData["scrollToElement"]';
+        if (scrollToElement) {
+            // Use JavaScript to scroll to the specified element
+            var element = document.getElementById(scrollToElement);
+            if (element) {
+                element.scrollIntoView({ behavior: 'instant' });
+            }
+        }
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="~/js/carousel-products.js"></script>
+}
+
+
+
 
