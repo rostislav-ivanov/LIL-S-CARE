@@ -1,0 +1,72 @@
+﻿@model IEnumerable<ProductDTO>
+@{
+}
+@section Styles {
+    <link rel="stylesheet" href="~/lib/owlcarousel/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" href="~/css/carousel-products.css" />
+}
+
+
+
+<div class="container-fluid p-5">
+    <p class="text-center fs-3">МОЖЕ ДА ХАРЕСАТЕ...</p>
+    <div class="vesitable">
+        <div class="owl-carousel vegetable-carousel justify-content-center">
+            @foreach (var product in Model)
+            {
+                <!-- Product Start-->
+                <div class="position-relative vesitable-item rounded-4">
+                    <a class="nav-link" asp-controller="Products" asp-action="Details" asp-route-id="@product.Id">
+                        <div class="vesitable-img">
+                            <img class="rounded-top-4"
+                                 src="@product.ImageUrl"
+                                 width="250"
+                                 height="250"
+                                 style="width: 100%; object-fit: cover"
+                                 alt="" />
+                        </div>
+                        <div class="px-3 py-2">
+                            <h6>@product.Name</h6>
+                            <div class="clearfix mt-2">
+                                @if (product.Quantity > 0)
+                                {
+                                    <a asp-controller="Products" asp-action="SetProductToBag"
+                                       class="btn"
+                                       style="float: left"
+                                       data-bs-toggle="offcanvas"
+                                       data-bs-target="#shopping-bag"><i class="fa fa-shopping-bag me-2"></i> Добави</a>
+                                }
+                                else
+                                {
+                                    <a  class="float-start btn unactive-button">
+                                        Изчерпано
+                                    </a>
+                                }
+                                <a asp-controller="Home"
+                                   class="float-end nav-link fs-3"
+                                   style="color: rgb(var(--app-btn-bg))">
+                                    @if (product.IsWish)
+                                    {
+                                        <i class="fa fa-heart"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="far fa-heart"></i>
+                                    }
+                                </a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- Product End-->
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="~/lib/jQuery/dist/jQuery.js"></script>
+    <script src="~/js/carousel-products.js"></script>
+}

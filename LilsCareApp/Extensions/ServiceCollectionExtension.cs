@@ -1,4 +1,6 @@
-﻿using LilsCareApp.Infrastructure.Data;
+﻿using LilsCareApp.Core.Contracts;
+using LilsCareApp.Core.Services;
+using LilsCareApp.Infrastructure.Data;
 using LilsCareApp.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +18,9 @@ namespace Microsoft.Extensions.DependencyInjection
             var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
+
+            services.AddScoped<ILilsCareService, LilsCareService>();
+
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             return services;

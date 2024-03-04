@@ -1,0 +1,21 @@
+.product-img {
+  overflow: hidden;
+  transition: 0.5s;
+  border-radius: 10px;
+}
+
+.product-img img {
+  height: 200px;
+  object-fit: cover;
+  object-position: 0% 50%;
+  transition: 0.5s;
+}
+
+.product-img img:hover {
+  transform: scale(1.3);
+}
+
+.form-select {
+  padding: 0;
+  border: none;
+}

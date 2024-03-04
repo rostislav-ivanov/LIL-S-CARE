@@ -1,0 +1,29 @@
+#carouselId .carousel-caption {
+    color: black;
+    background-color: white;
+    opacity: 0.6;
+    width: 500px;
+    height: 160px;
+    padding: 10px;
+    margin-bottom: 0;
+    position: absolute;
+    left: 50px;
+    top: 100%;
+    transition: top 2s;
+}
+
+    #carouselId .carousel-caption.show {
+        top: 5%;
+        transition: top 2s;
+    }
+
+#article-2 .img-transition {
+    position: absolute;
+    left: -24%;
+    transition: left 2s;
+}
+
+#article-2:hover .img-transition {
+    left: 0;
+    transition: left 2s;
+}

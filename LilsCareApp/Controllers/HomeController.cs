@@ -1,6 +1,7 @@
 using LilsCareApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace LilsCareApp.Controllers
 {
@@ -15,9 +16,9 @@ namespace LilsCareApp.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.UserId = User.GetUserId();
             return View();
         }
-
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
