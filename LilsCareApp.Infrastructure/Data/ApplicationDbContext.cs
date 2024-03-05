@@ -36,6 +36,10 @@ namespace LilsCareApp.Infrastructure.Data
 
         public DbSet<BagUser> BagsUsers { get; set; } = null!;
 
+        public DbSet<Subscriber> Subscribers { get; set; } = null!;
+
+        public DbSet<MessageFromClient> MessagesFromClients { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new AppUserConfiguration());

@@ -8,7 +8,7 @@
 
 
 
-<div class="container-fluid p-5">
+<div id="owl-carousel" class="container-fluid p-5">
     <p class="text-center fs-3">МОЖЕ ДА ХАРЕСАТЕ...</p>
     <div class="vesitable">
         <div class="owl-carousel vegetable-carousel justify-content-center">
@@ -42,18 +42,23 @@
                                         Изчерпано
                                     </a>
                                 }
-                                <a asp-controller="Home"
-                                   class="float-end nav-link fs-3"
-                                   style="color: rgb(var(--app-btn-bg))">
+
                                     @if (product.IsWish)
                                     {
+                                    <a asp-controller="Products" asp-action="RemoveFromWish" asp-route-id="@product.Id"
+                                       class="float-end nav-link fs-3"
+                                       style="color: rgb(var(--app-btn-bg))">
                                         <i class="fa fa-heart"></i>
+                                    </a>
                                     }
                                     else
                                     {
+                                    <a asp-controller="Products" asp-action="AddToWish" asp-route-id="@product.Id"
+                                       class="float-end nav-link fs-3"
+                                       style="color: rgb(var(--app-btn-bg))">
                                         <i class="far fa-heart"></i>
+                                    </a>
                                     }
-                                </a>
                             </div>
                         </div>
                     </a>

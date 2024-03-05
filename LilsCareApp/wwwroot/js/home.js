@@ -35,3 +35,15 @@ function onChanges() {
 // Set interval for carousel
 var carousel = new bootstrap.Carousel(carouselSlide);
 carousel._config.defaultInterval = caroselInterval;
+
+
+//Redirecting to a specific element on a page after form submission-- >
+// Check if there's a query parameter for scrolling
+var scrollToElement = '@ViewData["scrollToElement"]';
+if (scrollToElement) {
+    // Use JavaScript to scroll to the specified element
+    var element = document.getElementById(scrollToElement);
+    if (element) {
+        element.scrollIntoView({ behavior: 'instant' });
+    }
+}       

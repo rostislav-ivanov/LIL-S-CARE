@@ -1,0 +1,35 @@
+﻿@model HomeViewModel
+@{
+}
+<section id="add-to-subscribers" class="container w-50 text-center">
+    <h3 class="h3">За най-новите изкушения</h3>
+ 
+        <div class="input-group">
+        <input asp-for="EmailSubscriber" type="email"
+                   class="form-control"
+                   id="email"
+                   placeholder="Имейл..."
+               name="EmailSubscriber" />
+            <button type="submit" class="btn btn-lg">Запиши ме!</button>
+        </div>
+    <span asp-validation-for="@Model.EmailSubscriber" class="text-danger" style="font-size: 12px"></span>
+        <div class="form-check">
+            <label class="form-check-label">
+            <input asp-for="PrivacyPolicyCheckBox" type="checkbox" 
+                   name="PrivacyPolicyCheckBox"
+                   class="form-check-input"
+                   data-val="true"
+                   data-val-mustbetrue="Потвърдете съгласието с политиката за поверителност." />
+                <div class="d-flex justify-content-between">
+                    <small>
+                        Съгласен съм
+                        <a href="./terms-conditions.html"
+                           target="_blank"
+                           style="color: rgb(var(--app-btn-bg))">условията</a>
+                    </small>
+                    <small style="margin-left: 120px">Изпращаме имейл до 1 път месечно.</small>
+                </div>
+            </label>
+        </div>
+    <span asp-validation-for="@Model.PrivacyPolicyCheckBox" class="text-danger" style="font-size: 12px"></span>
+</section>
