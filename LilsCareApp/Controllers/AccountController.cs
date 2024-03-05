@@ -2,7 +2,7 @@
 
 namespace LilsCareApp.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         public IActionResult MyAccount()
         {

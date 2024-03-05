@@ -4,22 +4,27 @@ using System.Security.Claims;
 
 namespace LilsCareApp.Components
 {
-    public class HeaderComponent : ViewComponent
+    public class ShoppingBagComponent : ViewComponent
     {
         private readonly ILilsCareService _service;
         private readonly HttpContext _httpContext;
 
 
-        public HeaderComponent(ILilsCareService service, IHttpContextAccessor httpContextAccessor)
+        public ShoppingBagComponent(ILilsCareService service, IHttpContextAccessor httpContextAccessor)
         {
             _service = service;
             _httpContext = httpContextAccessor.HttpContext;
         }
+
         public async Task<IViewComponentResult> InvokeAsync()
         {
             string? userId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            ViewBag.count = userId != null ? await _service.GetCountInBagAsync(userId) : 0;
-            return await Task.FromResult((IViewComponentResult)View());
+            userId ??= "guestUser";
+            var productsInBag = await _service.GetProductsInBagAsync(userId);
+            ViewBag.Total = productsInBag.Sum(p => p.Quantity * p.Price);
+            return await Task.FromResult((IViewComponentResult)View(productsInBag));
         }
+
     }
 }
+

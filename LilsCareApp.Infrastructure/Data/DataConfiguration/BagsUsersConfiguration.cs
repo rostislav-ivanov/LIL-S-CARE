@@ -12,16 +12,19 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 {
                     AppUserId = ConfigurationHelper.AppUser.Id,
                     ProductId = 1,
+                    Quantity = 2
                 },
                 new BagUser
                 {
                     AppUserId = ConfigurationHelper.AppUser.Id,
                     ProductId = 2,
+                    Quantity = 3
                 },
                 new BagUser
                 {
                     AppUserId = ConfigurationHelper.AppUser.Id,
                     ProductId = 3,
+                    Quantity = 4
                 },
 
             };

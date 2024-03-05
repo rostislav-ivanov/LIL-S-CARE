@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LilsCareApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240303101928_CreateTables")]
-    partial class CreateTables
+    [Migration("20240305081123_CreatTables")]
+    partial class CreatTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -85,6 +85,34 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.ToTable("AddressDeliveries", t =>
                         {
                             t.HasComment("Address Delivery");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "bul. Vitosha",
+                            AppUserId = "269c76ef-068a-4a06-9c3c-d1e1c7ce6c26",
+                            Country = "Bulgaria",
+                            District = "Sofia",
+                            FirstName = "Ivan",
+                            LastName = "Ivanov",
+                            PhoneNumber = "0888888888",
+                            PostCode = "1000",
+                            Town = "Sofia"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "bul. Vitosha",
+                            AppUserId = "269c76ef-068a-4a06-9c3c-d1e1c7ce6c26",
+                            Country = "Bulgaria",
+                            District = "Sofia",
+                            FirstName = "Petar",
+                            LastName = "Petrov",
+                            PhoneNumber = "0888888888",
+                            PostCode = "1000",
+                            Town = "Sofia"
                         });
                 });
 
@@ -162,6 +190,22 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             t.HasComment("App User");
                         });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "269c76ef-068a-4a06-9c3c-d1e1c7ce6c26",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "55443bbf-cbc3-477a-b9dd-bb64adcc3ee7",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "TEST@SOFTUNI.BG",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOHZvMlFaA5ffFodVeoSjYZNQM2XkgDfvENorKAY8g3s6ItW5UW6q3aozP3HG2dHMA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "583e5b81-480c-45d3-950a-a2c982cd011f",
+                            TwoFactorEnabled = false,
+                            UserName = "test@softuni.bg"
+                        });
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.BagUser", b =>
@@ -174,6 +218,10 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasComment("The product id");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int")
+                        .HasComment("The quantity of the product that the user has added to his bag");
+
                     b.HasKey("AppUserId", "ProductId");
 
                     b.HasIndex("ProductId");
@@ -181,6 +229,26 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.ToTable("BagsUsers", t =>
                         {
                             t.HasComment("This table contains the products that the user has added to his bag");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            AppUserId = "269c76ef-068a-4a06-9c3c-d1e1c7ce6c26",
+                            ProductId = 1,
+                            Quantity = 2
+                        },
+                        new
+                        {
+                            AppUserId = "269c76ef-068a-4a06-9c3c-d1e1c7ce6c26",
+                            ProductId = 2,
+                            Quantity = 3
+                        },
+                        new
+                        {
+                            AppUserId = "269c76ef-068a-4a06-9c3c-d1e1c7ce6c26",
+                            ProductId = 3,
+                            Quantity = 4
                         });
                 });
 
@@ -204,6 +272,33 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.ToTable("Categories", t =>
                         {
                             t.HasComment("The category of the product");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Всички"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "за тяло"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "за суха кожа"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "за мазна кожа"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "за лице"
                         });
                 });
 
@@ -243,6 +338,266 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.ToTable("Images", t =>
                         {
                             t.HasComment("The image of the product or review or user");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_24a7b0d7f63d42048f5a05e97362f385~mv2.jpg/v1/fill/w_301,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_24a7b0d7f63d42048f5a05e97362f385~mv2.jpg",
+                            ProductId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_263e877cdb774516bea29e2155049a0d~mv2.jpg/v1/fill/w_301,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_263e877cdb774516bea29e2155049a0d~mv2.jpg",
+                            ProductId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_69a0f0f6f1cf4847983b2248749af6cc~mv2.jpg/v1/fill/w_301,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_69a0f0f6f1cf4847983b2248749af6cc~mv2.jpg",
+                            ProductId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_57415abd6b2b4d1f86e4ed35cf155e0d~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_57415abd6b2b4d1f86e4ed35cf155e0d~mv2.jpg",
+                            ProductId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ImagePath = "https://video.wixstatic.com/video/a6694c_b61f40bc476a43578be260fce9fa6efa/1080p/mp4/file.mp4",
+                            ProductId = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_75d8524a8fb046db82d0090671364c15~mv2.jpg/v1/fill/w_886,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_75d8524a8fb046db82d0090671364c15~mv2.jpg",
+                            ProductId = 2
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_2f611f06e55346e5b3b22c94c0bb8077~mv2.jpg/v1/fill/w_887,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_2f611f06e55346e5b3b22c94c0bb8077~mv2.jpg",
+                            ProductId = 2
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_1b60760d6a9e46f6ba0be663ab0cd432~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_1b60760d6a9e46f6ba0be663ab0cd432~mv2.jpg",
+                            ProductId = 2
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_7ce163b0f3e4461d9ee3ef5c16b972f4~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_7ce163b0f3e4461d9ee3ef5c16b972f4~mv2.jpg",
+                            ProductId = 2
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_8cf53b5caa60466b86d7e1e71035a5c1~mv2.jpg/v1/fill/w_886,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_8cf53b5caa60466b86d7e1e71035a5c1~mv2.jpg",
+                            ProductId = 2
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_dbfcc272e90a48f89dfa6930ee2b0355~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_dbfcc272e90a48f89dfa6930ee2b0355~mv2.jpg",
+                            ProductId = 2
+                        },
+                        new
+                        {
+                            Id = 12,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_44172c09d7974734aed4b4fa6474bac2~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_44172c09d7974734aed4b4fa6474bac2~mv2.jpg",
+                            ProductId = 2
+                        },
+                        new
+                        {
+                            Id = 13,
+                            ImagePath = "https://video.wixstatic.com/video/a6694c_688be81645b14d1f9707a985aad784fb/1080p/mp4/file.mp4",
+                            ProductId = 2
+                        },
+                        new
+                        {
+                            Id = 14,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_40945dc6b1754f74ab2b9331a5d4c692~mv2.jpg/v1/fill/w_887,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_40945dc6b1754f74ab2b9331a5d4c692~mv2.jpg",
+                            ProductId = 3
+                        },
+                        new
+                        {
+                            Id = 15,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_dcb7369410054c2b8ffc9fa2f7a7854c~mv2.jpg/v1/fill/w_374,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_dcb7369410054c2b8ffc9fa2f7a7854c~mv2.jpg",
+                            ProductId = 3
+                        },
+                        new
+                        {
+                            Id = 16,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_5e4516f6b7294324b75d8577ed3b7112~mv2.jpg/v1/fill/w_374,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_5e4516f6b7294324b75d8577ed3b7112~mv2.jpg",
+                            ProductId = 3
+                        },
+                        new
+                        {
+                            Id = 17,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_955cfb52005d4979a9d170045f3bf603~mv2.jpg/v1/fill/w_374,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_955cfb52005d4979a9d170045f3bf603~mv2.jpg",
+                            ProductId = 3
+                        },
+                        new
+                        {
+                            Id = 18,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_22c2642fbcb14b9c83a1b7b5349cb654~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_22c2642fbcb14b9c83a1b7b5349cb654~mv2.png",
+                            ProductId = 3
+                        },
+                        new
+                        {
+                            Id = 19,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_9feeef67f1174acb9d05de346a5380f3~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_9feeef67f1174acb9d05de346a5380f3~mv2.png",
+                            ProductId = 4
+                        },
+                        new
+                        {
+                            Id = 20,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_331b7666ec214d1cb9eab348b23156e6~mv2.png/v1/fill/w_832,h_665,al_c,usm_0.66_1.00_0.01/a6694c_331b7666ec214d1cb9eab348b23156e6~mv2.png",
+                            ProductId = 4
+                        },
+                        new
+                        {
+                            Id = 21,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_8c8ef3eb0c7b4c009a08aecabee93d26~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_8c8ef3eb0c7b4c009a08aecabee93d26~mv2.png",
+                            ProductId = 4
+                        },
+                        new
+                        {
+                            Id = 22,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_f3173997361b4b1b83ad90f807bbaf85~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_f3173997361b4b1b83ad90f807bbaf85~mv2.png",
+                            ProductId = 4
+                        },
+                        new
+                        {
+                            Id = 23,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_6180737a52184e20a160a44b8b00cbc6~mv2.png/v1/fill/w_832,h_665,al_c,usm_0.66_1.00_0.01/a6694c_6180737a52184e20a160a44b8b00cbc6~mv2.png",
+                            ProductId = 4
+                        },
+                        new
+                        {
+                            Id = 24,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_0d7a1d6d29d0432b85ad84001ad13a9b~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_0d7a1d6d29d0432b85ad84001ad13a9b~mv2.png",
+                            ProductId = 4
+                        },
+                        new
+                        {
+                            Id = 25,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_2485f5b6aa434f04a31a359a58f370ce~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_2485f5b6aa434f04a31a359a58f370ce~mv2.png",
+                            ProductId = 4
+                        },
+                        new
+                        {
+                            Id = 26,
+                            ImagePath = "https://video.wixstatic.com/video/a6694c_84516f7e298844d7954c342ceedba433/1080p/mp4/file.mp4",
+                            ProductId = 4
+                        },
+                        new
+                        {
+                            Id = 27,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_c3e384c8ca434dc6b7c2920f660579e3~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_c3e384c8ca434dc6b7c2920f660579e3~mv2.png",
+                            ProductId = 5
+                        },
+                        new
+                        {
+                            Id = 28,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_c4aefe2a5f294a0faf6a2f7c19af32db~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_c4aefe2a5f294a0faf6a2f7c19af32db~mv2.png",
+                            ProductId = 5
+                        },
+                        new
+                        {
+                            Id = 29,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_a730f2e789864a9cb75ce1dde1e52b07~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_a730f2e789864a9cb75ce1dde1e52b07~mv2.png",
+                            ProductId = 5
+                        },
+                        new
+                        {
+                            Id = 30,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_35eeecadd7f6495c99a3db846af81148~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_35eeecadd7f6495c99a3db846af81148~mv2.jpg",
+                            ProductId = 5
+                        },
+                        new
+                        {
+                            Id = 31,
+                            ImagePath = "https://video.wixstatic.com/video/a6694c_5b80835e03c94fd6b720fdd2ceaa8865/1080p/mp4/file.mp4",
+                            ProductId = 5
+                        },
+                        new
+                        {
+                            Id = 32,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_e95ca1c8158d4caba5b6e7bedaa0eeab~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_e95ca1c8158d4caba5b6e7bedaa0eeab~mv2.png",
+                            ProductId = 6
+                        },
+                        new
+                        {
+                            Id = 33,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_6381e01ae9c340d598e09ea221ff60f2~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_6381e01ae9c340d598e09ea221ff60f2~mv2.png",
+                            ProductId = 6
+                        },
+                        new
+                        {
+                            Id = 34,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_48c50850bac34de3911eb25953af593d~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_48c50850bac34de3911eb25953af593d~mv2.png",
+                            ProductId = 6
+                        },
+                        new
+                        {
+                            Id = 35,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_757ebf6a259740c19feb8b3a9a6bc8f5~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_757ebf6a259740c19feb8b3a9a6bc8f5~mv2.png",
+                            ProductId = 6
+                        },
+                        new
+                        {
+                            Id = 36,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_dcd9e99fe4d44425b1f77612e83ac7c3~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_dcd9e99fe4d44425b1f77612e83ac7c3~mv2.png",
+                            ProductId = 7
+                        },
+                        new
+                        {
+                            Id = 37,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_2fa731434bbc41df95694781b5de4092~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_2fa731434bbc41df95694781b5de4092~mv2.png",
+                            ProductId = 7
+                        },
+                        new
+                        {
+                            Id = 38,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_1a21a0325bd2422081c51946789b8adf~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_1a21a0325bd2422081c51946789b8adf~mv2.png",
+                            ProductId = 7
+                        },
+                        new
+                        {
+                            Id = 39,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_f5e3c9c920fe41f395dc3bbb35e0161d~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_f5e3c9c920fe41f395dc3bbb35e0161d~mv2.png",
+                            ProductId = 7
+                        },
+                        new
+                        {
+                            Id = 40,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_ec1aa69e21ac48dc9cfd0bf0522f8caa~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_ec1aa69e21ac48dc9cfd0bf0522f8caa~mv2.png",
+                            ProductId = 7
+                        },
+                        new
+                        {
+                            Id = 41,
+                            ImagePath = "https://video.wixstatic.com/video/a6694c_8570c70283b14cce830d5da15331979c/480p/mp4/file.mp4",
+                            ProductId = 7
+                        },
+                        new
+                        {
+                            Id = 42,
+                            ImagePath = "https://video.wixstatic.com/video/a6694c_3e25a17da1ba451786a46aa4daee1698/480p/mp4/file.mp4",
+                            ProductId = 7
+                        },
+                        new
+                        {
+                            Id = 43,
+                            ImagePath = "https://static.wixstatic.com/media/a6694c_c198248097424ec09f04d600b3ee3a40~mv2.png/v1/fill/w_886,h_665,al_c,usm_0.66_1.00_0.01/a6694c_c198248097424ec09f04d600b3ee3a40~mv2.png",
+                            ProductId = 7
                         });
                 });
 
@@ -304,6 +659,32 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             t.HasComment("Order");
                         });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AddressDeliveryId = 1,
+                            AppUserId = "269c76ef-068a-4a06-9c3c-d1e1c7ce6c26",
+                            CreatedOn = new DateTime(2024, 3, 5, 8, 11, 20, 923, DateTimeKind.Utc).AddTicks(6866),
+                            DateShipping = new DateTime(2024, 3, 5, 8, 11, 20, 923, DateTimeKind.Utc).AddTicks(8319),
+                            PaymentMethodId = 1,
+                            ShippingProviderId = 1,
+                            StatusOrderId = 1,
+                            TrackingNumber = "1234567890"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AddressDeliveryId = 2,
+                            AppUserId = "269c76ef-068a-4a06-9c3c-d1e1c7ce6c26",
+                            CreatedOn = new DateTime(2024, 3, 5, 8, 11, 20, 923, DateTimeKind.Utc).AddTicks(9421),
+                            DateShipping = new DateTime(2024, 3, 5, 8, 11, 20, 923, DateTimeKind.Utc).AddTicks(9424),
+                            PaymentMethodId = 2,
+                            ShippingProviderId = 2,
+                            StatusOrderId = 2,
+                            TrackingNumber = "1234567890x"
+                        });
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.PaymentMethod", b =>
@@ -325,6 +706,23 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.ToTable("PaymentMethods", t =>
                         {
                             t.HasComment("Payment methods");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Type = "Наложен платеж"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Type = "С карта"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Type = "Банков превод"
                         });
                 });
 
@@ -382,6 +780,92 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             t.HasComment("The product model");
                         });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Част от лимитирана колекция празнични продукти, които може да закупите поотделно или като подаръчен комплект. 💝\r\n\r\n \r\n\r\nЗахарен скраб за тяло - натурален, био и ръчно изработен, с аромат на топли и уютни празници - естествен шоколадов аромат и леко цитрусов от етерично масло сладък портокал. \r\n\r\n💛Този сладък скраб за тяло в два цвята е домашно приготвен с любов, масло от гроздови семки и какаово масло. Цвета му е натуралне от червена мика (минерален пигмент). Този скраб е прекрасен подарък за всеки, който се нуждае от малко повече релаксиращи моменти и грижа за себе си този сезон.\r\n\r\n \r\n\r\nОбогатен с витамин Е.\r\n\r\n \r\n\r\n100% натурален\r\n\r\n86% от България\r\n\r\n13% Био",
+                            IngredientINCIs = "Sucrose (Захар), Vitis Vinifera Seed Oil (Масло от гроздови семки), Theobroma Cacao Seed Butter (Какаово масло)*, Stearic Acid , Citrus Sinensis (Портокал) Peel Oil*, Limonene**, Linalool**, Citral**, Benzyl Alcohol, Ethylhexylglycerin, Tocopherol (Vit E), Mica***, CI 77491***.\r\n\r\n*Био **Компоненти на етерични масла ***Минерални пигменти\r\n\r\nОт България 81,4%\r\n\r\nБио 14,5%",
+                            Ingredients = "Какаовото масло* придава лек и естествен шоколадов аромат и предпазва и подхранва кожата.\r\n\r\n \r\n\r\nЕтеричното масло от сладък портокал придават лек празничен аромат*.\r\n\r\n \r\n\r\nМасло от гроздови семки - подхранва кожата. То е леко, некомедогенно и попива бързо.\r\n\r\n \r\n\r\nСтеаринова киселина - наситена мастна 'киселина' която в природата се намира в много масла. В натуралния състав на какаовото масло е 24-37%, а в масло от шеа / карите е между 20-50%.\r\n\r\n \r\n\r\nВитамин Е е натурален антиоксидант, който предпазва и защитава кожата от свободни радикали, процеси на оксидация и вредни влияния от околната среда.\r\n\r\n \r\n\r\n*Био",
+                            Name = "СКРАБ ЗА ТЯЛО",
+                            Price = 9.00m,
+                            Purpose = "Изцяло натурален, може да използвате 1-2 пъти седмично, когато желаете нежно да ексфолирате кожата и да я направите по-мека и гладка.\r\n\r\n \r\n\r\nИзползвайте с чисти ръце върху чиста и мокра кожа. Нежно масажирайте за ексфолиращ ефект. Изплакнете.\r\n\r\n \r\n\r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено, защитено от пряка слънчева светлина.",
+                            Quantity = 10,
+                            Weight = "150 г"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Description 2",
+                            IngredientINCIs = "IngredientINCIs 2",
+                            Ingredients = "Ingredients 2",
+                            Name = "БАЛСАМ ЗА УСТНИ С ЖОЖОБА, КАКАО И ПЧЕЛЕН ВОСЪК",
+                            Price = 4.00m,
+                            Purpose = "Purpose 2",
+                            Quantity = 20,
+                            Weight = "200g"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Description 3",
+                            IngredientINCIs = "IngredientINCIs 3",
+                            Ingredients = "Ingredients 3",
+                            Name = "ХИДРАТИРАЩ КРЕМ С ШИПКА",
+                            Price = 12.00m,
+                            Purpose = "Purpose 3",
+                            Quantity = 30,
+                            Weight = "50 g"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Description 4",
+                            IngredientINCIs = "IngredientINCIs 4",
+                            Ingredients = "Ingredients 4",
+                            Name = "НЕЖЕН ЛОСИОН С НЕВЕН",
+                            Price = 4.00m,
+                            Purpose = "Purpose 4",
+                            Quantity = 0,
+                            Weight = "400g"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Description 5",
+                            IngredientINCIs = "IngredientINCIs 5",
+                            Ingredients = "Ingredients 5",
+                            Name = "ДВУФАЗНА МИЦЕЛАРНА ВОДА",
+                            Price = 10.00m,
+                            Purpose = "Purpose 5",
+                            Quantity = 50,
+                            Weight = "100 мл"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Description 6",
+                            IngredientINCIs = "IngredientINCIs 6",
+                            Ingredients = "Ingredients 6",
+                            Name = "НАТУРАЛЕН КРЕМ ДЕЗОДОРАНТ",
+                            Price = 8.50m,
+                            Purpose = "Purpose 6",
+                            Quantity = 70,
+                            Weight = "50 g"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "Description 7",
+                            IngredientINCIs = "IngredientINCIs 7",
+                            Ingredients = "Ingredients 7",
+                            Name = "СЕРУМ МАСЛО С ШИПКА И ЖОЖОБА",
+                            Price = 9.00m,
+                            Purpose = "Purpose 7",
+                            Quantity = 80,
+                            Weight = "20 мл"
+                        });
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ProductCategory", b =>
@@ -402,6 +886,28 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             t.HasComment("Many to many relation between products and categories");
                         });
+
+                    b.HasData(
+                        new
+                        {
+                            ProductId = 1,
+                            CategoryId = 1
+                        },
+                        new
+                        {
+                            ProductId = 1,
+                            CategoryId = 2
+                        },
+                        new
+                        {
+                            ProductId = 2,
+                            CategoryId = 2
+                        },
+                        new
+                        {
+                            ProductId = 2,
+                            CategoryId = 3
+                        });
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ProductOrder", b =>
@@ -419,6 +925,58 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.ToTable("ProductOrder", t =>
                         {
                             t.HasComment("Many to many relation between products and orders");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            ProductId = 1,
+                            OrderId = 1
+                        },
+                        new
+                        {
+                            ProductId = 1,
+                            OrderId = 2
+                        },
+                        new
+                        {
+                            ProductId = 2,
+                            OrderId = 1
+                        },
+                        new
+                        {
+                            ProductId = 3,
+                            OrderId = 1
+                        },
+                        new
+                        {
+                            ProductId = 3,
+                            OrderId = 2
+                        },
+                        new
+                        {
+                            ProductId = 4,
+                            OrderId = 1
+                        },
+                        new
+                        {
+                            ProductId = 5,
+                            OrderId = 2
+                        },
+                        new
+                        {
+                            ProductId = 6,
+                            OrderId = 1
+                        },
+                        new
+                        {
+                            ProductId = 6,
+                            OrderId = 2
+                        },
+                        new
+                        {
+                            ProductId = 7,
+                            OrderId = 1
                         });
                 });
 
@@ -479,6 +1037,44 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             t.HasComment("This class represents a review of a product.");
                         });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AppUserId = "269c76ef-068a-4a06-9c3c-d1e1c7ce6c26",
+                            AuthorName = "John Doe",
+                            Comment = "Great product, I love it!",
+                            CreatedOn = new DateTime(2024, 3, 5, 10, 11, 21, 475, DateTimeKind.Local).AddTicks(4029),
+                            Email = "john@doe.com",
+                            ProductId = 1,
+                            Rating = 4,
+                            Title = "Great product"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AppUserId = "269c76ef-068a-4a06-9c3c-d1e1c7ce6c26",
+                            AuthorName = "John Doe 2",
+                            Comment = "Great product, I love it!",
+                            CreatedOn = new DateTime(2024, 3, 5, 10, 11, 21, 475, DateTimeKind.Local).AddTicks(4080),
+                            Email = "john@doe.com",
+                            ProductId = 1,
+                            Rating = 3,
+                            Title = "Great product"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AppUserId = "269c76ef-068a-4a06-9c3c-d1e1c7ce6c26",
+                            AuthorName = "John Doe 3",
+                            Comment = "Great product, I love it!",
+                            CreatedOn = new DateTime(2024, 3, 5, 10, 11, 21, 475, DateTimeKind.Local).AddTicks(4083),
+                            Email = "john@doe.com",
+                            ProductId = 2,
+                            Rating = 3,
+                            Title = "Great product"
+                        });
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ShippingProvider", b =>
@@ -510,6 +1106,22 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             t.HasComment("Shipping providers");
                         });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "2-3 работни дни",
+                            Name = "До офис Еконт / Спиди",
+                            Price = 6.50m
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "2-3 работни дни",
+                            Name = "До адрес - Еконт",
+                            Price = 8.50m
+                        });
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.StatusOrder", b =>
@@ -533,6 +1145,28 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             t.HasComment("Status of the order");
                         });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Заявена"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Отменена"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Изпратена"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Получена"
+                        });
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.WishUser", b =>
@@ -552,6 +1186,23 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.ToTable("WishesUsers", t =>
                         {
                             t.HasComment("This table contains the products that the user has added to his wish list");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            AppUserId = "269c76ef-068a-4a06-9c3c-d1e1c7ce6c26",
+                            ProductId = 1
+                        },
+                        new
+                        {
+                            AppUserId = "269c76ef-068a-4a06-9c3c-d1e1c7ce6c26",
+                            ProductId = 3
+                        },
+                        new
+                        {
+                            AppUserId = "269c76ef-068a-4a06-9c3c-d1e1c7ce6c26",
+                            ProductId = 4
                         });
                 });
 

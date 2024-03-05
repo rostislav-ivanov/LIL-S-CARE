@@ -24,5 +24,8 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("Navigation property to the product that the user has added to his bag")]
         [ForeignKey(nameof(ProductId))]
         public Product Product { get; set; } = null!;
+
+        [Comment("The quantity of the product that the user has added to his bag")]
+        public int Quantity { get; set; }
     }
 }
