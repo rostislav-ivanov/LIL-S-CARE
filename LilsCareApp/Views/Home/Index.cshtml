@@ -1,4 +1,5 @@
-﻿@using System.Security.Claims;
+﻿@model HomeViewModel
+@using System.Security.Claims;
 @{
     ViewData["Title"] = "handmade natural skincare";
 }
@@ -243,9 +244,182 @@
 <vc:carousel-products-component user-id="@ViewBag.UserId"></vc:carousel-products-component>
 <!-- Similar Products End -->
 
+<!-- Add To Subscribers Start -->
+<form asp-action="AddToSubscribers" method="post">
+    <partial name="_SubscribersPartial" />
+</form>
+<!-- Add To Subscribers End -->
+
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 -3 1920 197"
+     fill="rgb(var(--app-bg-secondary))"
+     transform="scale(-1, 1)">
+    <path d="M0,200 v-5 A4000,4000 0 0 0 960,100  A4000,4000 0 0 1 1920,0 V200 h-1920 z" />
+</svg>
+
+<!-- About Start -->
+<section id="about">
+    <h1 class="h1 text-center mb-0 pb-3"
+        style="background-color: rgb(var(--app-bg-secondary))">
+        ЗА НАС
+    </h1>
+    <article>
+        <div class="d-flex justify-content-center p-0">
+            <div style="width: 40%">
+                <img src="~/files/home/about/home-about-image-01.webp"
+                     alt="1687301198477-L.png"
+                     style="width: 100%; object-fit: cover" />
+            </div>
+            <div class="ps-5 pt-2" style="width: 60%">
+                <h1 class="h1 mb-0">И ЗА ПРИРOДАТА</h1>
+
+                <p class="fs-5 mb-0">
+                    Ръчно изработена 100% натурална грижа за кожата със съставки от
+                    България и някои с био произход. Използваме еко съобразени
+                    опаковки като стъклени бутилки и алуминиеви кутийки. А картонените
+                    кутийки за изпращане и хартияния пълнеж са изцяло рециклирани
+                    продукти от България.
+                </p>
+            </div>
+        </div>
+    </article>
+    <article>
+        <div class="d-flex justify-content-center p-0"
+             style="background-color: rgb(var(--app-bg-secondary))">
+            <div style="width: 60%">
+                <h2 style="
+                font: var(--font_0);
+                letter-spacing: 0.1em;
+                font-size: 40px;
+                text-align: right;
+                padding: 25px;
+              ">
+                    И ЗА КОЖАТА
+                </h2>
+                <p class="font_7"
+                   style="
+                font-size: 18px;
+                line-height: 1.6em;
+                text-align: right;
+                padding: 25px;
+              ">
+                    Меко и приятно усещане. Семпли, нежни и ефективни формули, които
+                    хидратират, подрхранват и защитават. Не съдържат изсушаващ
+                    алкохол, изкуствени оцветители, избелващи или други потенциално
+                    агресивни съставки. Кожата е нашата бариера от външната среда и за
+                    това е важно и ние да я пазим и да се грижим за нея.
+                </p>
+                <svg id="Decoration"
+                     xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 -6 1920 500"
+                     fill="rgb(var(--app-bg-color))"
+                     style="position: absolute"
+                     transform="scale(-1, 1)">
+                    <path d="M0,200 A4000,4000 0 0 0 960,100  A4000,4000 0 0 1 1920,0 V200 h-1920 z" />
+                </svg>
+            </div>
+            <div style="width: 40%">
+                <div>
+                    <img src="~/files/home/about/home-about-image-02.webp"
+                         alt=""
+                         style="width: 100%; max-height: 430px; object-fit: cover" />
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+<!-- About End -->
+<!-- Contact As Start -->
+<section id="contact-as" style="position: relative">
+    <div class="d-flex justify-content-center">
+        <div style="width: 25%">
+            <img src="~/files/home/focus/home-focus-image-01.webp"
+                 alt=""
+                 style="width: 100%" />
+        </div>
+        <div style="width: 65%; padding: 0 0 0 25px">
+            <h2 class="h1">ФОКУС ВЪРХУ ТЕБ</h2>
+            <p class="fs-6 mb-0">
+                Твоето изживяване винаги ще е първия ни приоритет - да доставим
+                висококачествен продукт подходящ за теб.
+            </p>
+            <p class="fs-6 mb-0">
+                Попитай ни за продуктите, персонални предложения или споделете
+                мнение.
+            </p>
+            <form asp-controller="Home" asp-action="MessageFromClient" method="post" class="d-flex justify-content-center">
+                <div style="width: 60%">
+                    <div>
+                        <input asp-for="FirstName" type="name"
+                               class="form-control"
+                               placeholder="Име*"
+                               name="FirstName" />
+                    </div>
+                    <span asp-validation-for="@Model.FirstName" class="text-danger" style="font-size: 12px"></span>
+                    <div class="px-0 my-3">
+                        <input asp-for="LastName" type="name"
+                               class="form-control"
+                               placeholder="Фамилия"
+                               name="LastName" />
+                    </div>
+                    <div>
+                        <input asp-for="EmailForResponse" type="email"
+                               class="form-control"
+                               placeholder="Емайл*"
+                               name="EmailForResponse" />
+                    </div>
+                    <span asp-validation-for="@Model.EmailForResponse" class="text-danger" style="; font-size: 12px"></span>
+                    <button type="submit"
+                            class="btn btn-primary mt-3"
+                            style="width: 100%">
+                        Изпрати
+                    </button>
+                    <div class="form-check" style="font-size: 14px">
+                        <label class="form-check-label">
+                            <input asp-for="PrivacyPolicyCheckBoxForMessage" type="checkbox"
+                                   class="form-check-input"
+                                   name="PrivacyPolicyCheckBoxForMessage"
+                                   data-val="true"
+                                   data-val-mustbetrue="Потвърдете съгласието с политиката за поверителност." />
+                            Съгласенсен съм с&nbsp;
+                            <a style="color: rgb(var(--app-btn-bg))"
+                               href="https://www.lilscare.com/terms-conditions
+                               target="_blank">
+                                условията
+                            </a>
+                        </label>
+                    </div>
+                    <span asp-validation-for="@Model.PrivacyPolicyCheckBoxForMessage" class="text-danger" style="font: var(--font_9); font-size: 12px"></span>
+                </div>
+                <div style="width: 40%; padding-left: 15px">
+                    <textarea asp-for="Message" class="form-control"
+                              rows="9"
+                              name="Message"
+                              placeholder="Напишете съобщение..."></textarea>
+                    <span asp-validation-for="@Model.Message" class="text-danger" style="font-size: 12px"></span>
+                    <label for="comment"
+                           style="font-size: 14px">
+                        Изпращаме имейл 1 до 2 пъти месечно.
+                    </label>
+                </div>
+            </form> 
+        </div>
+    </div>
+</section>
+<!-- Contact As End -->
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 -3 1920 197"
+     fill="rgb(var(--app-bg-secondary))"
+     transform="scale(1, 1)">
+    <path d="M0,200 v-5 A4000,4000 0 0 0 960,100  A4000,4000 0 0 1 1920,0 V200 h-1920 z" />
+</svg>
 
 @section Scripts {
     <script src="~/js/home.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="~/js/carousel-products.js"></script>
+
     <!-- Validation form fields on client -->
     <partial name="_ValidationScriptsPartial" />
 
@@ -258,15 +432,13 @@
         var scrollToElement = '@ViewData["scrollToElement"]';
         if (scrollToElement) {
             // Use JavaScript to scroll to the specified element
-            var element = document.getElementById(scrollToElement);
+            var element = document.getElementById("add-to-subscribers");
             if (element) {
                 element.scrollIntoView({ behavior: 'instant' });
             }
         }
     </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="~/js/carousel-products.js"></script>
+
 }
 
 
