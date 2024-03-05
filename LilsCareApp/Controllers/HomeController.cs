@@ -17,6 +17,7 @@ namespace LilsCareApp.Controllers
         public IActionResult Index()
         {
             ViewBag.UserId = User.GetUserId();
+            string user = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return View();
         }
 

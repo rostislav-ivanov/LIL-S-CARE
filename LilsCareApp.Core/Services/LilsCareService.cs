@@ -36,5 +36,33 @@ namespace LilsCareApp.Core.Services
 
             return products;
         }
+
+        public async Task<int> GetCountInBagAsync(string userId)
+        {
+            int count = await _context.BagsUsers
+                .Where(bu => bu.AppUserId == userId)
+                .AsNoTracking()
+                .SumAsync(bu => bu.Quantity);
+
+            return count;
+        }
+
+        public async Task<IEnumerable<ProductsInBagDTO>> GetProductsInBagAsync(string userId)
+        {
+            var productsInBag = await _context.BagsUsers
+                .Where(bu => bu.AppUserId == userId)
+                .Select(bu => new ProductsInBagDTO
+                {
+                    Id = bu.Product.Id,
+                    Name = bu.Product.Name,
+                    Price = bu.Product.Price,
+                    ImageUrl = bu.Product.Images.FirstOrDefault(im => im.ProductId == bu.Product.Id).ImagePath,
+                    Quantity = bu.Quantity
+                })
+                .AsNoTracking()
+                .ToArrayAsync();
+
+            return productsInBag;
+        }
     }
 }

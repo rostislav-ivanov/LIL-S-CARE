@@ -2,7 +2,7 @@
 
 namespace LilsCareApp.Controllers
 {
-    public class IngredientsController : Controller
+    public class IngredientsController : BaseController
     {
         public IActionResult Index()
         {
