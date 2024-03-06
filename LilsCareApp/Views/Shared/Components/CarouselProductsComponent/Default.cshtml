@@ -45,7 +45,8 @@
 
                                     @if (product.IsWish)
                                     {
-                                    <a asp-action="RemoveFromWish" asp-route-id="@product.Id"
+                                    <a asp-controller="Products" asp-action="RemoveFromWish" asp-route-id="@product.Id"
+                                       method="post"
                                        class="float-end nav-link fs-3"
                                        style="color: rgb(var(--app-btn-bg))">
                                         <i class="fa fa-heart"></i>
@@ -53,7 +54,8 @@
                                     }
                                     else
                                     {
-                                    <a asp-action="AddToWish" asp-route-id="@product.Id"
+                                    <a asp-controller="Products" asp-action="AddToWish" asp-route-id="@product.Id"
+                                       method="post"
                                        class="float-end nav-link fs-3"
                                        style="color: rgb(var(--app-btn-bg))">
                                         <i class="far fa-heart"></i>
