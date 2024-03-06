@@ -83,6 +83,30 @@ namespace LilsCareApp.Controllers
             return View("Index");
         }
 
+        public async Task AddToWish(int id, HomeViewModel model)
+        {
+            string userId = User.GetUserId();
+
+            await _service.AddToWishAsync(id, userId);
+
+            string referringUrl = Request.Headers["Referer"].ToString();
+
+            // Redirect to Index with a query parameter indicating the element to scroll to
+            ViewData["scrollToElement"] = "owl-carousel";
+        }
+
+        public async Task<IActionResult> RemoveFromWish(int id)
+        {
+            string userId = User.GetUserId();
+
+            await _service.RemoveFromWishAsync(id, userId);
+
+            string referringUrl = Request.Headers["Referer"].ToString();
+
+            // Redirect to Index with a query parameter indicating the element to scroll to
+            ViewData["scrollToElement"] = "owl-carousel";
+            return RedirectToAction("Index");
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
