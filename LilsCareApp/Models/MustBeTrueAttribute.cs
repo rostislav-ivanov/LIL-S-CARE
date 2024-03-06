@@ -1,12 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using static LilsCareApp.Models.ErrorMessageConstants;
 
 namespace LilsCareApp.Models
 {
     public class MustBeTrueAttribute : ValidationAttribute
     {
-        public override bool IsValid(object value)
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            return value is bool && (bool)value;
+            if (value is bool && (bool)value)
+                return ValidationResult.Success;
+            return new ValidationResult(ConfirmAgreementPrivacyPolicy);
         }
     }
 }
