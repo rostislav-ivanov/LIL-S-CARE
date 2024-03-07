@@ -5,6 +5,8 @@ namespace LilsCareApp.Core.Contracts
     public interface IProductsService
     {
         Task<IEnumerable<ProductDTO>> GetAllAsync(string userId);
+        Task<IEnumerable<ProductDTO>> GetByCategoryAsync(int id, string userId);
+        Task<IList<CategoryDTO>> GetCategoriesAsync();
         Task AddToWishAsync(int productId, string userId);
         Task RemoveFromWishAsync(int productId, string userId);
         Task<IEnumerable<ProductsInBagDTO>> GetProductsInBagAsync(string userId);
