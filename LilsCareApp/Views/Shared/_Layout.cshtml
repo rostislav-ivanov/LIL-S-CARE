@@ -20,11 +20,12 @@
     @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
-    <vc:shopping-bag-component></vc:shopping-bag-component>
+    
     <header>
         <vc:header-component></vc:header-component>
     </header>
     <main role="main">
+        <vc:shopping-bag-component></vc:shopping-bag-component>
         @RenderBody()
     </main>
     <footer class="border-top footer text-muted">
