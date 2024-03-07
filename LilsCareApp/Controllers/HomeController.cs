@@ -78,7 +78,7 @@ namespace LilsCareApp.Controllers
 
             await _service.MessageFromClientAsync(message);
 
-            TempData["scrollToElementId"] = "contact-us";
+            TempData["scrollToElementId"] = "contact-as";
 
             return RedirectToAction("Index");
         }
