@@ -171,6 +171,19 @@ footer p {
     margin-bottom: 0;
 }
 
+.back-to-top {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    display: flex;
+    width: 45px;
+    height: 45px;
+    align-items: center;
+    justify-content: center;
+    transition: 0.5s;
+    z-index: 99;
+}
+
 :root,
 :host {
     --app-bg-color: 255, 255, 255;
