@@ -6,11 +6,11 @@ namespace LilsCareApp.Components
 {
     public class HeaderComponent : ViewComponent
     {
-        private readonly ILilsCareService _service;
+        private readonly IProductsService _service;
         private readonly HttpContext _httpContext;
 
 
-        public HeaderComponent(ILilsCareService service, IHttpContextAccessor httpContextAccessor)
+        public HeaderComponent(IProductsService service, IHttpContextAccessor httpContextAccessor)
         {
             _service = service;
             _httpContext = httpContextAccessor.HttpContext;

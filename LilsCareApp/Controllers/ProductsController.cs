@@ -6,9 +6,9 @@ namespace LilsCareApp.Controllers
 {
     public class ProductsController : BaseController
     {
-        private readonly ILilsCareService _service;
+        private readonly IProductsService _service;
 
-        public ProductsController(ILilsCareService service)
+        public ProductsController(IProductsService service)
         {
             _service = service;
         }
