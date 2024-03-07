@@ -5,9 +5,9 @@ namespace LilsCareApp.Components
 {
     public class CarouselProductsComponent : ViewComponent
     {
-        private readonly ILilsCareService _service;
+        private readonly IProductsService _service;
 
-        public CarouselProductsComponent(ILilsCareService service)
+        public CarouselProductsComponent(IProductsService service)
         {
             _service = service;
         }

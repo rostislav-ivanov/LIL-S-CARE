@@ -20,6 +20,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 options.UseSqlServer(connectionString));
 
             services.AddScoped<ILilsCareService, LilsCareService>();
+            services.AddScoped<IProductsService, ProductsService>();
             services.AddHttpContextAccessor();
 
             services.AddDatabaseDeveloperPageExceptionFilter();

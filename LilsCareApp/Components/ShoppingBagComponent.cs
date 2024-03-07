@@ -6,11 +6,11 @@ namespace LilsCareApp.Components
 {
     public class ShoppingBagComponent : ViewComponent
     {
-        private readonly ILilsCareService _service;
+        private readonly IProductsService _service;
         private readonly HttpContext _httpContext;
 
 
-        public ShoppingBagComponent(ILilsCareService service, IHttpContextAccessor httpContextAccessor)
+        public ShoppingBagComponent(IProductsService service, IHttpContextAccessor httpContextAccessor)
         {
             _service = service;
             _httpContext = httpContextAccessor.HttpContext;
