@@ -30,11 +30,15 @@
                             <div class="clearfix mt-2">
                                 @if (product.Quantity > 0)
                                 {
-                                    <a asp-controller="Products" asp-action="SetProductToBag"
-                                       class="btn"
-                                       style="float: left"
+                                    <a 
                                        data-bs-toggle="offcanvas"
-                                       data-bs-target="#shopping-bag"><i class="fa fa-shopping-bag me-2"></i> Добави</a>
+                                       data-bs-target="#shopping-bag">
+                                        <a asp-controller="Products" asp-action="AddToCart" asp-route-id="@product.Id"
+                                           class="btn"
+                                           style="float: left">
+                                            <i class="fa fa-shopping-bag me-2"></i> Добави
+                                       </a>
+                                   </a>
                                 }
                                 else
                                 {
