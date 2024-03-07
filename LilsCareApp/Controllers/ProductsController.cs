@@ -1,4 +1,5 @@
 ﻿using LilsCareApp.Core.Contracts;
+using LilsCareApp.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -13,9 +14,21 @@ namespace LilsCareApp.Controllers
             _service = service;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int id = 0)
         {
-            return View();
+            string userId = User.GetUserId();
+            ProductsDTO products = new ProductsDTO
+            {
+                Products = id == 0
+                    ? await _service.GetAllAsync(userId)
+                    : await _service.GetByCategoryAsync(id, userId),
+                Categories = await _service.GetCategoriesAsync(),
+            };
+            products.Categories.Add(new CategoryDTO { Id = 0, Name = "Всички" });
+
+            ViewBag.CheckedId = id;
+
+            return View(products);
         }
 
         public IActionResult Details(int id)
@@ -52,7 +65,9 @@ namespace LilsCareApp.Controllers
 
             await _service.AddToCartAsync(id, userId);
 
-            return View("Index");
+            TempData["ShowBag"] = "show";
+
+            return RedirectToAction(nameof(Index), "Products");
         }
 
         public async Task<IActionResult> RemoveFromCart(int id)
