@@ -31,7 +31,7 @@ namespace LilsCareApp.Controllers
 
             TempData["scrollToElementId"] = "owl-carousel";
 
-            return RedirectToAction("Index", "Home");
+            return View("Index");
         }
 
         public async Task<IActionResult> RemoveFromWish(int id)
@@ -42,7 +42,26 @@ namespace LilsCareApp.Controllers
 
             TempData["scrollToElementId"] = "owl-carousel";
 
-            return RedirectToAction("Index", "Home");
+            return View("Index");
+        }
+
+        public async Task<IActionResult> AddToCart(int id)
+        {
+
+            string userId = User.GetUserId();
+
+            await _service.AddToCartAsync(id, userId);
+
+            return View("Index");
+        }
+
+        public async Task<IActionResult> RemoveFromCart(int id)
+        {
+            string userId = User.GetUserId();
+
+            await _service.RemoveFromCartAsync(id, userId);
+
+            return View("Index");
         }
 
     }

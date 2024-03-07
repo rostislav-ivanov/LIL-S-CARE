@@ -76,34 +76,6 @@ namespace LilsCareApp.Core.Services
             return products;
         }
 
-        public async Task<int> GetCountInBagAsync(string userId)
-        {
-            int count = await _context.BagsUsers
-                .Where(bu => bu.AppUserId == userId)
-                .AsNoTracking()
-                .SumAsync(bu => bu.Quantity);
-
-            return count;
-        }
-
-        public async Task<IEnumerable<ProductsInBagDTO>> GetProductsInBagAsync(string userId)
-        {
-            var productsInBag = await _context.BagsUsers
-                .Where(bu => bu.AppUserId == userId)
-                .Select(bu => new ProductsInBagDTO
-                {
-                    Id = bu.Product.Id,
-                    Name = bu.Product.Name,
-                    Price = bu.Product.Price,
-                    ImageUrl = bu.Product.Images.FirstOrDefault(im => im.ProductId == bu.Product.Id).ImagePath,
-                    Quantity = bu.Quantity
-                })
-                .AsNoTracking()
-                .ToArrayAsync();
-
-            return productsInBag;
-        }
-
         public async Task MessageFromClientAsync(MessageFromClientDTO message)
         {
             var x = new MessageFromClient
@@ -129,5 +101,67 @@ namespace LilsCareApp.Core.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<ProductsInBagDTO>> GetProductsInBagAsync(string userId)
+        {
+            var productsInBag = await _context.BagsUsers
+                .Where(bu => bu.AppUserId == userId)
+                .Select(bu => new ProductsInBagDTO
+                {
+                    Id = bu.Product.Id,
+                    Name = bu.Product.Name,
+                    Price = bu.Product.Price,
+                    ImageUrl = bu.Product.Images.FirstOrDefault(im => im.ProductId == bu.Product.Id).ImagePath,
+                    Quantity = bu.Quantity
+                })
+                .AsNoTracking()
+                .ToArrayAsync();
+
+            return productsInBag;
+        }
+
+        public async Task AddToCartAsync(int productId, string userId)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            if (product is null || userId is null || product.Quantity < 1)
+            {
+                return;
+            }
+
+            var bagUser = await _context.BagsUsers
+                .FirstOrDefaultAsync(bu => bu.ProductId == productId && bu.AppUserId == userId);
+            if (bagUser == null)
+            {
+                await _context.BagsUsers.AddAsync(new BagUser
+                {
+                    ProductId = productId,
+                    AppUserId = userId,
+                    Quantity = 1
+                });
+            }
+            else
+            {
+                bagUser.Quantity += 1;
+            }
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task RemoveFromCartAsync(int productId, string userId)
+        {
+            var bagUser = _context.BagsUsers.FirstOrDefault(bu => bu.ProductId == productId && bu.AppUserId == userId);
+            if (bagUser != null)
+            {
+                _context.BagsUsers.Remove(bagUser);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<int> GetCountInBagAsync(string userId)
+        {
+            int count = await _context.BagsUsers
+                .Where(bu => bu.AppUserId == userId)
+                .AsNoTracking()
+                .SumAsync(bu => bu.Quantity);
+            return count;
+        }
     }
 }
