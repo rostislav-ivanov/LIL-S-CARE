@@ -2,5 +2,300 @@
 @{
     ViewData["Title"] = "Products";
 }
+@section Styles {
+    <link rel="stylesheet" href="~/css/products.css" />
+}
 
-<h1>@ViewData["Title"]</h1>
+<div class="container-fluid product py-5">
+    <h1 class="mb-4 text-center">ПРОДУКТИ</h1>
+    <div class="row">
+        <!-- Filter Categories Start-->
+        <div class="col-lg-2 fs-5">
+            <hr class="my-2" />
+            <a class="nav-link toggle-sign"
+               data-bs-toggle="collapse"
+               href="#collapse-categories">
+                <div class="d-flex justify-content-between">
+                    <h5>Филтър</h5>
+                    <span>+</span>
+                </div>
+            </a>
+            <div id="collapse-categories" class="collapse">
+                <form action="" class="form-check">
+                    <div class="nav-link mb-2">
+                        <input type="checkbox"
+                               class="form-check-input me-2"
+                               id="Categories-1"
+                               name="Categories-1"
+                               value="" />
+                        <label for="Categories-1"> за тяло</label>
+                    </div>
+                    <div class="nav-link mb-2">
+                        <input type="checkbox"
+                               class="form-check-input me-2"
+                               id="Categories-2"
+                               name="Categories-2"
+                               value="" />
+                        <label for="Categories-2">за суха кожа</label>
+                    </div>
+                    <div class="nav-link mb-2">
+                        <input type="checkbox"
+                               class="form-check-input me-2 fs-7"
+                               id="Categories-3"
+                               name="Categories-3"
+                               value="" />
+                        <label for="Categories-3">за мазна кожа</label>
+                    </div>
+                    <div class="nav-link mb-2">
+                        <input type="checkbox"
+                               class="form-check-input me-2"
+                               id="Categories-4"
+                               name="Categories-4"
+                               value="" />
+                        <label for="Categories-4">за лице</label>
+                    </div>
+                </form>
+            </div>
+            <hr class="my-2" />
+        </div>
+        <!--Filter Categories End-->
+        <!-- Products Start-->
+        <div class="col-lg">
+            <div class="row g-5 justify-content-center">
+                <div class="col-md-6 col-lg-4 col-xl-4">
+                    <a href="./details.html"
+                       style="text-decoration: none; color: inherit">
+                        <div class="rounded-4 position-relative product-item border">
+                            <div class="product-img">
+                                <img src="./files/products/products-image-01.jpg"
+                                     class="img-fluid w-100"
+                                     alt="" />
+                            </div>
+                            <div class="px-3 py-2">
+                                <h6>СКРАБ ЗА ТЯЛО</h6>
+                                <p class="fs-5 fw-bold mb-0">9,00 лв.</p>
+                                <div class="clearfix mt-2">
+                                    <a href="#" class="float-start btn unactive-button">
+                                        Изчерпано
+                                    </a>
+                                    <a id="heart-icon"
+                                       href="#"
+                                       class="float-end nav-link fs-3"
+                                       style="color: rgb(var(--app-btn-bg))">
+                                        <i class="far fa-heart" style="display: block"></i>
+                                        <i class="fa fa-heart" style="display: none"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4 col-xl-4">
+                    <a href="./details.html"
+                       style="text-decoration: none; color: inherit">
+                        <div class="rounded-4 position-relative product-item border">
+                            <div class="product-img">
+                                <img src="./files/products/products-image-02.jpg"
+                                     class="img-fluid w-100"
+                                     alt="" />
+                            </div>
+                            <div class="px-3 py-2">
+                                <h6>БАЛСАМ ЗА УСТНИ С ЖОЖОБА, КАКАО И ПЧЕЛЕН ВОСЪК</h6>
+                                <p class="fs-5 fw-bold mb-0">9,00 лв.</p>
+                                <div class="clearfix mt-2">
+                                    <a href="#"
+                                       class="btn"
+                                       style="float: left"
+                                       data-bs-toggle="offcanvas"
+                                       data-bs-target="#shopping-bag"><i class="fa fa-shopping-bag me-2"></i> Добави</a>
+                                    <a id="heart-icon"
+                                       href="#"
+                                       class="float-end nav-link fs-3"
+                                       style="color: rgb(var(--app-btn-bg))">
+                                        <i class="far fa-heart" style="display: block"></i>
+                                        <i class="fa fa-heart" style="display: none"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4 col-xl-4">
+                    <a href="./details.html"
+                       style="text-decoration: none; color: inherit">
+                        <div class="rounded-4 position-relative product-item border">
+                            <div class="product-img">
+                                <img src="./files/products/products-image-03.jpg"
+                                     class="img-fluid w-100"
+                                     alt="" />
+                            </div>
+                            <div class="px-3 py-2">
+                                <h6>ХИДРАТИРАЩ КРЕМ С ШИПКА</h6>
+                                <p class="fs-5 fw-bold mb-0">9,00 лв.</p>
+                                <div class="clearfix mt-2">
+                                    <a href="#"
+                                       class="btn"
+                                       style="float: left"
+                                       data-bs-toggle="offcanvas"
+                                       data-bs-target="#shopping-bag"><i class="fa fa-shopping-bag me-2"></i> Добави</a>
+                                    <a id="heart-icon"
+                                       href="#"
+                                       class="float-end nav-link fs-3"
+                                       style="color: rgb(var(--app-btn-bg))">
+                                        <i class="far fa-heart" style="display: block"></i>
+                                        <i class="fa fa-heart" style="display: none"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4 col-xl-4">
+                    <a href="./details.html"
+                       style="text-decoration: none; color: inherit">
+                        <div class="rounded-4 position-relative product-item border">
+                            <div class="product-img">
+                                <img src="./files/products/products-image-04.jpg"
+                                     class="img-fluid w-100"
+                                     alt="" />
+                            </div>
+                            <div class="px-3 py-2">
+                                <h6>НЕЖЕН ЛОСИОН С НЕВЕН</h6>
+                                <p class="fs-5 fw-bold mb-0">8,00 лв.</p>
+                                <div class="clearfix mt-2">
+                                    <a href="#"
+                                       class="btn"
+                                       style="float: left"
+                                       data-bs-toggle="offcanvas"
+                                       data-bs-target="#shopping-bag"><i class="fa fa-shopping-bag me-2"></i> Добави</a>
+                                    <a id="heart-icon"
+                                       href="#"
+                                       class="float-end nav-link fs-3"
+                                       style="color: rgb(var(--app-btn-bg))">
+                                        <i class="far fa-heart" style="display: block"></i>
+                                        <i class="fa fa-heart" style="display: none"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4 col-xl-4">
+                    <a href="./details.html"
+                       style="text-decoration: none; color: inherit">
+                        <div class="rounded-4 position-relative product-item border">
+                            <div class="product-img">
+                                <img src="./files/products/products-image-05.jpg"
+                                     class="img-fluid w-100"
+                                     alt="" />
+                            </div>
+                            <div class="px-3 py-2">
+                                <h6>ДВУФАЗНА МИЦЕЛАРНА ВОДА</h6>
+                                <p class="fs-5 fw-bold mb-0">10,00 лв.</p>
+                                <div class="clearfix mt-2">
+                                    <a href="#"
+                                       class="btn"
+                                       style="float: left"
+                                       data-bs-toggle="offcanvas"
+                                       data-bs-target="#shopping-bag"><i class="fa fa-shopping-bag me-2"></i> Добави</a>
+                                    <a id="heart-icon"
+                                       href="#"
+                                       class="float-end nav-link fs-3"
+                                       style="color: rgb(var(--app-btn-bg))">
+                                        <i class="far fa-heart" style="display: block"></i>
+                                        <i class="fa fa-heart" style="display: none"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-4">
+                    <a href="./details.html"
+                       style="text-decoration: none; color: inherit">
+                        <div class="rounded-4 position-relative product-item border">
+                            <div class="product-img">
+                                <img src="./files/products/products-image-05.jpg"
+                                     class="img-fluid w-100"
+                                     alt="" />
+                            </div>
+                            <div class="px-3 py-2">
+                                <h6>НАТУРАЛЕН КРЕМ ДЕЗОДОРАНТ</h6>
+                                <p class="fs-5 fw-bold mb-0">8,50 лв.</p>
+                                <div class="clearfix mt-2">
+                                    <a href="#"
+                                       class="btn"
+                                       style="float: left"
+                                       data-bs-toggle="offcanvas"
+                                       data-bs-target="#shopping-bag"><i class="fa fa-shopping-bag me-2"></i> Добави</a>
+                                    <a id="heart-icon"
+                                       href="#"
+                                       class="float-end nav-link fs-3"
+                                       style="color: rgb(var(--app-btn-bg))">
+                                        <i class="far fa-heart" style="display: block"></i>
+                                        <i class="fa fa-heart" style="display: none"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4 col-xl-4">
+                    <a href="./details.html"
+                       style="text-decoration: none; color: inherit">
+                        <div class="rounded-4 position-relative product-item border">
+                            <div class="product-img">
+                                <img src="./files/products/products-image-07.jpg"
+                                     class="img-fluid w-100"
+                                     alt="" />
+                            </div>
+                            <div class="px-3 py-2">
+                                <h6>СЕРУМ МАСЛО С ШИПКА И ЖОЖОБА</h6>
+                                <p class="fs-5 fw-bold mb-0">9,00 лв.</p>
+                                <div class="clearfix mt-2">
+                                    <a href="#"
+                                       class="btn"
+                                       style="float: left"
+                                       data-bs-toggle="offcanvas"
+                                       data-bs-target="#shopping-bag"><i class="fa fa-shopping-bag me-2"></i> Добави</a>
+                                    <a id="heart-icon"
+                                       href="#"
+                                       class="float-end nav-link fs-3"
+                                       style="color: rgb(var(--app-btn-bg))">
+                                        <i class="far fa-heart" style="display: block"></i>
+                                        <i class="fa fa-heart" style="display: none"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Pagination Start-->
+                <div class="col-12">
+                    <div class="pagination d-flex justify-content-center mt-5">
+                        <a href="#" class="btn btn-inverce m-1">&laquo;</a>
+                        <a href="#" class="btn active m-1">1</a>
+                        <a href="#" class="btn btn-inverce m-1">2</a>
+                        <a href="#" class="btn btn-inverce m-1">3</a>
+                        <a href="#" class="btn btn-inverce m-1">4</a>
+                        <a href="#" class="btn btn-inverce m-1">5</a>
+                        <a href="#" class="btn btn-inverce m-1">6</a>
+                        <a href="#" class="btn btn-inverce m-1">&raquo;</a>
+                    </div>
+                </div>
+                <!-- Pagination End-->
+            </div>
+        </div>
+        <!-- Products End-->
+    </div>
+</div>
+
+<!-- Back to Top -->
+<a href="#" class="btn rounded-circle back-to-top">
+    <i class="fa fa-arrow-up"></i>
+</a>
+
+@section Scripts {
+    <script src="~/js/products.js"></script>
+}
