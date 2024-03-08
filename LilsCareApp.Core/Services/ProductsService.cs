@@ -123,7 +123,7 @@ namespace LilsCareApp.Core.Services
             return productsInBag;
         }
 
-        public async Task AddToCartAsync(int productId, string userId)
+        public async Task AddToCartAsync(int productId, string userId, int quantity)
         {
             var product = await _context.Products.FindAsync(productId);
             if (product is null || userId is null)
@@ -135,39 +135,47 @@ namespace LilsCareApp.Core.Services
                 .FirstOrDefaultAsync(bu => bu.ProductId == productId && bu.AppUserId == userId);
             if (bagUser == null)
             {
-                await _context.BagsUsers.AddAsync(new BagUser
+                bagUser = new BagUser
                 {
                     ProductId = productId,
                     AppUserId = userId,
-                    Quantity = 1
-                });
+                    Quantity = quantity
+                };
+                await _context.BagsUsers.AddAsync(bagUser);
             }
             else
             {
-                bagUser.Quantity += 1;
-            }
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task RemoveFromCartAsync(int productId, string userId)
-        {
-            var bagUser = _context.BagsUsers.FirstOrDefault(bu => bu.ProductId == productId && bu.AppUserId == userId);
-            if (bagUser is null)
-            {
-                return;
+                bagUser.Quantity += quantity;
             }
 
-            if (bagUser.Quantity > 1)
-            {
-                bagUser.Quantity -= 1;
-            }
-            else
+
+            if (bagUser.Quantity <= 0)
             {
                 _context.BagsUsers.Remove(bagUser);
             }
 
             await _context.SaveChangesAsync();
         }
+
+        //public async Task RemoveFromCartAsync(int productId, string userId)
+        //{
+        //    var bagUser = _context.BagsUsers.FirstOrDefault(bu => bu.ProductId == productId && bu.AppUserId == userId);
+        //    if (bagUser is null)
+        //    {
+        //        return;
+        //    }
+
+        //    if (bagUser.Quantity > 1)
+        //    {
+        //        bagUser.Quantity -= 1;
+        //    }
+        //    else
+        //    {
+        //        _context.BagsUsers.Remove(bagUser);
+        //    }
+
+        //    await _context.SaveChangesAsync();
+        //}
 
         public async Task DeleteProductFromCartAsync(int productId, string userId)
         {

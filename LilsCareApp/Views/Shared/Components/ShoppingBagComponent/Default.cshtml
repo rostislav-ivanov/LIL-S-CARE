@@ -25,21 +25,25 @@
                     <div class="w-50 fs-6 p-3">
                         <p>@product.Name</p>
                         <p>Цена: @product.Price лв.</p>
-                        <p>Количество: @product.Quantity бр.</p>
-                        
-                         <div class="my-2">
-                            <a asp-controller="Products" asp-action="RemoveFromCart" asp-route-id="@product.Id"
-                                class="btn btn-inverce my-2" style="border: none">
-                                <i class="fa fa-minus me-2"></i>
-                            </a>
-                            @product.Quantity
-                        <a asp-controller="Products" asp-action="AddToCart" asp-route-id="@product.Id"
-                           class="btn btn-inverce my-2" style="border: none">
-                            <i class="fa fa-plus me-2"></i>
-                        </a>
-                        
-
-                        </div>
+                    <div class="d-flex justify-content-start align-items-center my-2">
+                        <form asp-controller="Products" asp-action="AddToCart" asp-route-productId="@product.Id"
+                              method="post">
+                            <input type="hidden" name="quantity" value="-1" />
+                            <button type="submit"
+                                    class="btn btn-inverce my-2" style="border: none">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </form>
+                        <span class="mx-2"> @product.Quantity</span>
+                        <form asp-controller="Products" asp-action="AddToCart" asp-route-productId="@product.Id"
+                              method="post">
+                            <input type="hidden" name="quantity" value="1" />
+                            <button type="submit"
+                                    class="btn btn-inverce my-2" style="border: none">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </form>
+                    </div>
                     <a asp-controller="Products" asp-action="DeleteProductFromCart" asp-route-id="@product.Id" class="btn my-2">
                         <i class="fa fa-trash-can me-2"></i> Изтрий</a>
                 </div>
