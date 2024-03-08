@@ -126,7 +126,7 @@ namespace LilsCareApp.Core.Services
         public async Task AddToCartAsync(int productId, string userId)
         {
             var product = await _context.Products.FindAsync(productId);
-            if (product is null || userId is null || product.Quantity < 1)
+            if (product is null || userId is null)
             {
                 return;
             }
@@ -152,11 +152,33 @@ namespace LilsCareApp.Core.Services
         public async Task RemoveFromCartAsync(int productId, string userId)
         {
             var bagUser = _context.BagsUsers.FirstOrDefault(bu => bu.ProductId == productId && bu.AppUserId == userId);
-            if (bagUser != null)
+            if (bagUser is null)
+            {
+                return;
+            }
+
+            if (bagUser.Quantity > 1)
+            {
+                bagUser.Quantity -= 1;
+            }
+            else
             {
                 _context.BagsUsers.Remove(bagUser);
-                await _context.SaveChangesAsync();
             }
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteProductFromCartAsync(int productId, string userId)
+        {
+            var bagUser = _context.BagsUsers.FirstOrDefault(bu => bu.ProductId == productId && bu.AppUserId == userId);
+            if (bagUser is null)
+            {
+                return;
+            }
+
+            _context.BagsUsers.Remove(bagUser);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<int> GetCountInBagAsync(string userId)
@@ -167,5 +189,6 @@ namespace LilsCareApp.Core.Services
                 .SumAsync(bu => bu.Quantity);
             return count;
         }
+
     }
 }
