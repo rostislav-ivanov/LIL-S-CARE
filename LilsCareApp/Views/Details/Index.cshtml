@@ -1,65 +1,68 @@
-﻿@{
+﻿@model DetailsDTO
+@{
     ViewData["Title"] = "Details";
 }
 @section Styles {
     <link rel="stylesheet" href="~/css/details.css" />
+    <link rel="stylesheet" href="~/css/carousel-products.css" />
 }
 
 <!-- Single Product Start -->
-<div class="d-flex justify-content-end">
+<div class="d-flex justify-content-end mt-4">
     <div class="col-5">
         <!-- Carousel Details Start-->
         <div id="carousel-details" class="carousel slide carousel-fade">
             <!-- The slideshow/carousel -->
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="https://static.wixstatic.com/media/a6694c_24a7b0d7f63d42048f5a05e97362f385~mv2.jpg"
-                         width="440"
-                         height="500"
-                         style="width: 100%; object-fit: cover"
-                         alt="" />
-                </div>
-                <div class="carousel-item">
-                    <img src="https://static.wixstatic.com/media/a6694c_75d8524a8fb046db82d0090671364c15~mv2.jpg"
-                         width="440"
-                         height="500"
-                         style="width: 100%; object-fit: cover"
-                         alt="" />
-                </div>
-                <div class="carousel-item">
-                    <img src="https://static.wixstatic.com/media/a6694c_40945dc6b1754f74ab2b9331a5d4c692~mv2.jpg"
-                         width="440"
-                         height="500"
-                         style="width: 100%; object-fit: cover"
-                         alt="" />
-                </div>
-                <div class="carousel-item">
-                    <video controls
-                           width="440"
-                           height="500"
-                           style="width: 100%; object-fit: cover">
-                        <source src="https://video.wixstatic.com/video/a6694c_b61f40bc476a43578be260fce9fa6efa/1080p/mp4/file.mp4"
-                                type="video/mp4" />
-                    </video>
-                </div>
+                @foreach (var image in Model.Images)
+                {
+                    if (image.IsVideo)
+                    {
+                        <div class="carousel-item @(image == Model.Images[0] ? "active" : "")">
+                            <video controls
+                                   width="440"
+                                   height="500"
+                                   style="width: 100%; object-fit: cover">
+                                    <source src="@image.ImagePath" type="video/mp4" />
+                            </video>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="carousel-item @(image == Model.Images[0] ? "active" : "")">
+                            <img src="@image.ImagePath"
+                                 width="440"
+                                 height="500"
+                                 style="width: 100%; object-fit: cover"
+                                 alt="" />
+                        </div>
+                    }
+                }
             </div>
 
             <!-- Custom indicators -->
             <div class="carousel-indicators d-flex justify-content-center mt-2">
-                <img src="https://static.wixstatic.com/media/a6694c_24a7b0d7f63d42048f5a05e97362f385~mv2.jpg"
-                     data-bs-target="#carousel-details"
-                     data-bs-slide-to="0"
-                     class="active" />
-                <img src="https://static.wixstatic.com/media/a6694c_75d8524a8fb046db82d0090671364c15~mv2.jpg"
-                     data-bs-target="#carousel-details"
-                     data-bs-slide-to="1" />
-                <img src="https://static.wixstatic.com/media/a6694c_40945dc6b1754f74ab2b9331a5d4c692~mv2.jpg"
-                     data-bs-target="#carousel-details"
-                     data-bs-slide-to="2" />
-                <video data-bs-target="#carousel-details" data-bs-slide-to="3">
-                    <source src="https://video.wixstatic.com/video/a6694c_b61f40bc476a43578be260fce9fa6efa/1080p/mp4/file.mp4"
-                            type="video/mp4" />
-                </video>
+                @foreach (var image in Model.Images)
+                {
+                    if (image.IsVideo)
+                    {
+                        <video 
+                            data-bs-target="#carousel-details" 
+                            data-bs-slide-to="@(Model.Images.IndexOf(image))">
+                            <source src="@image.ImagePath"
+                                    type="video/mp4"
+                                    class="@(image == Model.Images[0] ? "active" : "")" />
+                        </video>
+                    }
+                    else
+                    {
+                        <img src="@image.ImagePath"
+                             data-bs-target="#carousel-details"
+                             data-bs-slide-to="@(Model.Images.IndexOf(image))"
+                             class="@(image == Model.Images[0] ? "active" : "")" />
+                    }
+                }
+
             </div>
 
             <!-- Left and right controls/icons -->
@@ -81,57 +84,83 @@
         <!-- Carousel Details End-->
     </div>
     <div class="col-6 px-5">
-        <h1 class="h3 mb-5">СКРАБ ЗА ТЯЛО</h1>
+        <h1 class="h3 mb-5">@Model.Name</h1>
         <div class="container px-0 py-4">
-            <p class="fs-5">Цена: 15,00 лв</p>
+            <p class="fs-5">Цена: @Model.Price лв</p>
         </div>
         <div class="container px-0 py-4">
             <div class="row align-items-center">
                 <div class="col-auto">
-                    <span class="fs-5">Тегло :</span>
+                    <p class="fs-5">Тегло: @Model.Weight</p>
                 </div>
-                <div class="col p-0">
-                    <select class="form-select w-auto fs-5">
-                        <option class="fs-5">150 г</option>
-                        <option class="fs-5">500 г</option>
-                    </select>
-                </div>
+
             </div>
         </div>
-        <div class="container px-0 py-4">
-            <div class="row align-items-center">
-                <div class="col-auto">
-                    <span class="fs-5">Количество :</span>
-                </div>
-                <div class="col p-0">
-                    <div class="quantity-input">
-                        <input type="number" class="form-control fs-5 w-auto"
-                               value="1" min="1" max="999" display: flex; align-items:
-                               center; />
+
+
+        <form asp-controller="Details" asp-action="AddToCart" asp-route-id="@Model.Id" method="post">
+            <input type="hidden" asp-for="@Model.Id" />
+            <div class="container px-0 py-4">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <span class="fs-5">Количество :</span>
+                    </div>
+                    <div class="col p-0">
+                        <div class="quantity-input">
+                            <input asp-for="@Model.Quantity" type="number" class="form-control fs-5 w-auto"
+                                   value="1" min="1" max="999" display: flex; align-items:
+                                   center; />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="container px-0 py-4">
-            <div class="row align-items-center">
-                <div class="col-auto">
+
+            <div class="container px-0 py-4">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <button type="submit" class="btn">
+                             <i class="fa fa-shopping-bag me-2"></i> Добави
+                        </button>
+                    </div>
+                    <div class="col p-0 mx-5" style="color: rgb(var(--app-btn-bg))">
+                        @if (Model.IsWish)
+                        {
+                            <a asp-controller="Products" asp-action="RemoveFromWish" asp-route-id="@Model.Id"
+                               method="post"
+                               class="nav-link fs-3"
+                               style="color: rgb(var(--app-btn-bg))">
+                                <i class="fa fa-heart"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Products" asp-action="AddToWish" asp-route-id="@Model.Id"
+                               method="post"
+                               class="nav-link fs-3"
+                               style="color: rgb(var(--app-btn-bg))">
+                                <i class="far fa-heart"></i>
+                            </a>
+                        }
+                    </div>
+                    @*                 <div class="col-auto">
                     <a href="#"
-                       class="btn btn-lg"
-                       style="float: left"
-                       data-bs-toggle="offcanvas"
-                       data-bs-target="#shopping-bag"><i class="fa fa-shopping-bag me-2"></i> Добави</a>
-                </div>
-                <div class="col p-0 mx-5" style="color: rgb(var(--app-btn-bg))">
+                    class="btn btn-lg"
+                    style="float: left"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#shopping-bag"><i class="fa fa-shopping-bag me-2"></i> Добави</a>
+                    </div>
+                    <div class="col p-0 mx-5" style="color: rgb(var(--app-btn-bg))">
                     <a id="heart-icon"
-                       href="#"
-                       class="nav-link fs-3"
-                       style="color: rgb(var(--app-btn-bg))">
-                        <i class="far fa-heart" style="display: block"></i>
-                        <i class="fa fa-heart" style="display: none"></i>
+                    href="#"
+                    class="nav-link fs-3"
+                    style="color: rgb(var(--app-btn-bg))">
+                    <i class="far fa-heart" style="display: block"></i>
+                    <i class="fa fa-heart" style="display: none"></i>
                     </a>
+                    </div> *@
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 <!-- Single Product End -->
@@ -376,7 +405,7 @@
 <!-- Similar Products Start -->
 <div id="carousel-products"></div>
 <!-- Similar Products End -->
-
 @section Scripts {
     <script src="~/js/details.js"></script>
+    <script src="~/js/carousel-products.js"></script>
 }
