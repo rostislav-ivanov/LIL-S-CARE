@@ -31,11 +31,6 @@ namespace LilsCareApp.Controllers
             return View(products);
         }
 
-        public IActionResult Details(int id)
-        {
-            return View(id);
-        }
-
         public async Task<IActionResult> AddToWish(int id)
         {
             string userId = User.GetUserId();
