@@ -48,7 +48,7 @@
                 {
                     <!-- Products Start-->
                     <div class="col-md-6 col-lg-4 col-xl-4">
-                        <a class="nav-link" asp-controller="Details" asp-action="Index" asp-route-id="@product.Id
+                        <a class="nav-link" asp-controller="Details" asp-action="Index" asp-route-id="@product.Id"
                         style="text-decoration: none; color: inherit">
                             <div class="rounded-4 position-relative product-item border">
                                 <div class="product-img">
@@ -62,14 +62,16 @@
                                     <div class="clearfix mt-2">
                                         @if (product.Quantity > 0)
                                         {
-                                            <a data-bs-toggle="offcanvas"
-                                               data-bs-target="#shopping-bag">
-                                                <a asp-controller="Products" asp-action="AddToCart" asp-route-id="@product.Id"
-                                                   class="btn"
+                                            <form asp-controller="Products" asp-action="AddToCart" asp-route-productId="@product.Id"
+                                                  method="post">
+                                                <input type="hidden" name="quantity" value="1" />
+                                                <button 
+                                                   type="submit"
+                                                    class="btn"
                                                    style="float: left">
                                                     <i class="fa fa-shopping-bag me-2"></i> Добави
-                                                </a>
-                                            </a>
+                                                </button>
+                                            </form>
                                         }
                                         else
                                         {
@@ -80,7 +82,7 @@
 
                                         @if (product.IsWish)
                                         {
-                                            <a asp-controller="Products" asp-action="RemoveFromWish" asp-route-id="@product.Id"
+                                            <a asp-controller="Products" asp-action="RemoveFromWish" asp-route-productId="@product.Id"
                                                method="post"
                                                class="float-end nav-link fs-3"
                                                style="color: rgb(var(--app-btn-bg))">
@@ -89,7 +91,7 @@
                                         }
                                         else
                                         {
-                                            <a asp-controller="Products" asp-action="AddToWish" asp-route-id="@product.Id"
+                                            <a asp-controller="Products" asp-action="AddToWish" asp-route-productId="@product.Id"
                                                method="post"
                                                class="float-end nav-link fs-3"
                                                style="color: rgb(var(--app-btn-bg))">

@@ -30,15 +30,15 @@
                             <div class="clearfix mt-2">
                                 @if (product.Quantity > 0)
                                 {
-                                    <a 
-                                       data-bs-toggle="offcanvas"
-                                       data-bs-target="#shopping-bag">
-                                        <a asp-controller="Products" asp-action="AddToCart" asp-route-id="@product.Id"
-                                           class="btn"
-                                           style="float: left">
+                                    <form asp-controller="Products" asp-action="AddToCart" asp-route-productId="@product.Id"
+                                          method="post">
+                                        <input type="hidden" name="quantity" value="1" />
+                                        <button type="submit"
+                                                class="btn"
+                                                style="float: left">
                                             <i class="fa fa-shopping-bag me-2"></i> Добави
-                                       </a>
-                                   </a>
+                                        </button>
+                                    </form>
                                 }
                                 else
                                 {
@@ -47,24 +47,24 @@
                                     </a>
                                 }
 
-                                    @if (product.IsWish)
-                                    {
-                                    <a asp-controller="Products" asp-action="RemoveFromWish" asp-route-id="@product.Id"
+                                @if (product.IsWish)
+                                {
+                                    <a asp-controller="Products" asp-action="RemoveFromWish" asp-route-productId="@product.Id"
                                        method="post"
                                        class="float-end nav-link fs-3"
                                        style="color: rgb(var(--app-btn-bg))">
                                         <i class="fa fa-heart"></i>
                                     </a>
-                                    }
-                                    else
-                                    {
-                                    <a asp-controller="Products" asp-action="AddToWish" asp-route-id="@product.Id"
+                                }
+                                else
+                                {
+                                    <a asp-controller="Products" asp-action="AddToWish" asp-route-productId="@product.Id"
                                        method="post"
                                        class="float-end nav-link fs-3"
                                        style="color: rgb(var(--app-btn-bg))">
                                         <i class="far fa-heart"></i>
                                     </a>
-                                    }
+                                }
                             </div>
                         </div>
                     </a>

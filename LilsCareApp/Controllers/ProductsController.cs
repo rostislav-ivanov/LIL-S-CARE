@@ -1,5 +1,6 @@
 ﻿using LilsCareApp.Core.Contracts;
 using LilsCareApp.Core.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -31,50 +32,53 @@ namespace LilsCareApp.Controllers
             return View(products);
         }
 
-        public async Task<IActionResult> AddToWish(int id)
+        public async Task<IActionResult> AddToWish(int productId)
         {
             string userId = User.GetUserId();
 
-            await _service.AddToWishAsync(id, userId);
+            await _service.AddToWishAsync(productId, userId);
 
             TempData["scrollToElementId"] = "owl-carousel";
 
             return RedirectToAction(nameof(Index), "Products");
         }
 
-        public async Task<IActionResult> RemoveFromWish(int id)
+        public async Task<IActionResult> RemoveFromWish(int productId)
         {
             string userId = User.GetUserId();
 
-            await _service.RemoveFromWishAsync(id, userId);
+            await _service.RemoveFromWishAsync(productId, userId);
 
             TempData["scrollToElementId"] = "owl-carousel";
 
             return RedirectToAction(nameof(Index), "Products");
         }
 
-        public async Task<IActionResult> AddToCart(int id)
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> AddToCart(int productId, int quantity = 1)
         {
 
             string userId = User.GetUserId();
 
-            await _service.AddToCartAsync(id, userId);
+            await _service.AddToCartAsync(productId, userId, quantity);
 
             TempData["ShowBag"] = "show";
 
             return RedirectToAction(nameof(Index), "Products");
         }
 
-        public async Task<IActionResult> RemoveFromCart(int id)
-        {
-            string userId = User.GetUserId();
+        //public async Task<IActionResult> RemoveFromCart(int id)
+        //{
+        //    string userId = User.GetUserId();
 
-            await _service.RemoveFromCartAsync(id, userId);
+        //    await _service.RemoveFromCartAsync(id, userId);
 
-            TempData["ShowBag"] = "show";
+        //    TempData["ShowBag"] = "show";
 
-            return RedirectToAction(nameof(Index), "Products");
-        }
+        //    return RedirectToAction(nameof(Index), "Products");
+        //}
 
         public async Task<IActionResult> DeleteProductFromCart(int id)
         {

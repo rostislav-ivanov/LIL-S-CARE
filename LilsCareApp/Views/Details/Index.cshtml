@@ -98,8 +98,7 @@
         </div>
 
 
-        <form asp-controller="Details" asp-action="AddToCart" asp-route-id="@Model.Id" method="post">
-            <input type="hidden" asp-for="@Model.Id" />
+        <form asp-controller="Products" asp-action="AddToCart" asp-route-productId="@Model.Id" method="post">
             <div class="container px-0 py-4">
                 <div class="row align-items-center">
                     <div class="col-auto">
@@ -107,7 +106,7 @@
                     </div>
                     <div class="col p-0">
                         <div class="quantity-input">
-                            <input asp-for="@Model.Quantity" type="number" class="form-control fs-5 w-auto"
+                            <input name="quantity" type="number" class="form-control fs-5 w-auto"
                                    value="1" min="1" max="999" display: flex; align-items:
                                    center; />
                         </div>
@@ -125,7 +124,7 @@
                     <div class="col p-0 mx-5" style="color: rgb(var(--app-btn-bg))">
                         @if (Model.IsWish)
                         {
-                            <a asp-controller="Products" asp-action="RemoveFromWish" asp-route-id="@Model.Id"
+                            <a asp-controller="Products" asp-action="RemoveFromWish" asp-route-productId="@Model.Id"
                                method="post"
                                class="nav-link fs-3"
                                style="color: rgb(var(--app-btn-bg))">
@@ -134,7 +133,7 @@
                         }
                         else
                         {
-                            <a asp-controller="Products" asp-action="AddToWish" asp-route-id="@Model.Id"
+                            <a asp-controller="Products" asp-action="AddToWish" asp-route-productId="@Model.Id"
                                method="post"
                                class="nav-link fs-3"
                                style="color: rgb(var(--app-btn-bg))">
