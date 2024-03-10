@@ -55,6 +55,7 @@ namespace LilsCareApp.Core.Services
                                 }).ToList(),
                             CreatedOn = r.CreatedOn,
                         }).ToList(),
+                    Rating = p.Reviews.Count > 0 ? p.Reviews.Average(r => r.Rating) : 0,
                     ProductsCategories = p.ProductsCategories
                         .Where(pc => pc.ProductId == p.Id)
                         .Select(pc => new CategoryDTO

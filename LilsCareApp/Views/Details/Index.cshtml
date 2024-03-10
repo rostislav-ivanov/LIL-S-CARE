@@ -84,7 +84,27 @@
         <!-- Carousel Details End-->
     </div>
     <div class="col-6 px-5">
-        <h1 class="h3 mb-5">@Model.Name</h1>
+        <h1 class="h3 mb-3">@Model.Name</h1>
+        @if(Model.Rating > 0)
+        {
+            <div class="fs-5">
+                <span style="color: gold">
+                    @for (var i = 1; i <= 5; i++)
+                    {
+                        if (i <= Model.Rating)
+                        {
+                            <i class="fa-solid fa-star ms-2"></i>
+                        }
+                        else
+                        {
+                            <i class="fa-regular fa-star"></i>
+                        }
+                    }
+                </span>
+                <span class="ms-2">@Model.Rating.ToString("0.0") | @Model.Reviews.Count() отзива</span>
+            </div>
+        }
+        
         <div class="container px-0 py-4">
             <p class="fs-5">Цена: @Model.Price лв</p>
         </div>
@@ -240,7 +260,73 @@
 }
 else
 {
-    <h1>review</h1>
+    <!-- Product Show All Reviews Start -->
+    <div class="container-fluid product py-5 w-75">
+        <div class="d-flex justify-content-between align-items-center mb-5">
+            <div class="fs-5">
+                <span  style="color: gold">
+                    @for (var i = 1; i <= 5; i++)
+                    {
+                        if (i <= Model.Rating)
+                        {
+                            <i class="fa-solid fa-star ms-2"></i>
+                        }
+                        else
+                        {
+                            <i class="fa-regular fa-star"></i>
+                        }
+                    }
+                </span>
+                <span class="ms-2">@Model.Rating.ToString("0.0") | @Model.Reviews.Count() отзива</span>
+            </div>
+            <button class="btn">
+                <i class="fa fa-check me-2"></i>Даден е отзив. Вижте вашия отзив
+            </button>
+        </div>
+        <p class="ms-2 fs-5">@Model.Reviews.Count() отзива</p>
+        <div class="col-lg">
+            <div class="row g-3 justify-content-start">
+                @foreach (var review in Model.Reviews)
+                {
+                    <div class="col-6">
+                        <div class="rounded-3 position-relative product-item border p-3 fs-7">
+                            <div class="d-flex justify-content-between">
+                                <p>@review.AuthorName </p>
+                                <p>@review.CreatedOn.ToString("dd/MM/yyyy")</p>
+                            </div>
+                            <div style="color: gold">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    if (i <= review.Rating)
+                                    {
+                                        <i class="fa-solid fa-star ms-1"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa-regular fa-star ms-1"></i>
+                                    }
+                                }
+                            </div>
+                            <h5 class="mt-3">@review.Title</h5>
+                            <p>@review.Comment</p>
+                            <div class="d-flex justify-content-start mt-2 align-items-center">
+                                @foreach (var image in review.Images)
+                                {
+                                    <span class="pe-2">
+                                        <img src="@image.ImagePath"
+                                             width="100px"
+                                             height="100px"
+                                             alt="" />
+                                    </span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <!-- Product Show All Reviews End -->
 }
     
 
