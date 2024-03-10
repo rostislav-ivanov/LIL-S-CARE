@@ -17,12 +17,12 @@ namespace LilsCareApp.Infrastructure.Migrations
                 name: "AspNetUsers",
                 comment: "App User");
 
-            migrationBuilder.AddColumn<int>(
-                name: "ImageId",
+            migrationBuilder.AddColumn<string>(
+                name: "ImagePath",
                 table: "AspNetUsers",
-                type: "int",
+                type: "nvarchar(max)",
                 nullable: true,
-                comment: "Image App User");
+                comment: "The image of user");
 
             migrationBuilder.CreateTable(
                 name: "AddressDeliveries",
@@ -200,6 +200,27 @@ namespace LilsCareApp.Infrastructure.Migrations
                 comment: "This table contains the products that the user has added to his bag");
 
             migrationBuilder.CreateTable(
+                name: "ImageProducts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false, comment: "The image id")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ImagePath = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: false, comment: "The path of the image"),
+                    ProductId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ImageProducts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ImageProducts_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                },
+                comment: "The image of the product");
+
+            migrationBuilder.CreateTable(
                 name: "ProductsCategories",
                 columns: table => new
                 {
@@ -228,25 +249,22 @@ namespace LilsCareApp.Infrastructure.Migrations
                 name: "Reviews",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false, comment: "The unique identifier of the review.")
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    AuthorName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false, comment: "The name of the author of the review."),
-                    Email = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false, comment: "The email of the author of the review."),
+                    ProductId = table.Column<int>(type: "int", nullable: false, comment: "The identifier of the product."),
+                    AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "The identifier of the user that created the review."),
                     Rating = table.Column<int>(type: "int", nullable: false, comment: "The rating of the review."),
                     Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true, comment: "The title of the review."),
                     Comment = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true, comment: "The comment of the review."),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "The date when the review was created."),
-                    ProductId = table.Column<int>(type: "int", nullable: false, comment: "The identifier of the product."),
-                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true, comment: "If the creator of review is Login. The identifier of the user that created the review.")
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "The date when the review was created.")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reviews", x => x.Id);
+                    table.PrimaryKey("PK_Reviews", x => new { x.ProductId, x.AuthorId });
                     table.ForeignKey(
-                        name: "FK_Reviews_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
+                        name: "FK_Reviews_AspNetUsers_AuthorId",
+                        column: x => x.AuthorId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Reviews_Products_ProductId",
                         column: x => x.ProductId,
@@ -330,31 +348,25 @@ namespace LilsCareApp.Infrastructure.Migrations
                 comment: "Order");
 
             migrationBuilder.CreateTable(
-                name: "Images",
+                name: "ImageReviews",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false, comment: "The image id")
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ImagePath = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: false, comment: "The path of the image"),
-                    ProductId = table.Column<int>(type: "int", nullable: true, comment: "The product id"),
-                    ReviewId = table.Column<int>(type: "int", nullable: true, comment: "The review id"),
-                    AppUserId = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "The user id")
+                    ProductId = table.Column<int>(type: "int", nullable: false, comment: "The identifier of the product."),
+                    AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: true, comment: "The identifier of the author.")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Images", x => x.Id);
+                    table.PrimaryKey("PK_ImageReviews", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Images_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Images_Reviews_ReviewId",
-                        column: x => x.ReviewId,
+                        name: "FK_ImageReviews_Reviews_ProductId_AuthorId",
+                        columns: x => new { x.ProductId, x.AuthorId },
                         principalTable: "Reviews",
-                        principalColumn: "Id");
+                        principalColumns: new[] { "ProductId", "AuthorId" });
                 },
-                comment: "The image of the product or review or user");
+                comment: "The image of the review");
 
             migrationBuilder.CreateTable(
                 name: "ProductOrder",
@@ -383,8 +395,8 @@ namespace LilsCareApp.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "ImageId", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "3827cc89-d232-4501-95f3-4a0588b55891", 0, "f37d9cca-39fc-45e0-a868-bf718290ffd4", null, false, null, false, null, null, "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAEJmzyFy+Fic4WQYxVvPaAPf0n72sOXv+HT8aCz0LX8PmtbtZW1dASPQJmDuFn7nmmg==", null, false, "df5bd741-1e2d-4f2a-9ff4-e09405f721a0", false, "test@softuni.bg" });
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "ImagePath", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "95442f54-c945-4b30-8512-59a54e6b8634", 0, "bb61830d-f127-407e-a4c4-7e0bab1cc0a6", null, false, null, false, null, null, "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAEJSKkkB0lF+IAstUjW4eMO/X4Gil0uoOGu+pnrK7+2NL3d7SDPRe/+mYtxaXYeWN1g==", null, false, "e927bfe4-6230-4d3d-ae75-99cfa66853a1", false, "test@softuni.bg" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -446,8 +458,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "Id", "Address", "AppUserId", "Country", "District", "FirstName", "LastName", "PhoneNumber", "PostCode", "Town" },
                 values: new object[,]
                 {
-                    { 1, "bul. Vitosha", "3827cc89-d232-4501-95f3-4a0588b55891", "Bulgaria", "Sofia", "Ivan", "Ivanov", "0888888888", "1000", "Sofia" },
-                    { 2, "bul. Vitosha", "3827cc89-d232-4501-95f3-4a0588b55891", "Bulgaria", "Sofia", "Petar", "Petrov", "0888888888", "1000", "Sofia" }
+                    { 1, "bul. Vitosha", "95442f54-c945-4b30-8512-59a54e6b8634", "Bulgaria", "Sofia", "Ivan", "Ivanov", "0888888888", "1000", "Sofia" },
+                    { 2, "bul. Vitosha", "95442f54-c945-4b30-8512-59a54e6b8634", "Bulgaria", "Sofia", "Petar", "Petrov", "0888888888", "1000", "Sofia" }
                 });
 
             migrationBuilder.InsertData(
@@ -455,59 +467,59 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "AppUserId", "ProductId", "Quantity" },
                 values: new object[,]
                 {
-                    { "3827cc89-d232-4501-95f3-4a0588b55891", 1, 2 },
-                    { "3827cc89-d232-4501-95f3-4a0588b55891", 2, 3 },
-                    { "3827cc89-d232-4501-95f3-4a0588b55891", 3, 4 }
+                    { "95442f54-c945-4b30-8512-59a54e6b8634", 1, 2 },
+                    { "95442f54-c945-4b30-8512-59a54e6b8634", 2, 3 },
+                    { "95442f54-c945-4b30-8512-59a54e6b8634", 3, 4 }
                 });
 
             migrationBuilder.InsertData(
-                table: "Images",
-                columns: new[] { "Id", "AppUserId", "ImagePath", "ProductId", "ReviewId" },
+                table: "ImageProducts",
+                columns: new[] { "Id", "ImagePath", "ProductId" },
                 values: new object[,]
                 {
-                    { 1, null, "https://static.wixstatic.com/media/a6694c_24a7b0d7f63d42048f5a05e97362f385~mv2.jpg/v1/fill/w_301,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_24a7b0d7f63d42048f5a05e97362f385~mv2.jpg", 1, null },
-                    { 2, null, "https://static.wixstatic.com/media/a6694c_263e877cdb774516bea29e2155049a0d~mv2.jpg/v1/fill/w_301,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_263e877cdb774516bea29e2155049a0d~mv2.jpg", 1, null },
-                    { 3, null, "https://static.wixstatic.com/media/a6694c_69a0f0f6f1cf4847983b2248749af6cc~mv2.jpg/v1/fill/w_301,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_69a0f0f6f1cf4847983b2248749af6cc~mv2.jpg", 1, null },
-                    { 4, null, "https://static.wixstatic.com/media/a6694c_57415abd6b2b4d1f86e4ed35cf155e0d~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_57415abd6b2b4d1f86e4ed35cf155e0d~mv2.jpg", 1, null },
-                    { 5, null, "https://video.wixstatic.com/video/a6694c_b61f40bc476a43578be260fce9fa6efa/1080p/mp4/file.mp4", 1, null },
-                    { 6, null, "https://static.wixstatic.com/media/a6694c_75d8524a8fb046db82d0090671364c15~mv2.jpg/v1/fill/w_886,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_75d8524a8fb046db82d0090671364c15~mv2.jpg", 2, null },
-                    { 7, null, "https://static.wixstatic.com/media/a6694c_2f611f06e55346e5b3b22c94c0bb8077~mv2.jpg/v1/fill/w_887,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_2f611f06e55346e5b3b22c94c0bb8077~mv2.jpg", 2, null },
-                    { 8, null, "https://static.wixstatic.com/media/a6694c_1b60760d6a9e46f6ba0be663ab0cd432~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_1b60760d6a9e46f6ba0be663ab0cd432~mv2.jpg", 2, null },
-                    { 9, null, "https://static.wixstatic.com/media/a6694c_7ce163b0f3e4461d9ee3ef5c16b972f4~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_7ce163b0f3e4461d9ee3ef5c16b972f4~mv2.jpg", 2, null },
-                    { 10, null, "https://static.wixstatic.com/media/a6694c_8cf53b5caa60466b86d7e1e71035a5c1~mv2.jpg/v1/fill/w_886,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_8cf53b5caa60466b86d7e1e71035a5c1~mv2.jpg", 2, null },
-                    { 11, null, "https://static.wixstatic.com/media/a6694c_dbfcc272e90a48f89dfa6930ee2b0355~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_dbfcc272e90a48f89dfa6930ee2b0355~mv2.jpg", 2, null },
-                    { 12, null, "https://static.wixstatic.com/media/a6694c_44172c09d7974734aed4b4fa6474bac2~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_44172c09d7974734aed4b4fa6474bac2~mv2.jpg", 2, null },
-                    { 13, null, "https://video.wixstatic.com/video/a6694c_688be81645b14d1f9707a985aad784fb/1080p/mp4/file.mp4", 2, null },
-                    { 14, null, "https://static.wixstatic.com/media/a6694c_40945dc6b1754f74ab2b9331a5d4c692~mv2.jpg/v1/fill/w_887,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_40945dc6b1754f74ab2b9331a5d4c692~mv2.jpg", 3, null },
-                    { 15, null, "https://static.wixstatic.com/media/a6694c_dcb7369410054c2b8ffc9fa2f7a7854c~mv2.jpg/v1/fill/w_374,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_dcb7369410054c2b8ffc9fa2f7a7854c~mv2.jpg", 3, null },
-                    { 16, null, "https://static.wixstatic.com/media/a6694c_5e4516f6b7294324b75d8577ed3b7112~mv2.jpg/v1/fill/w_374,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_5e4516f6b7294324b75d8577ed3b7112~mv2.jpg", 3, null },
-                    { 17, null, "https://static.wixstatic.com/media/a6694c_955cfb52005d4979a9d170045f3bf603~mv2.jpg/v1/fill/w_374,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_955cfb52005d4979a9d170045f3bf603~mv2.jpg", 3, null },
-                    { 18, null, "https://static.wixstatic.com/media/a6694c_22c2642fbcb14b9c83a1b7b5349cb654~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_22c2642fbcb14b9c83a1b7b5349cb654~mv2.png", 3, null },
-                    { 19, null, "https://static.wixstatic.com/media/a6694c_9feeef67f1174acb9d05de346a5380f3~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_9feeef67f1174acb9d05de346a5380f3~mv2.png", 4, null },
-                    { 20, null, "https://static.wixstatic.com/media/a6694c_331b7666ec214d1cb9eab348b23156e6~mv2.png/v1/fill/w_832,h_665,al_c,usm_0.66_1.00_0.01/a6694c_331b7666ec214d1cb9eab348b23156e6~mv2.png", 4, null },
-                    { 21, null, "https://static.wixstatic.com/media/a6694c_8c8ef3eb0c7b4c009a08aecabee93d26~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_8c8ef3eb0c7b4c009a08aecabee93d26~mv2.png", 4, null },
-                    { 22, null, "https://static.wixstatic.com/media/a6694c_f3173997361b4b1b83ad90f807bbaf85~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_f3173997361b4b1b83ad90f807bbaf85~mv2.png", 4, null },
-                    { 23, null, "https://static.wixstatic.com/media/a6694c_6180737a52184e20a160a44b8b00cbc6~mv2.png/v1/fill/w_832,h_665,al_c,usm_0.66_1.00_0.01/a6694c_6180737a52184e20a160a44b8b00cbc6~mv2.png", 4, null },
-                    { 24, null, "https://static.wixstatic.com/media/a6694c_0d7a1d6d29d0432b85ad84001ad13a9b~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_0d7a1d6d29d0432b85ad84001ad13a9b~mv2.png", 4, null },
-                    { 25, null, "https://static.wixstatic.com/media/a6694c_2485f5b6aa434f04a31a359a58f370ce~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_2485f5b6aa434f04a31a359a58f370ce~mv2.png", 4, null },
-                    { 26, null, "https://video.wixstatic.com/video/a6694c_84516f7e298844d7954c342ceedba433/1080p/mp4/file.mp4", 4, null },
-                    { 27, null, "https://static.wixstatic.com/media/a6694c_c3e384c8ca434dc6b7c2920f660579e3~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_c3e384c8ca434dc6b7c2920f660579e3~mv2.png", 5, null },
-                    { 28, null, "https://static.wixstatic.com/media/a6694c_c4aefe2a5f294a0faf6a2f7c19af32db~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_c4aefe2a5f294a0faf6a2f7c19af32db~mv2.png", 5, null },
-                    { 29, null, "https://static.wixstatic.com/media/a6694c_a730f2e789864a9cb75ce1dde1e52b07~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_a730f2e789864a9cb75ce1dde1e52b07~mv2.png", 5, null },
-                    { 30, null, "https://static.wixstatic.com/media/a6694c_35eeecadd7f6495c99a3db846af81148~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_35eeecadd7f6495c99a3db846af81148~mv2.jpg", 5, null },
-                    { 31, null, "https://video.wixstatic.com/video/a6694c_5b80835e03c94fd6b720fdd2ceaa8865/1080p/mp4/file.mp4", 5, null },
-                    { 32, null, "https://static.wixstatic.com/media/a6694c_e95ca1c8158d4caba5b6e7bedaa0eeab~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_e95ca1c8158d4caba5b6e7bedaa0eeab~mv2.png", 6, null },
-                    { 33, null, "https://static.wixstatic.com/media/a6694c_6381e01ae9c340d598e09ea221ff60f2~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_6381e01ae9c340d598e09ea221ff60f2~mv2.png", 6, null },
-                    { 34, null, "https://static.wixstatic.com/media/a6694c_48c50850bac34de3911eb25953af593d~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_48c50850bac34de3911eb25953af593d~mv2.png", 6, null },
-                    { 35, null, "https://static.wixstatic.com/media/a6694c_757ebf6a259740c19feb8b3a9a6bc8f5~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_757ebf6a259740c19feb8b3a9a6bc8f5~mv2.png", 6, null },
-                    { 36, null, "https://static.wixstatic.com/media/a6694c_dcd9e99fe4d44425b1f77612e83ac7c3~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_dcd9e99fe4d44425b1f77612e83ac7c3~mv2.png", 7, null },
-                    { 37, null, "https://static.wixstatic.com/media/a6694c_2fa731434bbc41df95694781b5de4092~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_2fa731434bbc41df95694781b5de4092~mv2.png", 7, null },
-                    { 38, null, "https://static.wixstatic.com/media/a6694c_1a21a0325bd2422081c51946789b8adf~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_1a21a0325bd2422081c51946789b8adf~mv2.png", 7, null },
-                    { 39, null, "https://static.wixstatic.com/media/a6694c_f5e3c9c920fe41f395dc3bbb35e0161d~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_f5e3c9c920fe41f395dc3bbb35e0161d~mv2.png", 7, null },
-                    { 40, null, "https://static.wixstatic.com/media/a6694c_ec1aa69e21ac48dc9cfd0bf0522f8caa~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_ec1aa69e21ac48dc9cfd0bf0522f8caa~mv2.png", 7, null },
-                    { 41, null, "https://video.wixstatic.com/video/a6694c_8570c70283b14cce830d5da15331979c/480p/mp4/file.mp4", 7, null },
-                    { 42, null, "https://video.wixstatic.com/video/a6694c_3e25a17da1ba451786a46aa4daee1698/480p/mp4/file.mp4", 7, null },
-                    { 43, null, "https://static.wixstatic.com/media/a6694c_c198248097424ec09f04d600b3ee3a40~mv2.png/v1/fill/w_886,h_665,al_c,usm_0.66_1.00_0.01/a6694c_c198248097424ec09f04d600b3ee3a40~mv2.png", 7, null }
+                    { 1, "https://static.wixstatic.com/media/a6694c_24a7b0d7f63d42048f5a05e97362f385~mv2.jpg/v1/fill/w_301,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_24a7b0d7f63d42048f5a05e97362f385~mv2.jpg", 1 },
+                    { 2, "https://static.wixstatic.com/media/a6694c_263e877cdb774516bea29e2155049a0d~mv2.jpg/v1/fill/w_301,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_263e877cdb774516bea29e2155049a0d~mv2.jpg", 1 },
+                    { 3, "https://static.wixstatic.com/media/a6694c_69a0f0f6f1cf4847983b2248749af6cc~mv2.jpg/v1/fill/w_301,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_69a0f0f6f1cf4847983b2248749af6cc~mv2.jpg", 1 },
+                    { 4, "https://static.wixstatic.com/media/a6694c_57415abd6b2b4d1f86e4ed35cf155e0d~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_57415abd6b2b4d1f86e4ed35cf155e0d~mv2.jpg", 1 },
+                    { 5, "https://video.wixstatic.com/video/a6694c_b61f40bc476a43578be260fce9fa6efa/1080p/mp4/file.mp4", 1 },
+                    { 6, "https://static.wixstatic.com/media/a6694c_75d8524a8fb046db82d0090671364c15~mv2.jpg/v1/fill/w_886,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_75d8524a8fb046db82d0090671364c15~mv2.jpg", 2 },
+                    { 7, "https://static.wixstatic.com/media/a6694c_2f611f06e55346e5b3b22c94c0bb8077~mv2.jpg/v1/fill/w_887,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_2f611f06e55346e5b3b22c94c0bb8077~mv2.jpg", 2 },
+                    { 8, "https://static.wixstatic.com/media/a6694c_1b60760d6a9e46f6ba0be663ab0cd432~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_1b60760d6a9e46f6ba0be663ab0cd432~mv2.jpg", 2 },
+                    { 9, "https://static.wixstatic.com/media/a6694c_7ce163b0f3e4461d9ee3ef5c16b972f4~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_7ce163b0f3e4461d9ee3ef5c16b972f4~mv2.jpg", 2 },
+                    { 10, "https://static.wixstatic.com/media/a6694c_8cf53b5caa60466b86d7e1e71035a5c1~mv2.jpg/v1/fill/w_886,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_8cf53b5caa60466b86d7e1e71035a5c1~mv2.jpg", 2 },
+                    { 11, "https://static.wixstatic.com/media/a6694c_dbfcc272e90a48f89dfa6930ee2b0355~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_dbfcc272e90a48f89dfa6930ee2b0355~mv2.jpg", 2 },
+                    { 12, "https://static.wixstatic.com/media/a6694c_44172c09d7974734aed4b4fa6474bac2~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_44172c09d7974734aed4b4fa6474bac2~mv2.jpg", 2 },
+                    { 13, "https://video.wixstatic.com/video/a6694c_688be81645b14d1f9707a985aad784fb/1080p/mp4/file.mp4", 2 },
+                    { 14, "https://static.wixstatic.com/media/a6694c_40945dc6b1754f74ab2b9331a5d4c692~mv2.jpg/v1/fill/w_887,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_40945dc6b1754f74ab2b9331a5d4c692~mv2.jpg", 3 },
+                    { 15, "https://static.wixstatic.com/media/a6694c_dcb7369410054c2b8ffc9fa2f7a7854c~mv2.jpg/v1/fill/w_374,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_dcb7369410054c2b8ffc9fa2f7a7854c~mv2.jpg", 3 },
+                    { 16, "https://static.wixstatic.com/media/a6694c_5e4516f6b7294324b75d8577ed3b7112~mv2.jpg/v1/fill/w_374,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_5e4516f6b7294324b75d8577ed3b7112~mv2.jpg", 3 },
+                    { 17, "https://static.wixstatic.com/media/a6694c_955cfb52005d4979a9d170045f3bf603~mv2.jpg/v1/fill/w_374,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_955cfb52005d4979a9d170045f3bf603~mv2.jpg", 3 },
+                    { 18, "https://static.wixstatic.com/media/a6694c_22c2642fbcb14b9c83a1b7b5349cb654~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_22c2642fbcb14b9c83a1b7b5349cb654~mv2.png", 3 },
+                    { 19, "https://static.wixstatic.com/media/a6694c_9feeef67f1174acb9d05de346a5380f3~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_9feeef67f1174acb9d05de346a5380f3~mv2.png", 4 },
+                    { 20, "https://static.wixstatic.com/media/a6694c_331b7666ec214d1cb9eab348b23156e6~mv2.png/v1/fill/w_832,h_665,al_c,usm_0.66_1.00_0.01/a6694c_331b7666ec214d1cb9eab348b23156e6~mv2.png", 4 },
+                    { 21, "https://static.wixstatic.com/media/a6694c_8c8ef3eb0c7b4c009a08aecabee93d26~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_8c8ef3eb0c7b4c009a08aecabee93d26~mv2.png", 4 },
+                    { 22, "https://static.wixstatic.com/media/a6694c_f3173997361b4b1b83ad90f807bbaf85~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_f3173997361b4b1b83ad90f807bbaf85~mv2.png", 4 },
+                    { 23, "https://static.wixstatic.com/media/a6694c_6180737a52184e20a160a44b8b00cbc6~mv2.png/v1/fill/w_832,h_665,al_c,usm_0.66_1.00_0.01/a6694c_6180737a52184e20a160a44b8b00cbc6~mv2.png", 4 },
+                    { 24, "https://static.wixstatic.com/media/a6694c_0d7a1d6d29d0432b85ad84001ad13a9b~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_0d7a1d6d29d0432b85ad84001ad13a9b~mv2.png", 4 },
+                    { 25, "https://static.wixstatic.com/media/a6694c_2485f5b6aa434f04a31a359a58f370ce~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_2485f5b6aa434f04a31a359a58f370ce~mv2.png", 4 },
+                    { 26, "https://video.wixstatic.com/video/a6694c_84516f7e298844d7954c342ceedba433/1080p/mp4/file.mp4", 4 },
+                    { 27, "https://static.wixstatic.com/media/a6694c_c3e384c8ca434dc6b7c2920f660579e3~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_c3e384c8ca434dc6b7c2920f660579e3~mv2.png", 5 },
+                    { 28, "https://static.wixstatic.com/media/a6694c_c4aefe2a5f294a0faf6a2f7c19af32db~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_c4aefe2a5f294a0faf6a2f7c19af32db~mv2.png", 5 },
+                    { 29, "https://static.wixstatic.com/media/a6694c_a730f2e789864a9cb75ce1dde1e52b07~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_a730f2e789864a9cb75ce1dde1e52b07~mv2.png", 5 },
+                    { 30, "https://static.wixstatic.com/media/a6694c_35eeecadd7f6495c99a3db846af81148~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_35eeecadd7f6495c99a3db846af81148~mv2.jpg", 5 },
+                    { 31, "https://video.wixstatic.com/video/a6694c_5b80835e03c94fd6b720fdd2ceaa8865/1080p/mp4/file.mp4", 5 },
+                    { 32, "https://static.wixstatic.com/media/a6694c_e95ca1c8158d4caba5b6e7bedaa0eeab~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_e95ca1c8158d4caba5b6e7bedaa0eeab~mv2.png", 6 },
+                    { 33, "https://static.wixstatic.com/media/a6694c_6381e01ae9c340d598e09ea221ff60f2~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_6381e01ae9c340d598e09ea221ff60f2~mv2.png", 6 },
+                    { 34, "https://static.wixstatic.com/media/a6694c_48c50850bac34de3911eb25953af593d~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_48c50850bac34de3911eb25953af593d~mv2.png", 6 },
+                    { 35, "https://static.wixstatic.com/media/a6694c_757ebf6a259740c19feb8b3a9a6bc8f5~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_757ebf6a259740c19feb8b3a9a6bc8f5~mv2.png", 6 },
+                    { 36, "https://static.wixstatic.com/media/a6694c_dcd9e99fe4d44425b1f77612e83ac7c3~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_dcd9e99fe4d44425b1f77612e83ac7c3~mv2.png", 7 },
+                    { 37, "https://static.wixstatic.com/media/a6694c_2fa731434bbc41df95694781b5de4092~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_2fa731434bbc41df95694781b5de4092~mv2.png", 7 },
+                    { 38, "https://static.wixstatic.com/media/a6694c_1a21a0325bd2422081c51946789b8adf~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_1a21a0325bd2422081c51946789b8adf~mv2.png", 7 },
+                    { 39, "https://static.wixstatic.com/media/a6694c_f5e3c9c920fe41f395dc3bbb35e0161d~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_f5e3c9c920fe41f395dc3bbb35e0161d~mv2.png", 7 },
+                    { 40, "https://static.wixstatic.com/media/a6694c_ec1aa69e21ac48dc9cfd0bf0522f8caa~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_ec1aa69e21ac48dc9cfd0bf0522f8caa~mv2.png", 7 },
+                    { 41, "https://video.wixstatic.com/video/a6694c_8570c70283b14cce830d5da15331979c/480p/mp4/file.mp4", 7 },
+                    { 42, "https://video.wixstatic.com/video/a6694c_3e25a17da1ba451786a46aa4daee1698/480p/mp4/file.mp4", 7 },
+                    { 43, "https://static.wixstatic.com/media/a6694c_c198248097424ec09f04d600b3ee3a40~mv2.png/v1/fill/w_886,h_665,al_c,usm_0.66_1.00_0.01/a6694c_c198248097424ec09f04d600b3ee3a40~mv2.png", 7 }
                 });
 
             migrationBuilder.InsertData(
@@ -532,12 +544,12 @@ namespace LilsCareApp.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Reviews",
-                columns: new[] { "Id", "AppUserId", "AuthorName", "Comment", "CreatedOn", "Email", "ProductId", "Rating", "Title" },
+                columns: new[] { "AuthorId", "ProductId", "Comment", "CreatedOn", "Rating", "Title" },
                 values: new object[,]
                 {
-                    { 1, "3827cc89-d232-4501-95f3-4a0588b55891", "John Doe", "Great product, I love it!", new DateTime(2024, 3, 9, 8, 37, 11, 213, DateTimeKind.Local).AddTicks(8653), "john@doe.com", 1, 4, "Great product" },
-                    { 2, "3827cc89-d232-4501-95f3-4a0588b55891", "John Doe 2", "Great product, I love it!", new DateTime(2024, 3, 9, 8, 37, 11, 213, DateTimeKind.Local).AddTicks(8708), "john@doe.com", 1, 3, "Great product" },
-                    { 3, "3827cc89-d232-4501-95f3-4a0588b55891", "John Doe 3", "Great product, I love it!", new DateTime(2024, 3, 9, 8, 37, 11, 213, DateTimeKind.Local).AddTicks(8712), "john@doe.com", 2, 3, "Great product" }
+                    { "95442f54-c945-4b30-8512-59a54e6b8634", 2, "Great product, I love it!", new DateTime(2024, 3, 10, 14, 43, 53, 514, DateTimeKind.Local).AddTicks(7633), 4, "Great product" },
+                    { "95442f54-c945-4b30-8512-59a54e6b8634", 3, "Great product, I love it!", new DateTime(2024, 3, 10, 14, 43, 53, 514, DateTimeKind.Local).AddTicks(7693), 3, "Great product" },
+                    { "95442f54-c945-4b30-8512-59a54e6b8634", 4, "Great product, I love it!", new DateTime(2024, 3, 10, 14, 43, 53, 514, DateTimeKind.Local).AddTicks(7696), 3, "Great product" }
                 });
 
             migrationBuilder.InsertData(
@@ -545,9 +557,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "AppUserId", "ProductId" },
                 values: new object[,]
                 {
-                    { "3827cc89-d232-4501-95f3-4a0588b55891", 1 },
-                    { "3827cc89-d232-4501-95f3-4a0588b55891", 3 },
-                    { "3827cc89-d232-4501-95f3-4a0588b55891", 4 }
+                    { "95442f54-c945-4b30-8512-59a54e6b8634", 1 },
+                    { "95442f54-c945-4b30-8512-59a54e6b8634", 3 },
+                    { "95442f54-c945-4b30-8512-59a54e6b8634", 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -555,8 +567,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "Id", "AddressDeliveryId", "AppUserId", "CreatedOn", "DateShipping", "PaymentMethodId", "ShippingProviderId", "StatusOrderId", "TrackingNumber" },
                 values: new object[,]
                 {
-                    { 1, 1, "3827cc89-d232-4501-95f3-4a0588b55891", new DateTime(2024, 3, 9, 6, 37, 10, 724, DateTimeKind.Utc).AddTicks(2944), new DateTime(2024, 3, 9, 6, 37, 10, 724, DateTimeKind.Utc).AddTicks(4550), 1, 1, 1, "1234567890" },
-                    { 2, 2, "3827cc89-d232-4501-95f3-4a0588b55891", new DateTime(2024, 3, 9, 6, 37, 10, 724, DateTimeKind.Utc).AddTicks(5750), new DateTime(2024, 3, 9, 6, 37, 10, 724, DateTimeKind.Utc).AddTicks(5753), 2, 2, 2, "1234567890x" }
+                    { 1, 1, "95442f54-c945-4b30-8512-59a54e6b8634", new DateTime(2024, 3, 10, 12, 43, 52, 487, DateTimeKind.Utc).AddTicks(6436), new DateTime(2024, 3, 10, 12, 43, 52, 487, DateTimeKind.Utc).AddTicks(7917), 1, 1, 1, "1234567890" },
+                    { 2, 2, "95442f54-c945-4b30-8512-59a54e6b8634", new DateTime(2024, 3, 10, 12, 43, 52, 487, DateTimeKind.Utc).AddTicks(8970), new DateTime(2024, 3, 10, 12, 43, 52, 487, DateTimeKind.Utc).AddTicks(8974), 2, 2, 2, "1234567890x" }
                 });
 
             migrationBuilder.InsertData(
@@ -577,13 +589,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_ImageId",
-                table: "AspNetUsers",
-                column: "ImageId",
-                unique: true,
-                filter: "[ImageId] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_AddressDeliveries_AppUserId",
                 table: "AddressDeliveries",
                 column: "AppUserId");
@@ -594,14 +599,14 @@ namespace LilsCareApp.Infrastructure.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Images_ProductId",
-                table: "Images",
+                name: "IX_ImageProducts_ProductId",
+                table: "ImageProducts",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Images_ReviewId",
-                table: "Images",
-                column: "ReviewId");
+                name: "IX_ImageReviews_ProductId_AuthorId",
+                table: "ImageReviews",
+                columns: new[] { "ProductId", "AuthorId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_MessagesFromClients_AppUserId",
@@ -644,14 +649,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reviews_AppUserId",
+                name: "IX_Reviews_AuthorId",
                 table: "Reviews",
-                column: "AppUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Reviews_ProductId",
-                table: "Reviews",
-                column: "ProductId");
+                column: "AuthorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Subscribers_AppUserId",
@@ -662,27 +662,19 @@ namespace LilsCareApp.Infrastructure.Migrations
                 name: "IX_WishesUsers_ProductId",
                 table: "WishesUsers",
                 column: "ProductId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_AspNetUsers_Images_ImageId",
-                table: "AspNetUsers",
-                column: "ImageId",
-                principalTable: "Images",
-                principalColumn: "Id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_AspNetUsers_Images_ImageId",
-                table: "AspNetUsers");
-
             migrationBuilder.DropTable(
                 name: "BagsUsers");
 
             migrationBuilder.DropTable(
-                name: "Images");
+                name: "ImageProducts");
+
+            migrationBuilder.DropTable(
+                name: "ImageReviews");
 
             migrationBuilder.DropTable(
                 name: "MessagesFromClients");
@@ -723,17 +715,13 @@ namespace LilsCareApp.Infrastructure.Migrations
             migrationBuilder.DropTable(
                 name: "StatusOrders");
 
-            migrationBuilder.DropIndex(
-                name: "IX_AspNetUsers_ImageId",
-                table: "AspNetUsers");
-
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: "3827cc89-d232-4501-95f3-4a0588b55891");
+                keyValue: "95442f54-c945-4b30-8512-59a54e6b8634");
 
             migrationBuilder.DropColumn(
-                name: "ImageId",
+                name: "ImagePath",
                 table: "AspNetUsers");
 
             migrationBuilder.AlterTable(

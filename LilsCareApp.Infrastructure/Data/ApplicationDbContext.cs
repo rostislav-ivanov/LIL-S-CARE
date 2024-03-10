@@ -18,7 +18,9 @@ namespace LilsCareApp.Infrastructure.Data
 
         public DbSet<ProductCategory> ProductsCategories { get; set; } = null!;
 
-        public DbSet<Image> Images { get; set; } = null!;
+        public DbSet<ImageProduct> ImageProducts { get; set; } = null!;
+
+        public DbSet<ImageReview> ImageReviews { get; set; } = null!;
 
         public DbSet<Review> Reviews { get; set; } = null!;
 
@@ -42,6 +44,11 @@ namespace LilsCareApp.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<ImageReview>()
+                .HasOne(ir => ir.Review)
+                .WithMany(r => r.Images)
+                .HasForeignKey(ir => new { ir.ProductId, ir.AuthorId });
+
             builder.ApplyConfiguration(new AppUserConfiguration());
             builder.ApplyConfiguration(new ProductsConfiguration());
             builder.ApplyConfiguration(new CategoriesConfiguration());
@@ -55,7 +62,7 @@ namespace LilsCareApp.Infrastructure.Data
             builder.ApplyConfiguration(new OrdersConfiguration());
             builder.ApplyConfiguration(new ProductsOrdersConfiguration());
             builder.ApplyConfiguration(new ReviewsConfiguration());
-            builder.ApplyConfiguration(new ImagesConfiguration());
+            builder.ApplyConfiguration(new ImageProductsConfiguration());
 
             base.OnModelCreating(builder);
         }

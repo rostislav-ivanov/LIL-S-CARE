@@ -23,4 +23,8 @@
     <ProjectReference Include="..\LilsCareApp.Core\LilsCareApp.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\files\reviews\" />
+  </ItemGroup>
+
 </Project>

@@ -217,10 +217,6 @@
                 <div id="collapse4" class="collapse" data-bs-parent="#accordion">
                     <div class="mt-4">
                         @Html.Raw(Model.IngredientINCIs)
-@*                         
-<p>Sucrose (Захар), Vitis Vinifera Seed Oil (Масло от гроздови семки), Theobroma Cacao Seed Butter (Какаово масло)*, Stearic Acid , Citrus Sinensis (Портокал) Peel Oil*, Limonene**,
-Linalool**, Citral**, Benzyl Alcohol, Ethylhexylglycerin, Tocopherol (Vit E), Mica***, CI 77491***. *Био **Компоненти на етерични масла ***Минерални пигменти От България 81,4% Био 14,5%</p>
-*@
                     </div>
                 </div>
             </li>
@@ -229,99 +225,25 @@ Linalool**, Citral**, Benzyl Alcohol, Ethylhexylglycerin, Tocopherol (Vit E), Mi
 </div>
 <!-- Product Description End -->
 <!-- Product Reviews Start -->
-<form action="">
-    <div class="text-center">
+
+
+
+
+@if (Model.Reviews.Count == 0)
+{
+    <div id="leave-comment" class="text-center">
         <p class="fs-5">Все още няма отзиви</p>
         <p>Споделете вашите мисли. Бъдете първият, който ще остави отзив.</p>
-        <button id="leave-comment" class="btn btn-lg">Оставете отзив</button>
+        <a type="submit" asp-controller="Details" asp-action="AddReview" asp-route-productId="@Model.Id" class="btn btn-lg">Отзив</a>
     </div>
-    <div id="comment-product"
-         class="container p-5 mt-3 border rounded text-left w-50"
-         style="display: none">
-        <div class="row mb-3">
-            <div class="col">
-                <label for="userName" class="form-label small">Име* (това се появява публично)</label>
-                <input type="text"
-                       for="userName"
-                       class="form-control"
-                       aria-required="true"
-                       name="userName" />
-            </div>
-            <div class="col">
-                <label for="email" class="form-label small">Имейл* (това се появява публично)</label>
-                <input type="email"
-                       class="form-control"
-                       aria-required="true"
-                       name="email" />
-            </div>
-        </div>
-        <div class="row mb-3">
-            <label for="rate" class="form-label small">Добавяне на отзив*</label>
-            <div id="star-rating" class="d-flex fs-3" style="color: gold">
-                <input type="radio" id="star1" name="rate" value="1" hidden />
-                <label for="star1"><i class="fa-regular fa-star"></i></label>
-                <input type="radio" id="star2" name="rate" value="2" hidden />
-                <label for="star2"><i class="fa-regular fa-star"></i></label>
-                <input type="radio" id="star3" name="rate" value="3" hidden />
-                <label for="star3"><i class="fa-regular fa-star"></i></label>
-                <input type="radio" id="star4" name="rate" value="4" hidden />
-                <label for="star4"><i class="fa-regular fa-star"></i></label>
-                <input type="radio" id="star5" name="rate" value="5" hidden />
-                <label for="star5"><i class="fa-regular fa-star"></i></label>
-            </div>
-        </div>
-        <div class="mb-3">
-            <label for="title" class="form-label small">Заглавие на отзив*</label>
-            <input type="text"
-                   class="form-control"
-                   aria-required="true"
-                   name="title" />
-        </div>
-        <div class="mb-3">
-            <label for="comment" class="form-label small">Отзив*</label>
-            <textarea class="form-control"
-                      aria-required="true"
-                      rows="5"
-                      name="comment"></textarea>
-        </div>
-        <div class="row mb-3">
-            <input id="file-upload-1"
-                   type="file"
-                   class="form-control"
-                   name="attachment"
-                   accept="image/*, .pdf, .doc, .docx"
-                   style="display: none" />
-            <label for="file-upload-1"
-                   class="btn btn-image d-flex justify-content-center align-items-center m-3">
-                +
-            </label>
-            <input id="file-upload-2"
-                   type="file"
-                   class="form-control"
-                   name="attachment"
-                   accept="image/*, .pdf, .doc, .docx"
-                   style="display: none" />
-            <label for="file-upload-2"
-                   class="btn btn-image d-flex justify-content-center align-items-center m-3">
-                +
-            </label>
-            <input id="file-upload-3"
-                   type="file"
-                   class="form-control"
-                   name="attachment"
-                   accept="image/*, .pdf, .doc, .docx"
-                   style="display: none" />
-            <label for="file-upload-3"
-                   class="btn btn-image d-flex justify-content-center align-items-center m-3">
-                +
-            </label>
-        </div>
-        <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-lg btn-inverce">Отказ</button>
-            <button type="submit" class="btn btn-lg ms-3">Публикуване</button>
-        </div>
-    </div>
-</form>
+  
+}
+else
+{
+    <h1>review</h1>
+}
+    
+
 <!-- Product Reviews End -->
 <!-- Similar Products Start -->
 <div id="carousel-products"></div>

@@ -1,18 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LilsCareApp.Infrastructure.Data.Models
 {
     [Comment("App User")]
     public class AppUser : IdentityUser
     {
-        [Comment("Image App User")]
-        public int? ImageId { get; set; }
 
-        [ForeignKey(nameof(ImageId))]
-        [Comment("Navigation property to Image")]
-        public Image? Image { get; set; }
+        [Comment("The image of user")]
+        public string? ImagePath { get; set; }
 
         [Comment("Navigation property to AddressDelivery")]
         public List<AddressDelivery> AddressDelivery { get; set; } = new List<AddressDelivery>();
@@ -25,6 +21,9 @@ namespace LilsCareApp.Infrastructure.Data.Models
 
         [Comment("Navigation property to mapping table BagUser")]
         List<BagUser> BagsUsers { get; set; } = new List<BagUser>();
+
+        [Comment("Navigation property to Review")]
+        List<Review> Reviews { get; set; } = new List<Review>();
 
     }
 }

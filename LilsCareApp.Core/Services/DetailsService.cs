@@ -1,6 +1,7 @@
 ﻿using LilsCareApp.Core.Contracts;
 using LilsCareApp.Core.Models;
 using LilsCareApp.Infrastructure.Data;
+using LilsCareApp.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 
@@ -38,19 +39,22 @@ namespace LilsCareApp.Core.Services
                             ImagePath = im.ImagePath,
                             IsVideo = Regex.IsMatch(im.ImagePath, patternVideo, RegexOptions.IgnoreCase)
                         }).ToList(),
-                    Reviews = p.Reviews.Select(r => new ReviewDTO
-                    {
-                        Id = r.Id,
-                        AuthorName = r.AuthorName,
-                        Email = r.Email,
-                        Rating = r.Rating,
-                        Title = r.Title,
-                        Comment = r.Comment,
-                        CreatedOn = r.CreatedOn,
-                        ProductId = r.ProductId,
-                        AuthorId = r.AppUserId,
-                    })
-                        .ToList(),
+                    Reviews = p.Reviews
+                        .Select(r => new GetReviewDTO
+                        {
+                            ProductId = r.ProductId,
+                            AuthorName = r.Author.UserName,
+                            Rating = r.Rating,
+                            Title = r.Title,
+                            Comment = r.Comment,
+                            Images = r.Images
+                                .Select(im => new ImageDTO
+                                {
+                                    ImagePath = im.ImagePath,
+                                    IsVideo = Regex.IsMatch(im.ImagePath, patternVideo, RegexOptions.IgnoreCase)
+                                }).ToList(),
+                            CreatedOn = r.CreatedOn,
+                        }).ToList(),
                     ProductsCategories = p.ProductsCategories
                         .Where(pc => pc.ProductId == p.Id)
                         .Select(pc => new CategoryDTO
@@ -65,5 +69,69 @@ namespace LilsCareApp.Core.Services
 
             return details;
         }
+
+
+        public async Task AddReviewAsync(AddReviewDTO review)
+        {
+            if (await _context.Products.FindAsync(review.ProductId) == null)
+            {
+                return;
+            }
+
+            if (await _context.Users.FindAsync(review.AuthorId) == null)
+            {
+                return;
+            }
+
+            if (review.Stars.Count(s => s) == 0)
+            {
+                return;
+            }
+
+            var newReview = await _context.Reviews.FindAsync(review.ProductId, review.AuthorId);
+            if (newReview == null)
+            {
+                newReview = new Review
+                {
+                    ProductId = review.ProductId,
+                    AuthorId = review.AuthorId,
+                    Rating = review.Stars.Count(s => s),
+                    Title = review.Title,
+                    Comment = review.Comment,
+                    CreatedOn = DateTime.Now,
+                };
+                await _context.Reviews.AddAsync(newReview);
+            }
+            else
+            {
+                newReview.Rating = review.Stars.Count(s => s);
+                newReview.Title = review.Title;
+                newReview.Comment = review.Comment;
+                newReview.CreatedOn = DateTime.Now;
+                if (review.Images.Count > 0)
+                {
+                    _context.ImageReviews.RemoveRange(newReview.Images);
+                }
+            }
+
+            if (review.Images.Count > 0)
+            {
+                List<ImageReview> images = new List<ImageReview>();
+                foreach (var imagePath in review.Images)
+                {
+                    ImageReview newImage = new ImageReview
+                    {
+                        ImagePath = imagePath,
+                        AuthorId = review.AuthorId,
+                        ProductId = review.ProductId
+                    };
+                    images.Add(newImage);
+                }
+                await _context.ImageReviews.AddRangeAsync(images);
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

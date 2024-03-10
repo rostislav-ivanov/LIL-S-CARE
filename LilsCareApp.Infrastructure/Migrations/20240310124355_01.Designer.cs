@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LilsCareApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240309063712_01")]
+    [Migration("20240310124355_01")]
     partial class _01
     {
         /// <inheritdoc />
@@ -92,7 +92,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 1,
                             Address = "bul. Vitosha",
-                            AppUserId = "3827cc89-d232-4501-95f3-4a0588b55891",
+                            AppUserId = "95442f54-c945-4b30-8512-59a54e6b8634",
                             Country = "Bulgaria",
                             District = "Sofia",
                             FirstName = "Ivan",
@@ -105,7 +105,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 2,
                             Address = "bul. Vitosha",
-                            AppUserId = "3827cc89-d232-4501-95f3-4a0588b55891",
+                            AppUserId = "95442f54-c945-4b30-8512-59a54e6b8634",
                             Country = "Bulgaria",
                             District = "Sofia",
                             FirstName = "Petar",
@@ -135,9 +135,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("ImageId")
-                        .HasColumnType("int")
-                        .HasComment("Image App User");
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("The image of user");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -174,10 +174,6 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ImageId")
-                        .IsUnique()
-                        .HasFilter("[ImageId] IS NOT NULL");
-
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -194,15 +190,15 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3827cc89-d232-4501-95f3-4a0588b55891",
+                            Id = "95442f54-c945-4b30-8512-59a54e6b8634",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f37d9cca-39fc-45e0-a868-bf718290ffd4",
+                            ConcurrencyStamp = "bb61830d-f127-407e-a4c4-7e0bab1cc0a6",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "TEST@SOFTUNI.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJmzyFy+Fic4WQYxVvPaAPf0n72sOXv+HT8aCz0LX8PmtbtZW1dASPQJmDuFn7nmmg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJSKkkB0lF+IAstUjW4eMO/X4Gil0uoOGu+pnrK7+2NL3d7SDPRe/+mYtxaXYeWN1g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "df5bd741-1e2d-4f2a-9ff4-e09405f721a0",
+                            SecurityStamp = "e927bfe4-6230-4d3d-ae75-99cfa66853a1",
                             TwoFactorEnabled = false,
                             UserName = "test@softuni.bg"
                         });
@@ -234,19 +230,19 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            AppUserId = "3827cc89-d232-4501-95f3-4a0588b55891",
+                            AppUserId = "95442f54-c945-4b30-8512-59a54e6b8634",
                             ProductId = 1,
                             Quantity = 2
                         },
                         new
                         {
-                            AppUserId = "3827cc89-d232-4501-95f3-4a0588b55891",
+                            AppUserId = "95442f54-c945-4b30-8512-59a54e6b8634",
                             ProductId = 2,
                             Quantity = 3
                         },
                         new
                         {
-                            AppUserId = "3827cc89-d232-4501-95f3-4a0588b55891",
+                            AppUserId = "95442f54-c945-4b30-8512-59a54e6b8634",
                             ProductId = 3,
                             Quantity = 4
                         });
@@ -297,7 +293,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Image", b =>
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ImageProduct", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -306,33 +302,22 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("nvarchar(max)")
-                        .HasComment("The user id");
-
                     b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasMaxLength(2048)
                         .HasColumnType("nvarchar(2048)")
                         .HasComment("The path of the image");
 
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int")
-                        .HasComment("The product id");
-
-                    b.Property<int?>("ReviewId")
-                        .HasColumnType("int")
-                        .HasComment("The review id");
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("ReviewId");
-
-                    b.ToTable("Images", t =>
+                    b.ToTable("ImageProducts", t =>
                         {
-                            t.HasComment("The image of the product or review or user");
+                            t.HasComment("The image of the product");
                         });
 
                     b.HasData(
@@ -596,6 +581,39 @@ namespace LilsCareApp.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ImageReview", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("The image id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AuthorId")
+                        .HasColumnType("nvarchar(450)")
+                        .HasComment("The identifier of the author.");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)")
+                        .HasComment("The path of the image");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int")
+                        .HasComment("The identifier of the product.");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId", "AuthorId");
+
+                    b.ToTable("ImageReviews", t =>
+                        {
+                            t.HasComment("The image of the review");
+                        });
+                });
+
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.MessageFromClient", b =>
                 {
                     b.Property<int>("Id")
@@ -696,9 +714,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 1,
                             AddressDeliveryId = 1,
-                            AppUserId = "3827cc89-d232-4501-95f3-4a0588b55891",
-                            CreatedOn = new DateTime(2024, 3, 9, 6, 37, 10, 724, DateTimeKind.Utc).AddTicks(2944),
-                            DateShipping = new DateTime(2024, 3, 9, 6, 37, 10, 724, DateTimeKind.Utc).AddTicks(4550),
+                            AppUserId = "95442f54-c945-4b30-8512-59a54e6b8634",
+                            CreatedOn = new DateTime(2024, 3, 10, 12, 43, 52, 487, DateTimeKind.Utc).AddTicks(6436),
+                            DateShipping = new DateTime(2024, 3, 10, 12, 43, 52, 487, DateTimeKind.Utc).AddTicks(7917),
                             PaymentMethodId = 1,
                             ShippingProviderId = 1,
                             StatusOrderId = 1,
@@ -708,9 +726,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 2,
                             AddressDeliveryId = 2,
-                            AppUserId = "3827cc89-d232-4501-95f3-4a0588b55891",
-                            CreatedOn = new DateTime(2024, 3, 9, 6, 37, 10, 724, DateTimeKind.Utc).AddTicks(5750),
-                            DateShipping = new DateTime(2024, 3, 9, 6, 37, 10, 724, DateTimeKind.Utc).AddTicks(5753),
+                            AppUserId = "95442f54-c945-4b30-8512-59a54e6b8634",
+                            CreatedOn = new DateTime(2024, 3, 10, 12, 43, 52, 487, DateTimeKind.Utc).AddTicks(8970),
+                            DateShipping = new DateTime(2024, 3, 10, 12, 43, 52, 487, DateTimeKind.Utc).AddTicks(8974),
                             PaymentMethodId = 2,
                             ShippingProviderId = 2,
                             StatusOrderId = 2,
@@ -1058,22 +1076,13 @@ namespace LilsCareApp.Infrastructure.Migrations
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Review", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("ProductId")
                         .HasColumnType("int")
-                        .HasComment("The unique identifier of the review.");
+                        .HasComment("The identifier of the product.");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AppUserId")
+                    b.Property<string>("AuthorId")
                         .HasColumnType("nvarchar(450)")
-                        .HasComment("If the creator of review is Login. The identifier of the user that created the review.");
-
-                    b.Property<string>("AuthorName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasComment("The name of the author of the review.");
+                        .HasComment("The identifier of the user that created the review.");
 
                     b.Property<string>("Comment")
                         .HasMaxLength(1000)
@@ -1084,16 +1093,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasColumnType("datetime2")
                         .HasComment("The date when the review was created.");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasComment("The email of the author of the review.");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int")
-                        .HasComment("The identifier of the product.");
-
                     b.Property<int>("Rating")
                         .HasColumnType("int")
                         .HasComment("The rating of the review.");
@@ -1103,11 +1102,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasComment("The title of the review.");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductId", "AuthorId");
 
-                    b.HasIndex("AppUserId");
-
-                    b.HasIndex("ProductId");
+                    b.HasIndex("AuthorId");
 
                     b.ToTable("Reviews", t =>
                         {
@@ -1117,37 +1114,28 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            AppUserId = "3827cc89-d232-4501-95f3-4a0588b55891",
-                            AuthorName = "John Doe",
+                            ProductId = 2,
+                            AuthorId = "95442f54-c945-4b30-8512-59a54e6b8634",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 3, 9, 8, 37, 11, 213, DateTimeKind.Local).AddTicks(8653),
-                            Email = "john@doe.com",
-                            ProductId = 1,
+                            CreatedOn = new DateTime(2024, 3, 10, 14, 43, 53, 514, DateTimeKind.Local).AddTicks(7633),
                             Rating = 4,
                             Title = "Great product"
                         },
                         new
                         {
-                            Id = 2,
-                            AppUserId = "3827cc89-d232-4501-95f3-4a0588b55891",
-                            AuthorName = "John Doe 2",
+                            ProductId = 3,
+                            AuthorId = "95442f54-c945-4b30-8512-59a54e6b8634",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 3, 9, 8, 37, 11, 213, DateTimeKind.Local).AddTicks(8708),
-                            Email = "john@doe.com",
-                            ProductId = 1,
+                            CreatedOn = new DateTime(2024, 3, 10, 14, 43, 53, 514, DateTimeKind.Local).AddTicks(7693),
                             Rating = 3,
                             Title = "Great product"
                         },
                         new
                         {
-                            Id = 3,
-                            AppUserId = "3827cc89-d232-4501-95f3-4a0588b55891",
-                            AuthorName = "John Doe 3",
+                            ProductId = 4,
+                            AuthorId = "95442f54-c945-4b30-8512-59a54e6b8634",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 3, 9, 8, 37, 11, 213, DateTimeKind.Local).AddTicks(8712),
-                            Email = "john@doe.com",
-                            ProductId = 2,
+                            CreatedOn = new DateTime(2024, 3, 10, 14, 43, 53, 514, DateTimeKind.Local).AddTicks(7696),
                             Rating = 3,
                             Title = "Great product"
                         });
@@ -1292,17 +1280,17 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            AppUserId = "3827cc89-d232-4501-95f3-4a0588b55891",
+                            AppUserId = "95442f54-c945-4b30-8512-59a54e6b8634",
                             ProductId = 1
                         },
                         new
                         {
-                            AppUserId = "3827cc89-d232-4501-95f3-4a0588b55891",
+                            AppUserId = "95442f54-c945-4b30-8512-59a54e6b8634",
                             ProductId = 3
                         },
                         new
                         {
-                            AppUserId = "3827cc89-d232-4501-95f3-4a0588b55891",
+                            AppUserId = "95442f54-c945-4b30-8512-59a54e6b8634",
                             ProductId = 4
                         });
                 });
@@ -1453,15 +1441,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Navigation("AppUser");
                 });
 
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.AppUser", b =>
-                {
-                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.Image", "Image")
-                        .WithOne("AppUser")
-                        .HasForeignKey("LilsCareApp.Infrastructure.Data.Models.AppUser", "ImageId");
-
-                    b.Navigation("Image");
-                });
-
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.BagUser", b =>
                 {
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.AppUser", "AppUser")
@@ -1481,17 +1460,22 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Image", b =>
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ImageProduct", b =>
                 {
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.Product", "Product")
                         .WithMany("Images")
-                        .HasForeignKey("ProductId");
-
-                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.Review", "Review")
-                        .WithMany("Images")
-                        .HasForeignKey("ReviewId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ImageReview", b =>
+                {
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.Review", "Review")
+                        .WithMany("Images")
+                        .HasForeignKey("ProductId", "AuthorId");
 
                     b.Navigation("Review");
                 });
@@ -1582,9 +1566,11 @@ namespace LilsCareApp.Infrastructure.Migrations
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Review", b =>
                 {
-                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.AppUser", "AppUser")
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.AppUser", "Author")
                         .WithMany()
-                        .HasForeignKey("AppUserId");
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.Product", "Product")
                         .WithMany("Reviews")
@@ -1592,7 +1578,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AppUser");
+                    b.Navigation("Author");
 
                     b.Navigation("Product");
                 });
@@ -1691,11 +1677,6 @@ namespace LilsCareApp.Infrastructure.Migrations
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Category", b =>
                 {
                     b.Navigation("ProductsCategories");
-                });
-
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Image", b =>
-                {
-                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Order", b =>

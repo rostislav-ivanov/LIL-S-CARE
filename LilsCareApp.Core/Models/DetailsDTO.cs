@@ -11,23 +11,25 @@
 
         public int AvailableQuantity { get; set; }
 
-        public string? Weight { get; set; }
+        public string Weight { get; set; } = string.Empty;
 
-        public string? Purpose { get; set; }
+        public string Purpose { get; set; } = string.Empty;
 
-        public string? Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
-        public string? IngredientINCIs { get; set; }
+        public string IngredientINCIs { get; set; } = string.Empty;
 
-        public string? Ingredients { get; set; }
+        public string Ingredients { get; set; } = string.Empty;
 
-        public List<ImageDTO>? Images { get; set; }
+        public List<ImageDTO> Images { get; set; } = new List<ImageDTO>();
 
-        public List<ReviewDTO>? Reviews { get; set; }
+        public List<GetReviewDTO> Reviews { get; set; } = new List<GetReviewDTO>();
 
         public List<CategoryDTO> ProductsCategories { get; set; } = new List<CategoryDTO>();
 
         public bool IsWish { get; set; }
+
+        public AddReviewDTO? AddReview { get; set; }
 
     }
 }

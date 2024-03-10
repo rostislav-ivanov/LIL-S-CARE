@@ -34,6 +34,8 @@
             public const int EmailMaxLength = 200;
             public const int TitleMaxLength = 200;
             public const int CommentMaxLength = 1000;
+            public const int RatingMinValue = 1;
+            public const int RatingMaxValue = 5;
         }
 
         public static class StatusOrder
