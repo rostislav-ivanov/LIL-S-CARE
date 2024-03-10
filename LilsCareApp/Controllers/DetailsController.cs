@@ -6,6 +6,7 @@ using System.Security.Claims;
 
 namespace LilsCareApp.Controllers
 {
+
     public class DetailsController : BaseController
     {
         private readonly IDetailsService _service;

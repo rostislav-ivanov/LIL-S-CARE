@@ -25,6 +25,8 @@
 
         public List<GetReviewDTO> Reviews { get; set; } = new List<GetReviewDTO>();
 
+        public double Rating { get; set; }
+
         public List<CategoryDTO> ProductsCategories { get; set; } = new List<CategoryDTO>();
 
         public bool IsWish { get; set; }
