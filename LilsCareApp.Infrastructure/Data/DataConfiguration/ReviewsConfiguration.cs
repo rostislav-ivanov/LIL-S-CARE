@@ -11,39 +11,30 @@ namespace LilsCareApp.Infrastructure.Data
         {
             new Review
             {
-                Id = 1,
-                AuthorName = "John Doe",
-                Email = "john@doe.com",
                 Rating = 4,
                 Title = "Great product",
                 Comment = "Great product, I love it!",
                 CreatedOn = DateTime.Now,
-                ProductId = 1,
-                AppUserId = ConfigurationHelper.AppUser.Id,
+                ProductId = 2,
+                AuthorId = ConfigurationHelper.AppUser.Id,
             },
             new Review
             {
-                Id = 2,
-                AuthorName = "John Doe 2",
-                Email = "john@doe.com",
                 Rating = 3,
                 Title = "Great product",
                 Comment = "Great product, I love it!",
                 CreatedOn = DateTime.Now,
-                ProductId = 1,
-                AppUserId = ConfigurationHelper.AppUser.Id,
+                ProductId = 3,
+                AuthorId = ConfigurationHelper.AppUser.Id,
             },
-                        new Review
+            new Review
             {
-                Id = 3,
-                AuthorName = "John Doe 3",
-                Email = "john@doe.com",
                 Rating = 3,
                 Title = "Great product",
                 Comment = "Great product, I love it!",
                 CreatedOn = DateTime.Now,
-                ProductId = 2,
-                AppUserId = ConfigurationHelper.AppUser.Id,
+                ProductId = 4,
+                AuthorId = ConfigurationHelper.AppUser.Id,
             },
         };
         public void Configure(EntityTypeBuilder<Review> builder)

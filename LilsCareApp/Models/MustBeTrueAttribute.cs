@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static LilsCareApp.Models.ErrorMessageConstants;
+using static LilsCareApp.Core.ErrorMessageConstants;
 
 namespace LilsCareApp.Models
 {

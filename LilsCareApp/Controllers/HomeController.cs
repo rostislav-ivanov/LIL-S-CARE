@@ -19,6 +19,7 @@ namespace LilsCareApp.Controllers
             _service = service;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             ViewBag.UserId = User.GetUserId();

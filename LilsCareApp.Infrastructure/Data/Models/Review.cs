@@ -1,25 +1,27 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using static LilsCareApp.Infrastructure.DataConstants.Review;
 
 namespace LilsCareApp.Infrastructure.Data.Models
 {
     [Comment("This class represents a review of a product.")]
+    [PrimaryKey(nameof(ProductId), nameof(AuthorId))]
     public class Review
     {
-        [Comment("The unique identifier of the review.")]
-        [Key]
-        public int Id { get; set; }
 
-        [Comment("The name of the author of the review.")]
-        [Required]
-        [MaxLength(AuthorNameMaxLength)]
-        public required string AuthorName { get; set; }
+        [Comment("The identifier of the product.")]
+        public int ProductId { get; set; }
 
-        [Comment("The email of the author of the review.")]
-        [Required]
-        [MaxLength(EmailMaxLength)]
-        public required string Email { get; set; }
+        [Comment("The product that the review is for.")]
+        public Product Product { get; set; } = null!;
+
+        [Comment("The identifier of the user that created the review.")]
+        public string? AuthorId { get; set; }
+
+        [Comment("The user that created the review.")]
+        [ForeignKey(nameof(AuthorId))]
+        public AppUser? Author { get; set; }
 
         [Comment("The rating of the review.")]
         public int Rating { get; set; }
@@ -33,21 +35,9 @@ namespace LilsCareApp.Infrastructure.Data.Models
         public string? Comment { get; set; }
 
         [Comment("The images of the review.")]
-        public List<Image>? Images { get; set; }
+        public List<ImageReview>? Images { get; set; }
 
         [Comment("The date when the review was created.")]
         public DateTime CreatedOn { get; set; }
-
-        [Comment("The identifier of the product.")]
-        public int ProductId { get; set; }
-
-        [Comment("The product that the review is for.")]
-        public Product Product { get; set; } = null!;
-
-        [Comment("If the creator of review is Login. The identifier of the user that created the review.")]
-        public string? AppUserId { get; set; }
-
-        [Comment("The user that created the review.")]
-        public AppUser? AppUser { get; set; }
     }
 }

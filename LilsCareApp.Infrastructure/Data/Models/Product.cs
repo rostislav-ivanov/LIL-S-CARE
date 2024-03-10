@@ -44,7 +44,7 @@ namespace LilsCareApp.Infrastructure.Data.Models
         public string? Ingredients { get; set; }
 
         [Comment("Navigation Property to product's images")]
-        public List<Image>? Images { get; set; }
+        public List<ImageProduct>? Images { get; set; }
 
         [Comment("Navigation property to the product's Reviews")]
         public List<Review>? Reviews { get; set; }

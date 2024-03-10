@@ -7,5 +7,15 @@ namespace System.Security.Claims
         {
             return claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
         }
+
+        public static string GetUserName(this ClaimsPrincipal claimsPrincipal)
+        {
+            return claimsPrincipal.FindFirstValue(ClaimTypes.Name);
+        }
+
+        public static string GetUserEmail(this ClaimsPrincipal claimsPrincipal)
+        {
+            return claimsPrincipal.FindFirstValue(ClaimTypes.Email);
+        }
     }
 }

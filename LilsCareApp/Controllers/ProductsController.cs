@@ -15,6 +15,7 @@ namespace LilsCareApp.Controllers
             _service = service;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Index(int id = 0)
         {
             string userId = User.GetUserId();
@@ -69,17 +70,7 @@ namespace LilsCareApp.Controllers
             return RedirectToAction(nameof(Index), "Products");
         }
 
-        //public async Task<IActionResult> RemoveFromCart(int id)
-        //{
-        //    string userId = User.GetUserId();
-
-        //    await _service.RemoveFromCartAsync(id, userId);
-
-        //    TempData["ShowBag"] = "show";
-
-        //    return RedirectToAction(nameof(Index), "Products");
-        //}
-
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteProductFromCart(int id)
         {
             string userId = User.GetUserId();
