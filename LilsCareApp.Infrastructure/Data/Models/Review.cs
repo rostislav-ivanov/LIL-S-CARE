@@ -11,19 +11,22 @@ namespace LilsCareApp.Infrastructure.Data.Models
     {
 
         [Comment("The identifier of the product.")]
+        [Required]
         public int ProductId { get; set; }
 
         [Comment("The product that the review is for.")]
         public Product Product { get; set; } = null!;
 
         [Comment("The identifier of the user that created the review.")]
-        public string? AuthorId { get; set; }
+        [Required]
+        public required string AuthorId { get; set; }
 
         [Comment("The user that created the review.")]
         [ForeignKey(nameof(AuthorId))]
-        public AppUser? Author { get; set; }
+        public AppUser Author { get; set; } = null!;
 
         [Comment("The rating of the review.")]
+        [Required]
         public int Rating { get; set; }
 
         [Comment("The title of the review.")]

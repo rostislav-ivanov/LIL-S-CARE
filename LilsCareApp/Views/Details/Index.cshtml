@@ -279,9 +279,26 @@ else
                 </span>
                 <span class="ms-2">@Model.Rating.ToString("0.0") | @Model.Reviews.Count() отзива</span>
             </div>
-            <button class="btn">
-                <i class="fa fa-check me-2"></i>Даден е отзив. Вижте вашия отзив
-            </button>
+            @if(User.Identity?.IsAuthenticated ?? false)
+            {
+                @if(Model.Reviews.Any(r => r.AuthorName == User.Identity.Name))
+                {
+                    <a type="submit" asp-controller="Details" asp-action="AddReview" asp-route-productId="@Model.Id" class="btn btn-lg">
+                        <i class="fa fa-check me-2"></i>Даден е отзив. Вижте вашия отзив
+                    </a>
+                }
+                else
+                {
+                    <a type="submit" asp-controller="Details" asp-action="AddReview" asp-route-productId="@Model.Id" class="btn btn-lg">Отзив</a>
+                }
+            }
+            else
+            {
+                <span>За да дадете отзив, моля за
+                    <a type="submit" asp-controller="Details" asp-action="AddReview" asp-route-productId="@Model.Id" 
+                        style="color: rgb(var(--app-btn-bg))">вход</a>
+                </span>
+            }
         </div>
         <p class="ms-2 fs-5">@Model.Reviews.Count() отзива</p>
         <div class="col-lg">

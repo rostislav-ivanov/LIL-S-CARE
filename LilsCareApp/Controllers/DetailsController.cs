@@ -19,7 +19,7 @@ namespace LilsCareApp.Controllers
         public async Task<IActionResult> Index(int id)
         {
             string userId = User.GetUserId();
-            DetailsDTO details = await _service.GetDetailsById(id, userId);
+            DetailsDTO details = await _service.GetDetailsByIdAsync(id, userId);
             if (details == null)
             {
                 return NotFound();
@@ -32,22 +32,24 @@ namespace LilsCareApp.Controllers
         public async Task<IActionResult> AddReview(int productId)
         {
             string userId = User.GetUserId();
-            DetailsDTO details = await _service.GetDetailsById(productId, userId);
-            var review = new AddReviewDTO
+
+            AddReviewDTO? review = await _service.GetReviewByIdAsync(productId, userId);
+            if (review == null)
             {
-                ProductId = details.Id,
-                ProductName = details.Name,
-                ProductImage = details.Images[0].ImagePath,
-                AuthorId = User.GetUserId(),
-                AuthorName = User.GetUserName(),
-                Email = User.GetUserEmail(),
-            };
+                return BadRequest();
+            }
+
             return View(review);
         }
 
         [HttpPost]
         public async Task<IActionResult> AddReview(AddReviewDTO review)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(review);
+            }
+
             long size = 0;
             var files = Request.Form.Files;
             review.Images = new List<string>();  // Create a list of ImageDTO objects

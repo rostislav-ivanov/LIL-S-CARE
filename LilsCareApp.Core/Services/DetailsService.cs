@@ -16,7 +16,7 @@ namespace LilsCareApp.Core.Services
             _context = context;
         }
 
-        public async Task<DetailsDTO> GetDetailsById(int productId, string appUserId)
+        public async Task<DetailsDTO> GetDetailsByIdAsync(int productId, string appUserId)
         {
             string patternVideo = @"\.mp(4)?$";
             var details = await _context.Products
@@ -27,11 +27,11 @@ namespace LilsCareApp.Core.Services
                     Price = p.Price,
                     Quantity = 1,
                     AvailableQuantity = p.Quantity,
-                    Weight = p.Weight,
-                    Purpose = p.Purpose,
-                    Description = p.Description,
-                    IngredientINCIs = p.IngredientINCIs,
-                    Ingredients = p.Ingredients,
+                    Weight = p.Weight ?? string.Empty,
+                    Purpose = p.Purpose ?? string.Empty,
+                    Description = p.Description ?? string.Empty,
+                    IngredientINCIs = p.IngredientINCIs ?? string.Empty,
+                    Ingredients = p.Ingredients ?? string.Empty,
                     Images = p.Images
                         .Where(im => im.ProductId == p.Id)
                         .Select(im => new ImageDTO
@@ -43,7 +43,7 @@ namespace LilsCareApp.Core.Services
                         .Select(r => new GetReviewDTO
                         {
                             ProductId = r.ProductId,
-                            AuthorName = r.Author.UserName,
+                            AuthorName = r.Author.UserName ?? string.Empty,
                             Rating = r.Rating,
                             Title = r.Title,
                             Comment = r.Comment,
@@ -54,7 +54,9 @@ namespace LilsCareApp.Core.Services
                                     IsVideo = Regex.IsMatch(im.ImagePath, patternVideo, RegexOptions.IgnoreCase)
                                 }).ToList(),
                             CreatedOn = r.CreatedOn,
-                        }).ToList(),
+                        })
+                        .OrderByDescending(r => r.CreatedOn)
+                        .ToList(),
                     Rating = p.Reviews.Count > 0 ? p.Reviews.Average(r => r.Rating) : 0,
                     ProductsCategories = p.ProductsCategories
                         .Where(pc => pc.ProductId == p.Id)
@@ -134,5 +136,62 @@ namespace LilsCareApp.Core.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task<AddReviewDTO?> GetReviewByIdAsync(int productId, string userId)
+        {
+            if (await _context.Products.FindAsync(productId) == null)
+            {
+                return null;
+            }
+
+            if (await _context.Users.FindAsync(userId) == null)
+            {
+                return null;
+            }
+
+            AddReviewDTO? review = await _context.Reviews
+                .Where(r => r.ProductId == productId && r.AuthorId == userId)
+                .Select(r => new AddReviewDTO
+                {
+                    ProductId = r.ProductId,
+                    ProductName = r.Product.Name,
+                    ProductImage = r.Product.Images.FirstOrDefault().ImagePath,
+                    AuthorId = r.AuthorId,
+                    AuthorName = r.Author.UserName ?? string.Empty,
+                    Email = r.Author.Email ?? string.Empty,
+                    Title = r.Title,
+                    Comment = r.Comment,
+                    Images = r.Images.Select(i => i.ImagePath).ToList(),
+                    Stars = new bool[6],
+                    Rating = r.Rating
+                })
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+            if (review is null)
+            {
+                review = await _context.Products
+                    .Where(p => p.Id == productId)
+                    .Select(p => new AddReviewDTO
+                    {
+                        ProductId = p.Id,
+                        ProductName = p.Name,
+                        ProductImage = p.Images.FirstOrDefault().ImagePath,
+                        AuthorId = userId,
+                        AuthorName = _context.Users.Find(userId).UserName ?? string.Empty,
+                        Email = _context.Users.Find(userId).Email ?? string.Empty,
+                        Stars = new bool[6],
+                        Rating = 0
+                    })
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync();
+            }
+
+            for (int i = 0; i <= review.Rating; i++)
+            {
+                review.Stars[i] = true;
+            }
+
+            return review;
+        }
     }
 }
