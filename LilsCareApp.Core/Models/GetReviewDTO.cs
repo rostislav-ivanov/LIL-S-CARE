@@ -6,6 +6,10 @@
 
         public required string AuthorName { get; set; }
 
+        public string? AuthorEmail { get; set; }
+
+        public string? AuthorImage { get; set; }
+
         public int Rating { get; set; }
 
         public string? Title { get; set; }

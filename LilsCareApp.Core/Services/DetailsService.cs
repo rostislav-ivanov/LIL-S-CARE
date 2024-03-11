@@ -44,6 +44,8 @@ namespace LilsCareApp.Core.Services
                         {
                             ProductId = r.ProductId,
                             AuthorName = r.Author.UserName ?? string.Empty,
+                            AuthorEmail = r.Author.Email ?? string.Empty,
+                            AuthorImage = r.Author.ImagePath,
                             Rating = r.Rating,
                             Title = r.Title,
                             Comment = r.Comment,
@@ -73,70 +75,7 @@ namespace LilsCareApp.Core.Services
             return details;
         }
 
-
-        public async Task AddReviewAsync(AddReviewDTO review)
-        {
-            if (await _context.Products.FindAsync(review.ProductId) == null)
-            {
-                return;
-            }
-
-            if (await _context.Users.FindAsync(review.AuthorId) == null)
-            {
-                return;
-            }
-
-            if (review.Stars.Count(s => s) == 0)
-            {
-                return;
-            }
-
-            var newReview = await _context.Reviews.FindAsync(review.ProductId, review.AuthorId);
-            if (newReview == null)
-            {
-                newReview = new Review
-                {
-                    ProductId = review.ProductId,
-                    AuthorId = review.AuthorId,
-                    Rating = review.Stars.Count(s => s),
-                    Title = review.Title,
-                    Comment = review.Comment,
-                    CreatedOn = DateTime.Now,
-                };
-                await _context.Reviews.AddAsync(newReview);
-            }
-            else
-            {
-                newReview.Rating = review.Stars.Count(s => s);
-                newReview.Title = review.Title;
-                newReview.Comment = review.Comment;
-                newReview.CreatedOn = DateTime.Now;
-                if (review.Images.Count > 0)
-                {
-                    _context.ImageReviews.RemoveRange(newReview.Images);
-                }
-            }
-
-            if (review.Images.Count > 0)
-            {
-                List<ImageReview> images = new List<ImageReview>();
-                foreach (var imagePath in review.Images)
-                {
-                    ImageReview newImage = new ImageReview
-                    {
-                        ImagePath = imagePath,
-                        AuthorId = review.AuthorId,
-                        ProductId = review.ProductId
-                    };
-                    images.Add(newImage);
-                }
-                await _context.ImageReviews.AddRangeAsync(images);
-            }
-
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task<AddReviewDTO?> GetReviewByIdAsync(int productId, string userId)
+        public async Task<AddReviewDTO?> GetReviewAsync(int productId, string userId)
         {
             if (await _context.Products.FindAsync(productId) == null)
             {
@@ -161,7 +100,6 @@ namespace LilsCareApp.Core.Services
                     Title = r.Title,
                     Comment = r.Comment,
                     Images = r.Images.Select(i => i.ImagePath).ToList(),
-                    Stars = new bool[6],
                     Rating = r.Rating
                 })
                 .AsNoTracking()
@@ -179,19 +117,76 @@ namespace LilsCareApp.Core.Services
                         AuthorId = userId,
                         AuthorName = _context.Users.Find(userId).UserName ?? string.Empty,
                         Email = _context.Users.Find(userId).Email ?? string.Empty,
-                        Stars = new bool[6],
                         Rating = 0
                     })
                     .AsNoTracking()
                     .FirstOrDefaultAsync();
             }
 
-            for (int i = 0; i <= review.Rating; i++)
+            for (int i = 0; i < review.Rating; i++)
             {
                 review.Stars[i] = true;
             }
 
             return review;
+        }
+
+        public async Task SaveReviewAsync(AddReviewDTO review)
+        {
+            if (await _context.Products.FindAsync(review.ProductId) == null)
+            {
+                return;
+            }
+
+            if (await _context.Users.FindAsync(review.AuthorId) == null)
+            {
+                return;
+            }
+
+            var newReview = await _context.Reviews.FindAsync(review.ProductId, review.AuthorId);
+            if (newReview == null)
+            {
+                newReview = new Review
+                {
+                    ProductId = review.ProductId,
+                    AuthorId = review.AuthorId,
+                    Rating = review.Rating,
+                    Title = review.Title,
+                    Comment = review.Comment,
+                    CreatedOn = DateTime.Now,
+                };
+                await _context.Reviews.AddAsync(newReview);
+            }
+            else
+            {
+                newReview.Rating = review.Rating;
+                newReview.Title = review.Title;
+                newReview.Comment = review.Comment;
+                newReview.CreatedOn = DateTime.Now;
+            }
+
+            if (review.Images.Count > 0)
+            {
+                var oldImages = await _context.ImageReviews
+                    .Where(i => i.ProductId == review.ProductId && i.AuthorId == review.AuthorId)
+                    .ToListAsync();
+                _context.ImageReviews.RemoveRange(oldImages);
+
+                List<ImageReview> images = new List<ImageReview>();
+                foreach (var imagePath in review.Images)
+                {
+                    ImageReview newImage = new ImageReview
+                    {
+                        ImagePath = imagePath,
+                        AuthorId = review.AuthorId,
+                        ProductId = review.ProductId
+                    };
+                    images.Add(newImage);
+                }
+                await _context.ImageReviews.AddRangeAsync(images);
+            }
+
+            await _context.SaveChangesAsync();
         }
     }
 }

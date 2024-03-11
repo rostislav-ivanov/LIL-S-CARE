@@ -1,4 +1,8 @@
-﻿namespace LilsCareApp.Core.Models
+﻿using System.ComponentModel.DataAnnotations;
+using static LilsCareApp.Core.ErrorMessageConstants;
+using static LilsCareApp.Infrastructure.DataConstants.Review;
+
+namespace LilsCareApp.Core.Models
 {
     public class AddReviewDTO
     {
@@ -21,8 +25,9 @@
 
         public List<string> Images { get; set; } = new List<string>();
 
-        public bool[] Stars { get; set; } = { false, false, false, false, false, false };
+        public bool[] Stars { get; set; } = { false, false, false, false, false };
 
+        [Range(RatingMinValue, RatingMaxValue, ErrorMessage = RatingRange)]
         public int Rating { get; set; }
     }
 }
