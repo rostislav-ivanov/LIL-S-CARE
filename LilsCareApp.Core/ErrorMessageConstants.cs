@@ -7,5 +7,7 @@
         public const string DurationRange = "The {0} must be between {1} and {2}";
         public const string ConfirmAgreementPrivacyPolicy = "Потвърдете съгласието с политиката за поверителност.";
         public const string EmailAddress = "Невалиден имейл адрес.";
+        public const string RatingRange = "Моля, дайте вашата оценка!";
+        public const string RequireRating = "Моля, дайте вашата оценка!";
     }
 }

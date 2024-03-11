@@ -17,7 +17,8 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
 
             AppUser user = new AppUser
             {
-                UserName = "test@softuni.bg",
+                UserName = "Test SoftUni",
+                Email = "test@softuni.bg",
                 NormalizedUserName = "TEST@SOFTUNI.BG"
             };
 

@@ -89,7 +89,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 1,
                             Address = "bul. Vitosha",
-                            AppUserId = "95442f54-c945-4b30-8512-59a54e6b8634",
+                            AppUserId = "18cdfdd5-b6e8-41eb-a5d2-cd50dd09b87c",
                             Country = "Bulgaria",
                             District = "Sofia",
                             FirstName = "Ivan",
@@ -102,7 +102,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 2,
                             Address = "bul. Vitosha",
-                            AppUserId = "95442f54-c945-4b30-8512-59a54e6b8634",
+                            AppUserId = "18cdfdd5-b6e8-41eb-a5d2-cd50dd09b87c",
                             Country = "Bulgaria",
                             District = "Sofia",
                             FirstName = "Petar",
@@ -187,15 +187,15 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "95442f54-c945-4b30-8512-59a54e6b8634",
+                            Id = "18cdfdd5-b6e8-41eb-a5d2-cd50dd09b87c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bb61830d-f127-407e-a4c4-7e0bab1cc0a6",
+                            ConcurrencyStamp = "6026820e-74df-45ef-8393-1f4d60107ec2",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "TEST@SOFTUNI.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJSKkkB0lF+IAstUjW4eMO/X4Gil0uoOGu+pnrK7+2NL3d7SDPRe/+mYtxaXYeWN1g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELyPFrwiPkuUP4zLqoy0oWmEDLbSVCtTj19hL48dSOOH3/WSlaguBV6bxJoE2QuOZw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e927bfe4-6230-4d3d-ae75-99cfa66853a1",
+                            SecurityStamp = "13926e40-6a21-4677-95de-78e674023d06",
                             TwoFactorEnabled = false,
                             UserName = "test@softuni.bg"
                         });
@@ -227,19 +227,19 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            AppUserId = "95442f54-c945-4b30-8512-59a54e6b8634",
+                            AppUserId = "18cdfdd5-b6e8-41eb-a5d2-cd50dd09b87c",
                             ProductId = 1,
                             Quantity = 2
                         },
                         new
                         {
-                            AppUserId = "95442f54-c945-4b30-8512-59a54e6b8634",
+                            AppUserId = "18cdfdd5-b6e8-41eb-a5d2-cd50dd09b87c",
                             ProductId = 2,
                             Quantity = 3
                         },
                         new
                         {
-                            AppUserId = "95442f54-c945-4b30-8512-59a54e6b8634",
+                            AppUserId = "18cdfdd5-b6e8-41eb-a5d2-cd50dd09b87c",
                             ProductId = 3,
                             Quantity = 4
                         });
@@ -711,9 +711,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 1,
                             AddressDeliveryId = 1,
-                            AppUserId = "95442f54-c945-4b30-8512-59a54e6b8634",
-                            CreatedOn = new DateTime(2024, 3, 10, 12, 43, 52, 487, DateTimeKind.Utc).AddTicks(6436),
-                            DateShipping = new DateTime(2024, 3, 10, 12, 43, 52, 487, DateTimeKind.Utc).AddTicks(7917),
+                            AppUserId = "18cdfdd5-b6e8-41eb-a5d2-cd50dd09b87c",
+                            CreatedOn = new DateTime(2024, 3, 11, 14, 32, 10, 316, DateTimeKind.Utc).AddTicks(3916),
+                            DateShipping = new DateTime(2024, 3, 11, 14, 32, 10, 316, DateTimeKind.Utc).AddTicks(5335),
                             PaymentMethodId = 1,
                             ShippingProviderId = 1,
                             StatusOrderId = 1,
@@ -723,9 +723,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 2,
                             AddressDeliveryId = 2,
-                            AppUserId = "95442f54-c945-4b30-8512-59a54e6b8634",
-                            CreatedOn = new DateTime(2024, 3, 10, 12, 43, 52, 487, DateTimeKind.Utc).AddTicks(8970),
-                            DateShipping = new DateTime(2024, 3, 10, 12, 43, 52, 487, DateTimeKind.Utc).AddTicks(8974),
+                            AppUserId = "18cdfdd5-b6e8-41eb-a5d2-cd50dd09b87c",
+                            CreatedOn = new DateTime(2024, 3, 11, 14, 32, 10, 316, DateTimeKind.Utc).AddTicks(6400),
+                            DateShipping = new DateTime(2024, 3, 11, 14, 32, 10, 316, DateTimeKind.Utc).AddTicks(6403),
                             PaymentMethodId = 2,
                             ShippingProviderId = 2,
                             StatusOrderId = 2,
@@ -1112,27 +1112,27 @@ namespace LilsCareApp.Infrastructure.Migrations
                         new
                         {
                             ProductId = 2,
-                            AuthorId = "95442f54-c945-4b30-8512-59a54e6b8634",
+                            AuthorId = "18cdfdd5-b6e8-41eb-a5d2-cd50dd09b87c",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 3, 10, 14, 43, 53, 514, DateTimeKind.Local).AddTicks(7633),
+                            CreatedOn = new DateTime(2024, 3, 11, 16, 32, 11, 129, DateTimeKind.Local).AddTicks(1227),
                             Rating = 4,
                             Title = "Great product"
                         },
                         new
                         {
                             ProductId = 3,
-                            AuthorId = "95442f54-c945-4b30-8512-59a54e6b8634",
+                            AuthorId = "18cdfdd5-b6e8-41eb-a5d2-cd50dd09b87c",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 3, 10, 14, 43, 53, 514, DateTimeKind.Local).AddTicks(7693),
+                            CreatedOn = new DateTime(2024, 3, 11, 16, 32, 11, 129, DateTimeKind.Local).AddTicks(1313),
                             Rating = 3,
                             Title = "Great product"
                         },
                         new
                         {
                             ProductId = 4,
-                            AuthorId = "95442f54-c945-4b30-8512-59a54e6b8634",
+                            AuthorId = "18cdfdd5-b6e8-41eb-a5d2-cd50dd09b87c",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 3, 10, 14, 43, 53, 514, DateTimeKind.Local).AddTicks(7696),
+                            CreatedOn = new DateTime(2024, 3, 11, 16, 32, 11, 129, DateTimeKind.Local).AddTicks(1316),
                             Rating = 3,
                             Title = "Great product"
                         });
@@ -1277,17 +1277,17 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            AppUserId = "95442f54-c945-4b30-8512-59a54e6b8634",
+                            AppUserId = "18cdfdd5-b6e8-41eb-a5d2-cd50dd09b87c",
                             ProductId = 1
                         },
                         new
                         {
-                            AppUserId = "95442f54-c945-4b30-8512-59a54e6b8634",
+                            AppUserId = "18cdfdd5-b6e8-41eb-a5d2-cd50dd09b87c",
                             ProductId = 3
                         },
                         new
                         {
-                            AppUserId = "95442f54-c945-4b30-8512-59a54e6b8634",
+                            AppUserId = "18cdfdd5-b6e8-41eb-a5d2-cd50dd09b87c",
                             ProductId = 4
                         });
                 });

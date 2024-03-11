@@ -11,14 +11,14 @@ radioButtons.forEach(function (radioButton) {
 function updateStarRating(rating) {
     const stars = starRating.querySelectorAll("label");
     stars.forEach(function (star, index) {
-        if (index < rating) {
+        if (index <= rating) {
             star.innerHTML = '<i class="fa-solid fa-star"></i>';
         } else {
             star.innerHTML = '<i class="fa-regular fa-star"></i>';
         }
     });
     radioButtons.forEach(function (input, index) {
-        if (index < rating) {
+        if (index <= rating) {
             input.checked = true;
         } else {
             input.checked = false;

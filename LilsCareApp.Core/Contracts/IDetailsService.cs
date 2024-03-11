@@ -5,7 +5,7 @@ namespace LilsCareApp.Core.Contracts
     public interface IDetailsService
     {
         Task<DetailsDTO> GetDetailsByIdAsync(int productId, string appUserId);
-        Task AddReviewAsync(AddReviewDTO review);
-        Task<AddReviewDTO?> GetReviewByIdAsync(int productId, string userId);
+        Task SaveReviewAsync(AddReviewDTO review);
+        Task<AddReviewDTO?> GetReviewAsync(int productId, string userId);
     }
 }

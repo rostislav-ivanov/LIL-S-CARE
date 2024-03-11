@@ -3,6 +3,8 @@ using LilsCareApp.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using static LilsCareApp.Core.ErrorMessageConstants;
+using static LilsCareApp.Infrastructure.DataConstants.Review;
 
 namespace LilsCareApp.Controllers
 {
@@ -25,6 +27,8 @@ namespace LilsCareApp.Controllers
                 return NotFound();
             }
 
+            ViewBag.UserId = userId;
+
             return View(details);
         }
 
@@ -33,7 +37,7 @@ namespace LilsCareApp.Controllers
         {
             string userId = User.GetUserId();
 
-            AddReviewDTO? review = await _service.GetReviewByIdAsync(productId, userId);
+            AddReviewDTO? review = await _service.GetReviewAsync(productId, userId);
             if (review == null)
             {
                 return BadRequest();
@@ -45,6 +49,16 @@ namespace LilsCareApp.Controllers
         [HttpPost]
         public async Task<IActionResult> AddReview(AddReviewDTO review)
         {
+            review.Rating = review.Stars.Count(s => s);
+
+            if (review.Rating < RatingMinValue || review.Rating > RatingMaxValue)
+            {
+                ModelState.AddModelError(nameof(review.Rating), RequireRating);
+                return View(review);
+            }
+
+            ModelState.Remove(nameof(review.Rating));
+
             if (!ModelState.IsValid)
             {
                 return View(review);
@@ -61,19 +75,20 @@ namespace LilsCareApp.Controllers
                 {
                     // Generate a unique filename using the current date and time
                     string fileName = $"{DateTime.Now:yyyyMMddHHmmssfff}_{Path.GetFileName(formFile.FileName)}";
-                    var uploadDirectory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "files", "reviews");
-                    var filePath = Path.Combine(uploadDirectory, fileName);
-                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    var filePath = Path.Combine("files", "reviews", fileName);
+                    var uploadDirectory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", filePath);
+
+                    using (var stream = new FileStream(uploadDirectory, FileMode.Create))
                     {
                         await formFile.CopyToAsync(stream);
                     }
 
                     size += formFile.Length;
-                    review.Images.Add(filePath);
+                    review.Images.Add("\\" + filePath);
                 }
             }
             review.AuthorId = User.GetUserId();
-            await _service.AddReviewAsync(review);
+            await _service.SaveReviewAsync(review);
 
             return RedirectToAction(nameof(Index), "Details", new { id = review.ProductId });
         }
