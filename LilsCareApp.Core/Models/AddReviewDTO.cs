@@ -22,5 +22,7 @@
         public List<string> Images { get; set; } = new List<string>();
 
         public bool[] Stars { get; set; } = { false, false, false, false, false, false };
+
+        public int Rating { get; set; }
     }
 }
