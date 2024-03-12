@@ -26,7 +26,7 @@ namespace LilsCareApp.Core.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task MessageFromClientAsync(MessageFromClientDTO message)
+        public async Task MessageFromClientAsync(ContactUsDTO message)
         {
             var x = new MessageFromClient
             {
