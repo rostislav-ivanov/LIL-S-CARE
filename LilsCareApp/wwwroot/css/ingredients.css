@@ -1,19 +1,18 @@
-#carouselId .carousel-caption {
-  font: var(--font_7);
-  color: rgb(var(--color_2));
-  background-color: rgb(var(--color_1));
-  opacity: 0.6;
-  width: 500px;
-  height: 160px;
-  padding: 10px;
-  margin-bottom: 0;
-  position: absolute;
-  left: 50px;
-  top: 100%;
-  transition: top 2s;
+.carousel-caption {
+    color: black;
+    background-color: white;
+    opacity: 0.6;
+    width: 500px;
+    height: 160px;
+    padding: 10px;
+    margin-bottom: 0;
+    position: absolute;
+    left: 50px;
+    top: 100%;
+    transition: top 2s;
 }
 
-#carouselId .carousel-caption.show {
-  top: 5%;
-  transition: top 2s;
-}
+    .carousel-caption.show {
+        top: 5%;
+        transition: top 2s;
+    }

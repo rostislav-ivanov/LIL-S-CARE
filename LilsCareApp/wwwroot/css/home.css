@@ -1,4 +1,4 @@
-#carouselId .carousel-caption {
+.carousel-caption {
     color: black;
     background-color: white;
     opacity: 0.6;
@@ -12,10 +12,10 @@
     transition: top 2s;
 }
 
-    #carouselId .carousel-caption.show {
+.carousel-caption.show {
         top: 5%;
         transition: top 2s;
-    }
+ }
 
 #article-2 .img-transition {
     position: absolute;
