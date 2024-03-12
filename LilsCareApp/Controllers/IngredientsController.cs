@@ -25,6 +25,15 @@ namespace LilsCareApp.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet]
+        public IActionResult AddToSubscribers()
+        {
+            var subscriber = new SubscriberDTO();
+
+            return View(subscriber);
+        }
+
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> AddToSubscribers(SubscriberDTO subscriber)
         {
