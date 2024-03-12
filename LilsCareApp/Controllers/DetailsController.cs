@@ -66,8 +66,7 @@ namespace LilsCareApp.Controllers
 
             long size = 0;
             var files = Request.Form.Files;
-            review.Images = new List<string>();  // Create a list of ImageDTO objects
-
+            int i = 0;
             foreach (var formFile in files)
             {
 
@@ -84,7 +83,7 @@ namespace LilsCareApp.Controllers
                     }
 
                     size += formFile.Length;
-                    review.Images.Add("\\" + filePath);
+                    review.Images[i++].ImagePath = ("\\" + filePath);
                 }
             }
             review.AuthorId = User.GetUserId();

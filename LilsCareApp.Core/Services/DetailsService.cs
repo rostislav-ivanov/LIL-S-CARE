@@ -10,6 +10,7 @@ namespace LilsCareApp.Core.Services
     public class DetailsService : IDetailsService
     {
         private readonly ApplicationDbContext _context;
+        private const string patternVideo = @"\.mp(4)?$";
 
         public DetailsService(ApplicationDbContext context)
         {
@@ -18,7 +19,7 @@ namespace LilsCareApp.Core.Services
 
         public async Task<DetailsDTO> GetDetailsByIdAsync(int productId, string appUserId)
         {
-            string patternVideo = @"\.mp(4)?$";
+
             var details = await _context.Products
                 .Select(p => new DetailsDTO
                 {
@@ -54,7 +55,7 @@ namespace LilsCareApp.Core.Services
                                 {
                                     ImagePath = im.ImagePath,
                                     IsVideo = Regex.IsMatch(im.ImagePath, patternVideo, RegexOptions.IgnoreCase)
-                                }).ToList(),
+                                }).ToArray(),
                             CreatedOn = r.CreatedOn,
                         })
                         .OrderByDescending(r => r.CreatedOn)
@@ -99,7 +100,15 @@ namespace LilsCareApp.Core.Services
                     Email = r.Author.Email ?? string.Empty,
                     Title = r.Title,
                     Comment = r.Comment,
-                    Images = r.Images.Select(i => i.ImagePath).ToList(),
+                    Images = r.Images
+                        .Select(im => new ImageDTO
+                        {
+                            Id = im.Id,
+                            ImagePath = im.ImagePath,
+                            IsVideo = Regex.IsMatch(im.ImagePath, patternVideo, RegexOptions.IgnoreCase)
+                        })
+                        .OrderBy(im => im.Id)
+                        .ToArray(),
                     Rating = r.Rating
                 })
                 .AsNoTracking()
@@ -117,7 +126,7 @@ namespace LilsCareApp.Core.Services
                         AuthorId = userId,
                         AuthorName = _context.Users.Find(userId).UserName ?? string.Empty,
                         Email = _context.Users.Find(userId).Email ?? string.Empty,
-                        Rating = 0
+                        Rating = 0,
                     })
                     .AsNoTracking()
                     .FirstOrDefaultAsync();
@@ -144,6 +153,7 @@ namespace LilsCareApp.Core.Services
             }
 
             var newReview = await _context.Reviews.FindAsync(review.ProductId, review.AuthorId);
+
             if (newReview == null)
             {
                 newReview = new Review
@@ -155,6 +165,7 @@ namespace LilsCareApp.Core.Services
                     Comment = review.Comment,
                     CreatedOn = DateTime.Now,
                 };
+
                 await _context.Reviews.AddAsync(newReview);
             }
             else
@@ -165,25 +176,27 @@ namespace LilsCareApp.Core.Services
                 newReview.CreatedOn = DateTime.Now;
             }
 
-            if (review.Images.Count > 0)
-            {
-                var oldImages = await _context.ImageReviews
-                    .Where(i => i.ProductId == review.ProductId && i.AuthorId == review.AuthorId)
-                    .ToListAsync();
-                _context.ImageReviews.RemoveRange(oldImages);
 
-                List<ImageReview> images = new List<ImageReview>();
-                foreach (var imagePath in review.Images)
+            if (review.Images.Any(im => im.ImagePath != string.Empty))
+            {
+                List<ImageReview> imageReview = await _context.ImageReviews
+                    .Where(ir => ir.AuthorId == review.AuthorId && ir.ProductId == review.ProductId)
+                    .ToListAsync();
+                if (imageReview.Any())
                 {
-                    ImageReview newImage = new ImageReview
-                    {
-                        ImagePath = imagePath,
-                        AuthorId = review.AuthorId,
-                        ProductId = review.ProductId
-                    };
-                    images.Add(newImage);
+                    _context.ImageReviews.RemoveRange(imageReview);
                 }
-                await _context.ImageReviews.AddRangeAsync(images);
+
+                List<ImageReview> newImageReview = review.Images
+                    .Select(im => new ImageReview
+                    {
+                        ImagePath = im.ImagePath,
+                        ProductId = review.ProductId,
+                        AuthorId = review.AuthorId
+                    })
+                    .ToList();
+
+                await _context.ImageReviews.AddRangeAsync(newImageReview);
             }
 
             await _context.SaveChangesAsync();
