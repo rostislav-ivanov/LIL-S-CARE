@@ -18,7 +18,7 @@ namespace LilsCareApp.Core.Services
         {
             await _context.Subscribers.AddAsync(new Subscriber
             {
-                Email = subscriber.Email,
+                Email = subscriber.EmailSubscriber,
                 DateAdded = DateTime.Now,
                 AppUserId = subscriber.AppUserId
             });

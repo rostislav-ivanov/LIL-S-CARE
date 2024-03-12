@@ -1,4 +1,4 @@
-﻿@model HomeViewModel
+﻿@model SubscriberDTO
 @{
 }
 <section id="add-to-subscribers" class="container w-50 text-center">
@@ -23,7 +23,7 @@
                 <div class="d-flex justify-content-between">
                     <small>
                         Съгласен съм
-                        <a href="./terms-conditions.html"
+                    <a asp-controller="TermsConditions"
                            target="_blank"
                            style="color: rgb(var(--app-btn-bg))">условията</a>
                     </small>

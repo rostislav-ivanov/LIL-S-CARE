@@ -43,7 +43,7 @@ namespace LilsCareApp.Controllers
 
             SubscriberDTO subscriber = new SubscriberDTO
             {
-                Email = model.EmailSubscriber,
+                EmailSubscriber = model.EmailSubscriber,
                 AppUserId = User.GetUserId() ?? "guestUser"
             };
 
