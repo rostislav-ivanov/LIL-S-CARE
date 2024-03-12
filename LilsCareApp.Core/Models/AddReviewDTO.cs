@@ -23,7 +23,12 @@ namespace LilsCareApp.Core.Models
 
         public string? Comment { get; set; }
 
-        public List<string> Images { get; set; } = new List<string>();
+        public ImageDTO[] Images { get; set; } =
+            {
+                new ImageDTO() { ImagePath = string.Empty},
+                new ImageDTO() { ImagePath = string.Empty},
+                new ImageDTO() { ImagePath = string.Empty}
+            };
 
         public bool[] Stars { get; set; } = { false, false, false, false, false };
 

@@ -16,7 +16,7 @@
 
         public string? Comment { get; set; }
 
-        public List<ImageDTO>? Images { get; set; }
+        public ImageDTO[] Images { get; set; } = new ImageDTO[3];
 
         public DateTime CreatedOn { get; set; }
 

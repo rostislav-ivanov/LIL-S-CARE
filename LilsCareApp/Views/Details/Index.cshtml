@@ -336,13 +336,27 @@ else
                             <div class="d-flex justify-content-start mt-2 align-items-center">
                                 @foreach (var image in review.Images)
                                 {
-                                    <span class="pe-2">
-                                        <img src="@image.ImagePath"
-                                             width="100px"
-                                             height="100px"
-                                             style="object-fit: cover"
-                                             alt="" />
-                                    </span>
+                                    @if(image.ImagePath != string.Empty && !image.IsVideo)
+                                    {
+                                        <span class="pe-2">
+                                            <img src="@image.ImagePath"
+                                                 width="100px"
+                                                 height="100px"
+                                                 style="object-fit: cover"
+                                                 alt="" />
+                                        </span>
+                                    }
+                                    else if (image.ImagePath != string.Empty && image.IsVideo)
+                                    {
+                                        <span>
+                                            <video controls
+                                                   width="100px"
+                                                   height="100px"
+                                                   style="width: 100%; object-fit: cover">
+                                                <source src="@image.ImagePath" type="video/mp4" />
+                                            </video>
+                                        </span>
+                                    }
                                 }
                             </div>
                         </div>
