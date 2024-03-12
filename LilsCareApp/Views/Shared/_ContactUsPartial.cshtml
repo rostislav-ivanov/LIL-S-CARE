@@ -1,0 +1,64 @@
+﻿@model ContactUsDTO
+@{
+}
+
+<h2 class="h1">ПОПИТАЙ НИ</h2>
+<p class="fs-6 mb-0">
+    за продуктите, персонални предложения или споделете мнение. Твоето
+    изживяване винаги ще е най-важнто за нас.
+</p>
+<div class="d-flex justify-content-center">
+    <div style="width: 60%">
+        <div>
+            <input asp-for="FirstName" type="name"
+                   class="form-control"
+                   placeholder="Име*"
+                   name="FirstName" />
+        </div>
+        <span asp-validation-for="@Model.FirstName" class="text-danger" style="font-size: 12px"></span>
+        <div class="px-0 my-3">
+            <input asp-for="LastName" type="name"
+                   class="form-control"
+                   placeholder="Фамилия"
+                   name="LastName" />
+        </div>
+        <div>
+            <input asp-for="EmailForResponse" type="email"
+                   class="form-control"
+                   placeholder="Емайл*"
+                   name="EmailForResponse" />
+        </div>
+        <span asp-validation-for="@Model.EmailForResponse" class="text-danger" style="; font-size: 12px"></span>
+        <button type="submit"
+                class="btn btn-primary mt-3"
+                style="width: 100%">
+            Изпрати
+        </button>
+        <div class="form-check" style="font-size: 14px">
+            <label class="form-check-label">
+                <input asp-for="PrivacyPolicy" type="checkbox"
+                       class="form-check-input"
+                       name="PrivacyPolicy"
+                       data-val="true"
+                       data-val-mustbetrue="Потвърдете съгласието с политиката за поверителност." />
+                Съгласенсен съм с&nbsp;
+                <a asp-controller="TermsConditions" style="color: rgb(var(--app-btn-bg))"
+                   target="_blank">
+                    условията
+                </a>
+            </label>
+        </div>
+        <span asp-validation-for="@Model.PrivacyPolicy" class="text-danger" style="font: var(--font_9); font-size: 12px"></span>
+    </div>
+    <div style="width: 40%; padding-left: 15px">
+        <textarea asp-for="Message" class="form-control"
+                  rows="9"
+                  name="Message"
+                  placeholder="Напишете съобщение..."></textarea>
+        <span asp-validation-for="@Model.Message" class="text-danger" style="font-size: 12px"></span>
+        <label for="comment"
+               style="font-size: 14px">
+            Изпращаме имейл 1 до 2 пъти месечно.
+        </label>
+    </div>
+</div>

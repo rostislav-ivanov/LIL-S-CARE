@@ -5,7 +5,7 @@ namespace LilsCareApp.Core.Contracts
     public interface ILilsCareService
     {
         Task AddToSubscribersAsync(SubscriberDTO subscriber);
-        Task MessageFromClientAsync(MessageFromClientDTO message);
+        Task MessageFromClientAsync(ContactUsDTO message);
 
     }
 }

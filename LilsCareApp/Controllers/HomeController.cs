@@ -68,7 +68,7 @@ namespace LilsCareApp.Controllers
                 return View("Index");
             }
 
-            MessageFromClientDTO message = new MessageFromClientDTO
+            ContactUsDTO message = new ContactUsDTO
             {
                 FirstName = model.FirstName,
                 LastName = model.LastName,

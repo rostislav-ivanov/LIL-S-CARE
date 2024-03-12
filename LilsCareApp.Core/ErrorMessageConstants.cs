@@ -1,6 +1,6 @@
 ﻿namespace LilsCareApp.Core
 {
-    public class ErrorMessageConstants
+    public static class ErrorMessageConstants
     {
         public const string Required = "Моля, въведете {0}!";
         public const string StringLength = "The {0} must be at least {2} and at most {1} characters long";
