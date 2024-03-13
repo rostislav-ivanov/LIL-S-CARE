@@ -11,8 +11,8 @@ namespace LilsCareApp.Core.Contracts
         Task RemoveFromWishAsync(int productId, string userId);
         Task<IEnumerable<ProductsInBagDTO>> GetProductsInBagAsync(string userId);
         Task AddToCartAsync(int productId, string userId, int quantity);
-        //Task RemoveFromCartAsync(int productId, string userId);
         Task<int> GetCountInBagAsync(string userId);
         Task DeleteProductFromCartAsync(int id, string userId);
+        Task<CartDTO> GetProductsInCartAsync(string userId);
     }
 }

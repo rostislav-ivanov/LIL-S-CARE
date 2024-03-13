@@ -2,6 +2,11 @@
 {
     public static class DataConstants
     {
+        public static class AppConstants
+        {
+            public const decimal FreeShipping = 35.00m;
+        }
+
         public static class Product
         {
             public const int NameMinLength = 3;
