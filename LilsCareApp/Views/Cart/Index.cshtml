@@ -1,3 +1,159 @@
-﻿@{
+﻿@model CartDTO
+@{
+    ViewData["Title"] = "ПОРЪЧКА";
 }
-<h1>Cart</h1>
+@section Styles {
+    <link rel="stylesheet" href="~/css/card.css" />
+}
+
+<div class="container">
+    <div class="row">
+        <!-- My Order Start-->
+        <div class="col-lg-8">
+            <h5 class="my-4">Моята количка</h5>
+            <hr class="my-4" />
+
+                @foreach (var product in Model.Products)
+                {
+                    <!-- Product Start -->
+                    <div class="row mb-4">
+                        <div class="col-md-5 col-lg-3 col-xl-3">
+                            <div class="product-img">
+                                <a asp-controller="Details" asp-action="Index" asp-route-id="@product.Id">
+                                    <img src="@product.ImageUrl"
+                                         class="img-fluid w-100"
+                                         alt="" />
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-7 col-lg-9 col-xl-9">
+                            <div>
+                                <p>@product.Name</p>
+                                <p>@product.Weight</p>
+                                <p>Цена: @product.Price лв.</p>
+                                <div class="d-flex justify-content-start align-items-center my-2">
+                                    <form asp-controller="Cart" asp-action="AddToCart" asp-route-productId="@product.Id"
+                                          method="post">
+                                        <input type="hidden" name="quantity" value="-1" />
+                                        <button type="submit"
+                                                class="btn btn-inverce my-2" style="border: none">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </form>
+                                    <span class="mx-2"> @product.Quantity</span>
+                                    <form asp-controller="Cart" asp-action="AddToCart" asp-route-productId="@product.Id"
+                                          method="post">
+                                        <input type="hidden" name="quantity" value="1" />
+                                        <button type="submit"
+                                                class="btn btn-inverce my-2" style="border: none">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <a asp-controller="Cart" asp-action="DeleteProductFromCart" asp-route-id="@product.Id" class="nav-link">
+                                    <i class="fas fa-trash-alt me-2"></i>Извади от количка
+                                </a>
+                                <p class="mb-0">
+                                    <span><strong>@(product.Sum.ToString("F2")) лв.</strong></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="mb-4" />
+                    <!-- Product End-->
+                }
+
+
+
+
+
+            <a href="#"
+               class="nav-link mb-4"
+               data-bs-toggle="collapse"
+               data-bs-target="#promo-code">
+                <i class="fa-solid fa-tag me-1"></i>Въведете промо код
+            </a>
+            <div id="promo-code" class="collapse w-50">
+                <input for="promo-code"
+                       type="text"
+                       class="form-control my-1"
+                       name="promo-code"
+                       placeholder="напр.SUMMERSALE20" />
+                <a href="#" class="btn w-100 my-2">Приложи</a>
+            </div>
+
+            <a href="#"
+               class="nav-link mb-4"
+               data-bs-toggle="collapse"
+               data-bs-target="#notes">
+                <i class="fa-regular fa-file-lines me-2"></i>Добавяне на бележка
+            </a>
+            <div id="notes" class="collapse">
+                <textarea class="form-control w-75"
+                          rows="5"
+                          id="comment"
+                          name="text"
+                          placeholder="Инструкции? Специални заявки? Добавете ги тук."
+                          style="opacity: 0.7"></textarea>
+            </div>
+        </div>
+        <!-- My Order End -->
+        <!-- Order Summary Start-->
+        <div class="col-lg-4">
+            <h5 class="my-4">Резюме на поръчката</h5>
+            <hr class="my-4" />
+            <div class="d-flex justify-content-between my-3">
+                <span>Междина сума :</span>
+                <span><strong>@Model.SubTotal.ToString("F2") лв.</strong></span>
+            </div>
+            <div style="display: block">
+                <div class="d-flex justify-content-between my-3">
+                    <span>Промо код :</span>
+                    <span><strong>-10,00 лв.</strong></span>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between my-3">
+                <div class="w-75">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Изберете доставчик</a>
+                        <ul class="dropdown-menu">
+                            <li>
+                            @foreach (var shippingProvider in Model.ShippingProviders)
+                            {
+                                    <a asp-route-shippingProviderId="@shippingProvider.Id" class="dropdown-item">@shippingProvider.Name - @shippingProvider.Price.ToString("F2") лв.</a>
+                            }
+                            </li>
+                        </ul>
+
+
+@*                     <select asp-for="@Model.ShippingProviderId" class="form-select">
+                        <option disabled selected value="">Изберете доставчик</option>
+                        @foreach (var shippingProvider in Model.ShippingProviders)
+                        {
+                            <a asp-action="Index" value="@shippingProvider.Id">@shippingProvider.Name</a>
+                        }
+                    </select> *@
+                </div>
+                    <span><strong>@Model.ShippingPrice.ToString("F2") лв.</strong></span>
+            </div>
+            <hr class="my-4" />
+            <div class="d-flex justify-content-between my-3 fs-4">
+                <span>Общо :</span>
+                <span>@Model.Total.ToString("F2") лв.</span>
+            </div>
+            <a asp-controller="Checkout" asp-action="Index" class="btn w-100 mt-4">Закупуване</a>
+        </div>
+        <!-- Order Summary End -->
+    </div>
+</div>
+
+}
+@section Scripts {
+    <!-- Validation form fields on client -->
+    <partial name="_ValidationScriptsPartial" />
+
+    <!-- Custom validation for the form -->
+    <script src="~/js/customValidations.js"></script>
+
+}

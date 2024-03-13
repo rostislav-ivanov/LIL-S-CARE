@@ -157,26 +157,6 @@ namespace LilsCareApp.Core.Services
             await _context.SaveChangesAsync();
         }
 
-        //public async Task RemoveFromCartAsync(int productId, string userId)
-        //{
-        //    var bagUser = _context.BagsUsers.FirstOrDefault(bu => bu.ProductId == productId && bu.AppUserId == userId);
-        //    if (bagUser is null)
-        //    {
-        //        return;
-        //    }
-
-        //    if (bagUser.Quantity > 1)
-        //    {
-        //        bagUser.Quantity -= 1;
-        //    }
-        //    else
-        //    {
-        //        _context.BagsUsers.Remove(bagUser);
-        //    }
-
-        //    await _context.SaveChangesAsync();
-        //}
-
         public async Task DeleteProductFromCartAsync(int productId, string userId)
         {
             var bagUser = _context.BagsUsers.FirstOrDefault(bu => bu.ProductId == productId && bu.AppUserId == userId);
@@ -198,5 +178,40 @@ namespace LilsCareApp.Core.Services
             return count;
         }
 
+        public async Task<CartDTO> GetProductsInCartAsync(string userId)
+        {
+
+
+            CartDTO cart = new CartDTO()
+            {
+                Products = await _context.BagsUsers
+                    .Where(bu => bu.AppUserId == userId)
+                    .Select(bu => new ProductInCartDTO
+                    {
+                        Id = bu.Product.Id,
+                        Name = bu.Product.Name,
+                        Price = bu.Product.Price,
+                        Weight = bu.Product.Weight,
+                        ImageUrl = bu.Product.Images.FirstOrDefault().ImagePath,
+                        Quantity = bu.Quantity
+                    })
+                    .AsNoTracking()
+                    .ToListAsync(),
+
+                ShippingProviders = await _context.ShippingProviders
+                    .Select(sp => new ShippingProviderDTO
+                    {
+                        Id = sp.Id,
+                        Name = sp.Name,
+                        Price = sp.Price,
+                        Description = sp.Description
+                    })
+                    .AsNoTracking()
+                    .ToListAsync(),
+                ShippingProviderId = 2
+            };
+
+            return cart;
+        }
     }
 }
