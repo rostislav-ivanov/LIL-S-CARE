@@ -26,6 +26,15 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = ".YourApp.Session";
+                options.IdleTimeout = TimeSpan.FromMinutes(20); // Session timeout duration
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true; // This is required for essential services to function properly
+            });
+
             return services;
         }
 

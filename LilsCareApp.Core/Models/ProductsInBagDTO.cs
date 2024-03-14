@@ -4,9 +4,11 @@
     {
         public int Id { get; set; }
         public required string Name { get; set; }
-        public decimal Price { get; set; }
-        public required string ImageUrl { get; set; } = "https://via.placeholder.com/150";
 
+        public string? Weight { get; set; }
+
+        public decimal Price { get; set; }
+        public string? ImageUrl { get; set; }
         public int Quantity { get; set; }
     }
 }

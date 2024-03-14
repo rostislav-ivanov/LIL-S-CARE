@@ -5,7 +5,7 @@
 }
 
 .product-img img {
-  height: 100px;
+  height: 150px;
   object-fit: cover;
   object-position: 0% 50%;
   transition: 0.5s;

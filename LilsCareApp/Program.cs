@@ -26,6 +26,9 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+// Enable session middleware
+app.UseSession();
+
 app.MapDefaultControllerRoute();
 app.MapRazorPages();
 
