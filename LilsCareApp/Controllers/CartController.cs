@@ -9,10 +9,10 @@ namespace LilsCareApp.Controllers
 {
     public class CartController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<CartController> _logger;
         private readonly IProductsService _service;
 
-        public CartController(ILogger<HomeController> logger, IProductsService service)
+        public CartController(ILogger<CartController> logger, IProductsService service)
         {
             _logger = logger;
             _service = service;
