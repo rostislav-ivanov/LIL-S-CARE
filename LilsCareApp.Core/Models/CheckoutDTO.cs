@@ -1,4 +1,6 @@
-﻿namespace LilsCareApp.Core.Models
+﻿using static LilsCareApp.Infrastructure.DataConstants.AppConstants;
+
+namespace LilsCareApp.Core.Models
 {
     public class CheckoutDTO
     {
@@ -7,11 +9,22 @@
 
         public ShippingProviderDTO? ShippingProvider { get; set; }
 
-        public int ShippingProviderId { get; set; }
-
         public IEnumerable<ShippingProviderDTO> ShippingProviders { get; set; } = new List<ShippingProviderDTO>();
 
         public IEnumerable<ProductsInBagDTO> ProductsInBag { get; set; } = new List<ProductsInBagDTO>();
 
+        public decimal SubTotal() => ProductsInBag.Sum(p => p.Quantity * p.Price);
+
+        public decimal? ShippingPrice()
+        {
+            if (SubTotal() >= FreeShipping)
+            {
+                return 0;
+            }
+            else
+            {
+                return ShippingProvider?.Price;
+            }
+        }
     }
 }

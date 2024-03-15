@@ -31,11 +31,9 @@ namespace LilsCareApp.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost]
         public IActionResult SelectShippingProvider(int shippingProviderId)
         {
             CheckoutDTO checkout = JsonConvert.DeserializeObject<CheckoutDTO>(HttpContext.Session.GetString("Checkout"));
-            checkout.ShippingProviderId = shippingProviderId;
             checkout.ShippingProvider = checkout.ShippingProviders.FirstOrDefault(sp => sp.Id == shippingProviderId);
             HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
 
@@ -43,7 +41,6 @@ namespace LilsCareApp.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost]
         public IActionResult EditShippingProvider()
         {
             CheckoutDTO checkout = JsonConvert.DeserializeObject<CheckoutDTO>(HttpContext.Session.GetString("Checkout"));
@@ -73,6 +70,50 @@ namespace LilsCareApp.Controllers
             string userId = User.GetUserId();
             await _service.DeleteProductFromCartAsync(id, userId);
             checkout.ProductsInBag = await _service.GetProductsInBagAsync(userId);
+            HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
+
+            return View(nameof(Index), checkout);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> AddressDeliveryToOffice(AddressDeliveryDTO addressDelivery)
+        {
+            CheckoutDTO checkout = JsonConvert.DeserializeObject<CheckoutDTO>(HttpContext.Session.GetString("Checkout"));
+            checkout.AddressDelivery = addressDelivery;
+            if (!ModelState.IsValid)
+            {
+                return View(nameof(Index), checkout);
+            }
+            checkout.AddressDelivery = addressDelivery;
+
+            HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
+
+            return View(nameof(Index), checkout);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> AddressDeliveryToAddress(AddressDeliveryDTO addressDelivery)
+        {
+            CheckoutDTO checkout = JsonConvert.DeserializeObject<CheckoutDTO>(HttpContext.Session.GetString("Checkout"));
+            checkout.AddressDelivery = addressDelivery;
+            if (!ModelState.IsValid)
+            {
+                return View(nameof(Index), checkout);
+            }
+            checkout.AddressDelivery = addressDelivery;
+
+            HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
+
+            return View(nameof(Index), checkout);
+        }
+
+        [AllowAnonymous]
+        public IActionResult EditAddressDelivery()
+        {
+            CheckoutDTO checkout = JsonConvert.DeserializeObject<CheckoutDTO>(HttpContext.Session.GetString("Checkout"));
+            checkout.AddressDelivery = null;
             HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
 
             return View(nameof(Index), checkout);
