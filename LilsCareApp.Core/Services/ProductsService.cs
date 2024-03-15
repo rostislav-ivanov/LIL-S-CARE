@@ -291,7 +291,8 @@ namespace LilsCareApp.Core.Services
                     Id = sp.Id,
                     Name = sp.Name,
                     Price = sp.Price,
-                    Description = sp.Description
+                    Description = sp.Description,
+                    IsDeliveryToAddress = sp.IsDeliveryToAddress
                 })
                 .AsNoTracking()
                 .ToListAsync();

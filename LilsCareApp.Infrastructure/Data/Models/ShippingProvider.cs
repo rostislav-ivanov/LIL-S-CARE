@@ -26,5 +26,8 @@ namespace LilsCareApp.Infrastructure.Data.Models
 
         [Comment("Description duration of shipping")]
         public string? Description { get; set; }
+
+        [Comment("Is delivery to address")]
+        public bool IsDeliveryToAddress { get; set; }
     }
 }

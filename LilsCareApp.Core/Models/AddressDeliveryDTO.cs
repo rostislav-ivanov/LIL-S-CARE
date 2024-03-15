@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using static LilsCareApp.Core.ErrorMessageConstants;
 using static LilsCareApp.Infrastructure.DataConstants.AddressDelivery;
-
 namespace LilsCareApp.Core.Models
 {
     public class AddressDeliveryDTO
@@ -10,17 +10,24 @@ namespace LilsCareApp.Core.Models
         [Comment("Address Id")]
         public int Id { get; set; }
 
-        [MaxLength(FirstNameMaxLength)]
         [Comment("First Name Recipient")]
-        public string? FirstName { get; set; }
+        [Required(ErrorMessage = Required)]
+        [MaxLength(FirstNameMaxLength)]
+        [Display(Name = "име")]
+        public string FirstName { get; set; } = string.Empty;
 
-        [MaxLength(LastNameMaxLength)]
         [Comment("Last Name Recipient")]
-        public string? LastName { get; set; }
+        [Required(ErrorMessage = Required)]
+        [MaxLength(LastNameMaxLength)]
+        [Display(Name = "фамилия")]
+        public string LastName { get; set; } = string.Empty;
 
-        [MaxLength(PhoneNumberMaxLength)]
         [Comment("Phone Number Recipient")]
-        public string? PhoneNumber { get; set; }
+        [Required(ErrorMessage = Required)]
+        [MaxLength(PhoneNumberMaxLength)]
+        [RegularExpression(PhoneNumberPattern, ErrorMessage = InvalidPhoneNumber)]
+        [Display(Name = "телефонен номер")]
+        public string PhoneNumber { get; set; } = string.Empty;
 
         [MaxLength(PostCodeMaxLength)]
         [Comment("Post Code")]
@@ -44,6 +51,9 @@ namespace LilsCareApp.Core.Models
 
         [Comment("App User Id")]
         public string? AppUserId { get; set; }
+
+        [Comment("Email Address")]
+        public string Email { get; set; } = string.Empty;
 
     }
 }
