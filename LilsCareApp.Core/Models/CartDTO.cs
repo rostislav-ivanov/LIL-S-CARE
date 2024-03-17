@@ -1,4 +1,6 @@
-﻿namespace LilsCareApp.Core.Models
+﻿using LilsCareApp.Core.Models.Checkout;
+
+namespace LilsCareApp.Core.Models
 {
     public class CartDTO
     {

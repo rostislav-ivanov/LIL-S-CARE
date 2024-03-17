@@ -11,18 +11,12 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
             new ShippingProvider
             {
                 Id = 1,
-                Name = "До офис Еконт / Спиди",
-                Price = 6.50m,
-                Description = "2-3 работни дни",
-                IsDeliveryToAddress = false
+                Name = "Еконт",
             },
             new ShippingProvider
             {
                 Id = 2,
-                Name = "До адрес - Еконт" ,
-                Price = 8.50m,
-                Description = "2-3 работни дни",
-                IsDeliveryToAddress = true
+                Name = "Спиди"
             },
         };
 

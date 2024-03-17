@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using static LilsCareApp.Core.ErrorMessageConstants;
 using static LilsCareApp.Infrastructure.DataConstants.AddressDelivery;
-namespace LilsCareApp.Core.Models
+namespace LilsCareApp.Core.Models.Checkout
 {
-    public class AddressDeliveryDTO
+    public class AddressDeliveryDTO : IDeliveryDTO
     {
         [Key]
         [Comment("Address Id")]
@@ -57,8 +57,6 @@ namespace LilsCareApp.Core.Models
         [Display(Name = "телефонен номер")]
         public string? PhoneNumber { get; set; }
 
-        [Comment("App User Id")]
-        public string? AppUserId { get; set; }
 
         [Comment("Email Address not required")]
         [MaxLength(EmailNumberMaxLength)]
@@ -66,9 +64,11 @@ namespace LilsCareApp.Core.Models
         [Display(Name = "имейл")]
         public string? Email { get; set; }
 
+        public ShippingProviderDTO? ShippingProvider { get; set; }
+
         public bool IsValid { get; set; } = false;
 
-        public decimal Price { get; set; } = 8.50m;
+
 
     }
 }

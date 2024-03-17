@@ -3,16 +3,17 @@ using System.ComponentModel.DataAnnotations;
 using static LilsCareApp.Core.ErrorMessageConstants;
 using static LilsCareApp.Infrastructure.DataConstants.AddressDelivery;
 
-namespace LilsCareApp.Core.Models
+namespace LilsCareApp.Core.Models.Checkout
 {
-    public class OfficeDeliveryDTO
+    public class OfficeDeliveryDTO : IDeliveryDTO
     {
         public int Id { get; set; }
-        public int DeliverId { get; set; }
+        public ShippingProviderDTO? ShippingProvider { get; set; }
 
-        public OfficeDTO? Office { get; set; }
+        public ShippingOfficeDTO? ShippingOffice { get; set; }
 
-        public List<OfficeDTO> Offices { get; set; } = new List<OfficeDTO>();
+        public List<ShippingProviderDTO>? ShippingProviders { get; set; }
+
 
         [Comment("First Name Recipient")]
         [Required(ErrorMessage = Required)]

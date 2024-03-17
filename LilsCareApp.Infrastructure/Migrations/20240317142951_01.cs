@@ -17,39 +17,19 @@ namespace LilsCareApp.Infrastructure.Migrations
                 name: "AspNetUsers",
                 comment: "App User");
 
+            migrationBuilder.AddColumn<int>(
+                name: "DefaultAddressDeliveryId",
+                table: "AspNetUsers",
+                type: "int",
+                nullable: true,
+                comment: "Default Address Delivery Id");
+
             migrationBuilder.AddColumn<string>(
                 name: "ImagePath",
                 table: "AspNetUsers",
                 type: "nvarchar(max)",
                 nullable: true,
                 comment: "The image of user");
-
-            migrationBuilder.CreateTable(
-                name: "AddressDeliveries",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false, comment: "Address Id")
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true, comment: "First Name Recipient"),
-                    LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true, comment: "Last Name Recipient"),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true, comment: "Phone Number Recipient"),
-                    PostCode = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true, comment: "Post Code"),
-                    Address = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true, comment: "Address"),
-                    Town = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true, comment: "Town"),
-                    District = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true, comment: "District"),
-                    Country = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true, comment: "Country"),
-                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true, comment: "App User Id")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AddressDeliveries", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AddressDeliveries_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                },
-                comment: "Address Delivery");
 
             migrationBuilder.CreateTable(
                 name: "Categories",
@@ -129,10 +109,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false, comment: "Unique identifier of shipping provider")
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, comment: "Name of shipping provider"),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false, comment: "Price of shipping"),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "Description duration of shipping"),
-                    IsDeliveryToAddress = table.Column<bool>(type: "bit", nullable: false, comment: "Is delivery to address")
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, comment: "Name of shipping provider")
                 },
                 constraints: table =>
                 {
@@ -301,52 +278,26 @@ namespace LilsCareApp.Infrastructure.Migrations
                 comment: "This table contains the products that the user has added to his wish list");
 
             migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "ShippingOffices",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false, comment: "Order Id")
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Date of Order Creating"),
-                    StatusOrderId = table.Column<int>(type: "int", nullable: false, comment: "Status of Order"),
-                    AddressDeliveryId = table.Column<int>(type: "int", nullable: false, comment: "Address Delivery Id"),
-                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true, comment: "App User Id"),
-                    ShippingProviderId = table.Column<int>(type: "int", nullable: true, comment: "Shipping Provider Id"),
-                    DateShipping = table.Column<DateTime>(type: "datetime2", nullable: true, comment: "Date of Shipping Creating"),
-                    TrackingNumber = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true, comment: "Tracking Number of Order"),
-                    PaymentMethodId = table.Column<int>(type: "int", nullable: true, comment: "Payment Method Id")
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OfficeAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false, comment: "Price of shipping"),
+                    ShippingDuration = table.Column<int>(type: "int", nullable: false, comment: "Duration of shipping"),
+                    ShippingProviderId = table.Column<int>(type: "int", nullable: true, comment: "Shipping Provider Id")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.PrimaryKey("PK_ShippingOffices", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_AddressDeliveries_AddressDeliveryId",
-                        column: x => x.AddressDeliveryId,
-                        principalTable: "AddressDeliveries",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Orders_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Orders_PaymentMethods_PaymentMethodId",
-                        column: x => x.PaymentMethodId,
-                        principalTable: "PaymentMethods",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Orders_ShippingProviders_ShippingProviderId",
+                        name: "FK_ShippingOffices_ShippingProviders_ShippingProviderId",
                         column: x => x.ShippingProviderId,
                         principalTable: "ShippingProviders",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Orders_StatusOrders_StatusOrderId",
-                        column: x => x.StatusOrderId,
-                        principalTable: "StatusOrders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                },
-                comment: "Order");
+                });
 
             migrationBuilder.CreateTable(
                 name: "ImageReviews",
@@ -368,6 +319,82 @@ namespace LilsCareApp.Infrastructure.Migrations
                         principalColumns: new[] { "ProductId", "AuthorId" });
                 },
                 comment: "The image of the review");
+
+            migrationBuilder.CreateTable(
+                name: "AddressDeliveries",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false, comment: "Address Id")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, comment: "First Name Recipient"),
+                    LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, comment: "Last Name Recipient"),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true, comment: "Phone Number Recipient"),
+                    PostCode = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true, comment: "Post Code"),
+                    Address = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true, comment: "Address"),
+                    Town = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true, comment: "Town"),
+                    District = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true, comment: "District"),
+                    Country = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true, comment: "Country"),
+                    ShippingOfficeId = table.Column<int>(type: "int", nullable: true),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true, comment: "App User Id")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AddressDeliveries", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AddressDeliveries_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_AddressDeliveries_ShippingOffices_ShippingOfficeId",
+                        column: x => x.ShippingOfficeId,
+                        principalTable: "ShippingOffices",
+                        principalColumn: "Id");
+                },
+                comment: "Address Delivery");
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false, comment: "Order Id")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Date of Order Creating"),
+                    StatusOrderId = table.Column<int>(type: "int", nullable: false, comment: "Status of Order"),
+                    AddressDeliveryId = table.Column<int>(type: "int", nullable: false, comment: "Address Delivery Id"),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true, comment: "App User Id"),
+                    DateShipping = table.Column<DateTime>(type: "datetime2", nullable: true, comment: "Date of Shipping Creating"),
+                    TrackingNumber = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true, comment: "Tracking Number of Order"),
+                    PaymentMethodId = table.Column<int>(type: "int", nullable: true, comment: "Payment Method Id"),
+                    NoteForDelivery = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "Note for Delivery")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_AddressDeliveries_AddressDeliveryId",
+                        column: x => x.AddressDeliveryId,
+                        principalTable: "AddressDeliveries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Orders_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Orders_PaymentMethods_PaymentMethodId",
+                        column: x => x.PaymentMethodId,
+                        principalTable: "PaymentMethods",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Orders_StatusOrders_StatusOrderId",
+                        column: x => x.StatusOrderId,
+                        principalTable: "StatusOrders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                },
+                comment: "Order");
 
             migrationBuilder.CreateTable(
                 name: "ProductOrder",
@@ -396,8 +423,8 @@ namespace LilsCareApp.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "ImagePath", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "ba594e7f-7821-4984-8d75-edb5800559c2", 0, "f156049b-c0a0-4bd5-b355-516620c8da84", null, false, null, false, null, null, "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAEOv/AFZNfF9eCfV8113pvZCwkpq/WrroiughE3ScdD9Jcok60hLQq9zkyMwTiUTCDg==", null, false, "4e408b42-6361-4fa4-a75f-d24964c64a63", false, "test@softuni.bg" });
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DefaultAddressDeliveryId", "Email", "EmailConfirmed", "ImagePath", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "e3953841-2f70-46f1-a90b-31aa0ffe2a9a", 0, "cbeaf87e-9ee0-4424-96c6-f845c1367528", null, null, false, null, false, null, null, "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAENXl6tIgxopiqZUIlBQz/vrBq1xAOaPPUfeAQPpz3UJAIbP1ZQymXtdt/FhcBpn3iw==", null, false, "812ce4dc-0fd8-4902-b573-acd3c52e5502", false, "test@softuni.bg" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -436,11 +463,11 @@ namespace LilsCareApp.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "ShippingProviders",
-                columns: new[] { "Id", "Description", "IsDeliveryToAddress", "Name", "Price" },
+                columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 1, "2-3 работни дни", false, "До офис Еконт / Спиди", 6.50m },
-                    { 2, "2-3 работни дни", true, "До адрес - Еконт", 8.50m }
+                    { 1, "Еконт" },
+                    { 2, "Спиди" }
                 });
 
             migrationBuilder.InsertData(
@@ -455,22 +482,13 @@ namespace LilsCareApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "AddressDeliveries",
-                columns: new[] { "Id", "Address", "AppUserId", "Country", "District", "FirstName", "LastName", "PhoneNumber", "PostCode", "Town" },
-                values: new object[,]
-                {
-                    { 1, "bul. Vitosha", "ba594e7f-7821-4984-8d75-edb5800559c2", "Bulgaria", "Sofia", "Ivan", "Ivanov", "0888888888", "1000", "Sofia" },
-                    { 2, "bul. Vitosha", "ba594e7f-7821-4984-8d75-edb5800559c2", "Bulgaria", "Sofia", "Petar", "Petrov", "0888888888", "1000", "Sofia" }
-                });
-
-            migrationBuilder.InsertData(
                 table: "BagsUsers",
                 columns: new[] { "AppUserId", "ProductId", "Quantity" },
                 values: new object[,]
                 {
-                    { "ba594e7f-7821-4984-8d75-edb5800559c2", 1, 2 },
-                    { "ba594e7f-7821-4984-8d75-edb5800559c2", 2, 3 },
-                    { "ba594e7f-7821-4984-8d75-edb5800559c2", 3, 4 }
+                    { "e3953841-2f70-46f1-a90b-31aa0ffe2a9a", 1, 2 },
+                    { "e3953841-2f70-46f1-a90b-31aa0ffe2a9a", 2, 3 },
+                    { "e3953841-2f70-46f1-a90b-31aa0ffe2a9a", 3, 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -548,9 +566,26 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "AuthorId", "ProductId", "Comment", "CreatedOn", "Rating", "Title" },
                 values: new object[,]
                 {
-                    { "ba594e7f-7821-4984-8d75-edb5800559c2", 2, "Great product, I love it!", new DateTime(2024, 3, 15, 17, 32, 10, 397, DateTimeKind.Local).AddTicks(18), 4, "Great product" },
-                    { "ba594e7f-7821-4984-8d75-edb5800559c2", 3, "Great product, I love it!", new DateTime(2024, 3, 15, 17, 32, 10, 397, DateTimeKind.Local).AddTicks(79), 3, "Great product" },
-                    { "ba594e7f-7821-4984-8d75-edb5800559c2", 4, "Great product, I love it!", new DateTime(2024, 3, 15, 17, 32, 10, 397, DateTimeKind.Local).AddTicks(82), 3, "Great product" }
+                    { "e3953841-2f70-46f1-a90b-31aa0ffe2a9a", 2, "Great product, I love it!", new DateTime(2024, 3, 17, 16, 29, 50, 643, DateTimeKind.Local).AddTicks(2921), 4, "Great product" },
+                    { "e3953841-2f70-46f1-a90b-31aa0ffe2a9a", 3, "Great product, I love it!", new DateTime(2024, 3, 17, 16, 29, 50, 643, DateTimeKind.Local).AddTicks(2972), 3, "Great product" },
+                    { "e3953841-2f70-46f1-a90b-31aa0ffe2a9a", 4, "Great product, I love it!", new DateTime(2024, 3, 17, 16, 29, 50, 643, DateTimeKind.Local).AddTicks(2975), 3, "Great product" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ShippingOffices",
+                columns: new[] { "Id", "City", "OfficeAddress", "Price", "ShippingDuration", "ShippingProviderId" },
+                values: new object[,]
+                {
+                    { 1, "Sofia", "bul. Vitosha 100", 5.00m, 2, 1 },
+                    { 2, "Sofia", "bul. Hristo Botev 20", 5.00m, 2, 1 },
+                    { 3, "Varna", "bul. Vitosha 100", 5.00m, 2, 1 },
+                    { 4, "Burgas", "bul. Vitosha 100", 5.00m, 2, 1 },
+                    { 5, "Ruse", "bul. Vitosha 100", 5.00m, 2, 1 },
+                    { 6, "Sofia", "bul. Vitosha 200", 5.00m, 2, 2 },
+                    { 7, "Sofia", "bul. Hristo Botev 30", 5.00m, 2, 2 },
+                    { 8, "Sofia", "bul. Bozveli 200", 5.00m, 2, 2 },
+                    { 9, "Burgas", "bul. Vitosha 200", 5.00m, 2, 2 },
+                    { 10, "Ruse", "bul. Vitosha 200", 5.00m, 2, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -558,18 +593,27 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "AppUserId", "ProductId" },
                 values: new object[,]
                 {
-                    { "ba594e7f-7821-4984-8d75-edb5800559c2", 1 },
-                    { "ba594e7f-7821-4984-8d75-edb5800559c2", 3 },
-                    { "ba594e7f-7821-4984-8d75-edb5800559c2", 4 }
+                    { "e3953841-2f70-46f1-a90b-31aa0ffe2a9a", 1 },
+                    { "e3953841-2f70-46f1-a90b-31aa0ffe2a9a", 3 },
+                    { "e3953841-2f70-46f1-a90b-31aa0ffe2a9a", 4 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AddressDeliveries",
+                columns: new[] { "Id", "Address", "AppUserId", "Country", "District", "FirstName", "LastName", "PhoneNumber", "PostCode", "ShippingOfficeId", "Town" },
+                values: new object[,]
+                {
+                    { 1, "bul. Vitosha", "e3953841-2f70-46f1-a90b-31aa0ffe2a9a", "Bulgaria", "Sofia", "Ivan", "Ivanov", "0888888888", "1000", 1, "Sofia" },
+                    { 2, "bul. Vitosha", "e3953841-2f70-46f1-a90b-31aa0ffe2a9a", "Bulgaria", "Sofia", "Petar", "Petrov", "0888888888", "1000", 2, "Sofia" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Orders",
-                columns: new[] { "Id", "AddressDeliveryId", "AppUserId", "CreatedOn", "DateShipping", "PaymentMethodId", "ShippingProviderId", "StatusOrderId", "TrackingNumber" },
+                columns: new[] { "Id", "AddressDeliveryId", "AppUserId", "CreatedOn", "DateShipping", "NoteForDelivery", "PaymentMethodId", "StatusOrderId", "TrackingNumber" },
                 values: new object[,]
                 {
-                    { 1, 1, "ba594e7f-7821-4984-8d75-edb5800559c2", new DateTime(2024, 3, 15, 15, 32, 9, 935, DateTimeKind.Utc).AddTicks(9447), new DateTime(2024, 3, 15, 15, 32, 9, 936, DateTimeKind.Utc).AddTicks(886), 1, 1, 1, "1234567890" },
-                    { 2, 2, "ba594e7f-7821-4984-8d75-edb5800559c2", new DateTime(2024, 3, 15, 15, 32, 9, 936, DateTimeKind.Utc).AddTicks(2037), new DateTime(2024, 3, 15, 15, 32, 9, 936, DateTimeKind.Utc).AddTicks(2040), 2, 2, 2, "1234567890x" }
+                    { 1, 1, "e3953841-2f70-46f1-a90b-31aa0ffe2a9a", new DateTime(2024, 3, 17, 14, 29, 50, 95, DateTimeKind.Utc).AddTicks(4802), new DateTime(2024, 3, 17, 14, 29, 50, 95, DateTimeKind.Utc).AddTicks(6120), null, 1, 1, "1234567890" },
+                    { 2, 2, "e3953841-2f70-46f1-a90b-31aa0ffe2a9a", new DateTime(2024, 3, 17, 14, 29, 50, 95, DateTimeKind.Utc).AddTicks(7475), new DateTime(2024, 3, 17, 14, 29, 50, 95, DateTimeKind.Utc).AddTicks(7480), null, 2, 2, "1234567890x" }
                 });
 
             migrationBuilder.InsertData(
@@ -590,9 +634,19 @@ namespace LilsCareApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_DefaultAddressDeliveryId",
+                table: "AspNetUsers",
+                column: "DefaultAddressDeliveryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AddressDeliveries_AppUserId",
                 table: "AddressDeliveries",
                 column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AddressDeliveries_ShippingOfficeId",
+                table: "AddressDeliveries",
+                column: "ShippingOfficeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BagsUsers_ProductId",
@@ -630,11 +684,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                 column: "PaymentMethodId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_ShippingProviderId",
-                table: "Orders",
-                column: "ShippingProviderId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Orders_StatusOrderId",
                 table: "Orders",
                 column: "StatusOrderId");
@@ -655,6 +704,11 @@ namespace LilsCareApp.Infrastructure.Migrations
                 column: "AuthorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ShippingOffices_ShippingProviderId",
+                table: "ShippingOffices",
+                column: "ShippingProviderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Subscribers_AppUserId",
                 table: "Subscribers",
                 column: "AppUserId");
@@ -663,11 +717,22 @@ namespace LilsCareApp.Infrastructure.Migrations
                 name: "IX_WishesUsers_ProductId",
                 table: "WishesUsers",
                 column: "ProductId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AspNetUsers_AddressDeliveries_DefaultAddressDeliveryId",
+                table: "AspNetUsers",
+                column: "DefaultAddressDeliveryId",
+                principalTable: "AddressDeliveries",
+                principalColumn: "Id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_AspNetUsers_AddressDeliveries_DefaultAddressDeliveryId",
+                table: "AspNetUsers");
+
             migrationBuilder.DropTable(
                 name: "BagsUsers");
 
@@ -711,15 +776,26 @@ namespace LilsCareApp.Infrastructure.Migrations
                 name: "PaymentMethods");
 
             migrationBuilder.DropTable(
-                name: "ShippingProviders");
+                name: "StatusOrders");
 
             migrationBuilder.DropTable(
-                name: "StatusOrders");
+                name: "ShippingOffices");
+
+            migrationBuilder.DropTable(
+                name: "ShippingProviders");
+
+            migrationBuilder.DropIndex(
+                name: "IX_AspNetUsers_DefaultAddressDeliveryId",
+                table: "AspNetUsers");
 
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: "ba594e7f-7821-4984-8d75-edb5800559c2");
+                keyValue: "e3953841-2f70-46f1-a90b-31aa0ffe2a9a");
+
+            migrationBuilder.DropColumn(
+                name: "DefaultAddressDeliveryId",
+                table: "AspNetUsers");
 
             migrationBuilder.DropColumn(
                 name: "ImagePath",

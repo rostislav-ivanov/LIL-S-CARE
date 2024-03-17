@@ -15,6 +15,10 @@ namespace LilsCareApp.Core.Services
             _context = context;
         }
 
+        public ProductsService()
+        {
+        }
+
         async public Task<IEnumerable<ProductDTO>> GetAllAsync(string userId)
         {
             var products = await _context.Products

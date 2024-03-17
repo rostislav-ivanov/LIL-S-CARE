@@ -36,13 +36,6 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [ForeignKey(nameof(AppUserId))]
         public AppUser? AppUser { get; set; }
 
-        [Comment("Shipping Provider Id")]
-        public int? ShippingProviderId { get; set; }
-
-        [Comment("Navigation Property to ShippingProvider")]
-        [ForeignKey(nameof(ShippingProviderId))]
-        public ShippingProvider? ShippingProvider { get; set; }
-
         [Comment("Date of Shipping Creating")]
         public DateTime? DateShipping { get; set; }
 
@@ -59,6 +52,9 @@ namespace LilsCareApp.Infrastructure.Data.Models
 
         [Comment("Navigation Property to Products")]
         public List<ProductOrder> ProductsOrders { get; set; } = new List<ProductOrder>();
+
+        [Comment("Note for Delivery")]
+        public string? NoteForDelivery { get; set; }
     }
 }
 

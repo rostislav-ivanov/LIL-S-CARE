@@ -1,4 +1,4 @@
-﻿@model CheckoutDTO
+﻿@model OrderDTO
 @{
     ViewData["Title"] = "ПОРЪЧКА";
 }
@@ -38,23 +38,24 @@
                 <!-- Delivery Method Start -->
                 <div class="d-flex justify-content-between align-items-center">
                     <h5>Метод за доставка</h5>
-                    @if (Model.DeliveryType != null)
+                    @if (Model.IsShippingProvider())
                     {
-                        <a asp-controller="Checkout" asp-action="EditDeliveryType" style="color: rgb(var(--app-btn-bg))">
+                        <a asp-controller="Checkout" asp-action="EditShippingProvider" style="color: rgb(var(--app-btn-bg))">
                             Редактиране
                         </a>
                     }
 
                 </div>
-                @if (Model.DeliveryType is null)
+                @if (!Model.IsShippingProvider())
                 {
                     <a class="nav-link dropdown-toggle text-danger" href="#" role="button" data-bs-toggle="dropdown">Няма избран доставчик...</a>
                     <ul class="dropdown-menu">
                         <li>
-                            @foreach (var deliveryType in Model.DeliveryTypes)
+                            @foreach (var shippingProviders in Model.ShippingProviders)
                             {
-                                <a asp-controller="Checkout" asp-action="SelectDeliveryType" asp-route-deliveryTypeId="@deliveryType.Id" class="dropdown-item">
-                                    @deliveryType.Name
+                                <a asp-controller="Checkout" asp-action="SelectShippingProvider" asp-route-shippingProvidersId="@shippingProviders.Id" class="dropdown-item">
+                                    @shippingProviders.Description
+
                                 </a>
                             }
                         </li>
@@ -63,18 +64,16 @@
                 else
                 {
                     <p style="opacity: 0.9">
-                        @Model.DeliveryType.Name
+                        @Model.DeliveryType();
                     </p>
                 }
                 <hr />
                 <!-- Delivery Method End -->
-                <!-- Address Delivery Start -->
-                @if (Model.DeliveryType != null
-                && Model.DeliveryType.IsDeliveryToAddress)
+                <!-- Input Delivery Start -->
+                @if (Model.AddressDelivery != null && Model.DeliveryType() != null)
                 {
                     <!-- Delivery to Address Start -->
-                    @if (Model.AddressDelivery != null
-                   && Model.AddressDelivery.IsValid)
+                    @if (Model.AddressDelivery.IsValid)
                     {
                         <!-- Existing Address to Delivery Start -->
                         <div class="d-flex justify-content-between align-items-center">
@@ -147,37 +146,9 @@
                                 </div>
                                 <div class="col-4">
                                     <label asp-for="@Model.AddressDelivery.District" class="form-label small">Окръг</label>
-                                    <select asp-for="@Model.AddressDelivery.District" class="form-select">
-                                        <option></option>
-                                        <option>Благоевград</option>
-                                        <option>Бургас</option>
-                                        <option>Варна</option>
-                                        <option>Велико</option>
-                                        <option>Видин</option>
-                                        <option>Враца</option>
-                                        <option>Габрово</option>
-                                        <option>Добрич</option>
-                                        <option>Кърджали</option>
-                                        <option>Кюстендил</option>
-                                        <option>Ловеч</option>
-                                        <option>Монтана</option>
-                                        <option>Пазарджик</option>
-                                        <option>Перник</option>
-                                        <option>Плевен</option>
-                                        <option>Пловдив</option>
-                                        <option>Разград</option>
-                                        <option>Русе</option>
-                                        <option>Силистра</option>
-                                        <option>Сливен</option>
-                                        <option>Смолян</option>
-                                        <option>София</option>
-                                        <option>Софийска област</option>
-                                        <option>Стара</option>
-                                        <option>Търговище</option>
-                                        <option>Хасково</option>
-                                        <option>Шумен</option>
-                                        <option>Ямбол</option>
-                                    </select>
+                                    <input asp-for="@Model.AddressDelivery.District"
+                                           type="text"
+                                           class="form-control" />
                                     <span asp-validation-for="@Model.AddressDelivery.District" class="text-danger"></span>
                                 </div>
                             </div>
@@ -200,14 +171,12 @@
                         </form>
                         <!-- New Address to Delivery End -->
                     }
-                    <!-- Delivery to Address Start -->
+                    <!-- Delivery to Address End -->
                 }
-                else if (Model.DeliveryType != null
-                && !Model.DeliveryType.IsDeliveryToAddress)
+                else if (Model.OfficeDelivery != null && Model.DeliveryType() != null)
                 {
                     <!-- Delivery to Office Start -->
-                    @if (Model.OfficeDelivery != null
-                   && Model.OfficeDelivery.IsValid)
+                    @if (Model.OfficeDelivery.IsValid)
                     {
                         <!-- Existing Office to Delivery Start -->
                         <div class="d-flex justify-content-between align-items-center">
@@ -217,28 +186,27 @@
                             </a>
                         </div>
                         <div class="row" style="opacity: 0.9">
-                            <span>@Model.OfficeDelivery.Office.City</span>
-                            <span>@Model.OfficeDelivery.Office.Address</span>
+                            <span>@Model.OfficeDelivery.ShippingOffice.City</span>
+                            <span>@Model.OfficeDelivery.ShippingOffice.OfficeAddress</span>
                             <span>@Model.OfficeDelivery.FirstName @Model.OfficeDelivery.LastName</span>
                             <span>@Model.OfficeDelivery.PhoneNumber</span>
                         </div>
                         <!-- Existing Office to Delivery End -->
                     }
-                    else if (Model.OfficeDelivery != null
-                    && !Model.OfficeDelivery.IsValid)
+                    else if (!Model.OfficeDelivery.IsValid)
                     {
                         <!-- New Office to Delivery Start -->
                         <form asp-controller="Checkout" asp-action="DeliveryToOffice" method="post">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <input asp-for="@Model.OfficeDelivery.Office.City" hidden />
-                                    <span asp-validation-for="@Model.OfficeDelivery.Office.City" class="text-danger small"></span>
+                                    <input asp-for="@Model.OfficeDelivery.ShippingOffice.City" hidden />
+                                    <span asp-validation-for="@Model.OfficeDelivery.ShippingOffice.City" class="text-danger small"></span>
                                     <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown">
-                                        @(Model.OfficeDelivery.Office?.City ?? "Изберете град...")
+                                        @(Model.OfficeDelivery.ShippingOffice?.City ?? "Изберете град...")
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            @foreach (var city in Model.OfficeDelivery.Offices.Select(o => o.City).Distinct())
+                                            @foreach (var city in Model.ShippingOffices.Select(o => o.City).Distinct())
                                             {
                                                 <a asp-controller="Checkout" asp-action="SelectOfficeCity" asp-route-city="@city" class="dropdown-item">
                                                     @city
@@ -247,22 +215,22 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div style="display=@(Model.OfficeDelivery.Office?.City is null ? "none" : "block")">
-                                    <input asp-for="@Model.OfficeDelivery.Office.Address" hidden />
-                                    <span asp-validation-for="@Model.OfficeDelivery.Office.Address" class="text-danger small"></span>
+                                <div style="display=@(Model.OfficeDelivery.ShippingOffice?.City is null ? "none" : "block")">
+                                    <input asp-for="@Model.OfficeDelivery.ShippingOffice.OfficeAddress" hidden />
+                                    <span asp-validation-for="@Model.OfficeDelivery.ShippingOffice.OfficeAddress" class="text-danger small"></span>
                                     <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown">
-                                        @(Model.OfficeDelivery.Office?.Address ?? "Изберете офис...")
+                                        @(Model.OfficeDelivery.ShippingOffice?.OfficeAddress ?? "Изберете офис...")
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            @if (Model.OfficeDelivery.Office?.City != null)
+                                            @if (Model.OfficeDelivery.ShippingOffice?.City != null)
                                             {
-                                                var offices = Model.OfficeDelivery.Offices
-                                                .Where(o => o.City == Model.OfficeDelivery.Office.City);
+                                                var offices = Model.ShippingOffices
+                                                                .Where(o => o.City == Model.OfficeDelivery.ShippingOffice.City);
                                                 foreach (var office in offices)
                                                 {
                                                     <a asp-controller="Checkout" asp-action="SelectOfficeDelivery" asp-route-officeId="@office.Id" class="dropdown-item">
-                                                        @office.Address
+                                                        @office.OfficeAddress
                                                     </a>
                                                 }
 
@@ -309,8 +277,8 @@
                 <p style="opacity: 0.9">наложен платеж</p>
                 <!-- Payment Start -->
                 <hr />
-                <!-- Address Delivery End -->
-                @if (Model.IsValid())
+                <!-- Input Delivery End -->
+@*                 @if (Model.IsValid())
                 {
                     <p>
                         Прегледайте подробностите за поръчката по-горе и направете
@@ -321,7 +289,7 @@
                             style="width: 100%">
                         Направете поръчка
                     </a>
-                }
+                } *@
 
                 <!-- Confirm Order End-->
             </div>
@@ -329,7 +297,7 @@
         <!-- Client's data and Delivery address End -->
         <!-- Order Summary Start -->
         <div class="col-lg-6">
-            <div class="container mt-4 px-4 pb-2 rounded"
+@*             <div class="container mt-4 px-4 pb-2 rounded"
                  style="background-color: rgb(var(--app-bg-secondary))">
                 <div class="d-flex justify-content-between align-items-center">
                     <h5 class="py-4 m-0">Резюме на поръчката (@Model.ProductsInBag.Sum(p => p.Quantity))</h5>
@@ -455,7 +423,7 @@
                     <span>@Model.Total() лв.</span>
                 </div>
                 <!-- Total Price End -->
-            </div>
+            </div> *@
         </div>
         <!-- Order Summary End -->
     </div>
