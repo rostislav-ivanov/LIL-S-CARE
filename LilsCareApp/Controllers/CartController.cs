@@ -34,10 +34,10 @@ namespace LilsCareApp.Controllers
             {
                 model.ShippingPrice = 0;
             }
-            else
-            {
-                model.ShippingPrice = model.ShippingProviders.FirstOrDefault(sp => sp.Id == model.ShippingProviderId)?.Price ?? 0;
-            }
+            //else
+            //{
+            //    model.ShippingPrice = model.ShippingProviders.FirstOrDefault(sp => sp.Id == model.ShippingProviderId)?.Price ?? 0;
+            //}
             model.Total = model.SubTotal + model.ShippingPrice;
             return View(model);
         }

@@ -9,7 +9,7 @@ namespace LilsCareApp.Core.Models
     {
         [Required(ErrorMessage = Required)]
         [DisplayName("имейл")]
-        [EmailAddress(ErrorMessage = EmailAddress)]
+        [EmailAddress(ErrorMessage = InvalidEmailAddress)]
         public string EmailSubscriber { get; set; } = string.Empty;
 
         [MustBeTrue(ErrorMessage = PrivacyPolicyCheck)]

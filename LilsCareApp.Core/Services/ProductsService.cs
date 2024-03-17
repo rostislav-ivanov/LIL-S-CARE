@@ -206,16 +206,6 @@ namespace LilsCareApp.Core.Services
                     .AsNoTracking()
                     .ToListAsync(),
 
-                ShippingProviders = await _context.ShippingProviders
-                    .Select(sp => new ShippingProviderDTO
-                    {
-                        Id = sp.Id,
-                        Name = sp.Name,
-                        Price = sp.Price,
-                        Description = sp.Description
-                    })
-                    .AsNoTracking()
-                    .ToListAsync(),
                 ShippingProviderId = 2
             };
 
@@ -229,73 +219,5 @@ namespace LilsCareApp.Core.Services
 
 
 
-        public async Task<CheckoutDTO> GetCheckout(string userId)
-        {
-            IEnumerable<AddressDeliveryDTO> addressDelivery = await _context.AddressDeliveries
-                .Where(ad => ad.AppUserId == userId)
-                .Select(ad => new AddressDeliveryDTO
-                {
-                    Id = ad.Id,
-                    FirstName = ad.FirstName,
-                    LastName = ad.LastName,
-                    PhoneNumber = ad.PhoneNumber,
-                    PostCode = ad.PostCode,
-                    Address = ad.Address,
-                    Town = ad.Town,
-                    District = ad.District,
-                    Country = ad.Country,
-                    AppUserId = ad.AppUserId
-                })
-                .ToListAsync();
-
-            IEnumerable<ShippingProviderDTO> shippingProviders = await _context.ShippingProviders
-                .Select(sp => new ShippingProviderDTO
-                {
-                    Id = sp.Id,
-                    Name = sp.Name,
-                    Price = sp.Price,
-                    Description = sp.Description
-                })
-                .AsNoTracking()
-                .ToListAsync();
-
-            CheckoutDTO checkout = new CheckoutDTO
-            {
-                AddressDeliveries = addressDelivery,
-                ShippingProviders = shippingProviders
-            };
-
-            return checkout;
-        }
-
-        public async Task<ShippingProviderDTO?> GetShippingProviderByIdAsync(int shippingProviderId)
-        {
-            return await _context.ShippingProviders
-                .Where(sp => sp.Id == shippingProviderId)
-                .Select(sp => new ShippingProviderDTO
-                {
-                    Id = sp.Id,
-                    Name = sp.Name,
-                    Price = sp.Price,
-                    Description = sp.Description
-                })
-                .AsNoTracking()
-                .FirstOrDefaultAsync();
-        }
-
-        public async Task<IEnumerable<ShippingProviderDTO>> GetAllShippingProvidersAsync()
-        {
-            return await _context.ShippingProviders
-                .Select(sp => new ShippingProviderDTO
-                {
-                    Id = sp.Id,
-                    Name = sp.Name,
-                    Price = sp.Price,
-                    Description = sp.Description,
-                    IsDeliveryToAddress = sp.IsDeliveryToAddress
-                })
-                .AsNoTracking()
-                .ToListAsync();
-        }
     }
 }

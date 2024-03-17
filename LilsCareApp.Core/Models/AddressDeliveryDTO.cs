@@ -22,38 +22,53 @@ namespace LilsCareApp.Core.Models
         [Display(Name = "фамилия")]
         public string LastName { get; set; } = string.Empty;
 
-        [Comment("Phone Number Recipient")]
-        [Required(ErrorMessage = Required)]
-        [MaxLength(PhoneNumberMaxLength)]
-        [RegularExpression(PhoneNumberPattern, ErrorMessage = InvalidPhoneNumber)]
-        [Display(Name = "телефонен номер")]
-        public string PhoneNumber { get; set; } = string.Empty;
 
-        [MaxLength(PostCodeMaxLength)]
+        [Comment("Country")]
+        [Required(ErrorMessage = Required)]
+        [MaxLength(CountryMaxLength)]
+        [Display(Name = "държава")]
+        public string? Country { get; set; }
+
         [Comment("Post Code")]
+        [Required(ErrorMessage = Required)]
+        [MaxLength(PostCodeMaxLength)]
+        [Display(Name = "пощенски код")]
         public string? PostCode { get; set; }
 
-        [MaxLength(AddressMaxLength)]
-        [Comment("Address")]
-        public string? Address { get; set; }
-
-        [MaxLength(TownMaxLength)]
         [Comment("Town")]
+        [Required(ErrorMessage = Required)]
+        [MaxLength(TownMaxLength)]
+        [Display(Name = "град")]
         public string? Town { get; set; }
+
+        [Comment("Address")]
+        [Required(ErrorMessage = Required)]
+        [MaxLength(AddressMaxLength)]
+        [Display(Name = "адрес")]
+        public string? Address { get; set; }
 
         [MaxLength(DistrictMaxLength)]
         [Comment("District")]
         public string? District { get; set; }
 
-        [MaxLength(CountryMaxLength)]
-        [Comment("Country")]
-        public string? Country { get; set; }
+        [Comment("Phone Number Recipient not required")]
+        [MaxLength(PhoneNumberMaxLength)]
+        [RegularExpression(PhoneNumberPatternNotRequired, ErrorMessage = InvalidPhoneNumber)]
+        [Display(Name = "телефонен номер")]
+        public string? PhoneNumber { get; set; }
 
         [Comment("App User Id")]
         public string? AppUserId { get; set; }
 
-        [Comment("Email Address")]
-        public string Email { get; set; } = string.Empty;
+        [Comment("Email Address not required")]
+        [MaxLength(EmailNumberMaxLength)]
+        [RegularExpression(EmailPatternNotRequired, ErrorMessage = InvalidEmailAddress)]
+        [Display(Name = "имейл")]
+        public string? Email { get; set; }
+
+        public bool IsValid { get; set; } = false;
+
+        public decimal Price { get; set; } = 8.50m;
 
     }
 }
