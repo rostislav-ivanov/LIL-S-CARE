@@ -16,7 +16,7 @@ namespace LilsCareApp.Core.Models
 
         [Required(ErrorMessage = Required)]
         [DisplayName("имейл")]
-        [EmailAddress(ErrorMessage = EmailAddress)]
+        [EmailAddress(ErrorMessage = InvalidEmailAddress)]
         public string EmailForResponse { get; set; } = string.Empty;
 
         [Required(ErrorMessage = Required)]

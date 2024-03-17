@@ -8,7 +8,7 @@
 
         public DiscountDTO? Discount { get; set; }
 
-        public IEnumerable<ShippingProviderDTO> ShippingProviders { get; set; } = new List<ShippingProviderDTO>();
+        public IEnumerable<OfficeDeliveryDTO> ShippingProviders { get; set; } = new List<OfficeDeliveryDTO>();
 
         public int ShippingProviderId { get; set; }
 
