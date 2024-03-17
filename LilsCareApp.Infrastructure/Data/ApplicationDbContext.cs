@@ -42,6 +42,8 @@ namespace LilsCareApp.Infrastructure.Data
 
         public DbSet<MessageFromClient> MessagesFromClients { get; set; } = null!;
 
+        public DbSet<ShippingOffice> ShippingOffices { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<ImageReview>()
@@ -55,6 +57,7 @@ namespace LilsCareApp.Infrastructure.Data
             builder.ApplyConfiguration(new ProductsCategoriesConfiguration());
             builder.ApplyConfiguration(new WishesUsersConfiguration());
             builder.ApplyConfiguration(new BagsUsersConfiguration());
+            builder.ApplyConfiguration(new ShippingOfficeConfiguration());
             builder.ApplyConfiguration(new StatusOrdersConfiguration());
             builder.ApplyConfiguration(new ShippingProvidersConfiguration());
             builder.ApplyConfiguration(new PaymentMethodsConfiguration());

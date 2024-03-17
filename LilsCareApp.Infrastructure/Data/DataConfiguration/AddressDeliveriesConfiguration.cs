@@ -19,6 +19,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 Town = "Sofia",
                 District = "Sofia",
                 Country = "Bulgaria",
+                ShippingOfficeId = 1,
                 AppUserId = ConfigurationHelper.AppUser.Id
             },
             new AddressDelivery
@@ -32,6 +33,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 Town = "Sofia",
                 District = "Sofia",
                 Country = "Bulgaria",
+                ShippingOfficeId = 2,
                 AppUserId = ConfigurationHelper.AppUser.Id
             },
 

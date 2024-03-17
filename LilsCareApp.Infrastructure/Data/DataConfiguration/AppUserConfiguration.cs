@@ -19,7 +19,8 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
             {
                 UserName = "Test SoftUni",
                 Email = "test@softuni.bg",
-                NormalizedUserName = "TEST@SOFTUNI.BG"
+                NormalizedUserName = "TEST@SOFTUNI.BG",
+                DefaultAddressDeliveryId = 1
             };
 
             user.PasswordHash = hasher.HashPassword(user, "softuni");

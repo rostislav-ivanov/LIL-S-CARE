@@ -15,11 +15,11 @@ namespace LilsCareApp.Infrastructure.Data.Models
 
         [MaxLength(FirstNameMaxLength)]
         [Comment("First Name Recipient")]
-        public string? FirstName { get; set; }
+        public required string FirstName { get; set; }
 
         [MaxLength(LastNameMaxLength)]
         [Comment("Last Name Recipient")]
-        public string? LastName { get; set; }
+        public required string LastName { get; set; }
 
         [MaxLength(PhoneNumberMaxLength)]
         [Comment("Phone Number Recipient")]
@@ -45,6 +45,12 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("Country")]
         public string? Country { get; set; }
 
+        public int? ShippingOfficeId { get; set; }
+
+        [ForeignKey(nameof(ShippingOfficeId))]
+        [Comment("Navigation property to ShippingOffice")]
+        public ShippingOffice? ShippingOffice { get; set; }
+
         [Comment("App User Id")]
         public string? AppUserId { get; set; }
 
@@ -55,6 +61,9 @@ namespace LilsCareApp.Infrastructure.Data.Models
 
         [Comment("Navigation property to Order")]
         public List<Order> Orders { get; set; } = new List<Order>();
+
+        [InverseProperty(nameof(AppUser.DefaultAddressDelivery))]
+        public List<AppUser> AppUsers { get; set; } = new List<AppUser>();
 
     }
 }

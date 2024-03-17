@@ -10,6 +10,12 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("The image of user")]
         public string? ImagePath { get; set; }
 
+        [Comment("Default Address Delivery Id")]
+        public int? DefaultAddressDeliveryId { get; set; }
+
+        [Comment("Navigation property to AddressDelivery")]
+        public AddressDelivery? DefaultAddressDelivery { get; set; }
+
         [Comment("Navigation property to AddressDelivery")]
         public List<AddressDelivery> AddressDelivery { get; set; } = new List<AddressDelivery>();
 
