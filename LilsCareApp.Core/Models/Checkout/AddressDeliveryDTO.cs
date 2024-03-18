@@ -64,11 +64,10 @@ namespace LilsCareApp.Core.Models.Checkout
         [Display(Name = "имейл")]
         public string? Email { get; set; }
 
+        public int? ShippingProviderId { get; set; }
         public ShippingProviderDTO? ShippingProvider { get; set; }
 
         public bool IsValid { get; set; } = false;
-
-
-
+        public bool IsShippingToOffice { get; set; } = false;
     }
 }

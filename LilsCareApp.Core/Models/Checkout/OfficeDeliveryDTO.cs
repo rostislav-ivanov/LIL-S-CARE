@@ -12,6 +12,8 @@ namespace LilsCareApp.Core.Models.Checkout
 
         public ShippingOfficeDTO? ShippingOffice { get; set; }
 
+        public int? ShippingProviderId { get; set; }
+
         public List<ShippingProviderDTO>? ShippingProviders { get; set; }
 
 
@@ -35,6 +37,6 @@ namespace LilsCareApp.Core.Models.Checkout
         public string PhoneNumber { get; set; } = string.Empty;
 
         public bool IsValid { get; set; } = false;
-
+        public bool IsShippingToOffice { get; set; } = true;
     }
 }
