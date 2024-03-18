@@ -4,7 +4,7 @@ using static LilsCareApp.Core.ErrorMessageConstants;
 using static LilsCareApp.Infrastructure.DataConstants.AddressDelivery;
 namespace LilsCareApp.Core.Models.Checkout
 {
-    public class AddressDeliveryDTO : IDeliveryDTO
+    public class AddressDeliveryDTO
     {
         [Key]
         [Comment("Address Id")]
@@ -21,6 +21,14 @@ namespace LilsCareApp.Core.Models.Checkout
         [MaxLength(LastNameMaxLength)]
         [Display(Name = "фамилия")]
         public string LastName { get; set; } = string.Empty;
+
+
+        [Comment("Phone Number Recipient")]
+        [MaxLength(PhoneNumberMaxLength)]
+        [Required(ErrorMessage = Required)]
+        [RegularExpression(PhoneNumberPattern, ErrorMessage = InvalidPhoneNumber)]
+        [Display(Name = "телефонен номер")]
+        public string PhoneNumber { get; set; } = string.Empty;
 
 
         [Comment("Country")]
@@ -51,23 +59,25 @@ namespace LilsCareApp.Core.Models.Checkout
         [Comment("District")]
         public string? District { get; set; }
 
-        [Comment("Phone Number Recipient not required")]
-        [MaxLength(PhoneNumberMaxLength)]
-        [RegularExpression(PhoneNumberPatternNotRequired, ErrorMessage = InvalidPhoneNumber)]
-        [Display(Name = "телефонен номер")]
-        public string? PhoneNumber { get; set; }
-
-
         [Comment("Email Address not required")]
         [MaxLength(EmailNumberMaxLength)]
         [RegularExpression(EmailPatternNotRequired, ErrorMessage = InvalidEmailAddress)]
         [Display(Name = "имейл")]
         public string? Email { get; set; }
 
-        public int? ShippingProviderId { get; set; }
-        public ShippingProviderDTO? ShippingProvider { get; set; }
+
+        //public int? ShippingProviderId { get; set; }
+        //public ShippingProviderDTO? ShippingProvider { get; set; }
+        //public List<ShippingProviderDTO>? ShippingProviders { get; set; }
+
+        public int? ShippingOfficeId { get; set; }
+
+        public ShippingOfficeDTO? ShippingOffice { get; set; }
+
+
+
 
         public bool IsValid { get; set; } = false;
-        public bool IsShippingToOffice { get; set; } = false;
+        public bool IsShippingToOffice { get; set; }
     }
 }

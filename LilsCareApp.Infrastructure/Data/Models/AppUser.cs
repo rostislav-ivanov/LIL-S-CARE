@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LilsCareApp.Infrastructure.Data.Models
 {
@@ -10,14 +11,7 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("The image of user")]
         public string? ImagePath { get; set; }
 
-        [Comment("Default Address Delivery Id")]
-        public int? DefaultAddressDeliveryId { get; set; }
 
-        [Comment("Navigation property to AddressDelivery")]
-        public AddressDelivery? DefaultAddressDelivery { get; set; }
-
-        [Comment("Navigation property to AddressDelivery")]
-        public List<AddressDelivery> AddressDelivery { get; set; } = new List<AddressDelivery>();
 
         [Comment("Navigation property to Order")]
         public List<Order> Orders { get; set; } = new List<Order>();
@@ -31,6 +25,17 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("Navigation property to Review")]
         List<Review> Reviews { get; set; } = new List<Review>();
 
+
+        [Comment("Default Address Delivery Id")]
+        public int? DefaultAddressDeliveryId { get; set; }
+
+        [Comment("Navigation property to AddressDelivery")]
+        [ForeignKey(nameof(DefaultAddressDeliveryId))]
+        public AddressDelivery? DefaultAddressDelivery { get; set; }
+
+
+        [Comment("Navigation property to AddressDelivery")]
+        public List<AddressDelivery> AddressDelivery { get; set; } = new List<AddressDelivery>();
     }
 }
 

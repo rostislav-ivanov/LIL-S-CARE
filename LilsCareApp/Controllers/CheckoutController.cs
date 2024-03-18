@@ -32,25 +32,15 @@ namespace LilsCareApp.Controllers
             OrderDTO checkout = new OrderDTO();
 
             checkout.ProductsInBag = await _productsService.GetProductsInBagAsync(userId);
+            checkout.AddressDelivery = await _checkoutService.GetAddressDeliveryAsync(userId);
             checkout.ShippingProviders = await _checkoutService.GetShippingProvidersAsync();
-
-            IDeliveryDTO delivery = await _checkoutService.GetAddressDeliveryAsync(userId);
-
-
-            if (delivery.GetType() == typeof(AddressDeliveryDTO))
+            if (checkout.AddressDelivery != null)
             {
-                checkout.AddressDelivery = (AddressDeliveryDTO)delivery;
-                checkout.ShippingProviderId = checkout.AddressDelivery.ShippingProviderId;
+                checkout.ShippingProviderId = checkout.AddressDelivery.IsShippingToOffice
+                    ? checkout.AddressDelivery.ShippingOffice.ShippingProviderId : 0;
+                //checkout.ShippingProvider = checkout.ShippingProviders.FirstOrDefault(sp => sp.Id == checkout.ShippingProviderId);
             }
-            else if (delivery.GetType() == typeof(OfficeDeliveryDTO))
-            {
-                checkout.OfficeDelivery = (OfficeDeliveryDTO)delivery;
-                checkout.ShippingProviderId = checkout.OfficeDelivery.ShippingProviderId;
-            }
-            else
-            {
-                //checkout.ShippingOffices = await _checkoutService.GetShippingOfficesAsync();
-            }
+
             HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
 
             return View(checkout);
@@ -60,17 +50,19 @@ namespace LilsCareApp.Controllers
         public async Task<IActionResult> SelectShippingProvider(int shippingProvidersId)
         {
             OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
-            checkout.ShippingProviderId = shippingProvidersId;
-            if (shippingProvidersId == 0)
+
+            if (!checkout.ShippingProviders.Any(sp => sp.Id == shippingProvidersId))
             {
-                checkout.AddressDelivery = new AddressDeliveryDTO();
+                return BadRequest();
             }
-            else
+            checkout.ShippingProviderId = shippingProvidersId;
+            //checkout.ShippingProvider = checkout.ShippingProviders.FirstOrDefault(sp => sp.Id == shippingProvidersId);
+            checkout.AddressDelivery = new AddressDeliveryDTO();
+            checkout.AddressDelivery.IsShippingToOffice = shippingProvidersId != 0;
+            if (checkout.IsDeliveryToOffice())
             {
-                checkout.OfficeDelivery = new OfficeDeliveryDTO();
                 checkout.ShippingCities = await _checkoutService.GetShippingCitiesAsync(shippingProvidersId);
             }
-
 
             HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
 
@@ -82,7 +74,10 @@ namespace LilsCareApp.Controllers
         public IActionResult EditShippingProvider()
         {
             OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
+
             checkout.ShippingProviderId = null;
+            checkout.AddressDelivery = null;
+
             HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
 
             return View(nameof(Index), checkout);
@@ -109,7 +104,9 @@ namespace LilsCareApp.Controllers
         public IActionResult EditAddressDelivery()
         {
             OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
+
             checkout.AddressDelivery.IsValid = false;
+
             HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
 
             return View(nameof(Index), checkout);
@@ -122,12 +119,13 @@ namespace LilsCareApp.Controllers
         public async Task<IActionResult> SelectOfficeCity(string city)
         {
             OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
+
             checkout.ShippingOffices = await _checkoutService.GetShippingOfficesByCityAsync(city, checkout.ShippingProviderId);
-            checkout.OfficeDelivery.ShippingOffice = new ShippingOfficeDTO()
+            checkout.AddressDelivery.ShippingOffice = new ShippingOfficeDTO()
             {
                 City = city,
             };
-            checkout.OfficeDelivery.ShippingOffice.OfficeAddress = null;
+
             HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
 
             return View(nameof(Index), checkout);
@@ -137,8 +135,7 @@ namespace LilsCareApp.Controllers
         public async Task<IActionResult> SelectOfficeDelivery(int officeId)
         {
             OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
-            checkout.OfficeDelivery.ShippingOffice = await _checkoutService.GetShippingOfficeByIdAsync(officeId);
-            //checkout.OfficeDelivery.Offices.FirstOrDefault(o => o.Id == officeId);
+            checkout.AddressDelivery.ShippingOffice = checkout.ShippingOffices.FirstOrDefault(so => so.Id == officeId);
 
             HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
 
@@ -148,15 +145,20 @@ namespace LilsCareApp.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> AddOfficeDelivery(OfficeDeliveryDTO officeDelivery)
+        public async Task<IActionResult> AddOfficeDelivery(AddressDeliveryDTO addressDelivery)
         {
             OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
-            checkout.OfficeDelivery.FirstName = officeDelivery.FirstName;
-            checkout.OfficeDelivery.LastName = officeDelivery.LastName;
-            checkout.OfficeDelivery.PhoneNumber = officeDelivery.PhoneNumber;
+            checkout.AddressDelivery.FirstName = addressDelivery.FirstName;
+            checkout.AddressDelivery.LastName = addressDelivery.LastName;
+            checkout.AddressDelivery.PhoneNumber = addressDelivery.PhoneNumber;
+            ModelState.Remove("addressDelivery.Country");
+            ModelState.Remove("addressDelivery.PostCode");
+            ModelState.Remove("addressDelivery.Town");
+            ModelState.Remove("addressDelivery.Address");
+
             if (ModelState.IsValid)
             {
-                checkout.OfficeDelivery.IsValid = true;
+                checkout.AddressDelivery.IsValid = true;
             }
 
             HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
@@ -168,7 +170,7 @@ namespace LilsCareApp.Controllers
         public IActionResult EditOfficeDelivery()
         {
             OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
-            checkout.OfficeDelivery.IsValid = false;
+            checkout.AddressDelivery.IsValid = false;
             HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
 
             return View(nameof(Index), checkout);
@@ -191,9 +193,11 @@ namespace LilsCareApp.Controllers
         public async Task<IActionResult> DeleteProductFromCart(int id)
         {
             OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
+
             string userId = User.GetUserId();
             await _productsService.DeleteProductFromCartAsync(id, userId);
             checkout.ProductsInBag = await _productsService.GetProductsInBagAsync(userId);
+
             HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
 
             return View(nameof(Index), checkout);
@@ -203,9 +207,11 @@ namespace LilsCareApp.Controllers
         public async Task<IActionResult> CheckoutSummary()
         {
             OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
+
             string userId = User.GetUserId();
             await _checkoutService.CheckoutSaveAsync(checkout, userId);
 
+            HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
 
             return View(nameof(Index), checkout);
         }

@@ -425,7 +425,7 @@ namespace LilsCareApp.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DefaultAddressDeliveryId", "Email", "EmailConfirmed", "ImagePath", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "8e84d60c-17da-4667-b392-9e5779d9a687", 0, "c75acc80-e31e-48c4-b1d8-7ba6fab5d2d8", null, null, false, null, false, null, null, "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAEFZI17theT5c220ew3NWQuh9PGhCTVjBpgxNKc0I/cz7GUvEyGiDd9FWi7f4k77SPA==", null, false, "51f82881-ddb6-4eb0-9942-5504a929dbaa", false, "test@softuni.bg" });
+                values: new object[] { "63992fc8-1168-4fd2-9c54-54449cd9e463", 0, "9ff2c156-c946-49bb-aa2a-7d03f237cda3", null, null, false, null, false, null, null, "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAENSP+z/Ipmbt/2O5Grm6DGk8m+CRmhVwYrgszI1PHKsA977RTEszIdvARcF5EAncRw==", null, false, "8ee72146-6c67-4a93-a429-695401c46b04", false, "test@softuni.bg" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -487,9 +487,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "AppUserId", "ProductId", "Quantity" },
                 values: new object[,]
                 {
-                    { "8e84d60c-17da-4667-b392-9e5779d9a687", 1, 2 },
-                    { "8e84d60c-17da-4667-b392-9e5779d9a687", 2, 3 },
-                    { "8e84d60c-17da-4667-b392-9e5779d9a687", 3, 4 }
+                    { "63992fc8-1168-4fd2-9c54-54449cd9e463", 1, 2 },
+                    { "63992fc8-1168-4fd2-9c54-54449cd9e463", 2, 3 },
+                    { "63992fc8-1168-4fd2-9c54-54449cd9e463", 3, 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -567,9 +567,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "AuthorId", "ProductId", "Comment", "CreatedOn", "Rating", "Title" },
                 values: new object[,]
                 {
-                    { "8e84d60c-17da-4667-b392-9e5779d9a687", 2, "Great product, I love it!", new DateTime(2024, 3, 18, 8, 56, 14, 921, DateTimeKind.Local).AddTicks(6194), 4, "Great product" },
-                    { "8e84d60c-17da-4667-b392-9e5779d9a687", 3, "Great product, I love it!", new DateTime(2024, 3, 18, 8, 56, 14, 921, DateTimeKind.Local).AddTicks(6246), 3, "Great product" },
-                    { "8e84d60c-17da-4667-b392-9e5779d9a687", 4, "Great product, I love it!", new DateTime(2024, 3, 18, 8, 56, 14, 921, DateTimeKind.Local).AddTicks(6249), 3, "Great product" }
+                    { "63992fc8-1168-4fd2-9c54-54449cd9e463", 2, "Great product, I love it!", new DateTime(2024, 3, 18, 19, 0, 22, 510, DateTimeKind.Local).AddTicks(5320), 4, "Great product" },
+                    { "63992fc8-1168-4fd2-9c54-54449cd9e463", 3, "Great product, I love it!", new DateTime(2024, 3, 18, 19, 0, 22, 510, DateTimeKind.Local).AddTicks(5405), 3, "Great product" },
+                    { "63992fc8-1168-4fd2-9c54-54449cd9e463", 4, "Great product, I love it!", new DateTime(2024, 3, 18, 19, 0, 22, 510, DateTimeKind.Local).AddTicks(5409), 3, "Great product" }
                 });
 
             migrationBuilder.InsertData(
@@ -594,9 +594,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "AppUserId", "ProductId" },
                 values: new object[,]
                 {
-                    { "8e84d60c-17da-4667-b392-9e5779d9a687", 1 },
-                    { "8e84d60c-17da-4667-b392-9e5779d9a687", 3 },
-                    { "8e84d60c-17da-4667-b392-9e5779d9a687", 4 }
+                    { "63992fc8-1168-4fd2-9c54-54449cd9e463", 1 },
+                    { "63992fc8-1168-4fd2-9c54-54449cd9e463", 3 },
+                    { "63992fc8-1168-4fd2-9c54-54449cd9e463", 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -604,8 +604,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "Id", "Address", "AppUserId", "Country", "District", "FirstName", "IsShippingToOffice", "LastName", "PhoneNumber", "PostCode", "ShippingOfficeId", "Town" },
                 values: new object[,]
                 {
-                    { 1, "bul. Vitosha", "8e84d60c-17da-4667-b392-9e5779d9a687", "Bulgaria", "Sofia", "Ivan", false, "Ivanov", "0888888888", "1000", 1, "Sofia" },
-                    { 2, "bul. Vitosha", "8e84d60c-17da-4667-b392-9e5779d9a687", "Bulgaria", "Sofia", "Petar", false, "Petrov", "0888888888", "1000", 2, "Sofia" }
+                    { 1, "bul. Vitosha", "63992fc8-1168-4fd2-9c54-54449cd9e463", "Bulgaria", "Sofia", "Ivan", false, "Ivanov", "0888888888", "1000", 1, "Sofia" },
+                    { 2, "bul. Vitosha", "63992fc8-1168-4fd2-9c54-54449cd9e463", "Bulgaria", "Sofia", "Petar", false, "Petrov", "0888888888", "1000", 2, "Sofia" }
                 });
 
             migrationBuilder.InsertData(
@@ -613,8 +613,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "Id", "AddressDeliveryId", "AppUserId", "CreatedOn", "DateShipping", "NoteForDelivery", "PaymentMethodId", "StatusOrderId", "TrackingNumber" },
                 values: new object[,]
                 {
-                    { 1, 1, "8e84d60c-17da-4667-b392-9e5779d9a687", new DateTime(2024, 3, 18, 6, 56, 14, 317, DateTimeKind.Utc).AddTicks(1564), new DateTime(2024, 3, 18, 6, 56, 14, 317, DateTimeKind.Utc).AddTicks(2883), null, 1, 1, "1234567890" },
-                    { 2, 2, "8e84d60c-17da-4667-b392-9e5779d9a687", new DateTime(2024, 3, 18, 6, 56, 14, 317, DateTimeKind.Utc).AddTicks(3992), new DateTime(2024, 3, 18, 6, 56, 14, 317, DateTimeKind.Utc).AddTicks(3998), null, 2, 2, "1234567890x" }
+                    { 1, 1, "63992fc8-1168-4fd2-9c54-54449cd9e463", new DateTime(2024, 3, 18, 17, 0, 21, 993, DateTimeKind.Utc).AddTicks(1261), new DateTime(2024, 3, 18, 17, 0, 21, 993, DateTimeKind.Utc).AddTicks(2375), null, 1, 1, "1234567890" },
+                    { 2, 2, "63992fc8-1168-4fd2-9c54-54449cd9e463", new DateTime(2024, 3, 18, 17, 0, 21, 993, DateTimeKind.Utc).AddTicks(3487), new DateTime(2024, 3, 18, 17, 0, 21, 993, DateTimeKind.Utc).AddTicks(3488), null, 2, 2, "1234567890x" }
                 });
 
             migrationBuilder.InsertData(
@@ -792,7 +792,7 @@ namespace LilsCareApp.Infrastructure.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: "8e84d60c-17da-4667-b392-9e5779d9a687");
+                keyValue: "63992fc8-1168-4fd2-9c54-54449cd9e463");
 
             migrationBuilder.DropColumn(
                 name: "DefaultAddressDeliveryId",
