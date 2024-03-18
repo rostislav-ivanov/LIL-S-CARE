@@ -1,4 +1,5 @@
 ﻿using static LilsCareApp.Infrastructure.DataConstants.AppConstants;
+
 namespace LilsCareApp.Core.Models.Checkout
 {
     public class OrderDTO
@@ -7,13 +8,13 @@ namespace LilsCareApp.Core.Models.Checkout
 
         public IEnumerable<ShippingProviderDTO> ShippingProviders { get; set; } = new List<ShippingProviderDTO>();
 
-        public IEnumerable<ShippingOfficeDTO> ShippingOffices { get; set; } = new List<ShippingOfficeDTO>();
+        public IEnumerable<ProductsInBagDTO> ProductsInBag { get; set; } = new List<ProductsInBagDTO>();
 
         public AddressDeliveryDTO? AddressDelivery { get; set; }
 
-        public OfficeDeliveryDTO? OfficeDelivery { get; set; }
+        public IEnumerable<ShippingOfficeDTO> ShippingOffices { get; set; } = new List<ShippingOfficeDTO>();
 
-        public IEnumerable<ProductsInBagDTO> ProductsInBag { get; set; } = new List<ProductsInBagDTO>();
+        public int PaymentMethodId { get; set; } = 1;
 
         public string NoteForDelivery { get; set; } = string.Empty;
 
@@ -21,18 +22,32 @@ namespace LilsCareApp.Core.Models.Checkout
 
         public IEnumerable<string> ShippingCities { get; set; } = new List<string>();
 
-        public bool IsAddressDelivery() => ShippingProviderId == 0;
-
-        public bool IsOfficeDelivery() => ShippingProviderId > 0;
-
-
-        public bool IsDeliveryValid() => AddressDelivery?.IsValid != false || OfficeDelivery?.IsValid != false;
 
         public bool IsShippingProvider() => ShippingProviderId != null;
 
-        public bool IsValidOrder() => IsDeliveryValid() && IsShippingProvider();
+        public bool IsDeliveryOffice() => AddressDelivery?.ShippingOffice?.Id != null && AddressDelivery.ShippingOffice.Id != 0;
 
-        public string? DeliveryType() => ShippingProviders.FirstOrDefault(sp => sp.Id == ShippingProviderId)?.Description;
+        public bool IsDeliveryToAddress() => AddressDelivery != null && !AddressDelivery.IsShippingToOffice;
+
+        public bool IsDeliveryToOffice() => AddressDelivery != null && AddressDelivery.IsShippingToOffice;
+
+        public bool IsValidAddressDelivery() => AddressDelivery != null && AddressDelivery.IsValid;
+
+        public bool IsValidOrder() => IsValidAddressDelivery();
+
+
+
+
+        //public bool IsOfficeDelivery() => ShippingProviderId > 0;
+
+
+
+        //public bool IsDeliveryValid() => AddressDelivery?.IsValid != false || OfficeDelivery?.IsValid != false;
+
+        //public bool IsShippingProvider() => ShippingProviderId != null;
+
+
+        //public string? DeliveryType() => ShippingProviders.FirstOrDefault(sp => sp.Id == ShippingProviderId)?.Description;
 
         public decimal SubTotal() => ProductsInBag.Sum(p => p.Quantity * p.Price);
 
@@ -42,16 +57,18 @@ namespace LilsCareApp.Core.Models.Checkout
             {
                 return 0;
             }
-            else if (AddressDelivery != null && AddressDelivery.IsValid)
+            else if (IsDeliveryOffice())
+            {
+                return AddressDelivery.ShippingOffice?.Price;
+            }
+            else if (IsValidAddressDelivery())
             {
                 return AddressDeliveryPrice;
             }
-            else if (OfficeDelivery != null && OfficeDelivery.IsValid)
-            {
-                return OfficeDelivery.ShippingOffice?.Price;
-            }
             else
+            {
                 return null;
+            }
         }
 
         public decimal? Total() => SubTotal() + ShippingPrice();

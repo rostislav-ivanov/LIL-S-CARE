@@ -53,20 +53,16 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("Navigation property to ShippingOffice")]
         public ShippingOffice? ShippingOffice { get; set; }
 
+        [Comment("Navigation property to Order")]
+        public List<Order> Orders { get; set; } = new List<Order>();
+
+
         [Comment("App User Id")]
         public string? AppUserId { get; set; }
 
         [ForeignKey(nameof(AppUserId))]
         [Comment("Navigation property to AppUser")]
         public AppUser AppUser { get; set; } = null!;
-
-
-        [Comment("Navigation property to Order")]
-        public List<Order> Orders { get; set; } = new List<Order>();
-
-        [InverseProperty(nameof(AppUser.DefaultAddressDelivery))]
-        public List<AppUser> AppUsers { get; set; } = new List<AppUser>();
-
     }
 }
 

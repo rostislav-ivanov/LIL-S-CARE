@@ -51,6 +51,18 @@ namespace LilsCareApp.Infrastructure.Data
                 .WithMany(r => r.Images)
                 .HasForeignKey(ir => new { ir.ProductId, ir.AuthorId });
 
+            builder.Entity<AppUser>()
+                .HasMany(au => au.AddressDelivery)
+                .WithOne(ad => ad.AppUser)
+                .HasForeignKey(ad => ad.AppUserId);
+
+            builder.Entity<AppUser>()
+                .HasOne(au => au.DefaultAddressDelivery)
+                .WithMany()
+                .HasForeignKey(au => au.DefaultAddressDeliveryId)
+                .IsRequired(false);
+
+
             builder.ApplyConfiguration(new AppUserConfiguration());
             builder.ApplyConfiguration(new ProductsConfiguration());
             builder.ApplyConfiguration(new CategoriesConfiguration());
