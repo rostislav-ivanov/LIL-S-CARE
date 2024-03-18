@@ -45,6 +45,8 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("Country")]
         public string? Country { get; set; }
 
+        public bool IsShippingToOffice { get; set; }
+
         public int? ShippingOfficeId { get; set; }
 
         [ForeignKey(nameof(ShippingOfficeId))]

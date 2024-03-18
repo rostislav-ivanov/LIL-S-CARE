@@ -6,7 +6,20 @@
     <link rel="stylesheet" href="~/css/checkout.css" />
 }
 
+@if (Model.ProductsInBag.Count() == 0)
+{
+    <div class="text-center mt-5">
+        <h1 style="height:100px">Количката е празна</h1>
+        <a asp-controller="Products" asp-action="Index" class="btn">
+            Към магазина...
+        </a>
+        <div style="height:100px"></div>
+    </div>
+}
+else
+{
 <div class="container p-3">
+
     <div class="row g-5 p-3">
         <!-- Client's data and Delivery address Start -->
         <div class="col-lg-6">
@@ -64,13 +77,13 @@
                 else
                 {
                     <p style="opacity: 0.9">
-                        @Model.DeliveryType();
+                        @Model.DeliveryType()
                     </p>
                 }
                 <hr />
                 <!-- Delivery Method End -->
                 <!-- Input Delivery Start -->
-                @if (Model.AddressDelivery != null && Model.DeliveryType() != null)
+                @if (Model.IsAddressDelivery())
                 {
                     <!-- Delivery to Address Start -->
                     @if (Model.AddressDelivery.IsValid)
@@ -172,8 +185,9 @@
                         <!-- New Address to Delivery End -->
                     }
                     <!-- Delivery to Address End -->
+                    <hr />
                 }
-                else if (Model.OfficeDelivery != null && Model.DeliveryType() != null)
+                else if (Model.IsOfficeDelivery())
                 {
                     <!-- Delivery to Office Start -->
                     @if (Model.OfficeDelivery.IsValid)
@@ -196,7 +210,7 @@
                     else if (!Model.OfficeDelivery.IsValid)
                     {
                         <!-- New Office to Delivery Start -->
-                        <form asp-controller="Checkout" asp-action="DeliveryToOffice" method="post">
+                        <form asp-controller="Checkout" asp-action="AddOfficeDelivery" method="post">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <input asp-for="@Model.OfficeDelivery.ShippingOffice.City" hidden />
@@ -206,7 +220,7 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            @foreach (var city in Model.ShippingOffices.Select(o => o.City).Distinct())
+                                            @foreach (var city in Model.ShippingCities)
                                             {
                                                 <a asp-controller="Checkout" asp-action="SelectOfficeCity" asp-route-city="@city" class="dropdown-item">
                                                     @city
@@ -225,9 +239,7 @@
                                         <li>
                                             @if (Model.OfficeDelivery.ShippingOffice?.City != null)
                                             {
-                                                var offices = Model.ShippingOffices
-                                                                .Where(o => o.City == Model.OfficeDelivery.ShippingOffice.City);
-                                                foreach (var office in offices)
+                                                foreach (var office in Model.ShippingOffices)
                                                 {
                                                     <a asp-controller="Checkout" asp-action="SelectOfficeDelivery" asp-route-officeId="@office.Id" class="dropdown-item">
                                                         @office.OfficeAddress
@@ -267,29 +279,29 @@
                                    value="Потвърдете адреса за доставка">
                         </form>
                         <!-- New Office to Delivery End -->
+                        <hr />
                     }
 
                     <!-- Delivery to Office End -->
                 }
-                <hr />
                 <!-- Payment Start -->
                 <h5>Метод на плащане</h5>
                 <p style="opacity: 0.9">наложен платеж</p>
                 <!-- Payment Start -->
                 <hr />
                 <!-- Input Delivery End -->
-@*                 @if (Model.IsValid())
+                @if (Model.IsValidOrder())
                 {
                     <p>
                         Прегледайте подробностите за поръчката по-горе и направете
                         поръчката си, когато сте готови.
                     </p>
-                    <a  type="submit"
-                            class="btn btn-primary mt-3"
+                    <a  asp-controller="Checkout" asp-action="CheckoutSummary"
+                            class="btn mt-3"
                             style="width: 100%">
                         Направете поръчка
                     </a>
-                } *@
+                }
 
                 <!-- Confirm Order End-->
             </div>
@@ -297,7 +309,7 @@
         <!-- Client's data and Delivery address End -->
         <!-- Order Summary Start -->
         <div class="col-lg-6">
-@*             <div class="container mt-4 px-4 pb-2 rounded"
+            <div class="container mt-4 px-4 pb-2 rounded"
                  style="background-color: rgb(var(--app-bg-secondary))">
                 <div class="d-flex justify-content-between align-items-center">
                     <h5 class="py-4 m-0">Резюме на поръчката (@Model.ProductsInBag.Sum(p => p.Quantity))</h5>
@@ -423,11 +435,12 @@
                     <span>@Model.Total() лв.</span>
                 </div>
                 <!-- Total Price End -->
-            </div> *@
+            </div>
         </div>
         <!-- Order Summary End -->
     </div>
 </div>
+}
 
 @section Scripts {
     <!-- Validation form fields on client -->
