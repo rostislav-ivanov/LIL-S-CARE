@@ -104,6 +104,29 @@ namespace LilsCareApp.Infrastructure.Migrations
                 comment: "The product model");
 
             migrationBuilder.CreateTable(
+                name: "PromoCodes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false, comment: "Promo Code Id")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Promo Code"),
+                    Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false, comment: "Discount of Total Price Order"),
+                    ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Expiration Date of Promo Code"),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "Owner of Promo Code")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PromoCodes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PromoCodes_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                },
+                comment: "Promo Code for one User");
+
+            migrationBuilder.CreateTable(
                 name: "ShippingProviders",
                 columns: table => new
                 {
@@ -360,6 +383,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false, comment: "Order Id")
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderNumber = table.Column<int>(type: "int", nullable: false, comment: "Order Number"),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Date of Order Creating"),
                     StatusOrderId = table.Column<int>(type: "int", nullable: false, comment: "Status of Order"),
                     AddressDeliveryId = table.Column<int>(type: "int", nullable: false, comment: "Address Delivery Id"),
@@ -367,7 +391,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                     DateShipping = table.Column<DateTime>(type: "datetime2", nullable: true, comment: "Date of Shipping Creating"),
                     TrackingNumber = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true, comment: "Tracking Number of Order"),
                     PaymentMethodId = table.Column<int>(type: "int", nullable: true, comment: "Payment Method Id"),
-                    NoteForDelivery = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "Note for Delivery")
+                    NoteForDelivery = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "Note for Delivery"),
+                    ShippingPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false, comment: "Shipping Price"),
+                    PromoCodeId = table.Column<int>(type: "int", nullable: true, comment: "Promo Code Id")
                 },
                 constraints: table =>
                 {
@@ -389,6 +415,11 @@ namespace LilsCareApp.Infrastructure.Migrations
                         principalTable: "PaymentMethods",
                         principalColumn: "Id");
                     table.ForeignKey(
+                        name: "FK_Orders_PromoCodes_PromoCodeId",
+                        column: x => x.PromoCodeId,
+                        principalTable: "PromoCodes",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_Orders_StatusOrders_StatusOrderId",
                         column: x => x.StatusOrderId,
                         principalTable: "StatusOrders",
@@ -402,7 +433,10 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: table => new
                 {
                     ProductId = table.Column<int>(type: "int", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: false)
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false, comment: "The quantity of the product in the order"),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false, comment: "The price of the product at the time of the order"),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "The image path of the product at the time of the order")
                 },
                 constraints: table =>
                 {
@@ -425,7 +459,7 @@ namespace LilsCareApp.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DefaultAddressDeliveryId", "Email", "EmailConfirmed", "ImagePath", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "63992fc8-1168-4fd2-9c54-54449cd9e463", 0, "9ff2c156-c946-49bb-aa2a-7d03f237cda3", null, null, false, null, false, null, null, "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAENSP+z/Ipmbt/2O5Grm6DGk8m+CRmhVwYrgszI1PHKsA977RTEszIdvARcF5EAncRw==", null, false, "8ee72146-6c67-4a93-a429-695401c46b04", false, "test@softuni.bg" });
+                values: new object[] { "a0affcc1-cead-4ee3-a23f-49dc02d13c50", 0, "f1ba7e2a-cb3f-4725-945e-e615438d3f9f", null, null, false, null, false, null, null, "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAED1djs+Ly+94nX0RCYsCT9hLIXHkffYcdfXqJo/qPWIa0e7DsMHxuGEPDxP3rjgtgg==", null, false, "e193d668-bcee-450d-a2c2-b22919a94e6e", false, "test@softuni.bg" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -487,9 +521,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "AppUserId", "ProductId", "Quantity" },
                 values: new object[,]
                 {
-                    { "63992fc8-1168-4fd2-9c54-54449cd9e463", 1, 2 },
-                    { "63992fc8-1168-4fd2-9c54-54449cd9e463", 2, 3 },
-                    { "63992fc8-1168-4fd2-9c54-54449cd9e463", 3, 4 }
+                    { "a0affcc1-cead-4ee3-a23f-49dc02d13c50", 1, 2 },
+                    { "a0affcc1-cead-4ee3-a23f-49dc02d13c50", 2, 3 },
+                    { "a0affcc1-cead-4ee3-a23f-49dc02d13c50", 3, 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -563,13 +597,22 @@ namespace LilsCareApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "PromoCodes",
+                columns: new[] { "Id", "AppUserId", "Code", "Discount", "ExpirationDate" },
+                values: new object[,]
+                {
+                    { 1, "a0affcc1-cead-4ee3-a23f-49dc02d13c50", "LILS10", 0.1m, new DateTime(2025, 3, 19, 13, 1, 15, 920, DateTimeKind.Utc).AddTicks(5634) },
+                    { 2, "a0affcc1-cead-4ee3-a23f-49dc02d13c50", "LILS20", 0.2m, new DateTime(2025, 3, 19, 13, 1, 15, 920, DateTimeKind.Utc).AddTicks(5642) }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Reviews",
                 columns: new[] { "AuthorId", "ProductId", "Comment", "CreatedOn", "Rating", "Title" },
                 values: new object[,]
                 {
-                    { "63992fc8-1168-4fd2-9c54-54449cd9e463", 2, "Great product, I love it!", new DateTime(2024, 3, 18, 19, 0, 22, 510, DateTimeKind.Local).AddTicks(5320), 4, "Great product" },
-                    { "63992fc8-1168-4fd2-9c54-54449cd9e463", 3, "Great product, I love it!", new DateTime(2024, 3, 18, 19, 0, 22, 510, DateTimeKind.Local).AddTicks(5405), 3, "Great product" },
-                    { "63992fc8-1168-4fd2-9c54-54449cd9e463", 4, "Great product, I love it!", new DateTime(2024, 3, 18, 19, 0, 22, 510, DateTimeKind.Local).AddTicks(5409), 3, "Great product" }
+                    { "a0affcc1-cead-4ee3-a23f-49dc02d13c50", 2, "Great product, I love it!", new DateTime(2024, 3, 19, 15, 1, 15, 920, DateTimeKind.Local).AddTicks(5224), 4, "Great product" },
+                    { "a0affcc1-cead-4ee3-a23f-49dc02d13c50", 3, "Great product, I love it!", new DateTime(2024, 3, 19, 15, 1, 15, 920, DateTimeKind.Local).AddTicks(5276), 3, "Great product" },
+                    { "a0affcc1-cead-4ee3-a23f-49dc02d13c50", 4, "Great product, I love it!", new DateTime(2024, 3, 19, 15, 1, 15, 920, DateTimeKind.Local).AddTicks(5283), 3, "Great product" }
                 });
 
             migrationBuilder.InsertData(
@@ -594,9 +637,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "AppUserId", "ProductId" },
                 values: new object[,]
                 {
-                    { "63992fc8-1168-4fd2-9c54-54449cd9e463", 1 },
-                    { "63992fc8-1168-4fd2-9c54-54449cd9e463", 3 },
-                    { "63992fc8-1168-4fd2-9c54-54449cd9e463", 4 }
+                    { "a0affcc1-cead-4ee3-a23f-49dc02d13c50", 1 },
+                    { "a0affcc1-cead-4ee3-a23f-49dc02d13c50", 3 },
+                    { "a0affcc1-cead-4ee3-a23f-49dc02d13c50", 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -604,34 +647,34 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "Id", "Address", "AppUserId", "Country", "District", "FirstName", "IsShippingToOffice", "LastName", "PhoneNumber", "PostCode", "ShippingOfficeId", "Town" },
                 values: new object[,]
                 {
-                    { 1, "bul. Vitosha", "63992fc8-1168-4fd2-9c54-54449cd9e463", "Bulgaria", "Sofia", "Ivan", false, "Ivanov", "0888888888", "1000", 1, "Sofia" },
-                    { 2, "bul. Vitosha", "63992fc8-1168-4fd2-9c54-54449cd9e463", "Bulgaria", "Sofia", "Petar", false, "Petrov", "0888888888", "1000", 2, "Sofia" }
+                    { 1, "bul. Vitosha", "a0affcc1-cead-4ee3-a23f-49dc02d13c50", "Bulgaria", "Sofia", "Ivan", false, "Ivanov", "0888888888", "1000", 1, "Sofia" },
+                    { 2, "bul. Vitosha", "a0affcc1-cead-4ee3-a23f-49dc02d13c50", "Bulgaria", "Sofia", "Petar", false, "Petrov", "0888888888", "1000", 2, "Sofia" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Orders",
-                columns: new[] { "Id", "AddressDeliveryId", "AppUserId", "CreatedOn", "DateShipping", "NoteForDelivery", "PaymentMethodId", "StatusOrderId", "TrackingNumber" },
+                columns: new[] { "Id", "AddressDeliveryId", "AppUserId", "CreatedOn", "DateShipping", "NoteForDelivery", "OrderNumber", "PaymentMethodId", "PromoCodeId", "ShippingPrice", "StatusOrderId", "TrackingNumber" },
                 values: new object[,]
                 {
-                    { 1, 1, "63992fc8-1168-4fd2-9c54-54449cd9e463", new DateTime(2024, 3, 18, 17, 0, 21, 993, DateTimeKind.Utc).AddTicks(1261), new DateTime(2024, 3, 18, 17, 0, 21, 993, DateTimeKind.Utc).AddTicks(2375), null, 1, 1, "1234567890" },
-                    { 2, 2, "63992fc8-1168-4fd2-9c54-54449cd9e463", new DateTime(2024, 3, 18, 17, 0, 21, 993, DateTimeKind.Utc).AddTicks(3487), new DateTime(2024, 3, 18, 17, 0, 21, 993, DateTimeKind.Utc).AddTicks(3488), null, 2, 2, "1234567890x" }
+                    { 1, 1, "a0affcc1-cead-4ee3-a23f-49dc02d13c50", new DateTime(2024, 3, 19, 13, 1, 15, 210, DateTimeKind.Utc).AddTicks(4468), new DateTime(2024, 3, 19, 13, 1, 15, 210, DateTimeKind.Utc).AddTicks(5788), null, 0, 1, null, 0m, 1, "1234567890" },
+                    { 2, 2, "a0affcc1-cead-4ee3-a23f-49dc02d13c50", new DateTime(2024, 3, 19, 13, 1, 15, 210, DateTimeKind.Utc).AddTicks(6833), new DateTime(2024, 3, 19, 13, 1, 15, 210, DateTimeKind.Utc).AddTicks(6836), null, 0, 2, null, 0m, 2, "1234567890x" }
                 });
 
             migrationBuilder.InsertData(
                 table: "ProductOrder",
-                columns: new[] { "OrderId", "ProductId" },
+                columns: new[] { "OrderId", "ProductId", "ImagePath", "Price", "Quantity" },
                 values: new object[,]
                 {
-                    { 1, 1 },
-                    { 2, 1 },
-                    { 1, 2 },
-                    { 1, 3 },
-                    { 2, 3 },
-                    { 1, 4 },
-                    { 2, 5 },
-                    { 1, 6 },
-                    { 2, 6 },
-                    { 1, 7 }
+                    { 1, 1, "", 0m, 0 },
+                    { 2, 1, "", 0m, 0 },
+                    { 1, 2, "", 0m, 0 },
+                    { 1, 3, "", 0m, 0 },
+                    { 2, 3, "", 0m, 0 },
+                    { 1, 4, "", 0m, 0 },
+                    { 2, 5, "", 0m, 0 },
+                    { 1, 6, "", 0m, 0 },
+                    { 2, 6, "", 0m, 0 },
+                    { 1, 7, "", 0m, 0 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -685,6 +728,13 @@ namespace LilsCareApp.Infrastructure.Migrations
                 column: "PaymentMethodId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_PromoCodeId",
+                table: "Orders",
+                column: "PromoCodeId",
+                unique: true,
+                filter: "[PromoCodeId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_StatusOrderId",
                 table: "Orders",
                 column: "StatusOrderId");
@@ -698,6 +748,11 @@ namespace LilsCareApp.Infrastructure.Migrations
                 name: "IX_ProductsCategories_CategoryId",
                 table: "ProductsCategories",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PromoCodes_AppUserId",
+                table: "PromoCodes",
+                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_AuthorId",
@@ -777,6 +832,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                 name: "PaymentMethods");
 
             migrationBuilder.DropTable(
+                name: "PromoCodes");
+
+            migrationBuilder.DropTable(
                 name: "StatusOrders");
 
             migrationBuilder.DropTable(
@@ -792,7 +850,7 @@ namespace LilsCareApp.Infrastructure.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: "63992fc8-1168-4fd2-9c54-54449cd9e463");
+                keyValue: "a0affcc1-cead-4ee3-a23f-49dc02d13c50");
 
             migrationBuilder.DropColumn(
                 name: "DefaultAddressDeliveryId",

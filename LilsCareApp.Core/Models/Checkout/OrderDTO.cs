@@ -16,6 +16,8 @@ namespace LilsCareApp.Core.Models.Checkout
 
         public int PaymentMethodId { get; set; } = 1;
 
+        public int? PromoCodeId { get; set; }
+
         public string NoteForDelivery { get; set; } = string.Empty;
 
         public bool IsWantToBeDefaultAddressDelivery { get; set; }
@@ -35,19 +37,6 @@ namespace LilsCareApp.Core.Models.Checkout
 
         public bool IsValidOrder() => IsValidAddressDelivery();
 
-
-
-
-        //public bool IsOfficeDelivery() => ShippingProviderId > 0;
-
-
-
-        //public bool IsDeliveryValid() => AddressDelivery?.IsValid != false || OfficeDelivery?.IsValid != false;
-
-        //public bool IsShippingProvider() => ShippingProviderId != null;
-
-
-        //public string? DeliveryType() => ShippingProviders.FirstOrDefault(sp => sp.Id == ShippingProviderId)?.Description;
 
         public decimal SubTotal() => ProductsInBag.Sum(p => p.Quantity * p.Price);
 

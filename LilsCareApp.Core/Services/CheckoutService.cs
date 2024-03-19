@@ -19,21 +19,20 @@ namespace LilsCareApp.Core.Services
         {
 
             var addressDelivery = await _context.Users
-                .Where(u => u.Id == userId)
-                .Select(u => u.DefaultAddressDelivery)
+                .Where(u => u.Id == userId && u.DefaultAddressDeliveryId != null)
                 .Select(ad => new AddressDeliveryDTO()
                 {
-                    Id = ad.Id,
-                    FirstName = ad.FirstName,
-                    LastName = ad.LastName,
-                    Country = ad.Country,
-                    PostCode = ad.PostCode,
-                    Town = ad.Town,
-                    Address = ad.Address,
-                    District = ad.District,
-                    PhoneNumber = ad.PhoneNumber,
-                    IsShippingToOffice = ad.IsShippingToOffice,
-                    ShippingOfficeId = ad.ShippingOfficeId
+                    Id = ad.DefaultAddressDelivery.Id,
+                    FirstName = ad.DefaultAddressDelivery.FirstName,
+                    LastName = ad.DefaultAddressDelivery.LastName,
+                    Country = ad.DefaultAddressDelivery.Country,
+                    PostCode = ad.DefaultAddressDelivery.PostCode,
+                    Town = ad.DefaultAddressDelivery.Town,
+                    Address = ad.DefaultAddressDelivery.Address,
+                    District = ad.DefaultAddressDelivery.District,
+                    PhoneNumber = ad.DefaultAddressDelivery.PhoneNumber,
+                    IsShippingToOffice = ad.DefaultAddressDelivery.IsShippingToOffice,
+                    ShippingOfficeId = ad.DefaultAddressDelivery.ShippingOfficeId
                 })
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
@@ -126,7 +125,7 @@ namespace LilsCareApp.Core.Services
                 .ToListAsync();
         }
 
-        public async Task CheckoutSaveAsync(OrderDTO checkout, string userId)
+        public async Task<OrderSummaryDTO> CheckoutSaveAsync(OrderDTO checkout, string userId)
         {
 
             AppUser appUser = await _context.Users.FirstAsync(u => u.Id == userId);
@@ -135,10 +134,32 @@ namespace LilsCareApp.Core.Services
             {
                 CreatedOn = DateTime.UtcNow,
                 StatusOrderId = 1,
-                AppUserId = userId,
+                AppUser = appUser,
                 PaymentMethodId = checkout.PaymentMethodId,
                 NoteForDelivery = checkout.NoteForDelivery,
+                ProductsOrders = new List<ProductOrder>(),
+                PromoCodeId = checkout.PromoCodeId,
+                ShippingPrice = checkout.ShippingPrice() ?? 0
+
             };
+
+            // add products to order
+            foreach (var product in checkout.ProductsInBag)
+            {
+                ProductOrder productOrder = new ProductOrder()
+                {
+                    ProductId = product.Id,
+                    Quantity = product.Quantity,
+                    Price = product.Price,
+                    ImagePath = await _context.ImageProducts
+                        .Where(ip => ip.Id == product.Id)
+                        .Select(ip => ip.ImagePath)
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync()
+                };
+                order.ProductsOrders.Add(productOrder);
+            }
+
 
             // check for existing address delivery
             AddressDelivery addressDelivery = await _context.AddressDeliveries.FirstOrDefaultAsync(ad => ad.Id == checkout.AddressDelivery.Id);
@@ -156,7 +177,7 @@ namespace LilsCareApp.Core.Services
                     Address = checkout.AddressDelivery.Address,
                     District = checkout.AddressDelivery.District,
                     IsShippingToOffice = checkout.AddressDelivery.IsShippingToOffice,
-                    ShippingOfficeId = checkout.AddressDelivery.ShippingOffice.Id,
+                    ShippingOfficeId = checkout.AddressDelivery.ShippingOffice?.Id,
                     AppUser = appUser
 
                 };
@@ -171,7 +192,61 @@ namespace LilsCareApp.Core.Services
 
             await _context.Orders.AddAsync(order);
 
+            // generate unique order number
+            order.OrderNumber = new Random().Next(1000, 9999) + order.Id;
+
             await _context.SaveChangesAsync();
+
+
+            OrderSummaryDTO? orderSummary = await _context.Orders
+                .Where(o => o.Id == order.Id)
+                .Select(o => new OrderSummaryDTO()
+                {
+                    OrderNumber = o.OrderNumber,
+                    OrderDate = o.CreatedOn,
+                    FirstName = o.AddressDelivery.FirstName,
+                    LastName = o.AddressDelivery.LastName,
+                    PhoneNumber = o.AddressDelivery.PhoneNumber,
+                    PostCode = o.AddressDelivery.PostCode,
+                    Address = o.AddressDelivery.Address,
+                    Town = o.AddressDelivery.Town,
+                    District = o.AddressDelivery.District,
+                    Country = o.AddressDelivery.Country,
+                    IsShippingToOffice = o.AddressDelivery.IsShippingToOffice,
+                    ShippingProviderName = o.AddressDelivery.ShippingOffice.ShippingProvider.Name,
+                    ShippingOfficeCity = o.AddressDelivery.ShippingOffice.City,
+                    ShippingOfficeAddress = o.AddressDelivery.ShippingOffice.OfficeAddress,
+                    PaymentMethod = o.PaymentMethod.Type,
+                    NoteForDelivery = o.NoteForDelivery,
+                    Products = o.ProductsOrders
+                        .Select(po => new ProductOrderDTO()
+                        {
+                            Id = po.Product.Id,
+                            Name = po.Product.Name,
+                            Description = po.Product.Description,
+                            ImagePath = po.ImagePath,
+                            Quantity = po.Quantity,
+                            Price = po.Price,
+                        }),
+                    PromoCode = o.PromoCode == null ? null : o.PromoCode.Code,
+                    Discount = o.PromoCode == null ? 0 : o.PromoCode.Discount,
+                    ShippingPrice = o.ShippingPrice
+                })
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+
+
+            orderSummary.SubTotal = orderSummary.Products.Sum(p => p.Quantity * p.Price);
+            orderSummary.Total = orderSummary.SubTotal - (orderSummary.SubTotal * orderSummary.Discount) + orderSummary.ShippingPrice;
+
+            IEnumerable<BagUser> bagUsers = await _context.BagsUsers
+                .Where(bu => bu.AppUserId == userId)
+                .ToListAsync();
+
+            _context.Remove(bagUsers);
+
+            return orderSummary;
         }
     }
 }

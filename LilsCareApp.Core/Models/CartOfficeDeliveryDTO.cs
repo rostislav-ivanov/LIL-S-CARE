@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LilsCareApp.Core.Models.Checkout;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using static LilsCareApp.Core.ErrorMessageConstants;
 using static LilsCareApp.Infrastructure.DataConstants.AddressDelivery;
 
-namespace LilsCareApp.Core.Models.Checkout
+namespace LilsCareApp.Core.Models
 {
-    public class OfficeDeliveryDTO : IDeliveryDTO
+    public class CartOfficeDeliveryDTO
     {
         public int Id { get; set; }
         public ShippingProviderDTO? ShippingProvider { get; set; }

@@ -66,15 +66,9 @@ namespace LilsCareApp.Core.Models.Checkout
         public string? Email { get; set; }
 
 
-        //public int? ShippingProviderId { get; set; }
-        //public ShippingProviderDTO? ShippingProvider { get; set; }
-        //public List<ShippingProviderDTO>? ShippingProviders { get; set; }
-
         public int? ShippingOfficeId { get; set; }
 
         public ShippingOfficeDTO? ShippingOffice { get; set; }
-
-
 
 
         public bool IsValid { get; set; } = false;

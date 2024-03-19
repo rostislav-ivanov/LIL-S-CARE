@@ -10,7 +10,7 @@ namespace LilsCareApp.Core.Models
 
         public DiscountDTO? Discount { get; set; }
 
-        public IEnumerable<OfficeDeliveryDTO> ShippingProviders { get; set; } = new List<OfficeDeliveryDTO>();
+        public IEnumerable<CartOfficeDeliveryDTO> ShippingProviders { get; set; } = new List<CartOfficeDeliveryDTO>();
 
         public int ShippingProviderId { get; set; }
 
