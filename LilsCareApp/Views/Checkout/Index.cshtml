@@ -105,6 +105,7 @@ else
                             <span>@Model.AddressDelivery.Email</span>
                         </div>
                         <!-- Existing Address to Delivery End -->
+                            <hr />
                     }
                     else
                     {
@@ -183,9 +184,10 @@ else
                                    value="Потвърдете адреса за доставка">
                         </form>
                         <!-- New Address to Delivery End -->
+                            <hr />
                     }
                     <!-- Delivery to Address End -->
-                    <hr />
+                   
                 }
                     else if (Model.IsDeliveryToOffice())
                 {
@@ -199,13 +201,14 @@ else
                                 Редактиране
                             </a>
                         </div>
-                        <div class="row" style="opacity: 0.9">
-                                <span>@Model.AddressDelivery.ShippingOffice.City</span>
-                                <span>@Model.AddressDelivery.ShippingOffice.OfficeAddress</span>
+                            <div class="row" style="opacity: 0.9">
+                                <span>@Model.AddressDelivery.ShippingOffice?.City</span>
+                                <span>@Model.AddressDelivery.ShippingOffice?.OfficeAddress</span>
                                 <span>@Model.AddressDelivery.FirstName @Model.AddressDelivery.LastName</span>
                                 <span>@Model.AddressDelivery.PhoneNumber</span>
-                        </div>
+                            </div>
                         <!-- Existing Office to Delivery End -->
+                            <hr />
                     }
                         else if (!Model.AddressDelivery.IsValid)
                     {
@@ -282,12 +285,11 @@ else
                                    value="Потвърдете адреса за доставка">
                         </form>
                         <!-- New Office to Delivery End -->
-                        <hr />
+                            <hr />
                     }
                     <!-- Delivery to Office End -->
                 }
                 <!-- Input Delivery End -->
-
 
                 <!-- Payment Start -->
                 <h5>Метод на плащане</h5>

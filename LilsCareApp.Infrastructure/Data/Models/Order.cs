@@ -12,6 +12,10 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Key]
         public int Id { get; set; }
 
+        [Comment("Order Number")]
+        [Unique]
+        public int OrderNumber { get; set; }
+
         [Comment("Date of Order Creating")]
         public DateTime CreatedOn { get; set; }
 
@@ -55,6 +59,20 @@ namespace LilsCareApp.Infrastructure.Data.Models
 
         [Comment("Note for Delivery")]
         public string? NoteForDelivery { get; set; }
+
+        [Comment("Shipping Price")]
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal ShippingPrice { get; set; }
+
+
+        [Comment("Promo Code Id")]
+        public int? PromoCodeId { get; set; }
+
+        [Comment("Navigation Property to PromoCode")]
+        [ForeignKey(nameof(PromoCodeId))]
+        public PromoCode? PromoCode { get; set; }
+
     }
+
 }
 

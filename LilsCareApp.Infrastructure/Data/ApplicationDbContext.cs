@@ -44,6 +44,8 @@ namespace LilsCareApp.Infrastructure.Data
 
         public DbSet<ShippingOffice> ShippingOffices { get; set; } = null!;
 
+        public DbSet<PromoCode> PromoCodes { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<ImageReview>()
@@ -78,6 +80,7 @@ namespace LilsCareApp.Infrastructure.Data
             builder.ApplyConfiguration(new ProductsOrdersConfiguration());
             builder.ApplyConfiguration(new ReviewsConfiguration());
             builder.ApplyConfiguration(new ImageProductsConfiguration());
+            builder.ApplyConfiguration(new PromoCodeConfiguration());
 
             base.OnModelCreating(builder);
         }

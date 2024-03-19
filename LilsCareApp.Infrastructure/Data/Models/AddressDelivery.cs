@@ -23,7 +23,7 @@ namespace LilsCareApp.Infrastructure.Data.Models
 
         [MaxLength(PhoneNumberMaxLength)]
         [Comment("Phone Number Recipient")]
-        public string? PhoneNumber { get; set; }
+        public required string PhoneNumber { get; set; }
 
         [MaxLength(PostCodeMaxLength)]
         [Comment("Post Code")]

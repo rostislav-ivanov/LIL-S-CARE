@@ -36,6 +36,9 @@ namespace LilsCareApp.Infrastructure.Data.Models
 
         [Comment("Navigation property to AddressDelivery")]
         public List<AddressDelivery> AddressDelivery { get; set; } = new List<AddressDelivery>();
+
+        [Comment("Navigation property to PromoCode")]
+        public List<PromoCode> PromoCodes { get; set; } = new List<PromoCode>();
     }
 }
 

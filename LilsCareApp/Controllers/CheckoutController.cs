@@ -209,11 +209,9 @@ namespace LilsCareApp.Controllers
             OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
 
             string userId = User.GetUserId();
-            await _checkoutService.CheckoutSaveAsync(checkout, userId);
+            OrderSummaryDTO orderSummary = await _checkoutService.CheckoutSaveAsync(checkout, userId);
 
-            HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
-
-            return View(nameof(Index), checkout);
+            return View(orderSummary);
         }
 
     }
