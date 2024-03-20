@@ -34,11 +34,11 @@ namespace LilsCareApp.Controllers
             checkout.ProductsInBag = await _productsService.GetProductsInBagAsync(userId);
             checkout.AddressDelivery = await _checkoutService.GetAddressDeliveryAsync(userId);
             checkout.ShippingProviders = await _checkoutService.GetShippingProvidersAsync();
+            checkout.PromoCodes = await _checkoutService.GetPromoCodesAsync(userId);
             if (checkout.AddressDelivery != null)
             {
                 checkout.ShippingProviderId = checkout.AddressDelivery.IsShippingToOffice
                     ? checkout.AddressDelivery.ShippingOffice.ShippingProviderId : 0;
-                //checkout.ShippingProvider = checkout.ShippingProviders.FirstOrDefault(sp => sp.Id == checkout.ShippingProviderId);
             }
 
             HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
@@ -56,7 +56,6 @@ namespace LilsCareApp.Controllers
                 return BadRequest();
             }
             checkout.ShippingProviderId = shippingProvidersId;
-            //checkout.ShippingProvider = checkout.ShippingProviders.FirstOrDefault(sp => sp.Id == shippingProvidersId);
             checkout.AddressDelivery = new AddressDeliveryDTO();
             checkout.AddressDelivery.IsShippingToOffice = shippingProvidersId != 0;
             if (checkout.IsDeliveryToOffice())
@@ -184,6 +183,18 @@ namespace LilsCareApp.Controllers
             string userId = User.GetUserId();
             await _productsService.AddToCartAsync(productId, userId, quantity);
             checkout.ProductsInBag = await _productsService.GetProductsInBagAsync(userId);
+            HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
+
+            return View(nameof(Index), checkout);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> DiscountWithPromoCode(int? promoCodeId)
+        {
+            OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
+
+            checkout.PromoCodeId = promoCodeId;
+
             HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
 
             return View(nameof(Index), checkout);

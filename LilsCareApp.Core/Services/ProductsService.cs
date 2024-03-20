@@ -148,15 +148,9 @@ namespace LilsCareApp.Core.Services
                 };
                 await _context.BagsUsers.AddAsync(bagUser);
             }
-            else
+            else if (bagUser.Quantity + quantity >= 1) // quantity must be at least 1
             {
                 bagUser.Quantity += quantity;
-            }
-
-
-            if (bagUser.Quantity <= 0)
-            {
-                _context.BagsUsers.Remove(bagUser);
             }
 
             await _context.SaveChangesAsync();
