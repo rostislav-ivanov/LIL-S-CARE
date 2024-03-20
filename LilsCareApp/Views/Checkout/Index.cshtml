@@ -380,8 +380,18 @@ else
                     </div>
                 }
                 <!-- Product End -->
+@*                     <!-- Promo Code Start -->
+                    <div style="display: block">
+                        <div class="d-flex justify-content-between">
+                            <span>Промо код: @Model.PromoCode - @((Model.Discount * 100).ToString("f0")) %</span>
+                            <span>
+                                <strong> - @((Model.SubTotal * Model.Discount).ToString("f2"))</strong>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- Promo Code Start --> *@
                 <!-- Promo Code Start -->
-                <div style="display: none">
+                <div>
                     <a href="#"
                        class="nav-link"
                        data-bs-toggle="collapse"
@@ -389,22 +399,24 @@ else
                         <i class="fa-solid fa-tag me-1"></i>Въведете промо код
                     </a>
                     <div id="promo-code" class="collapse">
-                        <input for="promo-code"
-                               type="text"
-                               class="form-control my-1"
-                               name="promo-code"
-                               placeholder="напр.SUMMERSALE20" />
-                        <a href="#" class="btn w-100 my-2">Приложи</a>
+                        <form asp-controller="Checkout" asp-action="Discount" method="post">
+                                <input asp-for="@Model.Pro"
+                                       type="text"
+                                       class="form-control my-1"
+                                       name="promo-code"
+                                       placeholder="напр.SUMMERSALE20" />
+                                <a href="#" class="btn w-100 my-2">Приложи</a>
+                        </form>
                     </div>
                 </div>
-                <div style="display: block">
+@*                 <div style="display: block">
                     <div class="d-flex justify-content-between">
                         <span>Промо код</span>
                         <span>
                             <strong>-10,00 лв.</strong>
                         </span>
                     </div>
-                </div>
+                </div> *@
                 <!-- Promo Code Start -->
                 <hr />
                 <!-- Subtotal Start -->
