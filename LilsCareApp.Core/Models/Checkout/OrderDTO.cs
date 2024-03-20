@@ -20,8 +20,6 @@ namespace LilsCareApp.Core.Models.Checkout
 
         public IEnumerable<PromoCodeDTO> PromoCodes { get; set; } = new List<PromoCodeDTO>();
 
-        public string NoteForDelivery { get; set; } = string.Empty;
-
         public bool IsWantToBeDefaultAddressDelivery { get; set; }
 
         public IEnumerable<string> ShippingCities { get; set; } = new List<string>();
@@ -39,11 +37,9 @@ namespace LilsCareApp.Core.Models.Checkout
 
         public bool IsValidOrder() => IsValidAddressDelivery();
 
+        public decimal Discount() => ProductsInBag.Sum(p => p.Quantity * p.Price) * PromoCodes.FirstOrDefault(p => p.Id == PromoCodeId)?.Discount ?? 0;
 
-        public decimal SubTotal() => ProductsInBag.Sum(p => p.Quantity * p.Price);
-
-        public decimal Discount() => SubTotal() * PromoCodes.FirstOrDefault(p => p.Id == PromoCodeId)?.Discount ?? 0;
-
+        public decimal SubTotal() => ProductsInBag.Sum(p => p.Quantity * p.Price) - Discount();
         public decimal? ShippingPrice()
         {
             if (SubTotal() >= FreeShipping)

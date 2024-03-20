@@ -65,6 +65,8 @@ namespace LilsCareApp.Core.Models.Checkout
         [Display(Name = "имейл")]
         public string? Email { get; set; }
 
+        [Comment("Note for Delivery")]
+        public string? NoteForDelivery { get; set; }
 
         public int? ShippingOfficeId { get; set; }
 
