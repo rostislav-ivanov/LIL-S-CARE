@@ -125,9 +125,9 @@ namespace LilsCareApp.Core.Services
                 .ToListAsync();
         }
 
-        public async Task<OrderSummaryDTO> CheckoutSaveAsync(OrderDTO checkout, string userId)
+        public async Task<string> CheckoutSaveAsync(OrderDTO checkout, string userId)
         {
-
+            // get user
             AppUser appUser = await _context.Users.FirstAsync(u => u.Id == userId);
 
             Order order = new Order()
@@ -164,7 +164,7 @@ namespace LilsCareApp.Core.Services
             // check for existing address delivery
             AddressDelivery addressDelivery = await _context.AddressDeliveries.FirstOrDefaultAsync(ad => ad.Id == checkout.AddressDelivery.Id);
 
-            if (addressDelivery is null) // create new address delivery
+            if (addressDelivery is null) // if not existing address create new address delivery
             {
                 addressDelivery = new AddressDelivery()
                 {
@@ -183,23 +183,38 @@ namespace LilsCareApp.Core.Services
                 };
             };
 
-
-            // set new default address delivery to user
-
-            appUser.DefaultAddressDelivery = addressDelivery;
-
+            // add address delivery to order
             order.AddressDelivery = addressDelivery;
 
+            // add order to user
             await _context.Orders.AddAsync(order);
 
-            // generate unique order number
-            order.OrderNumber = new Random().Next(1000, 9999) + order.Id;
+            // set new default address delivery to user
+            appUser.DefaultAddressDelivery = addressDelivery;
+
+            // remove products from user's bag
+            IEnumerable<BagUser> bagUsers = await _context.BagsUsers
+                .Where(bu => bu.AppUserId == userId)
+                .ToListAsync();
+
+            _context.RemoveRange(bagUsers);
 
             await _context.SaveChangesAsync();
 
+            // return unique order number to user
+            Random random = new Random();
 
+            order.OrderNumber = random.Next(10, 99).ToString() + order.Id.ToString() + random.Next(10, 99).ToString();
+
+            await _context.SaveChangesAsync();
+
+            return order.OrderNumber;
+        }
+
+        public async Task<OrderSummaryDTO> OrderSummaryAsync(string orderSNumber)
+        {
             OrderSummaryDTO? orderSummary = await _context.Orders
-                .Where(o => o.Id == order.Id)
+                .Where(o => o.OrderNumber == orderSNumber)
                 .Select(o => new OrderSummaryDTO()
                 {
                     OrderNumber = o.OrderNumber,
@@ -235,16 +250,8 @@ namespace LilsCareApp.Core.Services
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
 
-
-
             orderSummary.SubTotal = orderSummary.Products.Sum(p => p.Quantity * p.Price);
             orderSummary.Total = orderSummary.SubTotal - (orderSummary.SubTotal * orderSummary.Discount) + orderSummary.ShippingPrice;
-
-            IEnumerable<BagUser> bagUsers = await _context.BagsUsers
-                .Where(bu => bu.AppUserId == userId)
-                .ToListAsync();
-
-            _context.Remove(bagUsers);
 
             return orderSummary;
         }

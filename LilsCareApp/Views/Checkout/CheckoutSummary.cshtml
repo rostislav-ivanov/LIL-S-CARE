@@ -13,7 +13,7 @@
         <!-- Client's data and Delivery address Start -->
         <div class="col-lg-6">
             <hr />
-            <h5 class="py-3 m-0">Поръчка номер: <strong>@Model.OrderNumber</strong> от @Model.OrderDate.ToString("dd/MM/yyyy")</h5>
+            <h5 class="py-3 m-0">Поръчка #<strong>@Model.OrderNumber</strong> от @Model.OrderDate.ToString("dd/MM/yyyy")</h5>
 
             <hr />
             @if (!Model.IsShippingToOffice)

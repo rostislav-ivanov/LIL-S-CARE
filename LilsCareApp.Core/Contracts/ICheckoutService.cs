@@ -8,6 +8,7 @@ namespace LilsCareApp.Core.Contracts
         Task<IEnumerable<ShippingProviderDTO>> GetShippingProvidersAsync();
         Task<IEnumerable<ShippingOfficeDTO>> GetShippingOfficesByCityAsync(string city, int? shippingProviderId);
         Task<IEnumerable<string>> GetShippingCitiesAsync(int shippingProvidersId);
-        Task<OrderSummaryDTO> CheckoutSaveAsync(OrderDTO checkout, string userId);
+        Task<string> CheckoutSaveAsync(OrderDTO checkout, string userId);
+        Task<OrderSummaryDTO> OrderSummaryAsync(string orderSNumber);
     }
 }

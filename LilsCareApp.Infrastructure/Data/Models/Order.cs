@@ -13,8 +13,7 @@ namespace LilsCareApp.Infrastructure.Data.Models
         public int Id { get; set; }
 
         [Comment("Order Number")]
-        [Unique]
-        public int OrderNumber { get; set; }
+        public string? OrderNumber { get; set; }
 
         [Comment("Date of Order Creating")]
         public DateTime CreatedOn { get; set; }

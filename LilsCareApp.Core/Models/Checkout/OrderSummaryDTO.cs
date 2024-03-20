@@ -2,7 +2,7 @@
 {
     public class OrderSummaryDTO
     {
-        public int OrderNumber { get; set; }
+        public string? OrderNumber { get; set; }
 
         public DateTime OrderDate { get; set; }
 
