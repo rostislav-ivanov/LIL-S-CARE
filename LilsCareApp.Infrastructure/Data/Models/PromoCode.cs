@@ -21,6 +21,8 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("Expiration Date of Promo Code")]
         public DateTime ExpirationDate { get; set; }
 
+        public DateTime? AppliedDate { get; set; }
+
         [Comment("Owner of Promo Code")]
         public required string AppUserId { get; set; }
 

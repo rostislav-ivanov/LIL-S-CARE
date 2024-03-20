@@ -63,6 +63,17 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal ShippingPrice { get; set; }
 
+        [Comment("Sub Total")]
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal SubTotal { get; set; }
+
+        [Comment("Absolute Discount value")]
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal Discount { get; set; }
+
+        [Comment("Total")]
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal Total { get; set; }
 
         [Comment("Promo Code Id")]
         public int? PromoCodeId { get; set; }

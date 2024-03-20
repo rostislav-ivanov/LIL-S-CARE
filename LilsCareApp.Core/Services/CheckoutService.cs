@@ -99,6 +99,24 @@ namespace LilsCareApp.Core.Services
             return shippingProviders.OrderBy(sp => sp.Id);
         }
 
+        // get all promo codes for user witch are not expired and not already applied
+        public async Task<IEnumerable<PromoCodeDTO>> GetPromoCodesAsync(string userId)
+        {
+            return await _context.PromoCodes
+                .Where(pc => pc.AppUserId == userId
+                    && pc.ExpirationDate >= DateTime.UtcNow
+                    && pc.AppliedDate == null)
+                .Select(pc => new PromoCodeDTO()
+                {
+                    Id = pc.Id,
+                    Code = pc.Code,
+                    Discount = pc.Discount,
+                    ExpirationDate = pc.ExpirationDate
+                })
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<string>> GetShippingCitiesAsync(int shippingProvidersId)
         {
             return await _context.ShippingOffices
@@ -139,7 +157,11 @@ namespace LilsCareApp.Core.Services
                 NoteForDelivery = checkout.NoteForDelivery,
                 ProductsOrders = new List<ProductOrder>(),
                 PromoCodeId = checkout.PromoCodeId,
-                ShippingPrice = checkout.ShippingPrice() ?? 0
+                SubTotal = checkout.SubTotal(),
+                Discount = checkout.Discount(),
+                ShippingPrice = checkout.ShippingPrice() ?? 0,
+                Total = checkout.Total()
+
 
             };
 
@@ -197,6 +219,14 @@ namespace LilsCareApp.Core.Services
                 .Where(bu => bu.AppUserId == userId)
                 .ToListAsync();
 
+            // set the applied date to promo code if is applied
+            PromoCode promoCode = await _context.PromoCodes.FirstOrDefaultAsync(pc => pc.Id == order.PromoCodeId);
+
+            if (promoCode != null)
+            {
+                promoCode.AppliedDate = DateTime.UtcNow;
+            }
+
             _context.RemoveRange(bagUsers);
 
             await _context.SaveChangesAsync();
@@ -243,15 +273,13 @@ namespace LilsCareApp.Core.Services
                             Quantity = po.Quantity,
                             Price = po.Price,
                         }),
-                    PromoCode = o.PromoCode == null ? null : o.PromoCode.Code,
-                    Discount = o.PromoCode == null ? 0 : o.PromoCode.Discount,
-                    ShippingPrice = o.ShippingPrice
+                    Discount = o.Discount,
+                    SubTotal = o.SubTotal,
+                    ShippingPrice = o.ShippingPrice,
+                    Total = o.Total
                 })
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
-
-            orderSummary.SubTotal = orderSummary.Products.Sum(p => p.Quantity * p.Price);
-            orderSummary.Total = orderSummary.SubTotal - (orderSummary.SubTotal * orderSummary.Discount) + orderSummary.ShippingPrice;
 
             return orderSummary;
         }
