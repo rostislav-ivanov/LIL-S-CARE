@@ -15,9 +15,11 @@ namespace LilsCareApp.Core.Services
             _context = context;
         }
 
+        // get user's default address delivery or create new if it is not existing
+        // address could be client's address or courier office
         public async Task<AddressDeliveryDTO?> GetAddressDeliveryAsync(string userId)
         {
-
+            // check for existing default address delivery
             var addressDelivery = await _context.Users
                 .Where(u => u.Id == userId && u.DefaultAddressDeliveryId != null)
                 .Select(ad => new AddressDeliveryDTO()
@@ -37,8 +39,10 @@ namespace LilsCareApp.Core.Services
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
 
+            // create new address delivery if not existing default address delivery
             if (addressDelivery != null)
             {
+                // check if user is selected shipping to courier office
                 if (addressDelivery.IsShippingToOffice)
                 {
                     addressDelivery.ShippingOffice = await _context.ShippingOffices
@@ -65,6 +69,7 @@ namespace LilsCareApp.Core.Services
                                          && addressDelivery.PhoneNumber != null
                                          && addressDelivery.ShippingOffice != null;
                 }
+                // if user is selected shipping to your address  
                 else
                 {
                     addressDelivery.IsValid = addressDelivery.FirstName != null
@@ -79,6 +84,8 @@ namespace LilsCareApp.Core.Services
             return addressDelivery;
         }
 
+
+        // get list of all shipping providers
         public async Task<IEnumerable<ShippingProviderDTO>> GetShippingProvidersAsync()
         {
             var shippingProviders = await _context.ShippingProviders
@@ -90,6 +97,8 @@ namespace LilsCareApp.Core.Services
                 })
                 .AsNoTracking()
                 .ToListAsync();
+
+            // add option delivery to client's address
             shippingProviders.Add(new ShippingProviderDTO()
             {
                 Id = 0,
@@ -98,6 +107,7 @@ namespace LilsCareApp.Core.Services
             });
             return shippingProviders.OrderBy(sp => sp.Id);
         }
+
 
         // get all promo codes for user witch are not expired and not already applied
         public async Task<IEnumerable<PromoCodeDTO>> GetPromoCodesAsync(string userId)
@@ -117,6 +127,8 @@ namespace LilsCareApp.Core.Services
                 .ToListAsync();
         }
 
+
+        // get all cities where the shipping provider has offices
         public async Task<IEnumerable<string>> GetShippingCitiesAsync(int shippingProvidersId)
         {
             return await _context.ShippingOffices
@@ -127,6 +139,8 @@ namespace LilsCareApp.Core.Services
                 .ToListAsync();
         }
 
+
+        // get all offices in the city of the selected shipping provider
         public async Task<IEnumerable<ShippingOfficeDTO>> GetShippingOfficesByCityAsync(string city, int? shippingProviderId)
         {
             return await _context.ShippingOffices
@@ -143,6 +157,11 @@ namespace LilsCareApp.Core.Services
                 .ToListAsync();
         }
 
+
+        // save order to database and return unique order number
+        // remove products from user's bag
+        // set new default address delivery to user
+        // set the applied date to promo code if is applied
         public async Task<string> CheckoutSaveAsync(OrderDTO checkout, string userId)
         {
             // get user
@@ -154,7 +173,7 @@ namespace LilsCareApp.Core.Services
                 StatusOrderId = 1,
                 AppUser = appUser,
                 PaymentMethodId = checkout.PaymentMethodId,
-                NoteForDelivery = checkout.NoteForDelivery,
+                NoteForDelivery = checkout.AddressDelivery?.NoteForDelivery,
                 ProductsOrders = new List<ProductOrder>(),
                 PromoCodeId = checkout.PromoCodeId,
                 SubTotal = checkout.SubTotal(),
@@ -241,6 +260,8 @@ namespace LilsCareApp.Core.Services
             return order.OrderNumber;
         }
 
+
+        // get order summary by order number
         public async Task<OrderSummaryDTO> OrderSummaryAsync(string orderSNumber)
         {
             OrderSummaryDTO? orderSummary = await _context.Orders
@@ -273,6 +294,7 @@ namespace LilsCareApp.Core.Services
                             Quantity = po.Quantity,
                             Price = po.Price,
                         }),
+                    PromoCode = o.PromoCode.Code,
                     Discount = o.Discount,
                     SubTotal = o.SubTotal,
                     ShippingPrice = o.ShippingPrice,

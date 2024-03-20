@@ -150,6 +150,7 @@ namespace LilsCareApp.Controllers
             checkout.AddressDelivery.FirstName = addressDelivery.FirstName;
             checkout.AddressDelivery.LastName = addressDelivery.LastName;
             checkout.AddressDelivery.PhoneNumber = addressDelivery.PhoneNumber;
+            checkout.AddressDelivery.NoteForDelivery = addressDelivery.NoteForDelivery;
             ModelState.Remove("addressDelivery.Country");
             ModelState.Remove("addressDelivery.PostCode");
             ModelState.Remove("addressDelivery.Town");

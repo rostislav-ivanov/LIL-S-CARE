@@ -90,20 +90,26 @@ else
                     {
                         <!-- Existing Address to Delivery Start -->
                         <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="py-4 m-0">Доставка до адрес на клиент</h5>
+                            <h5 class="py-3 m-0">Доставка до адрес на клиент</h5>
                                 <a asp-controller="Checkout" asp-action="EditAddressDelivery" style="color: rgb(var(--app-btn-bg))">
                                 Редактиране
                             </a>
                         </div>
-                        <div class="row" style="opacity: 0.9">
-                            <span>@Model.AddressDelivery.FirstName @Model.AddressDelivery.LastName</span>
-                            <span>@Model.AddressDelivery.Country</span>
-                            <span>@Model.AddressDelivery.District</span>
-                            <span>@Model.AddressDelivery.PostCode @Model.AddressDelivery.Town</span>
-                            <span>@Model.AddressDelivery.Address</span>
-                            <span>@Model.AddressDelivery.PhoneNumber</span>
-                            <span>@Model.AddressDelivery.Email</span>
-                        </div>
+                            <div class="d-flex justify-content-between" style="opacity: 0.9">
+                                <div class="row">
+                                    <span>@Model.AddressDelivery.FirstName @Model.AddressDelivery.LastName</span>
+                                    <span>@Model.AddressDelivery.Country</span>
+                                    <span>@Model.AddressDelivery.District</span>
+                                    <span>@Model.AddressDelivery.PostCode @Model.AddressDelivery.Town</span>
+                                    <span>@Model.AddressDelivery.Address</span>
+                                    <span>@Model.AddressDelivery.PhoneNumber</span>
+                                    <span>@Model.AddressDelivery.Email</span>
+                                </div>
+                                @if (Model.AddressDelivery.NoteForDelivery != null)
+                                {
+                                    <textarea rows="4" placeholder="@Model.AddressDelivery.NoteForDelivery" disabled></textarea>
+                                }
+                            </div>
                         <!-- Existing Address to Delivery End -->
                             <hr />
                     }
@@ -111,77 +117,81 @@ else
                     {
                         <!-- New Address to Delivery Start -->
                             <form asp-controller="Checkout" asp-action="AddAddressDelivery" method="post">
-                            <div class="row my-2">
-                                <div class="col-6">
-                                    <label asp-for="@Model.AddressDelivery.FirstName" class="form-label small">Име*</label>
-                                    <input asp-for="@Model.AddressDelivery.FirstName"
-                                           type="text"
+                                <div class="row my-2">
+                                    <div class="col-6">
+                                        <label asp-for="@Model.AddressDelivery.FirstName" class="form-label small">Име*</label>
+                                        <input asp-for="@Model.AddressDelivery.FirstName"
+                                               type="text"
+                                               class="form-control" />
+                                        <span asp-validation-for="@Model.AddressDelivery.FirstName" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-6">
+                                        <label asp-for="@Model.AddressDelivery.LastName" class="form-label small">Фамилия*</label>
+                                        <input asp-for="@Model.AddressDelivery.LastName"
+                                               type="text"
+                                               class="form-control" />
+                                        <span asp-validation-for="@Model.AddressDelivery.LastName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row my-2">
+                                    <div class="col-4">
+                                        <label asp-for="@Model.AddressDelivery.Country" class="form-label small">Държава*</label>
+                                        <select asp-for="@Model.AddressDelivery.Country" class="form-select">
+                                            <option>България</option>
+                                        </select>
+                                        <span asp-validation-for="@Model.AddressDelivery.Country" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-3">
+                                        <label asp-for="@Model.AddressDelivery.PostCode" class="form-label small">Пощенски код*</label>
+                                        <input asp-for="@Model.AddressDelivery.PostCode"
+                                               type="text"
+                                               class="form-control" />
+                                        <span asp-validation-for="@Model.AddressDelivery.PostCode" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-5">
+                                        <label asp-for="@Model.AddressDelivery.Town" class="form-label small">Град*</label>
+                                        <input asp-for="@Model.AddressDelivery.Town"
+                                               type="text"
+                                               class="form-control" />
+                                        <span asp-validation-for="@Model.AddressDelivery.Town" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row my-2>">
+                                    <div class="col-8">
+                                        <label asp-for="@Model.AddressDelivery.Address" class="form-label small">Адрес*</label>
+                                        <input asp-for="@Model.AddressDelivery.Address"
+                                               type="text"
+                                               class="form-control" />
+                                        <span asp-validation-for="@Model.AddressDelivery.Address" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-4">
+                                        <label asp-for="@Model.AddressDelivery.District" class="form-label small">Окръг</label>
+                                        <input asp-for="@Model.AddressDelivery.District"
+                                               type="text"
+                                               class="form-control" />
+                                        <span asp-validation-for="@Model.AddressDelivery.District" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="my-2">
+                                    <label asp-for="@Model.AddressDelivery.PhoneNumber" class="form-label small">Телефонен номер* - използваме го само ако има проблем с доставката.</label>
+                                    <input asp-for="@Model.AddressDelivery.PhoneNumber"
                                            class="form-control" />
-                                    <span asp-validation-for="@Model.AddressDelivery.FirstName" class="text-danger"></span>
+                                    <span asp-validation-for="@Model.AddressDelivery.PhoneNumber" class="text-danger"></span>
                                 </div>
-                                <div class="col-6">
-                                    <label asp-for="@Model.AddressDelivery.LastName" class="form-label small">Фамилия*</label>
-                                    <input asp-for="@Model.AddressDelivery.LastName"
-                                           type="text"
+                                <div class="my-2">
+                                    <label asp-for="@Model.AddressDelivery.Email" class="form-label small">Имейл за потвърждение на поръчката</label>
+                                    <input asp-for="@Model.AddressDelivery.Email"
                                            class="form-control" />
-                                    <span asp-validation-for="@Model.AddressDelivery.LastName" class="text-danger"></span>
+                                    <span asp-validation-for="@Model.AddressDelivery.Email" class="text-danger"></span>
                                 </div>
-                            </div>
-                            <div class="row my-2">
-                                <div class="col-4">
-                                    <label asp-for="@Model.AddressDelivery.Country" class="form-label small">Държава*</label>
-                                    <select asp-for="@Model.AddressDelivery.Country" class="form-select">
-                                        <option>България</option>
-                                    </select>
-                                    <span asp-validation-for="@Model.AddressDelivery.Country" class="text-danger"></span>
+                                <div class="my-2">
+                                    <textarea asp-for="@Model.AddressDelivery.NoteForDelivery" class="form-control"
+                                              rows="4" placeholder="Напишете допълнителни изисквания относно доставката..."></textarea>
                                 </div>
-                                <div class="col-3">
-                                    <label asp-for="@Model.AddressDelivery.PostCode" class="form-label small">Пощенски код*</label>
-                                    <input asp-for="@Model.AddressDelivery.PostCode"
-                                           type="text"
-                                           class="form-control" />
-                                    <span asp-validation-for="@Model.AddressDelivery.PostCode" class="text-danger"></span>
-                                </div>
-                                <div class="col-5">
-                                    <label asp-for="@Model.AddressDelivery.Town" class="form-label small">Град*</label>
-                                    <input asp-for="@Model.AddressDelivery.Town"
-                                           type="text"
-                                           class="form-control" />
-                                    <span asp-validation-for="@Model.AddressDelivery.Town" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="row my-2>">
-                                <div class="col-8">
-                                    <label asp-for="@Model.AddressDelivery.Address" class="form-label small">Адрес*</label>
-                                    <input asp-for="@Model.AddressDelivery.Address"
-                                           type="text"
-                                           class="form-control" />
-                                    <span asp-validation-for="@Model.AddressDelivery.Address" class="text-danger"></span>
-                                </div>
-                                <div class="col-4">
-                                    <label asp-for="@Model.AddressDelivery.District" class="form-label small">Окръг</label>
-                                    <input asp-for="@Model.AddressDelivery.District"
-                                           type="text"
-                                           class="form-control" />
-                                    <span asp-validation-for="@Model.AddressDelivery.District" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="my-2">
-                                <label asp-for="@Model.AddressDelivery.PhoneNumber" class="form-label small">Телефонен номер* - използваме го само ако има проблем с доставката.</label>
-                                <input asp-for="@Model.AddressDelivery.PhoneNumber"
-                                       class="form-control" />
-                                <span asp-validation-for="@Model.AddressDelivery.PhoneNumber" class="text-danger"></span>
-                            </div>
-                            <div class="my-2">
-                                <label asp-for="@Model.AddressDelivery.Email" class="form-label small">Имейл за потвърждение на поръчката</label>
-                                <input asp-for="@Model.AddressDelivery.Email"
-                                       class="form-control" />
-                                <span asp-validation-for="@Model.AddressDelivery.Email" class="text-danger"></span>
-                            </div>
-                            <input type="submit"
-                                   class="btn mt-3"
-                                   style="width: 100%"
-                                   value="Потвърдете адреса за доставка">
+                                <input type="submit"
+                                       class="btn mt-3"
+                                       style="width: 100%"
+                                       value="Потвърдете адреса за доставка">
                         </form>
                         <!-- New Address to Delivery End -->
                             <hr />
@@ -201,11 +211,17 @@ else
                                 Редактиране
                             </a>
                         </div>
-                            <div class="row" style="opacity: 0.9">
-                                <span>@Model.AddressDelivery.ShippingOffice?.City</span>
-                                <span>@Model.AddressDelivery.ShippingOffice?.OfficeAddress</span>
-                                <span>@Model.AddressDelivery.FirstName @Model.AddressDelivery.LastName</span>
-                                <span>@Model.AddressDelivery.PhoneNumber</span>
+                            <div class="d-flex justify-content-between" style="opacity: 0.9">
+                                <div class="row">
+                                    <span>@Model.AddressDelivery.ShippingOffice?.City</span>
+                                    <span>@Model.AddressDelivery.ShippingOffice?.OfficeAddress</span>
+                                    <span>@Model.AddressDelivery.FirstName @Model.AddressDelivery.LastName</span>
+                                    <span>@Model.AddressDelivery.PhoneNumber</span>
+                                </div>
+                                @if (Model.AddressDelivery.NoteForDelivery != null)
+                                {
+                                    <textarea rows="4" placeholder="@Model.AddressDelivery.NoteForDelivery" disabled></textarea>
+                                }
                             </div>
                         <!-- Existing Office to Delivery End -->
                             <hr />
@@ -278,6 +294,10 @@ else
                                                class="form-control" />
                                         <span asp-validation-for="@Model.AddressDelivery.PhoneNumber" class="text-danger"></span>
                                     </div>
+                                    <div class="my-2">
+                                        <textarea asp-for="@Model.AddressDelivery.NoteForDelivery" class="form-control"
+                                                  rows="4" placeholder="Напишете допълнителни изисквания относно доставката..."></textarea>
+                                    </div>
                                 }
                             <input type="submit"
                                    class="btn mt-3"
@@ -334,8 +354,7 @@ else
                         <div class="col-5">
                             <div class="product-img">
                                 <a asp-controller="Details" asp-action="Index" asp-route-id="@product.Id">
-                                    <img src="@product.ImageUrl"
-                                         class="img-fluid w-100"
+                                    <img src="@product.ImageUrl"                                         class="img-fluid w-100"
                                          alt="" />
                                 </a>
                             </div>

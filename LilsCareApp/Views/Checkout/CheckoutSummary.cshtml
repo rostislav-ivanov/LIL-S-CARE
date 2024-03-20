@@ -29,6 +29,10 @@
                     <span>@Model.Address</span>
                     <span>@Model.PhoneNumber</span>
                     <span>@Model.Email</span>
+                    @if (Model.NoteForDelivery != null)
+                    {
+                        <textarea rows="4" placeholder="@Model.NoteForDelivery" disabled></textarea>
+                    }
                 </div>
                 <!-- Delivery to Address End -->
             }
@@ -42,6 +46,11 @@
                     <span>@Model.ShippingOfficeAddress</span>
                     <span>@Model.FirstName @Model.LastName</span>
                     <span>@Model.PhoneNumber</span>
+                    <span>@Model.Email</span>
+                    @if (Model.NoteForDelivery != null)
+                    {
+                        <textarea rows="4" placeholder="@Model.NoteForDelivery" disabled></textarea>
+                    }
                 </div>
                 <!-- Delivery to Office End -->
             }
@@ -138,37 +147,5 @@
         <!-- Order Summary End -->
     </div>
 </div>
-
-<p>OrderNumber - @Model.OrderNumber</p>
-<p>OrderDate - @Model.OrderDate</p>
-<p>FirstName - @Model.FirstName</p>
-<p>LastName - @Model.LastName</p>
-<p>PostCode - @Model.PostCode</p>
-<p>Address - @Model.Address</p>
-<p>Town - @Model.Town</p>
-<p>District - @Model.District</p>
-<p>Email - @Model.Email</p>
-<p>Country - @Model.Country</p>
-<p>ShippingProviderName - @Model.ShippingProviderName</p>
-<p>City - @Model.ShippingOfficeCity</p>
-<p>OfficeAddress - @Model.ShippingOfficeAddress</p>
-<p>PaymentMethod - @Model.PaymentMethod</p>
-<p>NoteForDelivery - @Model.NoteForDelivery</p>
-@foreach (var product in Model.Products)
-{
-    <hr/>
-    <p>Id - @product.Id</p>
-    <p>Name - @product.Name</p>
-    <p>Description - @product.Description</p>
-    <p>ImagePath - @product.ImagePath</p>
-    <p>Quantity - @product.Quantity</p>
-    <p>Price - @product.Price</p>
-}
-<hr/>
-<p>SubTotal - @Model.SubTotal</p>
-<p>PromoCode - @Model.PromoCode</p>
-<p>Discount - @Model.Discount</p>
-<p>ShippingPrice - @Model.ShippingPrice</p>
-<p>Total - @Model.Total</p>
 
 
