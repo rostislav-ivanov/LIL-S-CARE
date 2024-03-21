@@ -15,5 +15,8 @@
         public const string RatingRange = "Моля, дайте вашата оценка!";
         public const string RequireRating = "Моля, дайте вашата оценка!";
         public const string PrivacyPolicyCheck = "Моля, потвърдете съгласието с политиката за поверителност.";
+        public const string UserNameError = "Потребителското име трябва да съдържа само латински букви и цифри";
+        public const string UserNamePattern = @"^[a-zA-Z0-9]+$";
+        public const string ConfirmPasswordError = "Паролата и паролата за потвърждение не съвпадат.";
     }
 }
