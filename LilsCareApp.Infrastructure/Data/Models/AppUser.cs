@@ -1,17 +1,25 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static LilsCareApp.Infrastructure.DataConstants.AppUser;
 
 namespace LilsCareApp.Infrastructure.Data.Models
 {
     [Comment("App User")]
     public class AppUser : IdentityUser
     {
+        [Comment("First Name")]
+        [MaxLength(FirstNameMaxLength)]
+        public string? FirstName { get; set; }
+
+        [Comment("Last Name")]
+        [MaxLength(LastNameMaxLength)]
+        public string? LastName { get; set; }
 
         [Comment("The image of user")]
+        [MaxLength(ImagePathMaxLength)]
         public string? ImagePath { get; set; }
-
-
 
         [Comment("Navigation property to Order")]
         public List<Order> Orders { get; set; } = new List<Order>();
