@@ -60,7 +60,7 @@ namespace LilsCareApp.Core.Models.Checkout
             }
         }
 
-        public decimal Total() => SubTotal() - Discount() + (ShippingPrice() ?? 0);
+        public decimal Total() => SubTotal() + (ShippingPrice() ?? 0);
 
 
     }
