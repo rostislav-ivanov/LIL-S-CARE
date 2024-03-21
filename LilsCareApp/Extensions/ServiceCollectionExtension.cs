@@ -23,6 +23,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IProductsService, ProductsService>();
             services.AddScoped<IDetailsService, DetailsService>();
             services.AddScoped<ICheckoutService, CheckoutService>();
+            services.AddScoped<IAccountService, AccountService>();
             services.AddHttpContextAccessor();
 
             services.AddDatabaseDeveloperPageExceptionFilter();
