@@ -13,6 +13,8 @@
             public const int FirstNameMaxLength = 100;
             public const int LastNameMaxLength = 100;
             public const int ImagePathMaxLength = 2048;
+            public const int UserNameMinLength = 6;
+            public const int UserNameMaxLength = 20;
         }
 
         public static class Product
