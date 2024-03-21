@@ -1,5 +1,35 @@
-﻿@{
-    ViewData["Title"] = "Account";
+﻿@model MyAccountDTO
+@{
+    ViewData["Title"] = "Акаунт";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="d-flex justify-content-center">
+    <!-- Menu My Account Start-->
+    <partial name="_AccountMenuPartial" model="@Model" />
+    <!-- Menu My Account  End -->
+    <!-- My My Account Start-->
+    <div class="border rounded p-2 w-50" style="margin: 50px 100px 20px 20px">
+        <div class="d-flex justify-content-between align-items-center">
+            <h5 class="my-4">Моят акаунт</h5>
+            <a asp-controller="Account" asp-action="UpdateMyAccount" style="color: rgb(var(--app-btn-bg))">
+                Редактиране <i class="fa-solid fa-user-pen ms-3"></i>
+            </a>
+        </div>
+        <hr />
+        <!-- Show My Account Start -->
+        <p>Потребителското име: @Model.UserName</p>
+        <p>Собствено име: @Model.FirstName</p>
+        <p>Фамилия: @Model.LastName</p>
+        <p>Телефон: @Model.PhoneNumber</p>
+        <p>Имейл: @Model.Email</p>
+        <p>Снимка:</p>
+        <div class="text-center my-3">
+            <img src="@Model.ImagePath"
+                 class="rounded-circle"
+                 width="100"
+                 height="100"
+                 alt="" />
+        </div>
+    </div>
+    <!-- Show My Account Еnd -->
+</div>
