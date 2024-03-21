@@ -9,6 +9,10 @@ namespace LilsCareApp.Infrastructure.Data.Models
     [Comment("App User")]
     public class AppUser : IdentityUser
     {
+        [Required]
+        [StringLength(UserNameMaxLength)]
+        public override required string UserName { get; set; }
+
         [Comment("First Name")]
         [MaxLength(FirstNameMaxLength)]
         public string? FirstName { get; set; }
