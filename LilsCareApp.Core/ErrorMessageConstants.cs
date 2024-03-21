@@ -4,6 +4,7 @@
     {
         public const string Required = "Моля, въведете {0}!";
         public const string StringLength = "Полето {0} трябва да бъде най-малко {2} и най-много {1} символа дълго";
+        public const string StringLengthMax = "Полето {0} трябва да бъде най-много {1} символа дълго";
         public const string DurationRange = "Полето {0} трябва да бъде между {1} и {2}";
         public const string ConfirmAgreementPrivacyPolicy = "Потвърдете съгласието с политиката за поверителност.";
         public const string InvalidEmailAddress = "Невалиден имейл адрес.";

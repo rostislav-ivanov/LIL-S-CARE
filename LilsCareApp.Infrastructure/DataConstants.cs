@@ -15,6 +15,7 @@
             public const int ImagePathMaxLength = 2048;
             public const int UserNameMinLength = 6;
             public const int UserNameMaxLength = 20;
+            public const int EmailMaxLength = 20;
         }
 
         public static class Product
