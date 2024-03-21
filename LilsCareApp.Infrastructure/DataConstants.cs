@@ -8,6 +8,13 @@
             public const decimal AddressDeliveryPrice = 8.00m;
         }
 
+        public static class AppUser
+        {
+            public const int FirstNameMaxLength = 100;
+            public const int LastNameMaxLength = 100;
+            public const int ImagePathMaxLength = 2048;
+        }
+
         public static class Product
         {
             public const int NameMinLength = 3;
