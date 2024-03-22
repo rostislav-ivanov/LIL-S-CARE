@@ -1,20 +1,19 @@
-﻿@model MyAccountDTO
-
+﻿
 <!-- Account Menu Start-->
 <div style="margin: 50px 20px 20px 100px">
     <div class="row border rounded ">
         <ul class="nav flex-column p-2">
             <li class="nav-item m-2">
-                <a class="nav-link text-uppercase" href="./my-orders.html">Моите поръчки</a>
+                <a asp-controller="Account" asp-action="MyOrders" class="nav-link text-uppercase">Моите поръчки</a>
             </li>
             <li class="nav-item m-2">
-                <a class="nav-link text-uppercase" href="./my-addresses.html">Адреси</a>
+                <a asp-controller="Account" asp-action="MyAddresses" class="nav-link text-uppercase">Адреси</a>
             </li>
             <li class="nav-item m-2">
-                <a class="nav-link text-uppercase" href="./my-wishlist.html">Желани продукти</a>
+                <a asp-controller="Account" asp-action="MyWishes"  class="nav-link text-uppercase">Желани продукти</a>
             </li>
             <li class="nav-item m-2">
-                <a class="nav-link text-uppercase" href="./my-account.html">Моят акаунт</a>
+                <a asp-controller="Account" asp-action="MyAccount" class="nav-link text-uppercase">Моят акаунт</a>
             </li>
         </ul>
     </div>

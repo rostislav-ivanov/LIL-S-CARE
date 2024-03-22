@@ -1,0 +1,103 @@
+﻿@model OfficeDTO
+@{
+    ViewData["Title"] = "Адреси";
+}
+
+<div class="d-flex justify-content-center">
+    <!-- Menu My Account Start-->
+    <partial name="_AccountMenuPartial" />
+    <!-- Menu My Account  End -->
+    <!-- New Office  Start -->
+    <div class="border rounded p-2 w-50" style="margin: 50px 100px 20px 20px">
+    <form asp-controller="Account" asp-action="AddOffice" method="post">
+        <input asp-for="@Model.Id" value="@Model.Id" hidden />
+        <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown">
+                        @(Model.Provider() ?? "Изберете доставчик...")
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            @foreach (var provider in Model.ShippingProviders)
+                            {
+                                <a asp-controller="Account" asp-action="SelectShippingProvider" asp-route-city="@provider.Id" class="dropdown-item">
+                                    @provider.Name
+                                </a>
+                            }
+                        </li>
+                    </ul>
+                </div>
+                <div style="display=@(Model.Provider() is null ? "none" : "block")">
+                    <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown">
+                        @(Model.City() ?? "Изберете град...")
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            @foreach (var office in Model.ShippingOffices.Where(so => so.ShippingProviderId == Model.ShippingProviderId))
+                            {
+                                <a asp-controller="Account" asp-action="SelectOfficeCity" asp-route-city="@office.Id" class="dropdown-item">
+                                    @office.City
+                                </a>
+                            }
+                        </li>
+                    </ul>
+                </div>
+                <div style="display=@(Model.City() is null ? "none" : "block")">
+@*                     <input asp-for="@Model.AddressDelivery.ShippingOffice.OfficeAddress" hidden />
+                    <span asp-validation-for="@Model.AddressDelivery.ShippingOffice.OfficeAddress" class="text-danger small"></span> *@
+                    <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown">
+                        @(Model.OfficeAddress() ?? "Изберете офис...")
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            @if (Model.City() != null)
+                            {
+                                foreach (var office in Model.ShippingOffices)
+                                {
+                                    <a asp-controller="Checkout" asp-action="SelectOfficeDelivery" asp-route-officeId="@office.Id" class="dropdown-item">
+                                        @office.OfficeAddress
+                                    </a>
+                                }
+
+                            }
+                        </li>
+                    </ul>
+                </div>
+        </div>
+        @if (Model.IsSelectedOffice())
+        {
+            <div class="row my-2">
+                <div class="col-6">
+                    <label asp-for="@Model.FirstName" class="form-label small">Име*</label>
+                    <input asp-for="@Model.FirstName"
+                           type="text"
+                           class="form-control" />
+                    <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+                </div>
+                <div class="col-6">
+                    <label asp-for="@Model.LastName" class="form-label small">Фамилия*</label>
+                    <input asp-for="@Model.LastName"
+                           type="text"
+                           class="form-control" />
+                    <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="my-2">
+                <label asp-for="@Model.PhoneNumber" class="form-label small">Телефонен номер*</label>
+                <input asp-for="@Model.PhoneNumber"
+                       class="form-control" />
+                <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+            </div>
+        }
+            <div class="d-flex justify-content-end">
+                <!-- Cancel Start -->
+                <a asp-controller="Account" asp-action="MyAddresses" class="btn btn-sm btn-inverce">Отказ</a>
+                <!-- Cancel End -->
+                <!-- Save Changes Start -->
+                <button type="submit" class="btn btn-sm ms-3">Запази</button>
+                <!-- Save Changes End -->
+            </div>
+    </form>
+    <!-- New Office End -->
+    </div>
+</div>
