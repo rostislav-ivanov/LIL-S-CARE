@@ -1,5 +1,68 @@
-﻿@{
-    ViewData["Title"] = "Addresses";
+﻿@model IEnumerable<MyAddressDTO>
+@{
+    ViewData["Title"] = "Адреси";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="d-flex justify-content-center">
+    <!-- Menu My Account Start-->
+    <partial name="_AccountMenuPartial" />
+    <!-- Menu My Account  End -->
+    <!-- My Addresses Start-->
+    <div class="border rounded p-2 w-50" style="margin: 50px 100px 20px 20px">
+        <h5 class="my-4">Моите адреси</h5>
+        <p>Добави и управлявай адресите, които ползваш често</p>
+        <hr />
+        @foreach (var address in Model)
+        {
+            if (address.IsOffice)
+            {
+                <!-- Office Start -->
+                <div class="row">
+                    <span>@address.OfficeCity</span>
+                    <span>@address.OfficeAddress</span>
+                    <span>@address.FirstName @address.LastName</span>
+                    <span>@address.PhoneNumber</span>
+                </div>
+                <!-- Office Start -->
+            }
+            else
+            {
+                <!-- Address Start -->
+                <div class="row">
+                    <span>@address.FirstName @address.LastName</span>
+                    <span>@address.Country</span>
+                    <span>@address.District</span>
+                    <span>@address.PostCode @address.Town</span>
+                    <span>@address.Address</span>
+                    <span>@address.PhoneNumber</span>
+                    <span>@address.Email</span>
+                </div>
+                <!-- Address End -->
+            }
+            <div class="d-flex justify-content-start my-3">
+                <a asp-controller="Account" asp-action="@(address.IsOffice ? "AddOffice" : "AddAddress")" asp-route-addressId="@address.AddressId" class="btn btn-sm">
+                    Редактирай<i class="fa-solid fa-user-pen ms-2"></i>
+                </a>
+                <a asp-controller="Account" asp-action="DeleteAddress" asp-route-addressId="@address.AddressId" class="btn btn-sm ms-3">
+                    Изтрий<i class="fa fa-trash-can ms-2"></i>
+                </a>
+                @if (address.IsDefault)
+                {
+                    <div class="ms-5">
+                        Адрес по подразбиране
+                        <i class="fa fa-check ms-2"></i>
+                    </div>
+                }
+            </div>
+            @if (!address.IsDefault)
+            {
+                <a asp-controller="Account" asp-action="SetDefaultAddress" asp-route-addressId="@address.AddressId" style="color: rgb(var(--app-btn-bg))">
+                    Направете това моя адрес по подразбиране
+                </a>
+            }
+            <hr />
+        }
+        <a asp-controller="Account" asp-action="AddAddress" class="btn btn-sm">Добави адрес</a>
+    </div>
+    <!--My Addresses End -->
+</div>

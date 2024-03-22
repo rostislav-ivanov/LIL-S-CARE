@@ -88,6 +88,7 @@
             public const int DistrictMaxLength = 100;
             public const int CountryMaxLength = 100;
             public const int PostCodeMaxLength = 50;
+            public const int EmailMaxLength = 50;
         }
     }
 }

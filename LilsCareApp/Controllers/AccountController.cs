@@ -41,6 +41,7 @@ namespace LilsCareApp.Controllers
             return View(myAccount);
         }
 
+
         [HttpPost]
         public async Task<IActionResult> UpdateMyAccount(MyAccountDTO myAccount)
         {
@@ -72,10 +73,102 @@ namespace LilsCareApp.Controllers
             return RedirectToAction(nameof(MyAccount));
         }
 
-        public IActionResult MyAddresses()
+        public async Task<IActionResult> MyAddresses()
         {
-            return View();
+            string userId = User.GetUserId();
+            IEnumerable<MyAddressDTO> myAddresses = await _accountService.GetMyAddressesAsync(userId);
+
+            return View(myAddresses);
         }
+
+        public async Task<IActionResult> AddAddress(int addressId)
+        {
+            if (addressId == 0)
+            {
+                return View(new AddressDTO());
+            }
+            var model = await _accountService.GetAddressAsync(addressId);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddAddress(AddressDTO model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            string userId = User.GetUserId();
+            if (model.Id != 0) // Update the address
+            {
+                await _accountService.UpdateAddressAsync(userId, model);
+            }
+            else // Add a new address
+            {
+                await _accountService.AddAddressAsync(userId, model);
+            }
+
+            return RedirectToAction(nameof(MyAddresses));
+        }
+
+        public async Task<IActionResult> DeleteAddress(int addressId)
+        {
+            if (addressId == 0)
+            {
+                return BadRequest();
+            }
+            await _accountService.DeleteAddressAsync(addressId);
+
+            return RedirectToAction(nameof(MyAddresses));
+        }
+
+        public async Task<IActionResult> SetDefaultAddress(int addressId)
+        {
+            if (addressId == 0)
+            {
+                return BadRequest();
+            }
+            string userId = User.GetUserId();
+            await _accountService.SetDefaultAddressAsync(userId, addressId);
+
+            return RedirectToAction(nameof(MyAddresses));
+        }
+
+        public async Task<IActionResult> AddOffice(int addressId)
+        {
+            if (addressId == 0)
+            {
+                return View(new OfficeDTO());
+            }
+            OfficeDTO model = await _accountService.GetOfficeAsync(addressId);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddOffice(OfficeDTO model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            string userId = User.GetUserId();
+            if (model.Id != 0) // Update the address
+            {
+                await _accountService.UpdateOfficeAsync(userId, model);
+            }
+            else // Add a new address
+            {
+                //await _accountService.AddOfficeAsync(userId, model);
+            }
+
+            return RedirectToAction(nameof(MyAddresses));
+        }
+
+
 
         public IActionResult MyOrders()
         {

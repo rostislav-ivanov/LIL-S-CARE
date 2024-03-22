@@ -45,6 +45,10 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("Country")]
         public string? Country { get; set; }
 
+        [MaxLength(EmailMaxLength)]
+        [Comment("Email")]
+        public string? Email { get; set; }
+
         public bool IsShippingToOffice { get; set; }
 
         public int? ShippingOfficeId { get; set; }
