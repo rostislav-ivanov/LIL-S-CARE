@@ -56,7 +56,7 @@ namespace LilsCareApp.Controllers
                 return BadRequest();
             }
             checkout.ShippingProviderId = shippingProvidersId;
-            checkout.AddressDelivery = new AddressDeliveryDTO();
+            checkout.AddressDelivery = new AddressDeliveryDTOtoByChange();
             checkout.AddressDelivery.IsShippingToOffice = shippingProvidersId != 0;
             if (checkout.IsDeliveryToOffice())
             {
@@ -85,7 +85,7 @@ namespace LilsCareApp.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult AddAddressDelivery(AddressDeliveryDTO addressDelivery)
+        public IActionResult AddAddressDelivery(AddressDeliveryDTOtoByChange addressDelivery)
         {
             OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
             checkout.AddressDelivery = addressDelivery;
@@ -144,7 +144,7 @@ namespace LilsCareApp.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> AddOfficeDelivery(AddressDeliveryDTO addressDelivery)
+        public async Task<IActionResult> AddOfficeDelivery(AddressDeliveryDTOtoByChange addressDelivery)
         {
             OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
             checkout.AddressDelivery.FirstName = addressDelivery.FirstName;

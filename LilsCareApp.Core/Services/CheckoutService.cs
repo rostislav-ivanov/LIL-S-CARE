@@ -17,12 +17,12 @@ namespace LilsCareApp.Core.Services
 
         // get user's default address delivery or create new if it is not existing
         // address could be client's address or courier office
-        public async Task<AddressDeliveryDTO?> GetAddressDeliveryAsync(string userId)
+        public async Task<AddressDeliveryDTOtoByChange?> GetAddressDeliveryAsync(string userId)
         {
             // check for existing default address delivery
             var addressDelivery = await _context.Users
                 .Where(u => u.Id == userId && u.DefaultAddressDeliveryId != null)
-                .Select(ad => new AddressDeliveryDTO()
+                .Select(ad => new AddressDeliveryDTOtoByChange()
                 {
                     Id = ad.DefaultAddressDelivery.Id,
                     FirstName = ad.DefaultAddressDelivery.FirstName,

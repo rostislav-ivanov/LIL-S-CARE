@@ -13,20 +13,26 @@ namespace LilsCareApp.Core.Models.Account
         public int Id { get; set; }
 
         public int? ShippingProviderId { get; set; }
-        public IEnumerable<ShippingProviderDTO> ShippingProviders { get; set; } = new List<ShippingProviderDTO>();
+        public IEnumerable<ShippingProviderDTO> ShippingProviders { get; set; } = [];
+
+        public string? CityName { get; set; }
+
+        public IEnumerable<string> ShippingProviderCities { get; set; } = [];
 
         public int? ShippingOfficeId { get; set; }
 
-        public IEnumerable<ShippingOfficeDTO> ShippingOffices { get; set; } = new List<ShippingOfficeDTO>();
+        public IEnumerable<ShippingOfficeDTO> ShippingOffices { get; set; } = [];
 
 
         public string? Provider() => ShippingProviders.Where(sp => sp.Id == ShippingProviderId).Select(sp => sp.Name).FirstOrDefault();
 
-        public string? City() => ShippingOffices.Where(so => so.Id == ShippingOfficeId).Select(so => so.City).FirstOrDefault();
 
         public string? OfficeAddress() => ShippingOffices.Where(so => so.Id == ShippingOfficeId).Select(so => so.OfficeAddress).FirstOrDefault();
 
+        public string? City() => ShippingOffices.Where(so => so.Id == ShippingOfficeId).Select(so => so.City).FirstOrDefault();
+
         public bool IsSelectedOffice() => Provider() != null && City() != null && OfficeAddress() != null;
+
 
         [Comment("First Name Recipient")]
         [Required(ErrorMessage = Required)]
