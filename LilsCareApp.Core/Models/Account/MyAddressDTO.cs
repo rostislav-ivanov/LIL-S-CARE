@@ -1,35 +1,34 @@
-﻿namespace LilsCareApp.Core.Models.Account
+﻿using System.ComponentModel.DataAnnotations;
+using static LilsCareApp.Core.ErrorMessageConstants;
+using static LilsCareApp.Infrastructure.DataConstants.AppUser;
+
+namespace LilsCareApp.Core.Models.Account
 {
     public class MyAddressDTO
     {
-        public int AddressId { get; set; }
+        public required string UserName { get; set; }
 
-        public string FirstName { get; set; } = string.Empty;
+        [MaxLength(FirstNameMaxLength, ErrorMessage = StringLengthMax)]
+        [Display(Name = "име")]
+        public string? FirstName { get; set; }
 
-        public string LastName { get; set; } = string.Empty;
+        [MaxLength(LastNameMaxLength, ErrorMessage = StringLengthMax)]
+        [Display(Name = "фамилия")]
+        public string? LastName { get; set; }
 
-        public string PhoneNumber { get; set; } = string.Empty;
-
-        public string? Country { get; set; } = string.Empty;
-
-        public string? PostCode { get; set; } = string.Empty;
-
-        public string? Town { get; set; } = string.Empty;
-
-        public string? Address { get; set; } = string.Empty;
-
-        public string? District { get; set; }
-
+        [MaxLength(EmailMaxLength, ErrorMessage = StringLengthMax)]
+        [RegularExpression(EmailPatternNotRequired, ErrorMessage = InvalidEmailAddress)]
+        [Display(Name = "имейл")]
         public string? Email { get; set; }
 
-        public string? ShippingProvider { get; set; } = string.Empty;
+        [RegularExpression(PhoneNumberPatternNotRequired, ErrorMessage = InvalidPhoneNumber)]
+        [Display(Name = "телефонен номер")]
+        public string? PhoneNumber { get; set; }
 
-        public string? OfficeCity { get; set; } = string.Empty;
+        [MaxLength(ImagePathMaxLength, ErrorMessage = StringLengthMax)]
+        [Display(Name = "снимка")]
+        public string? ImagePath { get; set; }
 
-        public string? OfficeAddress { get; set; } = string.Empty;
 
-        public bool IsDefault { get; set; }
-
-        public bool IsOffice { get; set; }
     }
 }

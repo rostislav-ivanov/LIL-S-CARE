@@ -10,7 +10,7 @@ namespace LilsCareApp.Core.Models.Checkout
 
         public IEnumerable<ProductsInBagDTO> ProductsInBag { get; set; } = new List<ProductsInBagDTO>();
 
-        public AddressDeliveryDTO? AddressDelivery { get; set; }
+        public AddressDeliveryDTOtoByChange? AddressDelivery { get; set; }
 
         public IEnumerable<ShippingOfficeDTO> ShippingOffices { get; set; } = new List<ShippingOfficeDTO>();
 

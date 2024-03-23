@@ -4,7 +4,7 @@ namespace LilsCareApp.Core.Contracts
 {
     public interface ICheckoutService
     {
-        Task<AddressDeliveryDTO?> GetAddressDeliveryAsync(string userId);
+        Task<AddressDeliveryDTOtoByChange?> GetAddressDeliveryAsync(string userId);
         Task<IEnumerable<ShippingProviderDTO>> GetShippingProvidersAsync();
         Task<IEnumerable<PromoCodeDTO>> GetPromoCodesAsync(string userId);
         Task<IEnumerable<ShippingOfficeDTO>> GetShippingOfficesByCityAsync(string city, int? shippingProviderId);

@@ -16,11 +16,12 @@ namespace LilsCareApp.Core.Services
             _context = context;
         }
 
-        public async Task<MyAccountDTO?> GetMyAccountAsync(string userId)
+        // Get the user account details
+        public async Task<MyAddressDTO?> GetMyAccountAsync(string userId)
         {
             return await _context.Users
                 .Where(u => u.Id == userId)
-                .Select(u => new MyAccountDTO
+                .Select(u => new MyAddressDTO
                 {
                     UserName = u.UserName,
                     FirstName = u.FirstName,
@@ -33,7 +34,8 @@ namespace LilsCareApp.Core.Services
                 .FirstOrDefaultAsync();
         }
 
-        public async Task UpdateMyAccountAsync(string userId, MyAccountDTO myAccount)
+        // Update the user account details
+        public async Task UpdateMyAccountAsync(string userId, MyAddressDTO myAccount)
         {
             var user = await _context.Users.FirstOrDefaultAsync(au => au.Id == userId);
             if (user == null)
@@ -61,6 +63,7 @@ namespace LilsCareApp.Core.Services
         }
 
 
+        // Get the user image path
         public async Task<dynamic> GetUserImagePathAsync(string userId)
         {
             var user = await _context.Users.FirstOrDefaultAsync(au => au.Id == userId);
@@ -71,16 +74,20 @@ namespace LilsCareApp.Core.Services
             return user.ImagePath;
         }
 
-        public async Task<IEnumerable<MyAddressDTO>> GetMyAddressesAsync(string userId)
+
+
+
+        // Return all delivery addresses  of the user (to address and to office)
+        public async Task<IEnumerable<DeliveryAddressDTO>> GetMyAddressesAsync(string userId)
         {
             var defaultAddressId = await _context.Users
                 .Where(u => u.Id == userId)
                 .Select(u => u.DefaultAddressDeliveryId)
                 .FirstOrDefaultAsync();
 
-            IEnumerable<MyAddressDTO> myAddresses = await _context.AddressDeliveries
+            IEnumerable<DeliveryAddressDTO> myAddresses = await _context.AddressDeliveries
                 .Where(ad => ad.AppUserId == userId)
-                .Select(ad => new MyAddressDTO
+                .Select(ad => new DeliveryAddressDTO
                 {
                     AddressId = ad.Id,
                     FirstName = ad.FirstName,
@@ -98,78 +105,14 @@ namespace LilsCareApp.Core.Services
                     IsOffice = ad.IsShippingToOffice,
                     IsDefault = ad.Id == defaultAddressId
                 })
-                //.OrderByDescending(ad => ad.IsDefault)
                 .AsNoTracking()
                 .ToListAsync();
 
             return myAddresses;
         }
 
-        public async Task AddAddressAsync(string userId, AddressDTO model)
-        {
-            AddressDelivery address = new()
-            {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                PhoneNumber = model.PhoneNumber,
-                Country = model.Country,
-                PostCode = model.PostCode,
-                Town = model.Town,
-                Address = model.Address,
-                District = model.District,
-                Email = model.Email,
-                AppUserId = userId,
-                IsShippingToOffice = false
-            };
 
-            await _context.AddressDeliveries.AddAsync(address);
-
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task<AddressDTO?> GetAddressAsync(int addressId)
-        {
-            return await _context.AddressDeliveries
-                .Where(ad => ad.Id == addressId)
-                .Select(ad => new AddressDTO
-                {
-                    Id = ad.Id,
-                    FirstName = ad.FirstName,
-                    LastName = ad.LastName,
-                    PhoneNumber = ad.PhoneNumber,
-                    Country = ad.Country ?? string.Empty,
-                    PostCode = ad.PostCode ?? string.Empty,
-                    Town = ad.Town ?? string.Empty,
-                    Address = ad.Address ?? string.Empty,
-                    District = ad.District ?? string.Empty,
-                    Email = ad.Email ?? string.Empty
-                })
-                .AsNoTracking()
-                .FirstOrDefaultAsync();
-        }
-
-        public async Task UpdateAddressAsync(string userId, AddressDTO model)
-        {
-            var address = await _context.AddressDeliveries.FirstOrDefaultAsync(ad => ad.Id == model.Id);
-            if (address == null)
-            {
-                throw new InvalidOperationException("Address not found");
-            }
-            address.FirstName = model.FirstName;
-            address.LastName = model.LastName;
-            address.PhoneNumber = model.PhoneNumber;
-            address.Country = model.Country;
-            address.PostCode = model.PostCode;
-            address.Town = model.Town;
-            address.Address = model.Address;
-            address.District = model.District;
-            address.Email = model.Email;
-            address.AppUserId = userId;
-            address.IsShippingToOffice = false;
-
-            await _context.SaveChangesAsync();
-        }
-
+        // Delete the delivery address
         public async Task DeleteAddressAsync(int addressId)
         {
             var address = await _context.AddressDeliveries.FirstOrDefaultAsync(ad => ad.Id == addressId);
@@ -190,6 +133,8 @@ namespace LilsCareApp.Core.Services
             await _context.SaveChangesAsync();
         }
 
+
+        // Set the default delivery address
         public async Task SetDefaultAddressAsync(string userId, int addressId)
         {
             var users = await _context.Users.ToListAsync();
@@ -202,55 +147,73 @@ namespace LilsCareApp.Core.Services
             }
         }
 
-        public async Task<OfficeDTO?> GetOfficeAsync(int addressId)
-        {
 
-            var office = await _context.AddressDeliveries
-                .Where(ad => ad.Id == addressId)
-                .Select(ad => new OfficeDTO
+        // Get all shipping providers
+        public async Task<IEnumerable<ShippingProviderDTO>> GetShippingProvidersAsync()
+        {
+            return await _context.ShippingProviders
+                .Select(sp => new ShippingProviderDTO
                 {
-                    Id = ad.Id,
-                    ShippingProviderId = ad.ShippingOffice.ShippingProviderId,
-                    ShippingOfficeId = ad.ShippingOfficeId,
-                    FirstName = ad.FirstName,
-                    LastName = ad.LastName,
-                    PhoneNumber = ad.PhoneNumber,
+                    Id = sp.Id,
+                    Name = sp.Name
                 })
                 .AsNoTracking()
-                .FirstOrDefaultAsync();
-
-            if (office != null)
-            {
-                office.ShippingProviders = await _context.ShippingProviders
-                    .Select(sp => new ShippingProviderDTO
-                    {
-                        Id = sp.Id,
-                        Name = sp.Name,
-                    })
-                    .AsNoTracking()
-                    .ToListAsync();
-
-                office.ShippingOffices = await _context.ShippingOffices
-                    .Select(so => new ShippingOfficeDTO
-                    {
-                        Id = so.Id,
-                        City = so.City,
-                        OfficeAddress = so.OfficeAddress
-                    })
-                    .AsNoTracking()
-                    .ToListAsync();
-            }
-
-            return office;
+                .ToListAsync();
         }
 
-        public async Task UpdateOfficeAsync(string userId, OfficeDTO model)
+
+        // Get all cities of the shipping provider
+        public async Task<IEnumerable<string>> GetShippingProviderCitiesAsync(int shippingProviderId)
+        {
+            return await _context.ShippingOffices
+                .Where(so => so.ShippingProviderId == shippingProviderId)
+                .Select(so => so.City)
+                .Distinct()
+                .OrderBy(c => c)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+
+        // Get all offices of the shipping provider in the city
+        public async Task<IEnumerable<ShippingOfficeDTO>> GetShippingOfficesAsync(int? shippingProviderId, string city)
+        {
+            return await _context.ShippingOffices
+                .Where(so => so.ShippingProviderId == shippingProviderId && so.City == city)
+                .Select(so => new ShippingOfficeDTO
+                {
+                    Id = so.Id,
+                    City = so.City,
+                    OfficeAddress = so.OfficeAddress
+                })
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+
+        // Add the office delivery address
+        public async Task AddOfficeDeliveryAsync(string userId, OfficeDTO model)
+        {
+            AddressDelivery addressDelivery = new()
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                PhoneNumber = model.PhoneNumber,
+                ShippingOfficeId = model.ShippingOfficeId,
+                AppUserId = userId,
+                IsShippingToOffice = true
+            };
+
+            await _context.AddressDeliveries.AddAsync(addressDelivery);
+
+            await _context.SaveChangesAsync();
+        }
+
+        // Edit the office delivery address
+        public async Task EditOfficeDeliveryAsync(string userId, OfficeDTO model)
         {
             var address = await _context.AddressDeliveries.FirstOrDefaultAsync(ad => ad.Id == model.Id);
-            if (address == null)
-            {
-                throw new InvalidOperationException("Address not found");
-            }
+
             address.FirstName = model.FirstName;
             address.LastName = model.LastName;
             address.PhoneNumber = model.PhoneNumber;
@@ -259,6 +222,101 @@ namespace LilsCareApp.Core.Services
             address.IsShippingToOffice = true;
 
             await _context.SaveChangesAsync();
+        }
+
+        // Add the address delivery
+        public async Task AddAddressDeliveryAsync(string userId, AddressDTO address)
+        {
+            AddressDelivery addressDelivery = new()
+            {
+                FirstName = address.FirstName,
+                LastName = address.LastName,
+                PhoneNumber = address.PhoneNumber,
+                Country = address.Country,
+                PostCode = address.PostCode,
+                Town = address.Town,
+                Address = address.Address,
+                District = address.District,
+                Email = address.Email,
+                AppUserId = userId,
+                IsShippingToOffice = false
+            };
+
+            await _context.AddressDeliveries.AddAsync(addressDelivery);
+
+            await _context.SaveChangesAsync();
+        }
+
+        // Edit the address delivery
+        public async Task EditAddressDeliveryAsync(string userId, AddressDTO model)
+        {
+            var address = await _context.AddressDeliveries.FirstOrDefaultAsync(ad => ad.Id == model.Id);
+
+            address.FirstName = model.FirstName;
+            address.LastName = model.LastName;
+            address.PhoneNumber = model.PhoneNumber;
+            address.Country = model.Country;
+            address.PostCode = model.PostCode;
+            address.Town = model.Town;
+            address.Address = model.Address;
+            address.District = model.District;
+            address.Email = model.Email;
+            address.AppUserId = userId;
+            address.IsShippingToOffice = false;
+
+            await _context.SaveChangesAsync();
+        }
+
+        // Get the delivery address to be edited
+        public async Task<DeliveryAddressesDTO> GetAddressDeliveryAsync(int addressId)
+        {
+            DeliveryAddressesDTO addressDeliveryDTO = new();
+
+            var addressDelivery = await _context.AddressDeliveries.FirstOrDefaultAsync(ad => ad.Id == addressId);
+
+            if (addressDelivery?.IsShippingToOffice == true)  // If the delivery address is to office
+            {
+                addressDeliveryDTO.Office = await _context.AddressDeliveries
+                    .Where(ad => ad.Id == addressId)
+                    .Select(ad => new OfficeDTO
+                    {
+                        Id = ad.Id,
+                        ShippingProviderId = ad.ShippingOffice!.ShippingProviderId,
+                        ShippingOfficeId = ad.ShippingOfficeId,
+                        FirstName = ad.FirstName,
+                        LastName = ad.LastName,
+                        PhoneNumber = ad.PhoneNumber,
+                        CityName = ad.ShippingOffice.City
+                    })
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync();
+
+                addressDeliveryDTO.Office!.ShippingProviders = await GetShippingProvidersAsync();
+
+                addressDeliveryDTO.Office.ShippingProviderCities =
+                    await GetShippingProviderCitiesAsync(addressDeliveryDTO.Office.ShippingProviderId ?? 0);
+
+                addressDeliveryDTO.Office.ShippingOffices =
+                    await GetShippingOfficesAsync(addressDeliveryDTO.Office.ShippingProviderId, addressDeliveryDTO.Office.CityName);
+            }
+            else if (addressDelivery?.IsShippingToOffice == false) // If the delivery address is to address
+            {
+                addressDeliveryDTO.Address = new AddressDTO
+                {
+                    Id = addressDelivery.Id,
+                    FirstName = addressDelivery.FirstName,
+                    LastName = addressDelivery.LastName,
+                    PhoneNumber = addressDelivery.PhoneNumber,
+                    Country = addressDelivery.Country ?? string.Empty,
+                    PostCode = addressDelivery.PostCode ?? string.Empty,
+                    Town = addressDelivery.Town ?? string.Empty,
+                    Address = addressDelivery.Address ?? string.Empty,
+                    District = addressDelivery.District ?? string.Empty,
+                    Email = addressDelivery.Email ?? string.Empty
+                };
+            }
+
+            return addressDeliveryDTO;
         }
     }
 }

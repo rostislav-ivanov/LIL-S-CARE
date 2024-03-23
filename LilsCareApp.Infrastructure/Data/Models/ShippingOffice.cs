@@ -29,6 +29,9 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [ForeignKey(nameof(ShippingProviderId))]
         public ShippingProvider? ShippingProvider { get; set; }
 
+        [Comment("Navigation Property to AddressDelivery")]
+        public IEnumerable<AddressDelivery> DeliveryAddresses { get; set; } = [];
+
 
 
 

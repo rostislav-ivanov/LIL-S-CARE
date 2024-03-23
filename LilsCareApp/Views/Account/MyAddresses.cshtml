@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MyAddressDTO>
+﻿@model IEnumerable<DeliveryAddressDTO>
 @{
     ViewData["Title"] = "Адреси";
 }
@@ -40,7 +40,7 @@
                 <!-- Address End -->
             }
             <div class="d-flex justify-content-start my-3">
-                <a asp-controller="Account" asp-action="@(address.IsOffice ? "AddOffice" : "AddAddress")" asp-route-addressId="@address.AddressId" class="btn btn-sm">
+                <a asp-controller="Account" asp-action="EditAddress" asp-route-addressId="@address.AddressId" class="btn btn-sm">
                     Редактирай<i class="fa-solid fa-user-pen ms-2"></i>
                 </a>
                 <a asp-controller="Account" asp-action="DeleteAddress" asp-route-addressId="@address.AddressId" class="btn btn-sm ms-3">

@@ -4,7 +4,7 @@ using static LilsCareApp.Core.ErrorMessageConstants;
 using static LilsCareApp.Infrastructure.DataConstants.AddressDelivery;
 namespace LilsCareApp.Core.Models.Checkout
 {
-    public class AddressDeliveryDTO
+    public class AddressDeliveryDTOtoByChange
     {
         [Key]
         [Comment("Address Id")]

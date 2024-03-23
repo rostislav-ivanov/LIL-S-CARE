@@ -1,6 +1,7 @@
 ﻿using LilsCareApp.Core.Contracts;
 using LilsCareApp.Core.Models.Account;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Security.Claims;
 
 namespace LilsCareApp.Controllers
@@ -17,6 +18,7 @@ namespace LilsCareApp.Controllers
 
         }
 
+        // Get the user account details and send to view
         public async Task<IActionResult> MyAccount()
         {
             string userId = User.GetUserId();
@@ -29,6 +31,7 @@ namespace LilsCareApp.Controllers
             return View(myAccount);
         }
 
+        // Get the user account details and send to view to be updated
         public async Task<IActionResult> UpdateMyAccount()
         {
             string userId = User.GetUserId();
@@ -41,9 +44,9 @@ namespace LilsCareApp.Controllers
             return View(myAccount);
         }
 
-
+        // Update the user account details
         [HttpPost]
-        public async Task<IActionResult> UpdateMyAccount(MyAccountDTO myAccount)
+        public async Task<IActionResult> UpdateMyAccount(MyAddressDTO myAccount)
         {
             var files = Request.Form.Files.FirstOrDefault();
             if (files?.Length > 0)
@@ -73,46 +76,30 @@ namespace LilsCareApp.Controllers
             return RedirectToAction(nameof(MyAccount));
         }
 
+
+        public IActionResult MyOrders()
+        {
+            return View();
+        }
+
+        public IActionResult MyWishes()
+        {
+            return View();
+        }
+
+
+
+        // Get all delivery addresses  of the user and send to view to be edited or deleted or set as default
         public async Task<IActionResult> MyAddresses()
         {
             string userId = User.GetUserId();
-            IEnumerable<MyAddressDTO> myAddresses = await _accountService.GetMyAddressesAsync(userId);
+            IEnumerable<DeliveryAddressDTO> myAddresses = await _accountService.GetMyAddressesAsync(userId);
 
             return View(myAddresses);
         }
 
-        public async Task<IActionResult> AddAddress(int addressId)
-        {
-            if (addressId == 0)
-            {
-                return View(new AddressDTO());
-            }
-            var model = await _accountService.GetAddressAsync(addressId);
 
-            return View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddAddress(AddressDTO model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            string userId = User.GetUserId();
-            if (model.Id != 0) // Update the address
-            {
-                await _accountService.UpdateAddressAsync(userId, model);
-            }
-            else // Add a new address
-            {
-                await _accountService.AddAddressAsync(userId, model);
-            }
-
-            return RedirectToAction(nameof(MyAddresses));
-        }
-
+        // Delete the delivery address
         public async Task<IActionResult> DeleteAddress(int addressId)
         {
             if (addressId == 0)
@@ -124,6 +111,7 @@ namespace LilsCareApp.Controllers
             return RedirectToAction(nameof(MyAddresses));
         }
 
+        // Set the default delivery address
         public async Task<IActionResult> SetDefaultAddress(int addressId)
         {
             if (addressId == 0)
@@ -136,48 +124,166 @@ namespace LilsCareApp.Controllers
             return RedirectToAction(nameof(MyAddresses));
         }
 
-        public async Task<IActionResult> AddOffice(int addressId)
+
+        // Create a new delivery address and send to view to be filled
+        public IActionResult AddAddress()
+        {
+            DeliveryAddressesDTO model = new();
+
+            TempData["AddressDelivery"] = JsonConvert.SerializeObject(model);
+
+            return View("AddEditAddress", model);
+        }
+
+        // Get an existing delivery address and send to view to be edited
+        public async Task<IActionResult> EditAddress(int addressId)
         {
             if (addressId == 0)
             {
-                return View(new OfficeDTO());
+                return BadRequest();
             }
-            OfficeDTO model = await _accountService.GetOfficeAsync(addressId);
 
-            return View(model);
+            DeliveryAddressesDTO model = await _accountService.GetAddressDeliveryAsync(addressId);
+
+            TempData["AddressDelivery"] = JsonConvert.SerializeObject(model);
+
+            return View("AddEditAddress", model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddOffice(OfficeDTO model)
+
+        // Select the delivery type of address (office or address)
+        public async Task<IActionResult> SelectDeliveryType(bool isShippingToOffice)
         {
-            if (!ModelState.IsValid)
+            var model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(TempData["AddressDelivery"] as string);
+            if (model == null)
             {
-                return View(model);
+                model = new DeliveryAddressesDTO();
+            }
+            else if (isShippingToOffice)
+            {
+                model.Address = null;
+                model.Office = new OfficeDTO()
+                {
+                    ShippingProviders = await _accountService.GetShippingProvidersAsync(),
+                };
+            }
+            else
+            {
+                model.Office = null;
+                model.Address = new AddressDTO();
+            }
+
+            TempData["AddressDelivery"] = JsonConvert.SerializeObject(model);
+
+            return View("AddEditAddress", model);
+        }
+
+
+        // Select the shipping provider for office delivery
+        public async Task<IActionResult> SelectShippingProvider(int shippingProviderId)
+        {
+            var model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(TempData["AddressDelivery"] as string);
+
+            model.Office.ShippingProviderId = shippingProviderId;
+            model.Office.ShippingProviderCities = await _accountService.GetShippingProviderCitiesAsync(shippingProviderId);
+            model.Office.CityName = null;
+            model.Office.ShippingOfficeId = null;
+
+            TempData["AddressDelivery"] = JsonConvert.SerializeObject(model);
+
+            return View("AddEditAddress", model);
+        }
+
+
+        // Select the city for office delivery
+        public async Task<IActionResult> SelectShippingCity(string city)
+        {
+            var model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(TempData["AddressDelivery"] as string);
+
+            model.Office.CityName = city;
+            model.Office.ShippingOffices = await _accountService.GetShippingOfficesAsync(model.Office.ShippingProviderId, city);
+            model.Office.ShippingOfficeId = null;
+
+            TempData["AddressDelivery"] = JsonConvert.SerializeObject(model);
+
+            return View("AddEditAddress", model);
+        }
+
+        // Select the shipping office for office delivery
+        public IActionResult SelectShippingOffice(int officeId)
+        {
+            var model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(TempData["AddressDelivery"] as string);
+
+            model.Office.ShippingOfficeId = officeId;
+
+            TempData["AddressDelivery"] = JsonConvert.SerializeObject(model);
+
+            return View("AddEditAddress", model);
+        }
+
+
+        // Add or Edit address of type delivery to office
+        public async Task<IActionResult> AddOfficeDelivery(OfficeDTO officeDTO)
+        {
+            var model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(TempData["AddressDelivery"] as string);
+            model.Office.FirstName = officeDTO.FirstName;
+            model.Office.LastName = officeDTO.LastName;
+            model.Office.PhoneNumber = officeDTO.PhoneNumber;
+
+            if (!ModelState.IsValid || !model.Office.IsSelectedOffice())
+            {
+                TempData["AddressDelivery"] = JsonConvert.SerializeObject(model);
+
+                return View("AddEditAddress", model);
             }
 
             string userId = User.GetUserId();
-            if (model.Id != 0) // Update the address
+
+            if (model.Office.Id == 0)
             {
-                await _accountService.UpdateOfficeAsync(userId, model);
+                await _accountService.AddOfficeDeliveryAsync(userId, model.Office);
             }
-            else // Add a new address
+            else
             {
-                //await _accountService.AddOfficeAsync(userId, model);
+                await _accountService.EditOfficeDeliveryAsync(userId, model.Office);
             }
 
             return RedirectToAction(nameof(MyAddresses));
         }
 
 
-
-        public IActionResult MyOrders()
+        // Add or Edit address of type delivery to address
+        [HttpPost]
+        public async Task<IActionResult> AddAddressDelivery(AddressDTO addressDTO)
         {
-            return View();
+            var model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(TempData["AddressDelivery"] as string);
+            model.Address = addressDTO;
+
+            if (addressDTO is null)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                TempData["AddressDelivery"] = JsonConvert.SerializeObject(model);
+                return View("AddEditAddress", model);
+            }
+
+            string userId = User.GetUserId();
+
+            if (model.Address.Id == 0)
+            {
+                await _accountService.AddAddressDeliveryAsync(userId, model.Address);
+            }
+            else
+            {
+                await _accountService.EditAddressDeliveryAsync(userId, model.Address);
+            };
+
+            return RedirectToAction(nameof(MyAddresses));
         }
 
-        public IActionResult MyWishes()
-        {
-            return View();
-        }
+
     }
 }
