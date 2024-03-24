@@ -77,9 +77,12 @@ namespace LilsCareApp.Controllers
         }
 
 
-        public IActionResult MyOrders()
+        public async Task<IActionResult> MyOrders()
         {
-            return View();
+            string userId = User.GetUserId();
+            IEnumerable<MyOrderDTO> myOrders = await _accountService.GetMyOrdersAsync(userId);
+
+            return View(myOrders);
         }
 
         public IActionResult MyWishes()

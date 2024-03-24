@@ -74,7 +74,37 @@ namespace LilsCareApp.Core.Services
             return user.ImagePath;
         }
 
-
+        // Get all orders of the user
+        public async Task<IEnumerable<MyOrderDTO>> GetMyOrdersAsync(string userId)
+        {
+            return await _context.Orders
+                .Where(o => o.AppUserId == userId)
+                .Select(o => new MyOrderDTO
+                {
+                    Id = o.Id,
+                    CreatedOn = o.CreatedOn,
+                    OrderNumber = o.OrderNumber,
+                    StatusOrder = o.StatusOrder.Name,
+                    Total = o.Total,
+                    Products = o.ProductsOrders
+                        .Select(op => new MyProductOrderDTO
+                        {
+                            ProductId = op.ProductId,
+                            ProductName = op.Product.Name,
+                            ImagePath = op.ImagePath,
+                            Quantity = op.Quantity,
+                            Price = op.Price,
+                        })
+                        .ToList(),
+                    DateShipping = o.DateShipping,
+                    TrackingNumber = o.TrackingNumber,
+                    ShippingPrice = o.ShippingPrice,
+                    SubTotal = o.SubTotal,
+                    Discount = o.Discount
+                })
+                .AsNoTracking()
+                .ToListAsync();
+        }
 
 
         // Return all delivery addresses  of the user (to address and to office)

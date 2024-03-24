@@ -1,5 +1,149 @@
-﻿@{
-    ViewData["Title"] = "Orders";
+﻿@model IEnumerable<MyOrderDTO>
+@{
+    ViewData["Title"] = "Моите поръчки";
 }
 
-<h1>@ViewData["Title"]</h1>
+@section Styles {
+    <link rel="stylesheet" href="~/css/my-order.css" />
+}
+
+<div class="d-flex justify-content-center">
+    <!-- Menu My Account Start-->
+    <partial name="_AccountMenuPartial" />
+    <!-- Menu My Account  End -->
+    <!-- My Orders Start-->
+    <div class="border rounded p-3" style="margin: 50px 100px 20px 20px">
+        <h5 class="my-4">Моите поръчки</h5>
+        <p>Погледнете история на поръчките или проверете статуса им.</p>
+        <hr />
+        @if (Model.Count() == 0)
+        {
+            <div class="text-center mt-5">
+                <h5>Нямате поръчки</h5>
+                <a asp-controller="Products" asp-action="Index" class="btn btn-sm">Пазарувайте сега</a>
+            </div>
+        }
+        else
+        {
+            <div class="row me-3">
+                <div class="col-3"><strong>Дата</strong></div>
+                <div class="col-3"><strong>Поръчка</strong></div>
+                <div class="col-3"><strong>Статус</strong></div>
+                <div class="col-2"><strong>Общо</strong></div>
+            </div>
+            <hr class="mb-0" />
+            <div class="accordion accordion-flush" id="accordion-orders">
+                @foreach (var order in Model)
+                {
+                    <!-- Order Start -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed px-0"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#order-id-@order.Id"
+                                    aria-expanded="false"
+                                    aria-controls="order-id-@order.Id">
+                                <div class="col-3">@order.CreatedOn.ToString("dd/MM/yyyy")</div>
+                                <div class="col-3">#@order.OrderNumber</div>
+                                <div class="col-3">@order.StatusOrder</div>
+                                <div class="col-2">@order.Total</div>
+                            </button>
+                        </h2>
+                        <div id="order-id-@order.Id"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#accordion-orders">
+                            <!-- Order Summary Start -->
+                            <div class="accordion-body border rounded">
+                                @foreach (var product in order.Products)
+                                {
+                                    <!-- Product Start -->
+                                    <div class="row mb-5">
+                                        <div class="col-md-5 col-lg-3 col-xl-3">
+                                            <a asp-controller="Details" asp-action="Index" asp-route-id="@product.ProductId">
+                                                <div class="product-img">
+                                                    <img src="@product.ImagePath"
+                                                         class="img-fluid w-100"
+                                                         alt="" />
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-7 col-lg-9 col-xl-9 d-flex flex-column">
+                                            <p>@product.ProductName</p>
+                                            <p>Цена: @product.Price лв.</p>
+                                            <div class="flex-grow-1"></div>
+                                            <div class="d-flex justify-content-between">
+                                                <span>Количество: @product.Quantity бр.</span>
+                                                <span>
+                                                    <strong>@(product.Quantity * product.Price) лв.</strong>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Product End -->
+                                }
+                                <!-- Discount Start -->
+                                @if (order.Discount > 0)
+                                {
+                                    <div class="d-flex justify-content-between">
+                                        <span>Отстъпка:</span>
+                                        <span>
+                                            <strong>-@order.Discount лв.</strong>
+                                        </span>
+                                    </div>
+                                }
+                                <!-- Discount Start -->
+                                <hr />
+                                <!-- Subtotal Start -->
+                                <div class="d-flex justify-content-between mb-3">
+                                    <span>Междинна сума</span>
+                                    <span class="mb-0">
+                                        <strong>@order.SubTotal лв.</strong>
+                                    </span>
+                                </div>
+                                <!-- Subtotal End -->
+                                <!-- Delivery Start -->
+                                <div class="d-flex justify-content-between mb-3">
+                                    <span>Доставка</span>
+                                    <span class="mb-0">
+                                        <strong>@order.ShippingPrice лв.</strong>
+                                    </span>
+                                </div>
+                                <!-- Delivery End -->
+                                <hr />
+                                <!-- Total Price Start -->
+                                <div class="d-flex justify-content-between my-3 fs-4">
+                                    <span>Общо :</span>
+                                    <span>@order.Total лв.</span>
+                                </div>
+                                <!-- Total Price End -->
+                                <hr />
+                                <!-- Bill of Lading Start -->
+                                @if (order.TrackingNumber != null)
+                                {
+                                    <div class="d-flex justify-content-between mt-3">
+                                        <span>Товарителница :</span>
+                                        <span>@order.TrackingNumber</span>
+                                    </div>
+                                }
+                                <!-- Bill of Lading End -->
+                                <!-- Date Start -->
+                                @if (order.DateShipping != null)
+                                {
+                                    <div class="d-flex justify-content-between mt-3">
+                                        <span>Дата на доставка:</span>
+                                        <span>@(DateTime.Parse(order.DateShipping.ToString()?? "").ToString("dd/MM/yyyy"))</span>
+                                    </div>
+                                }
+                                <!-- Date End -->
+                            </div>
+                            <!-- Order Summary End -->
+                        </div>
+                    </div>
+                    <!-- Order End -->
+                }
+            </div>
+        }
+    </div>
+    <!--My Orders End -->
+</div>
