@@ -1,4 +1,5 @@
 ﻿using LilsCareApp.Core.Contracts;
+using LilsCareApp.Core.Models;
 using LilsCareApp.Core.Models.Account;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -9,11 +10,13 @@ namespace LilsCareApp.Controllers
     public class AccountController : BaseController
     {
         private readonly IAccountService _accountService;
+        private readonly IProductsService _productsService;
         private readonly ILogger<AccountController> _logger;
 
-        public AccountController(IAccountService accountService, ILogger<AccountController> logger)
+        public AccountController(IAccountService accountService, IProductsService productsService, ILogger<AccountController> logger)
         {
             _accountService = accountService;
+            _productsService = productsService;
             _logger = logger;
 
         }
@@ -76,7 +79,7 @@ namespace LilsCareApp.Controllers
             return RedirectToAction(nameof(MyAccount));
         }
 
-
+        // Get all orders of the user and send to view
         public async Task<IActionResult> MyOrders()
         {
             string userId = User.GetUserId();
@@ -85,9 +88,33 @@ namespace LilsCareApp.Controllers
             return View(myOrders);
         }
 
-        public IActionResult MyWishes()
+        public async Task<IActionResult> MyWishes()
         {
-            return View();
+            string userId = User.GetUserId();
+            IEnumerable<ProductDTO> myWishes = await _productsService.GetMyWishesAsync(userId);
+
+            return View(myWishes);
+        }
+
+        public async Task<IActionResult> AddToCart(int productId)
+        {
+
+            string userId = User.GetUserId();
+
+            await _productsService.AddToCartAsync(productId, userId, 1);
+
+            TempData["ShowBag"] = "show";
+
+            return RedirectToAction(nameof(MyWishes), "Account");
+        }
+
+        public async Task<IActionResult> AddRemoveWish(int productId)
+        {
+            string userId = User.GetUserId();
+
+            await _productsService.AddRemoveWishAsync(productId, userId);
+
+            return RedirectToAction(nameof(MyWishes), "Account");
         }
 
 
