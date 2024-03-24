@@ -1,5 +1,90 @@
-﻿@{
-    ViewData["Title"] = "Wishes";
+﻿@model IEnumerable<ProductDTO>
+@{
+    ViewData["Title"] = "Моите продукти";
 }
 
-<h1>@ViewData["Title"]</h1>
+@section Styles {
+    <link rel="stylesheet" href="~/css/my-wishlist.css" />
+}
+
+<div class="d-flex justify-content-center">
+    <!-- Menu My Account Start-->
+    <partial name="_AccountMenuPartial" />
+    <!-- Menu My Account  End -->
+    <!-- My Wish List Start-->
+    <div class="border rounded p-3" style="margin: 50px 100px 20px 20px">
+        <h5 class="my-4">Моят списък с желания</h5>
+        <p>
+            Преглеждайте любими продукти, които сте запазили в списъка си с
+            желания.
+        </p>
+        <hr />
+        @if (Model.Count() == 0)
+        {
+            <div class="text-center">
+                <p>Нямате добавени продукти в списъка с желания.</p>
+                <a asp-controller="Products" asp-action="Index" class="btn btn-sm">Разгледайте нашите продукти</a>
+            </div>
+        }
+        else
+        {
+            <div class="container product py-5">
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="row g-5 justify-content-center">
+                            <!-- Product Start-->
+                            @foreach (var product in Model)
+                            {
+                                <div class="col-md-6 col-lg-4 col-xl-4">
+                                    <a class="nav-link" asp-controller="Details" asp-action="Index" asp-route-id="@product.Id"
+                                       style="text-decoration: none; color: inherit">
+                                        <div class="rounded-4 position-relative product-item border">
+                                            <div class="product-img">
+                                                <img src="@product.ImageUrl"
+                                                     class="img-fluid w-100"
+                                                     alt="" />
+                                            </div>
+                                            <div class="px-3 py-2">
+                                                <h6>@product.Name</h6>
+                                                <p class="fs-5 fw-bold mb-0">@product.Price лв.</p>
+                                                <div class="clearfix mt-2">
+                                                    @if (product.Quantity > 0)
+                                                    {
+                                                        <a asp-controller="Account" asp-action="AddToCart" asp-route-productId="@product.Id" class="btn">
+                                                            <i class="fa fa-shopping-bag me-2"></i> Добави
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a class="float-start btn unactive-button">
+                                                            Изчерпано
+                                                        </a>
+                                                    }
+
+                                                    <a asp-controller="Account" asp-action="AddRemoveWish" asp-route-productId="@product.Id"
+                                                       class="float-end nav-link fs-3"
+                                                       style="color: rgb(var(--app-btn-bg))">
+                                                        @if (product.IsWish)
+                                                        {
+                                                            <i class="fa fa-heart"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="far fa-heart"></i>
+                                                        }
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            }
+                            <!-- Products End-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <!--My Wish List End -->
+</div>
