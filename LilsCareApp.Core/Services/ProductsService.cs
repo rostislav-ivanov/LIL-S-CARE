@@ -95,9 +95,6 @@ namespace LilsCareApp.Core.Services
             await _context.SaveChangesAsync();
         }
 
-
-
-
         public async Task<IEnumerable<ProductsInBagDTO>> GetProductsInBagAsync(string userId)
         {
             var productsInBag = await _context.BagsUsers
@@ -164,32 +161,6 @@ namespace LilsCareApp.Core.Services
                 .AsNoTracking()
                 .SumAsync(bu => bu.Quantity);
             return count;
-        }
-
-        public async Task<CartDTO> GetProductsInCartAsync(string userId)
-        {
-            CartDTO cart = new CartDTO()
-            {
-                Products = await _context.BagsUsers
-                    .Where(bu => bu.AppUserId == userId)
-                    .Select(bu => new ProductInCartDTO
-                    {
-                        Id = bu.Product.Id,
-                        Name = bu.Product.Name,
-                        Price = bu.Product.Price,
-                        Weight = bu.Product.Weight,
-                        ImageUrl = bu.Product.Images.FirstOrDefault().ImagePath,
-                        Quantity = bu.Quantity
-                    })
-                    .AsNoTracking()
-                    .ToListAsync(),
-
-                ShippingProviderId = 2
-            };
-
-            return cart;
-
-
         }
 
         public async Task<IEnumerable<ProductDTO>> GetMyWishesAsync(string userId)
