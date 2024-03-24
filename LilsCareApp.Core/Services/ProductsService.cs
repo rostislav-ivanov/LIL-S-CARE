@@ -15,10 +15,6 @@ namespace LilsCareApp.Core.Services
             _context = context;
         }
 
-        public ProductsService()
-        {
-        }
-
         async public Task<IEnumerable<ProductDTO>> GetAllAsync(string userId)
         {
             var products = await _context.Products
@@ -34,7 +30,7 @@ namespace LilsCareApp.Core.Services
                         Id = pc.Category.Id,
                         Name = pc.Category.Name
                     }).ToList(),
-                    IsWish = p.WishesUsers.Any(wu => wu.AppUserId == userId && wu.ProductId == p.Id)
+                    IsWish = p.WishesUsers.Any(wu => wu.AppUserId == userId)
                 })
                 .AsNoTracking()
                 .ToArrayAsync();
@@ -80,7 +76,7 @@ namespace LilsCareApp.Core.Services
             return categories;
         }
 
-        public async Task AddToWishAsync(int id, string userId)
+        public async Task AddRemoveWishAsync(int id, string userId)
         {
             var wishUser = new WishUser
             {
@@ -91,19 +87,12 @@ namespace LilsCareApp.Core.Services
             if (await _context.WishesUsers.ContainsAsync(wishUser) == false)
             {
                 await _context.WishesUsers.AddAsync(wishUser);
-                await _context.SaveChangesAsync();
             }
-        }
-
-
-        public async Task RemoveFromWishAsync(int id, string userId)
-        {
-            var wishUser = _context.WishesUsers.FirstOrDefault(wu => wu.ProductId == id && wu.AppUserId == userId);
-            if (wishUser != null)
+            else
             {
                 _context.WishesUsers.Remove(wishUser);
-                await _context.SaveChangesAsync();
             }
+            await _context.SaveChangesAsync();
         }
 
 
@@ -177,17 +166,8 @@ namespace LilsCareApp.Core.Services
             return count;
         }
 
-
-
-
-
-
-
-
         public async Task<CartDTO> GetProductsInCartAsync(string userId)
         {
-
-
             CartDTO cart = new CartDTO()
             {
                 Products = await _context.BagsUsers
@@ -208,14 +188,32 @@ namespace LilsCareApp.Core.Services
             };
 
             return cart;
+
+
         }
 
+        public async Task<IEnumerable<ProductDTO>> GetMyWishesAsync(string userId)
+        {
+            var products = await _context.Products
+                .Where(p => p.WishesUsers.Any(wu => wu.AppUserId == userId))
+                .Select(p => new ProductDTO
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    ImageUrl = p.Images.FirstOrDefault().ImagePath ?? "https://via.placeholder.com/150",
+                    Quantity = p.Quantity,
+                    Categories = p.ProductsCategories.Select(pc => new CategoryDTO
+                    {
+                        Id = pc.Category.Id,
+                        Name = pc.Category.Name
+                    }).ToList(),
+                    IsWish = p.WishesUsers.Any(wu => wu.AppUserId == userId)
+                })
+                .AsNoTracking()
+                .ToArrayAsync();
 
-
-
-
-
-
-
+            return products;
+        }
     }
 }

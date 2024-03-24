@@ -33,31 +33,40 @@ namespace LilsCareApp.Controllers
             return View(products);
         }
 
-        public async Task<IActionResult> AddToWish(int productId)
+        //public async Task<IActionResult> AddToWish(int productId)
+        //{
+        //    string userId = User.GetUserId();
+
+        //    await _service.AddToWishAsync(productId, userId);
+
+        //    TempData["scrollToElementId"] = "owl-carousel";
+
+        //    return RedirectToAction(nameof(Index), "Products");
+        //}
+
+        //public async Task<IActionResult> RemoveFromWish(int productId)
+        //{
+        //    string userId = User.GetUserId();
+
+        //    await _service.RemoveFromWishAsync(productId, userId);
+
+        //    TempData["scrollToElementId"] = "owl-carousel";
+
+        //    return RedirectToAction(nameof(Index), "Products");
+        //}
+
+        public async Task<IActionResult> AddRemoveWish(int productId)
         {
             string userId = User.GetUserId();
 
-            await _service.AddToWishAsync(productId, userId);
+            await _service.AddRemoveWishAsync(productId, userId);
 
             TempData["scrollToElementId"] = "owl-carousel";
 
             return RedirectToAction(nameof(Index), "Products");
         }
-
-        public async Task<IActionResult> RemoveFromWish(int productId)
-        {
-            string userId = User.GetUserId();
-
-            await _service.RemoveFromWishAsync(productId, userId);
-
-            TempData["scrollToElementId"] = "owl-carousel";
-
-            return RedirectToAction(nameof(Index), "Products");
-        }
-
 
         [AllowAnonymous]
-        [HttpPost]
         public async Task<IActionResult> AddToCart(int productId, int quantity = 1)
         {
 
