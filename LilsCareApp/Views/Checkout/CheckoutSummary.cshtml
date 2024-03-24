@@ -10,11 +10,10 @@
 <div class="container p-3">
 
     <div class="row g-5 p-3">
+        <hr />
+        <h5 class="text-center">Вие направихте поръчка #<strong>@Model.OrderNumber</strong> от @Model.OrderDate.ToString("dd/MM/yyyy")</h5>
         <!-- Client's data and Delivery address Start -->
         <div class="col-lg-6">
-            <hr />
-            <h5 class="py-3 m-0">Поръчка #<strong>@Model.OrderNumber</strong> от @Model.OrderDate.ToString("dd/MM/yyyy")</h5>
-
             <hr />
             @if (!Model.IsShippingToOffice)
             {
