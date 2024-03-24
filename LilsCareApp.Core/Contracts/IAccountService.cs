@@ -9,6 +9,7 @@ namespace LilsCareApp.Core.Contracts
         Task<dynamic> GetUserImagePathAsync(string userId);
         Task UpdateMyAccountAsync(string userId, MyAddressDTO myAccount);
 
+        Task<IEnumerable<MyOrderDTO>> GetMyOrdersAsync(string userId);
 
 
         Task<IEnumerable<DeliveryAddressDTO>> GetMyAddressesAsync(string userId);
