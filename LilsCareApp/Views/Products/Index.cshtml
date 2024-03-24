@@ -48,8 +48,9 @@
                 {
                     <!-- Products Start-->
                     <div class="col-md-6 col-lg-4 col-xl-4">
-                        <a class="nav-link" asp-controller="Details" asp-action="Index" asp-route-id="@product.Id"
-                        style="text-decoration: none; color: inherit">
+                        <a asp-controller="Details" asp-action="Index" asp-route-id="@product.Id"
+                           class="nav-link"
+                           style="text-decoration: none; color: inherit">
                             <div class="rounded-4 position-relative product-item border">
                                 <div class="product-img">
                                     <img src="@product.ImageUrl"
@@ -62,16 +63,9 @@
                                     <div class="clearfix mt-2">
                                         @if (product.Quantity > 0)
                                         {
-                                            <form asp-controller="Products" asp-action="AddToCart" asp-route-productId="@product.Id"
-                                                  method="post">
-                                                <input type="hidden" name="quantity" value="1" />
-                                                <button 
-                                                   type="submit"
-                                                    class="btn"
-                                                   style="float: left">
+                                            <a asp-controller="Products" asp-action="AddToCart" asp-route-productId="@product.Id" class="btn">
                                                     <i class="fa fa-shopping-bag me-2"></i> Добави
-                                                </button>
-                                            </form>
+                                            </a>
                                         }
                                         else
                                         {
@@ -80,24 +74,18 @@
                                             </a>
                                         }
 
-                                        @if (product.IsWish)
-                                        {
-                                            <a asp-controller="Products" asp-action="RemoveFromWish" asp-route-productId="@product.Id"
-                                               method="post"
-                                               class="float-end nav-link fs-3"
-                                               style="color: rgb(var(--app-btn-bg))">
+                                        <a asp-controller="Products" asp-action="AddRemoveWish" asp-route-productId="@product.Id"
+                                           class="float-end nav-link fs-3"
+                                           style="color: rgb(var(--app-btn-bg))">
+                                            @if (product.IsWish)
+                                            {
                                                 <i class="fa fa-heart"></i>
-                                            </a>
-                                        }
-                                        else
-                                        {
-                                            <a asp-controller="Products" asp-action="AddToWish" asp-route-productId="@product.Id"
-                                               method="post"
-                                               class="float-end nav-link fs-3"
-                                               style="color: rgb(var(--app-btn-bg))">
+                                            }
+                                            else
+                                            {
                                                 <i class="far fa-heart"></i>
-                                            </a>
-                                        }
+                                            }
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +95,7 @@
                 }
 
                 <!-- Pagination Start-->
-                <div class="col-12">
+@*                 <div class="col-12">
                     <div class="pagination d-flex justify-content-center mt-5">
                         <a href="#" class="btn btn-inverce m-1">&laquo;</a>
                         <a href="#" class="btn active m-1">1</a>
@@ -118,7 +106,7 @@
                         <a href="#" class="btn btn-inverce m-1">6</a>
                         <a href="#" class="btn btn-inverce m-1">&raquo;</a>
                     </div>
-                </div>
+                </div> *@
                 <!-- Pagination End-->
             </div>
         </div>

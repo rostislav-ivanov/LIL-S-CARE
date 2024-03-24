@@ -12,9 +12,11 @@ namespace LilsCareApp.Controllers
     public class DetailsController : BaseController
     {
         private readonly IDetailsService _service;
-        public DetailsController(IDetailsService service)
+        private readonly IProductsService _productsService;
+        public DetailsController(IDetailsService service, IProductsService productsService)
         {
             _service = service;
+            _productsService = productsService;
         }
 
         [AllowAnonymous]
@@ -32,7 +34,15 @@ namespace LilsCareApp.Controllers
             return View(details);
         }
 
-        [HttpGet]
+        public async Task<IActionResult> AddRemoveWish(int productId)
+        {
+            string userId = User.GetUserId();
+
+            await _productsService.AddRemoveWishAsync(productId, userId);
+
+            return RedirectToAction(nameof(Index), "Details", new { id = productId });
+        }
+
         public async Task<IActionResult> AddReview(int productId)
         {
             string userId = User.GetUserId();
