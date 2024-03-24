@@ -18,10 +18,11 @@
             {
                 <!-- Office Start -->
                 <div class="row">
-                    <span>@address.OfficeCity</span>
-                    <span>@address.OfficeAddress</span>
-                    <span>@address.FirstName @address.LastName</span>
-                    <span>@address.PhoneNumber</span>
+                    <h5>Доставка до куриерски офис</h5>
+                    <span>Куриер: @(address.ShippingProvider)</span>
+                    <span>Офис: @address.OfficeCity, @address.OfficeAddress</span>
+                    <span>Получател: @address.FirstName @address.LastName</span>
+                    <span>Телефон: @address.PhoneNumber</span>
                 </div>
                 <!-- Office Start -->
             }
@@ -29,13 +30,15 @@
             {
                 <!-- Address Start -->
                 <div class="row">
-                    <span>@address.FirstName @address.LastName</span>
-                    <span>@address.Country</span>
-                    <span>@address.District</span>
-                    <span>@address.PostCode @address.Town</span>
-                    <span>@address.Address</span>
-                    <span>@address.PhoneNumber</span>
-                    <span>@address.Email</span>
+                    <h5>Доставка до адрес</h5>
+                    <span>Адрес:</span>
+                    <span class="ms-5">@address.Country, @address.District</span>
+                    <span class ="ms-5">@address.PostCode, @address.Town</span>
+                    <span class="ms-5">@address.Address</span>
+                    <span>Получател:</span>
+                    <span class="ms-5">@address.FirstName @address.LastName</span>
+                    <span class="ms-5">@address.PhoneNumber</span>
+                    <span class="ms-5">@address.Email</span>
                 </div>
                 <!-- Address End -->
             }
