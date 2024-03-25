@@ -1,6 +1,6 @@
 ﻿using LilsCareApp.Core.Contracts;
+using LilsCareApp.Core.Models.Account;
 using LilsCareApp.Core.Models.Checkout;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Security.Claims;
@@ -12,220 +12,234 @@ namespace LilsCareApp.Controllers
         private readonly ILogger<CheckoutController> _logger;
         private readonly ICheckoutService _checkoutService;
         private readonly IProductsService _productsService;
+        private readonly IAccountService _accountService;
 
         public CheckoutController(
             ILogger<CheckoutController> logger,
             ICheckoutService checkoutService,
-            IProductsService productsService)
+            IProductsService productsService,
+            IAccountService accountService)
         {
             _logger = logger;
             _checkoutService = checkoutService;
             _productsService = productsService;
-
+            _accountService = accountService;
         }
 
-        [AllowAnonymous]
+        // GET: CheckoutController
+        // Display the order summary page with all the necessary information for the order
         public async Task<IActionResult> Index()
         {
-            string? userId = User.GetUserId();
+            string userId = User.GetUserId();
 
-            OrderDTO checkout = new OrderDTO();
 
-            checkout.ProductsInBag = await _productsService.GetProductsInBagAsync(userId);
-            checkout.AddressDelivery = await _checkoutService.GetAddressDeliveryAsync(userId);
-            checkout.ShippingProviders = await _checkoutService.GetShippingProvidersAsync();
-            checkout.PromoCodes = await _checkoutService.GetPromoCodesAsync(userId);
-            if (checkout.AddressDelivery != null)
+            OrderDTO order = new OrderDTO()
             {
-                checkout.ShippingProviderId = checkout.AddressDelivery.IsShippingToOffice
-                    ? checkout.AddressDelivery.ShippingOffice.ShippingProviderId : 0;
+                ProductsInBag = await _productsService.GetProductsInBagAsync(userId),
+                PromoCodes = await _checkoutService.GetPromoCodesAsync(userId),
+                PaymentMethods = await _checkoutService.GetPaymentMethodsAsync(),
+            };
+
+            int? defaultAddressId = await _checkoutService.GetDefaultAddressIdAsync(userId);
+
+            if (defaultAddressId != null)
+            {
+                var defaultAddress = await _accountService.GetAddressDeliveryAsync(defaultAddressId.Value);
+                if (defaultAddress.DeliveryType() == defaultAddress.OfficeDeliveryType)
+                {
+                    order.Office = defaultAddress.Office;
+                    order.IsValidOrder = true;
+                }
+                else if (defaultAddress.DeliveryType() == defaultAddress.AddressDeliveryType)
+                {
+                    order.Address = defaultAddress.Address;
+                    order.IsValidOrder = true;
+                }
             }
 
-            HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
+            HttpContext.Session.SetString("Order", JsonConvert.SerializeObject(order));
 
-            return View(checkout);
+            return View(order);
         }
 
-        [AllowAnonymous]
-        public async Task<IActionResult> SelectShippingProvider(int shippingProvidersId)
-        {
-            OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
 
-            if (!checkout.ShippingProviders.Any(sp => sp.Id == shippingProvidersId))
+
+        // Select the delivery type of address (office or address).
+        // If the delivery type is office, get the shipping provider.
+        public async Task<IActionResult> SelectDeliveryType(bool isShippingToOffice)
+        {
+            OrderDTO order = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Order"));
+
+            if (isShippingToOffice)
+            {
+                order.Address = null;
+                order.Office ??= new OfficeDTO()
+                {
+                    ShippingProviders = await _accountService.GetShippingProvidersAsync()
+                };
+                order.Office.Id = 0;
+            }
+            else
+            {
+                order.Office = null;
+                order.Address ??= new AddressDTO();
+                order.Address.Id = 0;
+            }
+            order.IsValidOrder = false;
+
+            HttpContext.Session.SetString("Order", JsonConvert.SerializeObject(order));
+
+            return View(nameof(Index), order);
+        }
+
+        // Select the shipping provider for office delivery
+        // Get the cities for the selected shipping provider.
+        public async Task<IActionResult> SelectShippingProvider(int shippingProviderId)
+        {
+            OrderDTO order = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Order"));
+
+            order.Office.ShippingProviderId = shippingProviderId;
+            order.Office.ShippingProviderCities = await _accountService.GetShippingProviderCitiesAsync(shippingProviderId);
+            order.Office.CityName = null;
+            order.Office.ShippingOfficeId = null;
+
+            HttpContext.Session.SetString("Order", JsonConvert.SerializeObject(order));
+
+            return View(nameof(Index), order);
+        }
+
+
+        // Select the city for office delivery
+        // Get the shipping offices for the selected city.
+        public async Task<IActionResult> SelectShippingCity(string city)
+        {
+            OrderDTO order = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Order"));
+
+            order.Office.CityName = city;
+            order.Office.ShippingOffices = await _accountService.GetShippingOfficesAsync(order.Office.ShippingProviderId, city);
+            order.Office.ShippingOfficeId = null;
+
+            HttpContext.Session.SetString("Order", JsonConvert.SerializeObject(order));
+
+            return View(nameof(Index), order);
+        }
+
+        // Select the shipping office for office delivery
+        public IActionResult SelectShippingOffice(int officeId)
+        {
+            OrderDTO order = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Order"));
+
+            order.Office.ShippingOfficeId = officeId;
+
+            HttpContext.Session.SetString("Order", JsonConvert.SerializeObject(order));
+
+            return View(nameof(Index), order);
+        }
+
+        // Add or Edit address of type delivery to office
+        public async Task<IActionResult> AddOfficeDelivery(OfficeDTO officeDTO)
+        {
+            OrderDTO order = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Order"));
+
+            order!.Office!.FirstName = officeDTO.FirstName;
+            order.Office.LastName = officeDTO.LastName;
+            order.Office.PhoneNumber = officeDTO.PhoneNumber;
+
+            if (ModelState.IsValid && order.Office.IsSelectedOffice())
+            {
+                order.IsValidOrder = true;
+            }
+
+            HttpContext.Session.SetString("Order", JsonConvert.SerializeObject(order));
+
+            return View(nameof(Index), order);
+        }
+
+
+        // Add or Edit address of type delivery to address
+        [HttpPost]
+        public async Task<IActionResult> AddAddressDelivery(AddressDTO addressDTO)
+        {
+            OrderDTO order = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Order"));
+
+            order.Address = addressDTO;
+
+            if (addressDTO is null)
             {
                 return BadRequest();
             }
-            checkout.ShippingProviderId = shippingProvidersId;
-            checkout.AddressDelivery = new AddressDeliveryDTOtoByChange();
-            checkout.AddressDelivery.IsShippingToOffice = shippingProvidersId != 0;
-            if (checkout.IsDeliveryToOffice())
-            {
-                checkout.ShippingCities = await _checkoutService.GetShippingCitiesAsync(shippingProvidersId);
-            }
-
-            HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
-
-            return View(nameof(Index), checkout);
-        }
-
-
-        [AllowAnonymous]
-        public IActionResult EditShippingProvider()
-        {
-            OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
-
-            checkout.ShippingProviderId = null;
-            checkout.AddressDelivery = null;
-
-            HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
-
-            return View(nameof(Index), checkout);
-        }
-
-
-        [AllowAnonymous]
-        [HttpPost]
-        public IActionResult AddAddressDelivery(AddressDeliveryDTOtoByChange addressDelivery)
-        {
-            OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
-            checkout.AddressDelivery = addressDelivery;
-            if (ModelState.IsValid)
-            {
-                checkout.AddressDelivery.IsValid = true;
-            }
-
-            HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
-
-            return View(nameof(Index), checkout);
-        }
-
-        [AllowAnonymous]
-        public IActionResult EditAddressDelivery()
-        {
-            OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
-
-            checkout.AddressDelivery.IsValid = false;
-
-            HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
-
-            return View(nameof(Index), checkout);
-        }
-
-
-
-
-        [AllowAnonymous]
-        public async Task<IActionResult> SelectOfficeCity(string city)
-        {
-            OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
-
-            checkout.ShippingOffices = await _checkoutService.GetShippingOfficesByCityAsync(city, checkout.ShippingProviderId);
-            checkout.AddressDelivery.ShippingOffice = new ShippingOfficeDTO()
-            {
-                City = city,
-            };
-
-            HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
-
-            return View(nameof(Index), checkout);
-        }
-
-        [AllowAnonymous]
-        public async Task<IActionResult> SelectOfficeDelivery(int officeId)
-        {
-            OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
-            checkout.AddressDelivery.ShippingOffice = checkout.ShippingOffices.FirstOrDefault(so => so.Id == officeId);
-
-            HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
-
-            return View(nameof(Index), checkout);
-        }
-
-
-        [AllowAnonymous]
-        [HttpPost]
-        public async Task<IActionResult> AddOfficeDelivery(AddressDeliveryDTOtoByChange addressDelivery)
-        {
-            OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
-            checkout.AddressDelivery.FirstName = addressDelivery.FirstName;
-            checkout.AddressDelivery.LastName = addressDelivery.LastName;
-            checkout.AddressDelivery.PhoneNumber = addressDelivery.PhoneNumber;
-            checkout.AddressDelivery.NoteForDelivery = addressDelivery.NoteForDelivery;
-            ModelState.Remove("addressDelivery.Country");
-            ModelState.Remove("addressDelivery.PostCode");
-            ModelState.Remove("addressDelivery.Town");
-            ModelState.Remove("addressDelivery.Address");
 
             if (ModelState.IsValid)
             {
-                checkout.AddressDelivery.IsValid = true;
+                order.IsValidOrder = true;
             }
 
-            HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
+            HttpContext.Session.SetString("Order", JsonConvert.SerializeObject(order));
 
-            return View(nameof(Index), checkout);
+            return View(nameof(Index), order);
         }
 
-        [AllowAnonymous]
-        public IActionResult EditOfficeDelivery()
-        {
-            OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
-            checkout.AddressDelivery.IsValid = false;
-            HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
 
-            return View(nameof(Index), checkout);
-        }
-
-        [AllowAnonymous]
-        [HttpPost]
-        public async Task<IActionResult> AddToCart(int productId, int quantity)
-        {
-            OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
-            string userId = User.GetUserId();
-            await _productsService.AddToCartAsync(productId, userId, quantity);
-            checkout.ProductsInBag = await _productsService.GetProductsInBagAsync(userId);
-            HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
-
-            return View(nameof(Index), checkout);
-        }
-
-        [AllowAnonymous]
+        // Select the payment method for the order.
         public async Task<IActionResult> DiscountWithPromoCode(int? promoCodeId)
         {
-            OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
+            OrderDTO order = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Order"));
 
-            checkout.PromoCodeId = promoCodeId;
+            order.PromoCodeId = promoCodeId;
 
-            HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
+            HttpContext.Session.SetString("Order", JsonConvert.SerializeObject(order));
 
-            return View(nameof(Index), checkout);
+            return View(nameof(Index), order);
         }
 
-        [AllowAnonymous]
+        // Add/Remove product to cart.
+        public async Task<IActionResult> AddToCart(int productId, int quantity)
+        {
+            OrderDTO order = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Order"));
+
+            string userId = User.GetUserId();
+            await _productsService.AddToCartAsync(productId, userId, quantity);
+            order.ProductsInBag = await _productsService.GetProductsInBagAsync(userId);
+
+            HttpContext.Session.SetString("Order", JsonConvert.SerializeObject(order));
+
+            return View(nameof(Index), order);
+        }
+
+        // Delete product from cart.
         public async Task<IActionResult> DeleteProductFromCart(int id)
         {
-            OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
+            OrderDTO order = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Order"));
 
             string userId = User.GetUserId();
             await _productsService.DeleteProductFromCartAsync(id, userId);
-            checkout.ProductsInBag = await _productsService.GetProductsInBagAsync(userId);
+            order.ProductsInBag = await _productsService.GetProductsInBagAsync(userId);
 
-            HttpContext.Session.SetString("Checkout", JsonConvert.SerializeObject(checkout));
+            HttpContext.Session.SetString("Order", JsonConvert.SerializeObject(order));
 
-            return View(nameof(Index), checkout);
+            return View(nameof(Index), order);
         }
 
-        [AllowAnonymous]
-        public async Task<IActionResult> CheckoutSummary()
+        // Save order to database and return unique order number.
+        // Add new address delivery to database if not existing.
+        // Remove products from user's bag.
+        // Set the applied date to promo code if is applied.
+        // Set new default address delivery to user.
+        // Return unique order number to user.
+        // Display the order summary page with all the necessary information for the order
+        [HttpPost]
+        public async Task<IActionResult> CheckoutSummary(string noteForDelivery)
         {
-            OrderDTO checkout = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Checkout"));
+            OrderDTO order = JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Order"));
+
+            order.NoteForDelivery = noteForDelivery;
 
             string userId = User.GetUserId();
-            string orderSNumber = await _checkoutService.CheckoutSaveAsync(checkout, userId);
-            OrderSummaryDTO orderSummary = await _checkoutService.OrderSummaryAsync(orderSNumber);
+            string orderNumber = await _checkoutService.CheckoutSaveAsync(order, userId);
+
+            OrderSummaryDTO orderSummary = await _checkoutService.OrderSummaryAsync(orderNumber);
 
             return View(orderSummary);
         }
-
     }
 }

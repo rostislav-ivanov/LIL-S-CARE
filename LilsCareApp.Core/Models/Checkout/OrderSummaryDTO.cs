@@ -36,7 +36,7 @@
 
         public string? NoteForDelivery { get; set; }
 
-        public IEnumerable<ProductOrderDTO> Products { get; set; } = new List<ProductOrderDTO>();
+        public IEnumerable<ProductOrderDTO> Products { get; set; } = [];
 
         public decimal SubTotal { get; set; }
 

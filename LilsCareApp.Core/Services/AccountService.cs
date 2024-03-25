@@ -214,7 +214,8 @@ namespace LilsCareApp.Core.Services
                 {
                     Id = so.Id,
                     City = so.City,
-                    OfficeAddress = so.OfficeAddress
+                    OfficeAddress = so.OfficeAddress,
+                    Price = so.Price
                 })
                 .AsNoTracking()
                 .ToListAsync();

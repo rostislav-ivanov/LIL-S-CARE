@@ -15,99 +15,23 @@ namespace LilsCareApp.Core.Services
             _context = context;
         }
 
-        // get user's default address delivery or create new if it is not existing
-        // address could be client's address or courier office
-        public async Task<AddressDeliveryDTOtoByChange?> GetAddressDeliveryAsync(string userId)
+
+        // get default address delivery Id for user if existing
+        public async Task<int?> GetDefaultAddressIdAsync(string userId)
         {
-            // check for existing default address delivery
-            var addressDelivery = await _context.Users
-                .Where(u => u.Id == userId && u.DefaultAddressDeliveryId != null)
-                .Select(ad => new AddressDeliveryDTOtoByChange()
-                {
-                    Id = ad.DefaultAddressDelivery.Id,
-                    FirstName = ad.DefaultAddressDelivery.FirstName,
-                    LastName = ad.DefaultAddressDelivery.LastName,
-                    Country = ad.DefaultAddressDelivery.Country,
-                    PostCode = ad.DefaultAddressDelivery.PostCode,
-                    Town = ad.DefaultAddressDelivery.Town,
-                    Address = ad.DefaultAddressDelivery.Address,
-                    District = ad.DefaultAddressDelivery.District,
-                    PhoneNumber = ad.DefaultAddressDelivery.PhoneNumber,
-                    IsShippingToOffice = ad.DefaultAddressDelivery.IsShippingToOffice,
-                    ShippingOfficeId = ad.DefaultAddressDelivery.ShippingOfficeId
-                })
-                .AsNoTracking()
+            return await _context.Users
+                .Where(u => u.Id == userId)
+                .Select(u => u.DefaultAddressDeliveryId)
                 .FirstOrDefaultAsync();
-
-            // create new address delivery if not existing default address delivery
-            if (addressDelivery != null)
-            {
-                // check if user is selected shipping to courier office
-                if (addressDelivery.IsShippingToOffice)
-                {
-                    addressDelivery.ShippingOffice = await _context.ShippingOffices
-                        .Where(so => so.Id == addressDelivery.ShippingOfficeId)
-                        .Select(so => new ShippingOfficeDTO()
-                        {
-                            Id = so.Id,
-                            City = so.City,
-                            OfficeAddress = so.OfficeAddress,
-                            Price = so.Price,
-                            ShippingDuration = so.ShippingDuration,
-                        })
-                        .AsNoTracking()
-                        .FirstOrDefaultAsync();
-
-
-                    addressDelivery.ShippingOffice.ShippingProviderId = await _context.ShippingProviders
-                                .Where(sp => sp.ShippingOffices.Any(so => so.Id == addressDelivery.ShippingOfficeId))
-                                .Select(sp => sp.Id)
-                                .FirstOrDefaultAsync();
-
-                    addressDelivery.IsValid = addressDelivery.FirstName != null
-                                         && addressDelivery.LastName != null
-                                         && addressDelivery.PhoneNumber != null
-                                         && addressDelivery.ShippingOffice != null;
-                }
-                // if user is selected shipping to your address  
-                else
-                {
-                    addressDelivery.IsValid = addressDelivery.FirstName != null
-                                         && addressDelivery.LastName != null
-                                         && addressDelivery.Country != null
-                                         && addressDelivery.PostCode != null
-                                         && addressDelivery.Town != null
-                                         && addressDelivery.Address != null;
-                }
-
-            }
-            return addressDelivery;
         }
 
-
-        // get list of all shipping providers
-        public async Task<IEnumerable<ShippingProviderDTO>> GetShippingProvidersAsync()
+        // get all payment methods 
+        public async Task<IEnumerable<PaymentMethod>> GetPaymentMethodsAsync()
         {
-            var shippingProviders = await _context.ShippingProviders
-                .Select(sp => new ShippingProviderDTO()
-                {
-                    Id = sp.Id,
-                    Name = sp.Name,
-                    Description = "доставка до офис на " + sp.Name
-                })
+            return await _context.PaymentMethods
                 .AsNoTracking()
                 .ToListAsync();
-
-            // add option delivery to client's address
-            shippingProviders.Add(new ShippingProviderDTO()
-            {
-                Id = 0,
-                Name = "доставка до адрес на клиент",
-                Description = "доставка до адрес на клиент"
-            });
-            return shippingProviders.OrderBy(sp => sp.Id);
         }
-
 
         // get all promo codes for user witch are not expired and not already applied
         public async Task<IEnumerable<PromoCodeDTO>> GetPromoCodesAsync(string userId)
@@ -128,41 +52,14 @@ namespace LilsCareApp.Core.Services
         }
 
 
-        // get all cities where the shipping provider has offices
-        public async Task<IEnumerable<string>> GetShippingCitiesAsync(int shippingProvidersId)
-        {
-            return await _context.ShippingOffices
-                .Where(so => so.ShippingProviderId == shippingProvidersId)
-                .Select(so => so.City)
-                .Distinct()
-                .AsNoTracking()
-                .ToListAsync();
-        }
 
-
-        // get all offices in the city of the selected shipping provider
-        public async Task<IEnumerable<ShippingOfficeDTO>> GetShippingOfficesByCityAsync(string city, int? shippingProviderId)
-        {
-            return await _context.ShippingOffices
-                .Where(so => so.City == city && so.ShippingProviderId == shippingProviderId)
-                .Select(so => new ShippingOfficeDTO()
-                {
-                    Id = so.Id,
-                    City = so.City,
-                    OfficeAddress = so.OfficeAddress,
-                    Price = so.Price,
-                    ShippingDuration = so.ShippingDuration,
-                })
-                .AsNoTracking()
-                .ToListAsync();
-        }
-
-
-        // save order to database and return unique order number
-        // remove products from user's bag
-        // set new default address delivery to user
-        // set the applied date to promo code if is applied
-        public async Task<string> CheckoutSaveAsync(OrderDTO checkout, string userId)
+        // Save order to database and return unique order number.
+        // Add new address delivery to database if not existing.
+        // Remove products from user's bag.
+        // Set the applied date to promo code if is applied.
+        // Set new default address delivery to user.
+        // Return unique order number to user.
+        public async Task<string> CheckoutSaveAsync(OrderDTO orderDTO, string userId)
         {
             // get user
             AppUser appUser = await _context.Users.FirstAsync(u => u.Id == userId);
@@ -172,20 +69,20 @@ namespace LilsCareApp.Core.Services
                 CreatedOn = DateTime.UtcNow,
                 StatusOrderId = 1,
                 AppUser = appUser,
-                PaymentMethodId = checkout.PaymentMethodId,
-                NoteForDelivery = checkout.AddressDelivery?.NoteForDelivery,
+                PaymentMethodId = orderDTO.PaymentMethodId,
+                NoteForDelivery = orderDTO.NoteForDelivery,
                 ProductsOrders = new List<ProductOrder>(),
-                PromoCodeId = checkout.PromoCodeId,
-                SubTotal = checkout.SubTotal(),
-                Discount = checkout.Discount(),
-                ShippingPrice = checkout.ShippingPrice() ?? 0,
-                Total = checkout.Total()
+                PromoCodeId = orderDTO.PromoCodeId,
+                SubTotal = orderDTO.SubTotal(),
+                Discount = orderDTO.Discount(),
+                ShippingPrice = orderDTO.ShippingPrice() ?? 0,
+                Total = orderDTO.Total()
 
 
             };
 
             // add products to order
-            foreach (var product in checkout.ProductsInBag)
+            foreach (var product in orderDTO.ProductsInBag)
             {
                 ProductOrder productOrder = new ProductOrder()
                 {
@@ -201,42 +98,53 @@ namespace LilsCareApp.Core.Services
                 order.ProductsOrders.Add(productOrder);
             }
 
+            // add address to order
 
-            // check for existing address delivery
-            AddressDelivery addressDelivery = await _context.AddressDeliveries.FirstOrDefaultAsync(ad => ad.Id == checkout.AddressDelivery.Id);
+            int? addressDeliveryId = orderDTO.Address?.Id ?? orderDTO.Office?.Id;
 
-            if (addressDelivery is null) // if not existing address create new address delivery
+            if (addressDeliveryId > 0) // if existing address set to order this address delivery
             {
-                addressDelivery = new AddressDelivery()
+                order.AddressDelivery = await _context.AddressDeliveries.FirstOrDefaultAsync(ad => ad.Id == addressDeliveryId);
+            }
+            else if (orderDTO.DeliveryType() == orderDTO.AddressDeliveryType) // if new address order add this address delivery
+            {
+                order.AddressDelivery = new AddressDelivery()
                 {
-                    FirstName = checkout.AddressDelivery.FirstName,
-                    LastName = checkout.AddressDelivery.LastName,
-                    PhoneNumber = checkout.AddressDelivery.PhoneNumber,
-                    Country = checkout.AddressDelivery.Country,
-                    PostCode = checkout.AddressDelivery.PostCode,
-                    Town = checkout.AddressDelivery.Town,
-                    Address = checkout.AddressDelivery.Address,
-                    District = checkout.AddressDelivery.District,
-                    IsShippingToOffice = checkout.AddressDelivery.IsShippingToOffice,
-                    ShippingOfficeId = checkout.AddressDelivery.ShippingOffice?.Id,
+                    FirstName = orderDTO.Address!.FirstName,
+                    LastName = orderDTO.Address.LastName,
+                    PhoneNumber = orderDTO.Address.PhoneNumber,
+                    Country = orderDTO.Address.Country,
+                    PostCode = orderDTO.Address.PostCode,
+                    Town = orderDTO.Address.Town,
+                    Address = orderDTO.Address.Address,
+                    District = orderDTO.Address.District,
+                    Email = orderDTO.Address.Email,
+                    IsShippingToOffice = false,
                     AppUser = appUser
-
                 };
-            };
-
-            // add address delivery to order
-            order.AddressDelivery = addressDelivery;
+            }
+            else if (orderDTO.DeliveryType() == orderDTO.OfficeDeliveryType) // if new office order add this address delivery
+            {
+                order.AddressDelivery = new AddressDelivery()
+                {
+                    FirstName = orderDTO.Office!.FirstName,
+                    LastName = orderDTO.Office.LastName,
+                    PhoneNumber = orderDTO.Office.PhoneNumber,
+                    IsShippingToOffice = true,
+                    ShippingOfficeId = orderDTO.Office.ShippingOfficeId,
+                    AppUser = appUser
+                };
+            }
 
             // add order to user
             await _context.Orders.AddAsync(order);
-
-            // set new default address delivery to user
-            appUser.DefaultAddressDelivery = addressDelivery;
 
             // remove products from user's bag
             IEnumerable<BagUser> bagUsers = await _context.BagsUsers
                 .Where(bu => bu.AppUserId == userId)
                 .ToListAsync();
+
+            _context.RemoveRange(bagUsers);
 
             // set the applied date to promo code if is applied
             PromoCode promoCode = await _context.PromoCodes.FirstOrDefaultAsync(pc => pc.Id == order.PromoCodeId);
@@ -246,7 +154,8 @@ namespace LilsCareApp.Core.Services
                 promoCode.AppliedDate = DateTime.UtcNow;
             }
 
-            _context.RemoveRange(bagUsers);
+            // set new default address delivery to user
+            appUser.DefaultAddressDelivery = order.AddressDelivery;
 
             await _context.SaveChangesAsync();
 
@@ -259,6 +168,7 @@ namespace LilsCareApp.Core.Services
 
             return order.OrderNumber;
         }
+
 
 
         // get order summary by order number
