@@ -1,26 +1,40 @@
 ﻿using LilsCareApp.Core.Contracts;
+using LilsCareApp.Core.Models;
+using LilsCareApp.Core.Models.GuestUser;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Security.Claims;
+using static LilsCareApp.Infrastructure.DataConstants.AppConstants;
 
 namespace LilsCareApp.Components
 {
     public class ShoppingBagComponent : ViewComponent
     {
-        private readonly IProductsService _service;
-        private readonly HttpContext _httpContext;
+        private readonly IProductsService _productService;
+        private readonly IGuestService _guestService;
 
-
-        public ShoppingBagComponent(IProductsService service, IHttpContextAccessor httpContextAccessor)
+        public ShoppingBagComponent(IProductsService productService, IGuestService guestService)
         {
-            _service = service;
-            _httpContext = httpContextAccessor.HttpContext;
+            _productService = productService;
+            _guestService = guestService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            string? userId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            userId ??= "guestUser";
-            var productsInBag = await _service.GetProductsInBagAsync(userId);
+            IEnumerable<ProductsInBagDTO> productsInBag = new List<ProductsInBagDTO>();
+
+            string? userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId != null)
+            {
+                productsInBag = await _productService.GetProductsInBagAsync(userId);
+
+            }
+            else if (HttpContext.Session.GetString(GuestSession) != null)
+            {
+                GuestOrder order = JsonConvert.DeserializeObject<GuestOrder>(HttpContext.Session.GetString(GuestSession));
+
+                productsInBag = await _guestService.GetProductsInBagAsync(order.GuestBags);
+            }
             ViewBag.Total = productsInBag.Sum(p => p.Quantity * p.Price);
             return await Task.FromResult((IViewComponentResult)View(productsInBag));
         }

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using static LilsCareApp.Core.ErrorMessageConstants;
 
-namespace LilsCareApp.Models
+namespace LilsCareApp.Core.Models
 {
     public class MustBeTrueAttribute : ValidationAttribute
     {

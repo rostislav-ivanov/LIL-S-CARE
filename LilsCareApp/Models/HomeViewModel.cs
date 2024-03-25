@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using LilsCareApp.Core.Models;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace LilsCareApp.Models
 {

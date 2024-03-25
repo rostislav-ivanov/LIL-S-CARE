@@ -1,5 +1,4 @@
-﻿using LilsCareApp.Models;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 using static LilsCareApp.Core.ErrorMessageConstants;
