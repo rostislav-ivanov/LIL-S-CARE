@@ -1,10 +1,13 @@
 using LilsCareApp.Core.Contracts;
 using LilsCareApp.Core.Models;
+using LilsCareApp.Core.Models.GuestUser;
 using LilsCareApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Security.Claims;
+using static LilsCareApp.Infrastructure.DataConstants.AppConstants;
 
 namespace LilsCareApp.Controllers
 {
@@ -23,6 +26,14 @@ namespace LilsCareApp.Controllers
         public IActionResult Index()
         {
             ViewBag.UserId = User.GetUserId();
+
+            if (HttpContext.Session.GetString(GuestSession) == null)
+            {
+                GuestOrder order = new() { sessionId = HttpContext.Session.Id };
+
+                HttpContext.Session.SetString(GuestSession, JsonConvert.SerializeObject(order));
+            }
+
             return View();
         }
 

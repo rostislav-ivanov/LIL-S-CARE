@@ -186,5 +186,10 @@ namespace LilsCareApp.Core.Services
 
             return products;
         }
+
+        public async Task<bool> IsProductAsync(int productId)
+        {
+            return await _context.Products.AnyAsync(p => p.Id == productId);
+        }
     }
 }
