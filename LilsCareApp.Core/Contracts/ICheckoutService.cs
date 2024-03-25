@@ -1,14 +1,13 @@
 ﻿using LilsCareApp.Core.Models.Checkout;
+using LilsCareApp.Infrastructure.Data.Models;
 
 namespace LilsCareApp.Core.Contracts
 {
     public interface ICheckoutService
     {
-        Task<AddressDeliveryDTOtoByChange?> GetAddressDeliveryAsync(string userId);
-        Task<IEnumerable<ShippingProviderDTO>> GetShippingProvidersAsync();
+        Task<int?> GetDefaultAddressIdAsync(string userId);
+        Task<IEnumerable<PaymentMethod>> GetPaymentMethodsAsync();
         Task<IEnumerable<PromoCodeDTO>> GetPromoCodesAsync(string userId);
-        Task<IEnumerable<ShippingOfficeDTO>> GetShippingOfficesByCityAsync(string city, int? shippingProviderId);
-        Task<IEnumerable<string>> GetShippingCitiesAsync(int shippingProvidersId);
         Task<string> CheckoutSaveAsync(OrderDTO checkout, string userId);
         Task<OrderSummaryDTO> OrderSummaryAsync(string orderSNumber);
     }

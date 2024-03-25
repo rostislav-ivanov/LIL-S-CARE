@@ -1,7 +1,7 @@
 ﻿@model OfficeDTO
 
 <!-- New Delivery Office Start Start -->
-<form asp-controller="Account" asp-action="AddOfficeDelivery" method="post">
+<form asp-action="AddOfficeDelivery" method="post">
     <div class="d-flex justify-content-between align-items-center">
         <!-- Select Shipping Provider Start -->
         <div class="col-4">
@@ -13,7 +13,7 @@
                 <li>
                     @foreach (var provider in Model.ShippingProviders)
                     {
-                        <a asp-controller="Account" asp-action="SelectShippingProvider" asp-route-shippingProviderId="@provider.Id" class="dropdown-item">
+                        <a asp-action="SelectShippingProvider" asp-route-shippingProviderId="@provider.Id" class="dropdown-item">
                             @provider.Name
                         </a>
                     }
@@ -31,7 +31,7 @@
                 <li>
                     @foreach (var city in Model.ShippingProviderCities)
                     {
-                        <a asp-controller="Account" asp-action="SelectShippingCity" asp-route-city="@city" class="dropdown-item">
+                        <a asp-action="SelectShippingCity" asp-route-city="@city" class="dropdown-item">
                             @city
                         </a>
                     }
@@ -49,7 +49,7 @@
                 <li>
                     @foreach (var office in Model.ShippingOffices)
                     {
-                        <a asp-controller="Account" asp-action="SelectShippingOffice" asp-route-officeId="@office.Id" class="dropdown-item">
+                        <a asp-action="SelectShippingOffice" asp-route-officeId="@office.Id" class="dropdown-item">
                             @office.OfficeAddress
                         </a>
                     }
@@ -86,9 +86,6 @@
         </div>
     <hr/>
         <div class="d-flex justify-content-end">
-            <!-- Cancel Start -->
-            <a asp-controller="Account" asp-action="MyAddresses" class="btn btn-sm btn-inverce">Отказ</a>
-            <!-- Cancel End -->
             <!-- Save Changes Start -->
             <button type="submit" class="btn btn-sm ms-3">Запази</button>
             <!-- Save Changes End -->

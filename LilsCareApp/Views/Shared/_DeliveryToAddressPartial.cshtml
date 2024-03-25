@@ -1,7 +1,7 @@
 ﻿@model AddressDTO
 
 <!-- New Delivery Address Start -->
-<form asp-controller="Account" asp-action="AddAddressDelivery" method="post">
+<form asp-action="AddAddressDelivery" method="post">
     <input asp-for="@Model.Id" value="@Model.Id" hidden />
     <div class="row my-2">
         <div class="col-6">
@@ -71,9 +71,6 @@
         <span asp-validation-for="@Model.Email" class="text-danger"></span>
     </div>
     <div class="d-flex justify-content-end">
-        <!-- Cancel Start -->
-        <a asp-controller="Account" asp-action="MyAddresses" class="btn btn-sm btn-inverce">Отказ</a>
-        <!-- Cancel End -->
         <!-- Save Changes Start -->
         <button type="submit" class="btn btn-sm ms-3">Запази</button>
         <!-- Save Changes End -->

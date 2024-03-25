@@ -31,6 +31,8 @@ namespace LilsCareApp.Core.Models.Account
 
         public string? City() => ShippingOffices.Where(so => so.Id == ShippingOfficeId).Select(so => so.City).FirstOrDefault();
 
+        public decimal? Price() => ShippingOffices.Where(so => so.Id == ShippingOfficeId).Select(so => so.Price).FirstOrDefault();
+
         public bool IsSelectedOffice() => Provider() != null && City() != null && OfficeAddress() != null;
 
 

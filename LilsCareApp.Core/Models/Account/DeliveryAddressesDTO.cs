@@ -19,5 +19,6 @@
         // AddressDeliveryType if Address is selected,
         // OfficeDeliveryType if Office is selected
         public string? DeliveryType() => IsSelectedDeliveryType() ? Address != null ? AddressDeliveryType : OfficeDeliveryType : null;
+
     }
 }
