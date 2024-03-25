@@ -46,7 +46,7 @@
                 <a asp-controller="Account" asp-action="EditAddress" asp-route-addressId="@address.AddressId" class="btn btn-sm">
                     Редактирай<i class="fa-solid fa-user-pen ms-2"></i>
                 </a>
-                <a asp-controller="Account" asp-action="DeleteAddress" asp-route-addressId="@address.AddressId" class="btn btn-sm ms-3">
+                <a asp-controller="Account" asp-action="RemoveAddress" asp-route-addressId="@address.AddressId" class="btn btn-sm ms-3">
                     Изтрий<i class="fa fa-trash-can ms-2"></i>
                 </a>
                 @if (address.IsDefault)
