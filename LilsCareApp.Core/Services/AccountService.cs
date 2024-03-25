@@ -142,8 +142,9 @@ namespace LilsCareApp.Core.Services
         }
 
 
-        // Delete the delivery address
-        public async Task DeleteAddressAsync(int addressId)
+        // If the address is the default address, set the default address to null.
+        // Remove the delivery address from the user.
+        public async Task RemoveAddressFromAppUserAsync(int addressId)
         {
             var address = await _context.AddressDeliveries.FirstOrDefaultAsync(ad => ad.Id == addressId);
 
@@ -151,14 +152,15 @@ namespace LilsCareApp.Core.Services
             {
                 return;
             }
-            _context.AddressDeliveries.Remove(address);
 
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.DefaultAddressDeliveryId == addressId);
-
-            if (user != null)
+            var appUser = await _context.Users.FirstOrDefaultAsync(au => au.Id == address.AppUserId);
+            if (appUser?.DefaultAddressDelivery != null)
             {
-                user.DefaultAddressDelivery = null;
+                appUser.DefaultAddressDelivery = null;
             }
+
+            address.AppUser = null;
+
 
             await _context.SaveChangesAsync();
         }

@@ -13,7 +13,7 @@ namespace LilsCareApp.Core.Contracts
 
 
         Task<IEnumerable<DeliveryAddressDTO>> GetMyAddressesAsync(string userId);
-        Task DeleteAddressAsync(int addressId);
+        Task RemoveAddressFromAppUserAsync(int addressId);
         Task SetDefaultAddressAsync(string userId, int addressId);
         Task<IEnumerable<ShippingProviderDTO>> GetShippingProvidersAsync();
         Task<IEnumerable<string>> GetShippingProviderCitiesAsync(int shippingProviderId);

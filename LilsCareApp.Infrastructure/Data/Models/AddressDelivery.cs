@@ -66,7 +66,7 @@ namespace LilsCareApp.Infrastructure.Data.Models
 
         [ForeignKey(nameof(AppUserId))]
         [Comment("Navigation property to AppUser")]
-        public AppUser AppUser { get; set; } = null!;
+        public AppUser? AppUser { get; set; }
     }
 }
 

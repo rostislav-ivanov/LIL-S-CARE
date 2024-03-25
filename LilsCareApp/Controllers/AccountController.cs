@@ -130,13 +130,13 @@ namespace LilsCareApp.Controllers
 
 
         // Delete the delivery address
-        public async Task<IActionResult> DeleteAddress(int addressId)
+        public async Task<IActionResult> RemoveAddress(int addressId)
         {
             if (addressId == 0)
             {
                 return BadRequest();
             }
-            await _accountService.DeleteAddressAsync(addressId);
+            await _accountService.RemoveAddressFromAppUserAsync(addressId);
 
             return RedirectToAction(nameof(MyAddresses));
         }
