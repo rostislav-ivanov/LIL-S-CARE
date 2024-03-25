@@ -160,7 +160,7 @@ namespace LilsCareApp.Controllers
         {
             DeliveryAddressesDTO model = new();
 
-            TempData["AddressDelivery"] = JsonConvert.SerializeObject(model);
+            HttpContext.Session.SetString("AddressDelivery", JsonConvert.SerializeObject(model));
 
             return View("AddEditAddress", model);
         }
@@ -175,7 +175,7 @@ namespace LilsCareApp.Controllers
 
             DeliveryAddressesDTO model = await _accountService.GetAddressDeliveryAsync(addressId);
 
-            TempData["AddressDelivery"] = JsonConvert.SerializeObject(model);
+            HttpContext.Session.SetString("AddressDelivery", JsonConvert.SerializeObject(model));
 
             return View("AddEditAddress", model);
         }
@@ -184,7 +184,7 @@ namespace LilsCareApp.Controllers
         // Select the delivery type of address (office or address)
         public async Task<IActionResult> SelectDeliveryType(bool isShippingToOffice)
         {
-            var model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(TempData["AddressDelivery"] as string);
+            DeliveryAddressesDTO model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(HttpContext.Session.GetString("AddressDelivery"));
             if (model == null)
             {
                 model = new DeliveryAddressesDTO();
@@ -203,7 +203,7 @@ namespace LilsCareApp.Controllers
                 model.Address = new AddressDTO();
             }
 
-            TempData["AddressDelivery"] = JsonConvert.SerializeObject(model);
+            HttpContext.Session.SetString("AddressDelivery", JsonConvert.SerializeObject(model));
 
             return View("AddEditAddress", model);
         }
@@ -212,14 +212,14 @@ namespace LilsCareApp.Controllers
         // Select the shipping provider for office delivery
         public async Task<IActionResult> SelectShippingProvider(int shippingProviderId)
         {
-            var model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(TempData["AddressDelivery"] as string);
+            DeliveryAddressesDTO model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(HttpContext.Session.GetString("AddressDelivery"));
 
             model.Office.ShippingProviderId = shippingProviderId;
             model.Office.ShippingProviderCities = await _accountService.GetShippingProviderCitiesAsync(shippingProviderId);
             model.Office.CityName = null;
             model.Office.ShippingOfficeId = null;
 
-            TempData["AddressDelivery"] = JsonConvert.SerializeObject(model);
+            HttpContext.Session.SetString("AddressDelivery", JsonConvert.SerializeObject(model));
 
             return View("AddEditAddress", model);
         }
@@ -228,13 +228,13 @@ namespace LilsCareApp.Controllers
         // Select the city for office delivery
         public async Task<IActionResult> SelectShippingCity(string city)
         {
-            var model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(TempData["AddressDelivery"] as string);
+            DeliveryAddressesDTO model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(HttpContext.Session.GetString("AddressDelivery"));
 
             model.Office.CityName = city;
             model.Office.ShippingOffices = await _accountService.GetShippingOfficesAsync(model.Office.ShippingProviderId, city);
             model.Office.ShippingOfficeId = null;
 
-            TempData["AddressDelivery"] = JsonConvert.SerializeObject(model);
+            HttpContext.Session.SetString("AddressDelivery", JsonConvert.SerializeObject(model));
 
             return View("AddEditAddress", model);
         }
@@ -242,11 +242,11 @@ namespace LilsCareApp.Controllers
         // Select the shipping office for office delivery
         public IActionResult SelectShippingOffice(int officeId)
         {
-            var model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(TempData["AddressDelivery"] as string);
+            DeliveryAddressesDTO model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(HttpContext.Session.GetString("AddressDelivery"));
 
             model.Office.ShippingOfficeId = officeId;
 
-            TempData["AddressDelivery"] = JsonConvert.SerializeObject(model);
+            HttpContext.Session.SetString("AddressDelivery", JsonConvert.SerializeObject(model));
 
             return View("AddEditAddress", model);
         }
@@ -255,14 +255,15 @@ namespace LilsCareApp.Controllers
         // Add or Edit address of type delivery to office
         public async Task<IActionResult> AddOfficeDelivery(OfficeDTO officeDTO)
         {
-            var model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(TempData["AddressDelivery"] as string);
+            DeliveryAddressesDTO model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(HttpContext.Session.GetString("AddressDelivery"));
+
             model.Office.FirstName = officeDTO.FirstName;
             model.Office.LastName = officeDTO.LastName;
             model.Office.PhoneNumber = officeDTO.PhoneNumber;
 
             if (!ModelState.IsValid || !model.Office.IsSelectedOffice())
             {
-                TempData["AddressDelivery"] = JsonConvert.SerializeObject(model);
+                HttpContext.Session.SetString("AddressDelivery", JsonConvert.SerializeObject(model));
 
                 return View("AddEditAddress", model);
             }
@@ -286,7 +287,8 @@ namespace LilsCareApp.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAddressDelivery(AddressDTO addressDTO)
         {
-            var model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(TempData["AddressDelivery"] as string);
+            DeliveryAddressesDTO model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(HttpContext.Session.GetString("AddressDelivery"));
+
             model.Address = addressDTO;
 
             if (addressDTO is null)
@@ -296,7 +298,8 @@ namespace LilsCareApp.Controllers
 
             if (!ModelState.IsValid)
             {
-                TempData["AddressDelivery"] = JsonConvert.SerializeObject(model);
+                HttpContext.Session.SetString("AddressDelivery", JsonConvert.SerializeObject(model));
+
                 return View("AddEditAddress", model);
             }
 
