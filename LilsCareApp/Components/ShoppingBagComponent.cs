@@ -1,10 +1,8 @@
 ﻿using LilsCareApp.Core.Contracts;
 using LilsCareApp.Core.Models;
-using LilsCareApp.Core.Models.GuestUser;
+using LilsCareApp.Services;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System.Security.Claims;
-using static LilsCareApp.Infrastructure.DataConstants.AppConstants;
 
 namespace LilsCareApp.Components
 {
@@ -27,13 +25,10 @@ namespace LilsCareApp.Components
             if (userId != null)
             {
                 productsInBag = await _productService.GetProductsInBagAsync(userId);
-
             }
-            else if (HttpContext.Session.GetString(GuestSession) != null)
+            else
             {
-                GuestOrder order = JsonConvert.DeserializeObject<GuestOrder>(HttpContext.Session.GetString(GuestSession));
-
-                productsInBag = await _guestService.GetProductsInBagAsync(order.GuestBags);
+                productsInBag = await _guestService.GetProductsInBagAsync();
             }
             ViewBag.Total = productsInBag.Sum(p => p.Quantity * p.Price);
             return await Task.FromResult((IViewComponentResult)View(productsInBag));

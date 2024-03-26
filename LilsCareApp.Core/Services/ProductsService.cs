@@ -187,9 +187,27 @@ namespace LilsCareApp.Core.Services
             return products;
         }
 
-        public async Task<bool> IsProductAsync(int productId)
+        // Migrate products in bag from guest to user
+        public async Task MigrateProductsInBagAsync(string userId, IEnumerable<ProductsInBagDTO> guestBag)
         {
-            return await _context.Products.AnyAsync(p => p.Id == productId);
+            var productsInBag = await _context.BagsUsers
+                .Where(bu => bu.AppUserId == userId)
+                .AsNoTracking()
+                .ToArrayAsync();
+
+            _context.BagsUsers.RemoveRange(productsInBag);
+
+            IEnumerable<BagUser> bagUsers = guestBag.Select(bag => new BagUser
+            {
+                ProductId = bag.Id,
+                AppUserId = userId,
+                Quantity = bag.Quantity
+            });
+
+            await _context.BagsUsers.AddRangeAsync(bagUsers);
+
+            await _context.SaveChangesAsync();
         }
+
     }
 }
