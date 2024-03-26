@@ -1,11 +1,9 @@
 ﻿using LilsCareApp.Core.Contracts;
 using LilsCareApp.Core.Models;
-using LilsCareApp.Core.Models.GuestUser;
+using LilsCareApp.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System.Security.Claims;
-using static LilsCareApp.Infrastructure.DataConstants.AppConstants;
 
 namespace LilsCareApp.Controllers
 {
@@ -13,8 +11,6 @@ namespace LilsCareApp.Controllers
     {
         private readonly IProductsService _productService;
         private readonly IGuestService _guestService;
-        private ISession _session => HttpContext.Session;
-
         public ProductsController(IProductsService productService, IGuestService guestService)
         {
             _productService = productService;
@@ -53,39 +49,13 @@ namespace LilsCareApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> AddToCart(int productId, int quantity = 1)
         {
-            if (await _productService.IsProductAsync(productId) == false)
+            if (User.GetUserId() != null)
             {
-                return BadRequest();
+                await _productService.AddToCartAsync(productId, User.GetUserId(), quantity);
             }
-
-            string userId = User.GetUserId();
-
-            if (userId != null)
+            else
             {
-                await _productService.AddToCartAsync(productId, userId, quantity);
-            }
-            else if (_session.GetString(GuestSession) != null)
-            {
-                var order = JsonConvert.DeserializeObject<GuestOrder>(_session.GetString(GuestSession));
-
-
-
-                var bag = order.GuestBags.FirstOrDefault(b => b.ProductId == productId);
-                if (bag == null)
-                {
-                    order.GuestBags.Add(new GuestBag()
-                    {
-                        ProductId = productId,
-                        Quantity = quantity
-                    });
-                }
-                else if (bag.Quantity + quantity >= 1) // quantity must be at least 1
-                {
-                    bag.Quantity += quantity;
-                }
-
-
-                _session.SetString(GuestSession, JsonConvert.SerializeObject(order));
+                _guestService.AddToCart(productId, quantity);
             }
 
             TempData["ShowBag"] = "show";
@@ -102,13 +72,9 @@ namespace LilsCareApp.Controllers
             {
                 await _productService.DeleteProductFromCartAsync(id, userId);
             }
-            else if (_session.GetString(GuestSession) != null)
+            else
             {
-                var order = JsonConvert.DeserializeObject<GuestOrder>(_session.GetString(GuestSession));
-
-                order.GuestBags.RemoveAll(b => b.ProductId == id);
-
-                _session.SetString(GuestSession, JsonConvert.SerializeObject(order));
+                _guestService.DeleteProductFromCart(id);
             }
 
             TempData["ShowBag"] = "show";

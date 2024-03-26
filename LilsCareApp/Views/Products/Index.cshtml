@@ -74,18 +74,21 @@
                                             </a>
                                         }
 
-                                        <a asp-controller="Products" asp-action="AddRemoveWish" asp-route-productId="@product.Id"
-                                           class="float-end nav-link fs-3"
-                                           style="color: rgb(var(--app-btn-bg))">
-                                            @if (product.IsWish)
-                                            {
-                                                <i class="fa fa-heart"></i>
-                                            }
-                                            else
-                                            {
-                                                <i class="far fa-heart"></i>
-                                            }
-                                        </a>
+                                        @if (User.Identity?.IsAuthenticated?? false)
+                                        {
+                                            <a asp-controller="Products" asp-action="AddRemoveWish" asp-route-productId="@product.Id"
+                                               class="float-end nav-link fs-3"
+                                               style="color: rgb(var(--app-btn-bg))">
+                                                @if (product.IsWish)
+                                                {
+                                                    <i class="fa fa-heart"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="far fa-heart"></i>
+                                                }
+                                            </a>
+                                        }
                                     </div>
                                 </div>
                             </div>

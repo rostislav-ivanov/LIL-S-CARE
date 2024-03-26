@@ -1,9 +1,7 @@
 ﻿using LilsCareApp.Core.Contracts;
-using LilsCareApp.Core.Models.GuestUser;
+using LilsCareApp.Services;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System.Security.Claims;
-using static LilsCareApp.Infrastructure.DataConstants.AppConstants;
 
 namespace LilsCareApp.Components
 {
@@ -11,29 +9,26 @@ namespace LilsCareApp.Components
     {
         private readonly IProductsService _productsService;
         private readonly IAccountService _accountService;
+        private readonly IGuestService _guestService;
 
 
-        public HeaderComponent(IProductsService productsService, IAccountService accountService, IHttpContextAccessor httpContextAccessor)
+        public HeaderComponent(IProductsService productsService, IAccountService accountService, IGuestService guestService)
         {
             _productsService = productsService;
             _accountService = accountService;
+            _guestService = guestService;
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            string? userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId != null)
             {
                 ViewBag.Count = await _productsService.GetCountInBagAsync(userId);
                 ViewBag.UserImagePath = await _accountService.GetUserImagePathAsync(userId);
             }
-            else if (HttpContext.Session.GetString(GuestSession) != null)
-            {
-                var order = JsonConvert.DeserializeObject<GuestOrder>(HttpContext.Session.GetString(GuestSession));
-                ViewBag.Count = order.GuestBags.Sum(gb => gb.Quantity);
-            }
             else
             {
-                ViewBag.Count = 0;
+                ViewBag.Count = _guestService.GetCountInBag();
             }
 
             return await Task.FromResult((IViewComponentResult)View());
