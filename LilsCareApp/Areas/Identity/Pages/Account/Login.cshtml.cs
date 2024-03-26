@@ -2,12 +2,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
+using LilsCareApp.Core.Contracts;
 using LilsCareApp.Infrastructure.Data.Models;
+using LilsCareApp.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
 namespace LilsCareApp.Areas.Identity.Pages.Account
 {
@@ -15,11 +19,15 @@ namespace LilsCareApp.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly IProductsService _productService;
+        private readonly IGuestService _guestService;
 
-        public LoginModel(SignInManager<AppUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<AppUser> signInManager, ILogger<LoginModel> logger, IProductsService productsService, IGuestService guestService)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _productService = productsService;
+            _guestService = guestService;
         }
 
         /// <summary>
@@ -108,6 +116,15 @@ namespace LilsCareApp.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+
+                    // Migrate products in bag from guest to user when user logs in.
+                    var guestProduct = await _guestService.GetProductsInBagAsync();
+                    if (guestProduct.Count() > 0)
+                    {
+                        await _productService.MigrateProductsInBagAsync(User.GetUserId(), guestProduct);
+                        _guestService.ClearBag();
+                    }
+
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
