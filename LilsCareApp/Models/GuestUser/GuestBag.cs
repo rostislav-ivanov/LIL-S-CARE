@@ -1,4 +1,4 @@
-﻿namespace LilsCareApp.Core.Models.GuestUser
+﻿namespace LilsCareApp.Models.GuestUser
 {
     public class GuestBag
     {
