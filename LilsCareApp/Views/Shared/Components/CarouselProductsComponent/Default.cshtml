@@ -30,39 +30,30 @@
                             <div class="clearfix mt-2">
                                 @if (product.Quantity > 0)
                                 {
-                                    <form asp-controller="Products" asp-action="AddToCart" asp-route-productId="@product.Id"
-                                          method="post">
-                                        <input type="hidden" name="quantity" value="1" />
-                                        <button type="submit"
-                                                class="btn"
-                                                style="float: left">
-                                            <i class="fa fa-shopping-bag me-2"></i> Добави
-                                        </button>
-                                    </form>
+                                    <a asp-action="AddToCart" asp-route-productId="@product.Id" class="btn">
+                                        <i class="fa fa-shopping-bag me-2"></i> Добави
+                                    </a>
                                 }
                                 else
                                 {
-                                    <a  class="float-start btn unactive-button">
+                                    <a class="float-start btn unactive-button">
                                         Изчерпано
                                     </a>
                                 }
 
-                                @if (product.IsWish)
+                                @if (User.Identity?.IsAuthenticated ?? false)
                                 {
-                                    <a asp-controller="Products" asp-action="RemoveFromWish" asp-route-productId="@product.Id"
-                                       method="post"
+                                    <a asp-action="AddRemoveWish" asp-route-productId="@product.Id"
                                        class="float-end nav-link fs-3"
                                        style="color: rgb(var(--app-btn-bg))">
-                                        <i class="fa fa-heart"></i>
-                                    </a>
-                                }
-                                else
-                                {
-                                    <a asp-controller="Products" asp-action="AddToWish" asp-route-productId="@product.Id"
-                                       method="post"
-                                       class="float-end nav-link fs-3"
-                                       style="color: rgb(var(--app-btn-bg))">
-                                        <i class="far fa-heart"></i>
+                                        @if (product.IsWish)
+                                        {
+                                            <i class="fa fa-heart"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="far fa-heart"></i>
+                                        }
                                     </a>
                                 }
                             </div>

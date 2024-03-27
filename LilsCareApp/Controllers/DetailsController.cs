@@ -1,5 +1,6 @@
 ﻿using LilsCareApp.Core.Contracts;
 using LilsCareApp.Core.Models;
+using LilsCareApp.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -12,11 +13,13 @@ namespace LilsCareApp.Controllers
     public class DetailsController : BaseController
     {
         private readonly IDetailsService _service;
-        private readonly IProductsService _productsService;
-        public DetailsController(IDetailsService service, IProductsService productsService)
+        private readonly IProductsService _productService;
+        private readonly IGuestService _guestService;
+        public DetailsController(IDetailsService service, IProductsService productService, IGuestService guestService)
         {
             _service = service;
-            _productsService = productsService;
+            _productService = productService;
+            _guestService = guestService;
         }
 
         [AllowAnonymous]
@@ -34,11 +37,28 @@ namespace LilsCareApp.Controllers
             return View(details);
         }
 
+        [AllowAnonymous]
+        public async Task<IActionResult> AddToCart(int productId, int quantity = 1)
+        {
+            if (User.GetUserId() != null)
+            {
+                await _productService.AddToCartAsync(productId, User.GetUserId(), quantity);
+            }
+            else
+            {
+                _guestService.AddToCart(productId, quantity);
+            }
+
+            TempData["ShowBag"] = "show";
+
+            return RedirectToAction(nameof(Index), "Details", new { id = productId });
+        }
+
         public async Task<IActionResult> AddRemoveWish(int productId)
         {
             string userId = User.GetUserId();
 
-            await _productsService.AddRemoveWishAsync(productId, userId);
+            await _productService.AddRemoveWishAsync(productId, userId);
 
             return RedirectToAction(nameof(Index), "Details", new { id = productId });
         }
