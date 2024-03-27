@@ -1,5 +1,5 @@
+using LilsCareApp.Infrastructure.Data.DataConfiguration;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc.Razor;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,19 +9,17 @@ var supportedCultures = new[]
     new CultureInfo("bg-BG")
 };
 
+
 builder.Services.AddAppDbContext(builder.Configuration);
 builder.Services.AddAppIdentity();
 builder.Services.AddAppLocalization();
-
-builder.Services.AddMvc()
-    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-    .AddDataAnnotationsLocalization();
-
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddAppServices();
 
 var app = builder.Build();
+
+app.SeedAdmin();
 
 if (app.Environment.IsDevelopment())
 {
@@ -46,6 +44,8 @@ app.UseRequestLocalization(options =>
     options.SupportedCultures = supportedCultures;
     options.SupportedUICultures = supportedCultures;
 });
+
+//app.UseMvc();
 
 // Enable session middleware
 app.UseSession();
