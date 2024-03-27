@@ -1,6 +1,7 @@
 using LilsCareApp.Core.Contracts;
 using LilsCareApp.Core.Models;
 using LilsCareApp.Models;
+using LilsCareApp.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -12,11 +13,19 @@ namespace LilsCareApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ILilsCareService _service;
+        private readonly IProductsService _productService;
+        private readonly IGuestService _guestService;
 
-        public HomeController(ILogger<HomeController> logger, ILilsCareService service)
+        public HomeController(
+            ILogger<HomeController> logger,
+            ILilsCareService service,
+            IProductsService productService,
+            IGuestService guestService)
         {
             _logger = logger;
             _service = service;
+            _productService = productService;
+            _guestService = guestService;
         }
 
         [AllowAnonymous]
@@ -83,6 +92,33 @@ namespace LilsCareApp.Controllers
             TempData["scrollToElementId"] = "contact-as";
 
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> AddRemoveWish(int productId)
+        {
+            await _productService.AddRemoveWishAsync(productId, User.GetUserId());
+
+            TempData["scrollToElementId"] = "owl-carousel";
+
+            return RedirectToAction(nameof(Index), "Home");
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> AddToCart(int productId, int quantity = 1)
+        {
+            if (User.GetUserId() != null)
+            {
+                await _productService.AddToCartAsync(productId, User.GetUserId(), quantity);
+            }
+            else
+            {
+                _guestService.AddToCart(productId, quantity);
+            }
+
+            TempData["ShowBag"] = "show";
+            TempData["scrollToElementId"] = "owl-carousel";
+
+            return RedirectToAction(nameof(Index), "Home");
         }
 
 
