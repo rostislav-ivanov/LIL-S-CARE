@@ -16,7 +16,7 @@ namespace LilsCareApp.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DefaultAddressDeliveryId", "Email", "EmailConfirmed", "FirstName", "ImagePath", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "282542cb-1c52-4f51-87fd-a226fa6b3f02", 0, "c4c265b1-fd63-4943-a8fe-7a9370faa01f", null, null, false, null, null, null, false, null, null, "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAEEls4q0vhSTI6MG7jbTMYm0/pKngW/R2DD3RzM0l0knN7hJu5F8/0HSVKbdrCxnJRQ==", null, false, "0f7d4bd8-2963-486a-b1fd-a456d32f2232", false, "test@softuni.bg" });
+                values: new object[] { "a2bc848a-f592-4c95-9264-43027b4ce346", 0, "0779255c-5f63-49f4-9842-f099ed3ee024", null, null, false, null, null, null, false, null, null, "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAEJL+qa+Jd4kwo5aaWy1S9umZKqxdSLW8xAfPzfMHqYViJd2sxGQ7hAci4IIFJAUnbg==", null, false, "85e816ef-1ecb-4a59-85ed-f7f2e9184738", false, "test@softuni.bg" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -78,9 +78,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "AppUserId", "ProductId", "Quantity" },
                 values: new object[,]
                 {
-                    { "282542cb-1c52-4f51-87fd-a226fa6b3f02", 1, 2 },
-                    { "282542cb-1c52-4f51-87fd-a226fa6b3f02", 2, 3 },
-                    { "282542cb-1c52-4f51-87fd-a226fa6b3f02", 3, 4 }
+                    { "a2bc848a-f592-4c95-9264-43027b4ce346", 1, 2 },
+                    { "a2bc848a-f592-4c95-9264-43027b4ce346", 2, 3 },
+                    { "a2bc848a-f592-4c95-9264-43027b4ce346", 3, 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -158,8 +158,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "Id", "AppUserId", "AppliedDate", "Code", "Discount", "ExpirationDate" },
                 values: new object[,]
                 {
-                    { 1, "282542cb-1c52-4f51-87fd-a226fa6b3f02", null, "-10 % за регистрация", 0.1m, new DateTime(2025, 3, 25, 12, 13, 42, 662, DateTimeKind.Utc).AddTicks(2493) },
-                    { 2, "282542cb-1c52-4f51-87fd-a226fa6b3f02", null, "-20 % отстъпка", 0.2m, new DateTime(2025, 3, 25, 12, 13, 42, 662, DateTimeKind.Utc).AddTicks(2505) }
+                    { 1, "a2bc848a-f592-4c95-9264-43027b4ce346", null, "-10 % за регистрация", 0.1m, new DateTime(2025, 3, 27, 12, 23, 47, 841, DateTimeKind.Utc).AddTicks(5027) },
+                    { 2, "a2bc848a-f592-4c95-9264-43027b4ce346", null, "-20 % отстъпка", 0.2m, new DateTime(2025, 3, 27, 12, 23, 47, 841, DateTimeKind.Utc).AddTicks(5033) }
                 });
 
             migrationBuilder.InsertData(
@@ -167,9 +167,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "AuthorId", "ProductId", "Comment", "CreatedOn", "Rating", "Title" },
                 values: new object[,]
                 {
-                    { "282542cb-1c52-4f51-87fd-a226fa6b3f02", 2, "Great product, I love it!", new DateTime(2024, 3, 25, 14, 13, 42, 662, DateTimeKind.Local).AddTicks(2016), 4, "Great product" },
-                    { "282542cb-1c52-4f51-87fd-a226fa6b3f02", 3, "Great product, I love it!", new DateTime(2024, 3, 25, 14, 13, 42, 662, DateTimeKind.Local).AddTicks(2107), 3, "Great product" },
-                    { "282542cb-1c52-4f51-87fd-a226fa6b3f02", 4, "Great product, I love it!", new DateTime(2024, 3, 25, 14, 13, 42, 662, DateTimeKind.Local).AddTicks(2111), 3, "Great product" }
+                    { "a2bc848a-f592-4c95-9264-43027b4ce346", 2, "Great product, I love it!", new DateTime(2024, 3, 27, 14, 23, 47, 841, DateTimeKind.Local).AddTicks(4594), 4, "Great product" },
+                    { "a2bc848a-f592-4c95-9264-43027b4ce346", 3, "Great product, I love it!", new DateTime(2024, 3, 27, 14, 23, 47, 841, DateTimeKind.Local).AddTicks(4657), 3, "Great product" },
+                    { "a2bc848a-f592-4c95-9264-43027b4ce346", 4, "Great product, I love it!", new DateTime(2024, 3, 27, 14, 23, 47, 841, DateTimeKind.Local).AddTicks(4662), 3, "Great product" }
                 });
 
             migrationBuilder.InsertData(
@@ -194,9 +194,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "AppUserId", "ProductId" },
                 values: new object[,]
                 {
-                    { "282542cb-1c52-4f51-87fd-a226fa6b3f02", 1 },
-                    { "282542cb-1c52-4f51-87fd-a226fa6b3f02", 3 },
-                    { "282542cb-1c52-4f51-87fd-a226fa6b3f02", 4 }
+                    { "a2bc848a-f592-4c95-9264-43027b4ce346", 1 },
+                    { "a2bc848a-f592-4c95-9264-43027b4ce346", 3 },
+                    { "a2bc848a-f592-4c95-9264-43027b4ce346", 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -204,8 +204,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "Id", "Address", "AppUserId", "Country", "District", "Email", "FirstName", "IsShippingToOffice", "LastName", "PhoneNumber", "PostCode", "ShippingOfficeId", "Town" },
                 values: new object[,]
                 {
-                    { 1, "bul. Vitosha", "282542cb-1c52-4f51-87fd-a226fa6b3f02", "Bulgaria", "Sofia", null, "Ivan", false, "Ivanov", "0888888888", "1000", 1, "Sofia" },
-                    { 2, "bul. Vitosha", "282542cb-1c52-4f51-87fd-a226fa6b3f02", "Bulgaria", "Sofia", null, "Petar", false, "Petrov", "0888888888", "1000", 2, "Sofia" }
+                    { 1, "bul. Vitosha", "a2bc848a-f592-4c95-9264-43027b4ce346", "Bulgaria", "Sofia", null, "Ivan", false, "Ivanov", "0888888888", "1000", 1, "Sofia" },
+                    { 2, "bul. Vitosha", "a2bc848a-f592-4c95-9264-43027b4ce346", "Bulgaria", "Sofia", null, "Petar", false, "Petrov", "0888888888", "1000", 2, "Sofia" }
                 });
 
             migrationBuilder.InsertData(
@@ -213,8 +213,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "Id", "AddressDeliveryId", "AppUserId", "CreatedOn", "DateShipping", "Discount", "NoteForDelivery", "OrderNumber", "PaymentMethodId", "PromoCodeId", "ShippingPrice", "StatusOrderId", "SubTotal", "Total", "TrackingNumber" },
                 values: new object[,]
                 {
-                    { 1, 1, "282542cb-1c52-4f51-87fd-a226fa6b3f02", new DateTime(2024, 3, 25, 12, 13, 41, 21, DateTimeKind.Utc).AddTicks(3862), new DateTime(2024, 3, 25, 12, 13, 41, 21, DateTimeKind.Utc).AddTicks(4984), 0m, null, null, 1, null, 0m, 1, 0m, 0m, "1234567890" },
-                    { 2, 2, "282542cb-1c52-4f51-87fd-a226fa6b3f02", new DateTime(2024, 3, 25, 12, 13, 41, 22, DateTimeKind.Utc).AddTicks(5143), new DateTime(2024, 3, 25, 12, 13, 41, 22, DateTimeKind.Utc).AddTicks(5146), 0m, null, null, 2, null, 0m, 2, 0m, 0m, "1234567890x" }
+                    { 1, 1, "a2bc848a-f592-4c95-9264-43027b4ce346", new DateTime(2024, 3, 27, 12, 23, 47, 224, DateTimeKind.Utc).AddTicks(6209), new DateTime(2024, 3, 27, 12, 23, 47, 224, DateTimeKind.Utc).AddTicks(7376), 0m, null, null, 1, null, 0m, 1, 0m, 0m, "1234567890" },
+                    { 2, 2, "a2bc848a-f592-4c95-9264-43027b4ce346", new DateTime(2024, 3, 27, 12, 23, 47, 225, DateTimeKind.Utc).AddTicks(1571), new DateTime(2024, 3, 27, 12, 23, 47, 225, DateTimeKind.Utc).AddTicks(1576), 0m, null, null, 2, null, 0m, 2, 0m, 0m, "1234567890x" }
                 });
 
             migrationBuilder.InsertData(
@@ -241,17 +241,17 @@ namespace LilsCareApp.Infrastructure.Migrations
             migrationBuilder.DeleteData(
                 table: "BagsUsers",
                 keyColumns: new[] { "AppUserId", "ProductId" },
-                keyValues: new object[] { "282542cb-1c52-4f51-87fd-a226fa6b3f02", 1 });
+                keyValues: new object[] { "a2bc848a-f592-4c95-9264-43027b4ce346", 1 });
 
             migrationBuilder.DeleteData(
                 table: "BagsUsers",
                 keyColumns: new[] { "AppUserId", "ProductId" },
-                keyValues: new object[] { "282542cb-1c52-4f51-87fd-a226fa6b3f02", 2 });
+                keyValues: new object[] { "a2bc848a-f592-4c95-9264-43027b4ce346", 2 });
 
             migrationBuilder.DeleteData(
                 table: "BagsUsers",
                 keyColumns: new[] { "AppUserId", "ProductId" },
-                keyValues: new object[] { "282542cb-1c52-4f51-87fd-a226fa6b3f02", 3 });
+                keyValues: new object[] { "a2bc848a-f592-4c95-9264-43027b4ce346", 3 });
 
             migrationBuilder.DeleteData(
                 table: "ImageProducts",
@@ -601,17 +601,17 @@ namespace LilsCareApp.Infrastructure.Migrations
             migrationBuilder.DeleteData(
                 table: "Reviews",
                 keyColumns: new[] { "AuthorId", "ProductId" },
-                keyValues: new object[] { "282542cb-1c52-4f51-87fd-a226fa6b3f02", 2 });
+                keyValues: new object[] { "a2bc848a-f592-4c95-9264-43027b4ce346", 2 });
 
             migrationBuilder.DeleteData(
                 table: "Reviews",
                 keyColumns: new[] { "AuthorId", "ProductId" },
-                keyValues: new object[] { "282542cb-1c52-4f51-87fd-a226fa6b3f02", 3 });
+                keyValues: new object[] { "a2bc848a-f592-4c95-9264-43027b4ce346", 3 });
 
             migrationBuilder.DeleteData(
                 table: "Reviews",
                 keyColumns: new[] { "AuthorId", "ProductId" },
-                keyValues: new object[] { "282542cb-1c52-4f51-87fd-a226fa6b3f02", 4 });
+                keyValues: new object[] { "a2bc848a-f592-4c95-9264-43027b4ce346", 4 });
 
             migrationBuilder.DeleteData(
                 table: "ShippingOffices",
@@ -666,17 +666,17 @@ namespace LilsCareApp.Infrastructure.Migrations
             migrationBuilder.DeleteData(
                 table: "WishesUsers",
                 keyColumns: new[] { "AppUserId", "ProductId" },
-                keyValues: new object[] { "282542cb-1c52-4f51-87fd-a226fa6b3f02", 1 });
+                keyValues: new object[] { "a2bc848a-f592-4c95-9264-43027b4ce346", 1 });
 
             migrationBuilder.DeleteData(
                 table: "WishesUsers",
                 keyColumns: new[] { "AppUserId", "ProductId" },
-                keyValues: new object[] { "282542cb-1c52-4f51-87fd-a226fa6b3f02", 3 });
+                keyValues: new object[] { "a2bc848a-f592-4c95-9264-43027b4ce346", 3 });
 
             migrationBuilder.DeleteData(
                 table: "WishesUsers",
                 keyColumns: new[] { "AppUserId", "ProductId" },
-                keyValues: new object[] { "282542cb-1c52-4f51-87fd-a226fa6b3f02", 4 });
+                keyValues: new object[] { "a2bc848a-f592-4c95-9264-43027b4ce346", 4 });
 
             migrationBuilder.DeleteData(
                 table: "Categories",
@@ -781,7 +781,7 @@ namespace LilsCareApp.Infrastructure.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: "282542cb-1c52-4f51-87fd-a226fa6b3f02");
+                keyValue: "a2bc848a-f592-4c95-9264-43027b4ce346");
 
             migrationBuilder.DeleteData(
                 table: "ShippingOffices",
