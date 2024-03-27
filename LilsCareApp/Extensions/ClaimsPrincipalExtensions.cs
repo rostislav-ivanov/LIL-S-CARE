@@ -17,5 +17,15 @@ namespace System.Security.Claims
         {
             return claimsPrincipal.FindFirstValue(ClaimTypes.Email);
         }
+
+        public static string GetUserRole(this ClaimsPrincipal claimsPrincipal)
+        {
+            return claimsPrincipal.FindFirstValue(ClaimTypes.Role);
+        }
+
+        public static bool IsAdmin(this ClaimsPrincipal claimsPrincipal)
+        {
+            return claimsPrincipal.IsInRole("Admin");
+        }
     }
 }
