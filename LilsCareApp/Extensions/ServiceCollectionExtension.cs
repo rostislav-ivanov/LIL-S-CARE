@@ -78,5 +78,22 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
+        public static IServiceCollection AddAppAuthentication(this IServiceCollection services)
+        {
+            services.AddAuthentication()
+                .AddFacebook(options =>
+                {
+                    options.AppId = "658708255927516";
+                    options.AppSecret = "795acf9f3041cb193e8305bc94dcd6d9";
+                })
+                .AddGoogle(options =>
+                {
+                    options.ClientId = "658708255927516";
+                    options.ClientSecret = "795acf9f3041cb193e8305bc94dcd6d9";
+                });
+
+            return services;
+        }
+
     }
 }
