@@ -1,8 +1,10 @@
 ﻿using LilsCareApp.Core.Contracts;
+using LilsCareApp.Core.Resources;
 using LilsCareApp.Core.Services;
 using LilsCareApp.Infrastructure.Data;
 using LilsCareApp.Infrastructure.Data.Models;
 using LilsCareApp.Services;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -33,7 +35,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
-                options.Cookie.Name = ".YourApp.Session";
+                options.Cookie.Name = ".LilsCare.Session";
                 options.IdleTimeout = TimeSpan.FromMinutes(120); // Session timeout duration
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true; // This is required for essential services to function properly
@@ -53,9 +55,26 @@ namespace Microsoft.Extensions.DependencyInjection
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequiredLength = 8;
             })
-                    .AddEntityFrameworkStores<ApplicationDbContext>();
+            .AddEntityFrameworkStores<ApplicationDbContext>();
 
             return services;
         }
+
+        public static IServiceCollection AddAppLocalization(this IServiceCollection services)
+        {
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            services.AddControllersWithViews()
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization(options =>
+                {
+                    options.DataAnnotationLocalizerProvider = (type, factory) =>
+                        factory.Create(typeof(SharedResource));
+                });
+            services.AddMvc();
+
+            return services;
+        }
+
     }
 }

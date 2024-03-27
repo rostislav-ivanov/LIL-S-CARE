@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LilsCareApp.Core.Resources;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using static LilsCareApp.Core.ErrorMessageConstants;
 using static LilsCareApp.Infrastructure.DataConstants.AddressDelivery;
@@ -12,15 +13,16 @@ namespace LilsCareApp.Core.Models.Account
         public int Id { get; set; }
 
         [Comment("First Name Recipient")]
-        [Required(ErrorMessage = Required)]
+        //[Required(ErrorMessage = Required)]
+        [Required(ErrorMessageResourceName = "ResourceRequired", ErrorMessageResourceType = typeof(SharedResource))]
         [MaxLength(FirstNameMaxLength)]
-        [Display(Name = "име")]
+        [Display(Name = "FirstName", ResourceType = typeof(SharedResource))]
         public string FirstName { get; set; } = string.Empty;
 
         [Comment("Last Name Recipient")]
         [Required(ErrorMessage = Required)]
         [MaxLength(LastNameMaxLength)]
-        [Display(Name = "фамилия")]
+        [Display(Name = "LastName", ResourceType = typeof(SharedResource))]
         public string LastName { get; set; } = string.Empty;
 
 
@@ -28,32 +30,32 @@ namespace LilsCareApp.Core.Models.Account
         [MaxLength(PhoneNumberMaxLength)]
         [Required(ErrorMessage = Required)]
         [RegularExpression(PhoneNumberPattern, ErrorMessage = InvalidPhoneNumber)]
-        [Display(Name = "телефонен номер")]
+        [Display(Name = "PhoneNumber", ResourceType = typeof(SharedResource))]
         public string PhoneNumber { get; set; } = string.Empty;
 
 
         [Comment("Country")]
         [Required(ErrorMessage = Required)]
         [MaxLength(CountryMaxLength)]
-        [Display(Name = "държава")]
+        [Display(Name = "Country", ResourceType = typeof(SharedResource))]
         public string Country { get; set; } = string.Empty;
 
         [Comment("Post Code")]
         [Required(ErrorMessage = Required)]
         [MaxLength(PostCodeMaxLength)]
-        [Display(Name = "пощенски код")]
+        [Display(Name = "PostCode", ResourceType = typeof(SharedResource))]
         public string PostCode { get; set; } = string.Empty;
 
         [Comment("Town")]
         [Required(ErrorMessage = Required)]
         [MaxLength(TownMaxLength)]
-        [Display(Name = "град")]
+        [Display(Name = "Town", ResourceType = typeof(SharedResource))]
         public string Town { get; set; } = string.Empty;
 
         [Comment("Address")]
         [Required(ErrorMessage = Required)]
         [MaxLength(AddressMaxLength)]
-        [Display(Name = "адрес")]
+        [Display(Name = "Address", ResourceType = typeof(SharedResource))]
         public string Address { get; set; } = string.Empty;
 
         [MaxLength(DistrictMaxLength)]
@@ -62,8 +64,11 @@ namespace LilsCareApp.Core.Models.Account
 
         [Comment("Email Address not required")]
         [MaxLength(EmailNumberMaxLength)]
-        [RegularExpression(EmailPatternNotRequired, ErrorMessage = InvalidEmailAddress)]
-        [Display(Name = "имейл")]
+        [RegularExpression(
+            EmailPatternNotRequired,
+            ErrorMessageResourceName = "InvalidEmailAddress",
+            ErrorMessageResourceType = typeof(SharedResource))]
+        [Display(Name = "Email", ResourceType = typeof(SharedResource))]
         public string? Email { get; set; }
     }
 }
