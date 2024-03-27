@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
+
 var supportedCultures = new[]
 {
     new CultureInfo("en-US"),
@@ -13,6 +14,8 @@ var supportedCultures = new[]
 builder.Services.AddAppDbContext(builder.Configuration);
 builder.Services.AddAppIdentity();
 builder.Services.AddAppLocalization();
+builder.Services.AddAppAuthentication();
+
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddAppServices();
