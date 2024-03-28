@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Claims;
+using static LilsCareApp.Areas.Admin.AdminConstants;
 
 namespace LilsCareApp.Controllers
 {
@@ -32,6 +33,11 @@ namespace LilsCareApp.Controllers
         public IActionResult Index()
         {
             ViewBag.UserId = User.GetUserId();
+
+            if (User.IsInRole(AdminRoleName))
+            {
+                return RedirectToAction("Index", "Home", new { area = "Admin" });
+            }
 
             return View();
         }
