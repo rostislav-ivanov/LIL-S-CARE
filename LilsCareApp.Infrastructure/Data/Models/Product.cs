@@ -43,6 +43,9 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [MaxLength(IngredientsMaxLength)]
         public string? Ingredients { get; set; }
 
+        [Comment("Is the product show on online store")]
+        public bool IsShow { get; set; }
+
         [Comment("Navigation Property to product's images")]
         public List<ImageProduct>? Images { get; set; }
 

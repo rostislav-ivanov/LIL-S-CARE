@@ -17,7 +17,7 @@ namespace LilsCareApp.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasAnnotation("ProductVersion", "8.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -105,7 +105,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 1,
                             Address = "bul. Vitosha",
-                            AppUserId = "a2bc848a-f592-4c95-9264-43027b4ce346",
+                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
                             Country = "Bulgaria",
                             District = "Sofia",
                             FirstName = "Ivan",
@@ -120,7 +120,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 2,
                             Address = "bul. Vitosha",
-                            AppUserId = "a2bc848a-f592-4c95-9264-43027b4ce346",
+                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
                             Country = "Bulgaria",
                             District = "Sofia",
                             FirstName = "Petar",
@@ -225,15 +225,15 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a2bc848a-f592-4c95-9264-43027b4ce346",
+                            Id = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0779255c-5f63-49f4-9842-f099ed3ee024",
+                            ConcurrencyStamp = "71813380-c3f5-4766-83a1-2ef768732c12",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "TEST@SOFTUNI.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJL+qa+Jd4kwo5aaWy1S9umZKqxdSLW8xAfPzfMHqYViJd2sxGQ7hAci4IIFJAUnbg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFKm2jIULvp9FQtblOeg2jVt8XOQRpHTbZ/SUzdkuo8Vj73PdHmO40r5BI9SM+SIbA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "85e816ef-1ecb-4a59-85ed-f7f2e9184738",
+                            SecurityStamp = "d03e385c-4ca5-4e9f-9e98-4219183f644a",
                             TwoFactorEnabled = false,
                             UserName = "test@softuni.bg"
                         });
@@ -265,19 +265,19 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            AppUserId = "a2bc848a-f592-4c95-9264-43027b4ce346",
+                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
                             ProductId = 1,
                             Quantity = 2
                         },
                         new
                         {
-                            AppUserId = "a2bc848a-f592-4c95-9264-43027b4ce346",
+                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
                             ProductId = 2,
                             Quantity = 3
                         },
                         new
                         {
-                            AppUserId = "a2bc848a-f592-4c95-9264-43027b4ce346",
+                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
                             ProductId = 3,
                             Quantity = 4
                         });
@@ -775,9 +775,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 1,
                             AddressDeliveryId = 1,
-                            AppUserId = "a2bc848a-f592-4c95-9264-43027b4ce346",
-                            CreatedOn = new DateTime(2024, 3, 27, 12, 23, 47, 224, DateTimeKind.Utc).AddTicks(6209),
-                            DateShipping = new DateTime(2024, 3, 27, 12, 23, 47, 224, DateTimeKind.Utc).AddTicks(7376),
+                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
+                            CreatedOn = new DateTime(2024, 3, 29, 15, 58, 55, 10, DateTimeKind.Utc).AddTicks(6987),
+                            DateShipping = new DateTime(2024, 3, 29, 15, 58, 55, 10, DateTimeKind.Utc).AddTicks(8194),
                             Discount = 0m,
                             PaymentMethodId = 1,
                             ShippingPrice = 0m,
@@ -790,9 +790,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 2,
                             AddressDeliveryId = 2,
-                            AppUserId = "a2bc848a-f592-4c95-9264-43027b4ce346",
-                            CreatedOn = new DateTime(2024, 3, 27, 12, 23, 47, 225, DateTimeKind.Utc).AddTicks(1571),
-                            DateShipping = new DateTime(2024, 3, 27, 12, 23, 47, 225, DateTimeKind.Utc).AddTicks(1576),
+                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
+                            CreatedOn = new DateTime(2024, 3, 29, 15, 58, 55, 10, DateTimeKind.Utc).AddTicks(9378),
+                            DateShipping = new DateTime(2024, 3, 29, 15, 58, 55, 10, DateTimeKind.Utc).AddTicks(9381),
                             Discount = 0m,
                             PaymentMethodId = 2,
                             ShippingPrice = 0m,
@@ -866,6 +866,10 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasColumnType("nvarchar(1500)")
                         .HasComment("The product ingredients");
 
+                    b.Property<bool>("IsShow")
+                        .HasColumnType("bit")
+                        .HasComment("Is the product show on online store");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -904,6 +908,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Description = "<p>Част от лимитирана колекция празнични продукти, които може да закупите поотделно или като подаръчен комплект. 💝</p><p>Захарен скраб за тяло - натурален, био и ръчно изработен, с аромат на топли и уютни празници - стествен шоколадов аромат и леко цитрусов от етерично масло сладък портокал.</p><p>💛Този сладък скраб за тяло в два цвята е домашно приготвен с любов, масло от гроздови семки и какаово масло. Цвета му е натуралне от червена мика (минерален пигмент). Този скраб е прекрасен подарък за всеки, който се нуждае от малко повече релаксиращи моменти и грижа за себе си този сезон.</p><p>Обогатен с витамин Е.</p><p class=\"mb-0\">100% натурален</p><p class=\"mb-0\">86% от България</p><p class=\"mb-0\">13% Био</p>",
                             IngredientINCIs = "<p>Sucrose (Захар), Vitis Vinifera Seed Oil (Масло от гроздови семки), Theobroma Cacao Seed Butter (Какаово масло)*, Stearic Acid , Citrus Sinensis (Портокал) Peel Oil*, Limonene**,\r\nLinalool**, Citral**, Benzyl Alcohol, Ethylhexylglycerin, Tocopherol (Vit E), Mica***, CI 77491***. *Био **Компоненти на етерични масла ***Минерални пигменти От България 81,4% Био 14,5%</p>",
                             Ingredients = "<p><strong>Какаовото масло* </strong>- придава лек и естествен шоколадов аромат и предпазва и подхранва кожата.</p>\r\n<p><strong>Етеричното масло от сладък </strong>- портокал придават лек празничен аромат*.</p>\r\n<p><strong>Масло от гроздови семки </strong>- подхранва кожата. То е леко, некомедогенно и попива бързо.</p>\r\n<p><strong>Стеаринова киселина </strong>- наситена мастна 'киселина' която в природата се намира в много масла. В натуралния състав на какаовото масло е 24-37%, а в масло от шеа / карите е между 20-50%.</p>\r\n<p><strong>Витамин Е </strong>- натурален антиоксидант, който предпазва и защитава кожата от свободни радикали, процеси на оксидация и вредни влияния от околната среда.</p>\r\n<p>*Био</p>",
+                            IsShow = true,
                             Name = "СКРАБ ЗА ТЯЛО",
                             Price = 9.00m,
                             Purpose = "<p>Изцяло натурален, може да използвате 1-2 пъти седмично, когато желаете нежно да ексфолирате кожата и да я направите по-мека и гладка.</p>\r\n<p>Използвайте с чисти ръце върху чиста и мокра кожа. Нежно масажирайте за ексфолиращ ефект. Изплакнете.</p>\r\n<p>Само за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено, защитено от пряка слънчева светлина.</p> ",
@@ -916,6 +921,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Description = "Description 2",
                             IngredientINCIs = "IngredientINCIs 2",
                             Ingredients = "Ingredients 2",
+                            IsShow = true,
                             Name = "БАЛСАМ ЗА УСТНИ С ЖОЖОБА, КАКАО И ПЧЕЛЕН ВОСЪК",
                             Price = 4.00m,
                             Purpose = "Purpose 2",
@@ -928,6 +934,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Description = "Description 3",
                             IngredientINCIs = "IngredientINCIs 3",
                             Ingredients = "Ingredients 3",
+                            IsShow = true,
                             Name = "ХИДРАТИРАЩ КРЕМ С ШИПКА",
                             Price = 12.00m,
                             Purpose = "Purpose 3",
@@ -940,6 +947,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Description = "Description 4",
                             IngredientINCIs = "IngredientINCIs 4",
                             Ingredients = "Ingredients 4",
+                            IsShow = true,
                             Name = "НЕЖЕН ЛОСИОН С НЕВЕН",
                             Price = 4.00m,
                             Purpose = "Purpose 4",
@@ -952,6 +960,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Description = "Description 5",
                             IngredientINCIs = "IngredientINCIs 5",
                             Ingredients = "Ingredients 5",
+                            IsShow = true,
                             Name = "ДВУФАЗНА МИЦЕЛАРНА ВОДА",
                             Price = 10.00m,
                             Purpose = "Purpose 5",
@@ -964,6 +973,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Description = "Description 6",
                             IngredientINCIs = "IngredientINCIs 6",
                             Ingredients = "Ingredients 6",
+                            IsShow = true,
                             Name = "НАТУРАЛЕН КРЕМ ДЕЗОДОРАНТ",
                             Price = 8.50m,
                             Purpose = "Purpose 6",
@@ -976,6 +986,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Description = "Description 7",
                             IngredientINCIs = "IngredientINCIs 7",
                             Ingredients = "Ingredients 7",
+                            IsShow = true,
                             Name = "СЕРУМ МАСЛО С ШИПКА И ЖОЖОБА",
                             Price = 9.00m,
                             Purpose = "Purpose 7",
@@ -1226,18 +1237,18 @@ namespace LilsCareApp.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            AppUserId = "a2bc848a-f592-4c95-9264-43027b4ce346",
+                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
                             Code = "-10 % за регистрация",
                             Discount = 0.1m,
-                            ExpirationDate = new DateTime(2025, 3, 27, 12, 23, 47, 841, DateTimeKind.Utc).AddTicks(5027)
+                            ExpirationDate = new DateTime(2025, 3, 29, 15, 58, 55, 578, DateTimeKind.Utc).AddTicks(6793)
                         },
                         new
                         {
                             Id = 2,
-                            AppUserId = "a2bc848a-f592-4c95-9264-43027b4ce346",
+                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
                             Code = "-20 % отстъпка",
                             Discount = 0.2m,
-                            ExpirationDate = new DateTime(2025, 3, 27, 12, 23, 47, 841, DateTimeKind.Utc).AddTicks(5033)
+                            ExpirationDate = new DateTime(2025, 3, 29, 15, 58, 55, 578, DateTimeKind.Utc).AddTicks(6802)
                         });
                 });
 
@@ -1282,27 +1293,27 @@ namespace LilsCareApp.Infrastructure.Migrations
                         new
                         {
                             ProductId = 2,
-                            AuthorId = "a2bc848a-f592-4c95-9264-43027b4ce346",
+                            AuthorId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 3, 27, 14, 23, 47, 841, DateTimeKind.Local).AddTicks(4594),
+                            CreatedOn = new DateTime(2024, 3, 29, 17, 58, 55, 578, DateTimeKind.Local).AddTicks(6244),
                             Rating = 4,
                             Title = "Great product"
                         },
                         new
                         {
                             ProductId = 3,
-                            AuthorId = "a2bc848a-f592-4c95-9264-43027b4ce346",
+                            AuthorId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 3, 27, 14, 23, 47, 841, DateTimeKind.Local).AddTicks(4657),
+                            CreatedOn = new DateTime(2024, 3, 29, 17, 58, 55, 578, DateTimeKind.Local).AddTicks(6310),
                             Rating = 3,
                             Title = "Great product"
                         },
                         new
                         {
                             ProductId = 4,
-                            AuthorId = "a2bc848a-f592-4c95-9264-43027b4ce346",
+                            AuthorId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 3, 27, 14, 23, 47, 841, DateTimeKind.Local).AddTicks(4662),
+                            CreatedOn = new DateTime(2024, 3, 29, 17, 58, 55, 578, DateTimeKind.Local).AddTicks(6314),
                             Rating = 3,
                             Title = "Great product"
                         });
@@ -1562,17 +1573,17 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            AppUserId = "a2bc848a-f592-4c95-9264-43027b4ce346",
+                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
                             ProductId = 1
                         },
                         new
                         {
-                            AppUserId = "a2bc848a-f592-4c95-9264-43027b4ce346",
+                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
                             ProductId = 3
                         },
                         new
                         {
-                            AppUserId = "a2bc848a-f592-4c95-9264-43027b4ce346",
+                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
                             ProductId = 4
                         });
                 });

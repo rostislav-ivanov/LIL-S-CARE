@@ -13,10 +13,18 @@ namespace LilsCareApp.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<bool>(
+                name: "IsShow",
+                table: "Products",
+                type: "bit",
+                nullable: false,
+                defaultValue: false,
+                comment: "Is the product show on online store");
+
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DefaultAddressDeliveryId", "Email", "EmailConfirmed", "FirstName", "ImagePath", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a2bc848a-f592-4c95-9264-43027b4ce346", 0, "0779255c-5f63-49f4-9842-f099ed3ee024", null, null, false, null, null, null, false, null, null, "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAEJL+qa+Jd4kwo5aaWy1S9umZKqxdSLW8xAfPzfMHqYViJd2sxGQ7hAci4IIFJAUnbg==", null, false, "85e816ef-1ecb-4a59-85ed-f7f2e9184738", false, "test@softuni.bg" });
+                values: new object[] { "4ae56886-4229-49e3-a6ae-96ee6e340c4a", 0, "71813380-c3f5-4766-83a1-2ef768732c12", null, null, false, null, null, null, false, null, null, "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAEFKm2jIULvp9FQtblOeg2jVt8XOQRpHTbZ/SUzdkuo8Vj73PdHmO40r5BI9SM+SIbA==", null, false, "d03e385c-4ca5-4e9f-9e98-4219183f644a", false, "test@softuni.bg" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -41,16 +49,16 @@ namespace LilsCareApp.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "Description", "IngredientINCIs", "Ingredients", "Name", "Price", "Purpose", "Quantity", "Weight" },
+                columns: new[] { "Id", "Description", "IngredientINCIs", "Ingredients", "IsShow", "Name", "Price", "Purpose", "Quantity", "Weight" },
                 values: new object[,]
                 {
-                    { 1, "<p>Част от лимитирана колекция празнични продукти, които може да закупите поотделно или като подаръчен комплект. 💝</p><p>Захарен скраб за тяло - натурален, био и ръчно изработен, с аромат на топли и уютни празници - стествен шоколадов аромат и леко цитрусов от етерично масло сладък портокал.</p><p>💛Този сладък скраб за тяло в два цвята е домашно приготвен с любов, масло от гроздови семки и какаово масло. Цвета му е натуралне от червена мика (минерален пигмент). Този скраб е прекрасен подарък за всеки, който се нуждае от малко повече релаксиращи моменти и грижа за себе си този сезон.</p><p>Обогатен с витамин Е.</p><p class=\"mb-0\">100% натурален</p><p class=\"mb-0\">86% от България</p><p class=\"mb-0\">13% Био</p>", "<p>Sucrose (Захар), Vitis Vinifera Seed Oil (Масло от гроздови семки), Theobroma Cacao Seed Butter (Какаово масло)*, Stearic Acid , Citrus Sinensis (Портокал) Peel Oil*, Limonene**,\r\nLinalool**, Citral**, Benzyl Alcohol, Ethylhexylglycerin, Tocopherol (Vit E), Mica***, CI 77491***. *Био **Компоненти на етерични масла ***Минерални пигменти От България 81,4% Био 14,5%</p>", "<p><strong>Какаовото масло* </strong>- придава лек и естествен шоколадов аромат и предпазва и подхранва кожата.</p>\r\n<p><strong>Етеричното масло от сладък </strong>- портокал придават лек празничен аромат*.</p>\r\n<p><strong>Масло от гроздови семки </strong>- подхранва кожата. То е леко, некомедогенно и попива бързо.</p>\r\n<p><strong>Стеаринова киселина </strong>- наситена мастна 'киселина' която в природата се намира в много масла. В натуралния състав на какаовото масло е 24-37%, а в масло от шеа / карите е между 20-50%.</p>\r\n<p><strong>Витамин Е </strong>- натурален антиоксидант, който предпазва и защитава кожата от свободни радикали, процеси на оксидация и вредни влияния от околната среда.</p>\r\n<p>*Био</p>", "СКРАБ ЗА ТЯЛО", 9.00m, "<p>Изцяло натурален, може да използвате 1-2 пъти седмично, когато желаете нежно да ексфолирате кожата и да я направите по-мека и гладка.</p>\r\n<p>Използвайте с чисти ръце върху чиста и мокра кожа. Нежно масажирайте за ексфолиращ ефект. Изплакнете.</p>\r\n<p>Само за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено, защитено от пряка слънчева светлина.</p> ", 10, "150 г" },
-                    { 2, "Description 2", "IngredientINCIs 2", "Ingredients 2", "БАЛСАМ ЗА УСТНИ С ЖОЖОБА, КАКАО И ПЧЕЛЕН ВОСЪК", 4.00m, "Purpose 2", 20, "200g" },
-                    { 3, "Description 3", "IngredientINCIs 3", "Ingredients 3", "ХИДРАТИРАЩ КРЕМ С ШИПКА", 12.00m, "Purpose 3", 30, "50 g" },
-                    { 4, "Description 4", "IngredientINCIs 4", "Ingredients 4", "НЕЖЕН ЛОСИОН С НЕВЕН", 4.00m, "Purpose 4", 0, "400g" },
-                    { 5, "Description 5", "IngredientINCIs 5", "Ingredients 5", "ДВУФАЗНА МИЦЕЛАРНА ВОДА", 10.00m, "Purpose 5", 50, "100 мл" },
-                    { 6, "Description 6", "IngredientINCIs 6", "Ingredients 6", "НАТУРАЛЕН КРЕМ ДЕЗОДОРАНТ", 8.50m, "Purpose 6", 70, "50 g" },
-                    { 7, "Description 7", "IngredientINCIs 7", "Ingredients 7", "СЕРУМ МАСЛО С ШИПКА И ЖОЖОБА", 9.00m, "Purpose 7", 80, "20 мл" }
+                    { 1, "<p>Част от лимитирана колекция празнични продукти, които може да закупите поотделно или като подаръчен комплект. 💝</p><p>Захарен скраб за тяло - натурален, био и ръчно изработен, с аромат на топли и уютни празници - стествен шоколадов аромат и леко цитрусов от етерично масло сладък портокал.</p><p>💛Този сладък скраб за тяло в два цвята е домашно приготвен с любов, масло от гроздови семки и какаово масло. Цвета му е натуралне от червена мика (минерален пигмент). Този скраб е прекрасен подарък за всеки, който се нуждае от малко повече релаксиращи моменти и грижа за себе си този сезон.</p><p>Обогатен с витамин Е.</p><p class=\"mb-0\">100% натурален</p><p class=\"mb-0\">86% от България</p><p class=\"mb-0\">13% Био</p>", "<p>Sucrose (Захар), Vitis Vinifera Seed Oil (Масло от гроздови семки), Theobroma Cacao Seed Butter (Какаово масло)*, Stearic Acid , Citrus Sinensis (Портокал) Peel Oil*, Limonene**,\r\nLinalool**, Citral**, Benzyl Alcohol, Ethylhexylglycerin, Tocopherol (Vit E), Mica***, CI 77491***. *Био **Компоненти на етерични масла ***Минерални пигменти От България 81,4% Био 14,5%</p>", "<p><strong>Какаовото масло* </strong>- придава лек и естествен шоколадов аромат и предпазва и подхранва кожата.</p>\r\n<p><strong>Етеричното масло от сладък </strong>- портокал придават лек празничен аромат*.</p>\r\n<p><strong>Масло от гроздови семки </strong>- подхранва кожата. То е леко, некомедогенно и попива бързо.</p>\r\n<p><strong>Стеаринова киселина </strong>- наситена мастна 'киселина' която в природата се намира в много масла. В натуралния състав на какаовото масло е 24-37%, а в масло от шеа / карите е между 20-50%.</p>\r\n<p><strong>Витамин Е </strong>- натурален антиоксидант, който предпазва и защитава кожата от свободни радикали, процеси на оксидация и вредни влияния от околната среда.</p>\r\n<p>*Био</p>", true, "СКРАБ ЗА ТЯЛО", 9.00m, "<p>Изцяло натурален, може да използвате 1-2 пъти седмично, когато желаете нежно да ексфолирате кожата и да я направите по-мека и гладка.</p>\r\n<p>Използвайте с чисти ръце върху чиста и мокра кожа. Нежно масажирайте за ексфолиращ ефект. Изплакнете.</p>\r\n<p>Само за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено, защитено от пряка слънчева светлина.</p> ", 10, "150 г" },
+                    { 2, "Description 2", "IngredientINCIs 2", "Ingredients 2", true, "БАЛСАМ ЗА УСТНИ С ЖОЖОБА, КАКАО И ПЧЕЛЕН ВОСЪК", 4.00m, "Purpose 2", 20, "200g" },
+                    { 3, "Description 3", "IngredientINCIs 3", "Ingredients 3", true, "ХИДРАТИРАЩ КРЕМ С ШИПКА", 12.00m, "Purpose 3", 30, "50 g" },
+                    { 4, "Description 4", "IngredientINCIs 4", "Ingredients 4", true, "НЕЖЕН ЛОСИОН С НЕВЕН", 4.00m, "Purpose 4", 0, "400g" },
+                    { 5, "Description 5", "IngredientINCIs 5", "Ingredients 5", true, "ДВУФАЗНА МИЦЕЛАРНА ВОДА", 10.00m, "Purpose 5", 50, "100 мл" },
+                    { 6, "Description 6", "IngredientINCIs 6", "Ingredients 6", true, "НАТУРАЛЕН КРЕМ ДЕЗОДОРАНТ", 8.50m, "Purpose 6", 70, "50 g" },
+                    { 7, "Description 7", "IngredientINCIs 7", "Ingredients 7", true, "СЕРУМ МАСЛО С ШИПКА И ЖОЖОБА", 9.00m, "Purpose 7", 80, "20 мл" }
                 });
 
             migrationBuilder.InsertData(
@@ -78,9 +86,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "AppUserId", "ProductId", "Quantity" },
                 values: new object[,]
                 {
-                    { "a2bc848a-f592-4c95-9264-43027b4ce346", 1, 2 },
-                    { "a2bc848a-f592-4c95-9264-43027b4ce346", 2, 3 },
-                    { "a2bc848a-f592-4c95-9264-43027b4ce346", 3, 4 }
+                    { "4ae56886-4229-49e3-a6ae-96ee6e340c4a", 1, 2 },
+                    { "4ae56886-4229-49e3-a6ae-96ee6e340c4a", 2, 3 },
+                    { "4ae56886-4229-49e3-a6ae-96ee6e340c4a", 3, 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -158,8 +166,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "Id", "AppUserId", "AppliedDate", "Code", "Discount", "ExpirationDate" },
                 values: new object[,]
                 {
-                    { 1, "a2bc848a-f592-4c95-9264-43027b4ce346", null, "-10 % за регистрация", 0.1m, new DateTime(2025, 3, 27, 12, 23, 47, 841, DateTimeKind.Utc).AddTicks(5027) },
-                    { 2, "a2bc848a-f592-4c95-9264-43027b4ce346", null, "-20 % отстъпка", 0.2m, new DateTime(2025, 3, 27, 12, 23, 47, 841, DateTimeKind.Utc).AddTicks(5033) }
+                    { 1, "4ae56886-4229-49e3-a6ae-96ee6e340c4a", null, "-10 % за регистрация", 0.1m, new DateTime(2025, 3, 29, 15, 58, 55, 578, DateTimeKind.Utc).AddTicks(6793) },
+                    { 2, "4ae56886-4229-49e3-a6ae-96ee6e340c4a", null, "-20 % отстъпка", 0.2m, new DateTime(2025, 3, 29, 15, 58, 55, 578, DateTimeKind.Utc).AddTicks(6802) }
                 });
 
             migrationBuilder.InsertData(
@@ -167,9 +175,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "AuthorId", "ProductId", "Comment", "CreatedOn", "Rating", "Title" },
                 values: new object[,]
                 {
-                    { "a2bc848a-f592-4c95-9264-43027b4ce346", 2, "Great product, I love it!", new DateTime(2024, 3, 27, 14, 23, 47, 841, DateTimeKind.Local).AddTicks(4594), 4, "Great product" },
-                    { "a2bc848a-f592-4c95-9264-43027b4ce346", 3, "Great product, I love it!", new DateTime(2024, 3, 27, 14, 23, 47, 841, DateTimeKind.Local).AddTicks(4657), 3, "Great product" },
-                    { "a2bc848a-f592-4c95-9264-43027b4ce346", 4, "Great product, I love it!", new DateTime(2024, 3, 27, 14, 23, 47, 841, DateTimeKind.Local).AddTicks(4662), 3, "Great product" }
+                    { "4ae56886-4229-49e3-a6ae-96ee6e340c4a", 2, "Great product, I love it!", new DateTime(2024, 3, 29, 17, 58, 55, 578, DateTimeKind.Local).AddTicks(6244), 4, "Great product" },
+                    { "4ae56886-4229-49e3-a6ae-96ee6e340c4a", 3, "Great product, I love it!", new DateTime(2024, 3, 29, 17, 58, 55, 578, DateTimeKind.Local).AddTicks(6310), 3, "Great product" },
+                    { "4ae56886-4229-49e3-a6ae-96ee6e340c4a", 4, "Great product, I love it!", new DateTime(2024, 3, 29, 17, 58, 55, 578, DateTimeKind.Local).AddTicks(6314), 3, "Great product" }
                 });
 
             migrationBuilder.InsertData(
@@ -194,9 +202,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "AppUserId", "ProductId" },
                 values: new object[,]
                 {
-                    { "a2bc848a-f592-4c95-9264-43027b4ce346", 1 },
-                    { "a2bc848a-f592-4c95-9264-43027b4ce346", 3 },
-                    { "a2bc848a-f592-4c95-9264-43027b4ce346", 4 }
+                    { "4ae56886-4229-49e3-a6ae-96ee6e340c4a", 1 },
+                    { "4ae56886-4229-49e3-a6ae-96ee6e340c4a", 3 },
+                    { "4ae56886-4229-49e3-a6ae-96ee6e340c4a", 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -204,8 +212,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "Id", "Address", "AppUserId", "Country", "District", "Email", "FirstName", "IsShippingToOffice", "LastName", "PhoneNumber", "PostCode", "ShippingOfficeId", "Town" },
                 values: new object[,]
                 {
-                    { 1, "bul. Vitosha", "a2bc848a-f592-4c95-9264-43027b4ce346", "Bulgaria", "Sofia", null, "Ivan", false, "Ivanov", "0888888888", "1000", 1, "Sofia" },
-                    { 2, "bul. Vitosha", "a2bc848a-f592-4c95-9264-43027b4ce346", "Bulgaria", "Sofia", null, "Petar", false, "Petrov", "0888888888", "1000", 2, "Sofia" }
+                    { 1, "bul. Vitosha", "4ae56886-4229-49e3-a6ae-96ee6e340c4a", "Bulgaria", "Sofia", null, "Ivan", false, "Ivanov", "0888888888", "1000", 1, "Sofia" },
+                    { 2, "bul. Vitosha", "4ae56886-4229-49e3-a6ae-96ee6e340c4a", "Bulgaria", "Sofia", null, "Petar", false, "Petrov", "0888888888", "1000", 2, "Sofia" }
                 });
 
             migrationBuilder.InsertData(
@@ -213,8 +221,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "Id", "AddressDeliveryId", "AppUserId", "CreatedOn", "DateShipping", "Discount", "NoteForDelivery", "OrderNumber", "PaymentMethodId", "PromoCodeId", "ShippingPrice", "StatusOrderId", "SubTotal", "Total", "TrackingNumber" },
                 values: new object[,]
                 {
-                    { 1, 1, "a2bc848a-f592-4c95-9264-43027b4ce346", new DateTime(2024, 3, 27, 12, 23, 47, 224, DateTimeKind.Utc).AddTicks(6209), new DateTime(2024, 3, 27, 12, 23, 47, 224, DateTimeKind.Utc).AddTicks(7376), 0m, null, null, 1, null, 0m, 1, 0m, 0m, "1234567890" },
-                    { 2, 2, "a2bc848a-f592-4c95-9264-43027b4ce346", new DateTime(2024, 3, 27, 12, 23, 47, 225, DateTimeKind.Utc).AddTicks(1571), new DateTime(2024, 3, 27, 12, 23, 47, 225, DateTimeKind.Utc).AddTicks(1576), 0m, null, null, 2, null, 0m, 2, 0m, 0m, "1234567890x" }
+                    { 1, 1, "4ae56886-4229-49e3-a6ae-96ee6e340c4a", new DateTime(2024, 3, 29, 15, 58, 55, 10, DateTimeKind.Utc).AddTicks(6987), new DateTime(2024, 3, 29, 15, 58, 55, 10, DateTimeKind.Utc).AddTicks(8194), 0m, null, null, 1, null, 0m, 1, 0m, 0m, "1234567890" },
+                    { 2, 2, "4ae56886-4229-49e3-a6ae-96ee6e340c4a", new DateTime(2024, 3, 29, 15, 58, 55, 10, DateTimeKind.Utc).AddTicks(9378), new DateTime(2024, 3, 29, 15, 58, 55, 10, DateTimeKind.Utc).AddTicks(9381), 0m, null, null, 2, null, 0m, 2, 0m, 0m, "1234567890x" }
                 });
 
             migrationBuilder.InsertData(
@@ -241,17 +249,17 @@ namespace LilsCareApp.Infrastructure.Migrations
             migrationBuilder.DeleteData(
                 table: "BagsUsers",
                 keyColumns: new[] { "AppUserId", "ProductId" },
-                keyValues: new object[] { "a2bc848a-f592-4c95-9264-43027b4ce346", 1 });
+                keyValues: new object[] { "4ae56886-4229-49e3-a6ae-96ee6e340c4a", 1 });
 
             migrationBuilder.DeleteData(
                 table: "BagsUsers",
                 keyColumns: new[] { "AppUserId", "ProductId" },
-                keyValues: new object[] { "a2bc848a-f592-4c95-9264-43027b4ce346", 2 });
+                keyValues: new object[] { "4ae56886-4229-49e3-a6ae-96ee6e340c4a", 2 });
 
             migrationBuilder.DeleteData(
                 table: "BagsUsers",
                 keyColumns: new[] { "AppUserId", "ProductId" },
-                keyValues: new object[] { "a2bc848a-f592-4c95-9264-43027b4ce346", 3 });
+                keyValues: new object[] { "4ae56886-4229-49e3-a6ae-96ee6e340c4a", 3 });
 
             migrationBuilder.DeleteData(
                 table: "ImageProducts",
@@ -601,17 +609,17 @@ namespace LilsCareApp.Infrastructure.Migrations
             migrationBuilder.DeleteData(
                 table: "Reviews",
                 keyColumns: new[] { "AuthorId", "ProductId" },
-                keyValues: new object[] { "a2bc848a-f592-4c95-9264-43027b4ce346", 2 });
+                keyValues: new object[] { "4ae56886-4229-49e3-a6ae-96ee6e340c4a", 2 });
 
             migrationBuilder.DeleteData(
                 table: "Reviews",
                 keyColumns: new[] { "AuthorId", "ProductId" },
-                keyValues: new object[] { "a2bc848a-f592-4c95-9264-43027b4ce346", 3 });
+                keyValues: new object[] { "4ae56886-4229-49e3-a6ae-96ee6e340c4a", 3 });
 
             migrationBuilder.DeleteData(
                 table: "Reviews",
                 keyColumns: new[] { "AuthorId", "ProductId" },
-                keyValues: new object[] { "a2bc848a-f592-4c95-9264-43027b4ce346", 4 });
+                keyValues: new object[] { "4ae56886-4229-49e3-a6ae-96ee6e340c4a", 4 });
 
             migrationBuilder.DeleteData(
                 table: "ShippingOffices",
@@ -666,17 +674,17 @@ namespace LilsCareApp.Infrastructure.Migrations
             migrationBuilder.DeleteData(
                 table: "WishesUsers",
                 keyColumns: new[] { "AppUserId", "ProductId" },
-                keyValues: new object[] { "a2bc848a-f592-4c95-9264-43027b4ce346", 1 });
+                keyValues: new object[] { "4ae56886-4229-49e3-a6ae-96ee6e340c4a", 1 });
 
             migrationBuilder.DeleteData(
                 table: "WishesUsers",
                 keyColumns: new[] { "AppUserId", "ProductId" },
-                keyValues: new object[] { "a2bc848a-f592-4c95-9264-43027b4ce346", 3 });
+                keyValues: new object[] { "4ae56886-4229-49e3-a6ae-96ee6e340c4a", 3 });
 
             migrationBuilder.DeleteData(
                 table: "WishesUsers",
                 keyColumns: new[] { "AppUserId", "ProductId" },
-                keyValues: new object[] { "a2bc848a-f592-4c95-9264-43027b4ce346", 4 });
+                keyValues: new object[] { "4ae56886-4229-49e3-a6ae-96ee6e340c4a", 4 });
 
             migrationBuilder.DeleteData(
                 table: "Categories",
@@ -781,7 +789,7 @@ namespace LilsCareApp.Infrastructure.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: "a2bc848a-f592-4c95-9264-43027b4ce346");
+                keyValue: "4ae56886-4229-49e3-a6ae-96ee6e340c4a");
 
             migrationBuilder.DeleteData(
                 table: "ShippingOffices",
@@ -797,6 +805,10 @@ namespace LilsCareApp.Infrastructure.Migrations
                 table: "ShippingProviders",
                 keyColumn: "Id",
                 keyValue: 1);
+
+            migrationBuilder.DropColumn(
+                name: "IsShow",
+                table: "Products");
         }
     }
 }
