@@ -5,6 +5,7 @@ using LilsCareApp.Infrastructure.Data;
 using LilsCareApp.Infrastructure.Data.Models;
 using LilsCareApp.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,12 +24,17 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
+            services.AddOptions<AuthMessageSenderOptions>()
+                    .Bind(configuration.GetSection("AuthMessageSenderOptions"));
+
             services.AddScoped<ILilsCareService, LilsCareService>();
             services.AddScoped<IProductsService, ProductsService>();
             services.AddScoped<IDetailsService, DetailsService>();
             services.AddScoped<ICheckoutService, CheckoutService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IGuestService, GuestService>();
+            services.AddTransient<IEmailSender, EmailSender>();
+
             services.AddHttpContextAccessor();
 
             services.AddDatabaseDeveloperPageExceptionFilter();
@@ -49,7 +55,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddDefaultIdentity<AppUser>(options =>
             {
-                options.SignIn.RequireConfirmedAccount = false;
+                options.SignIn.RequireConfirmedAccount = true;
                 options.Password.RequireDigit = true;
                 options.Password.RequireLowercase = true;
                 options.Password.RequireUppercase = true;
