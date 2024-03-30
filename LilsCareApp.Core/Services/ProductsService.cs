@@ -30,7 +30,8 @@ namespace LilsCareApp.Core.Services
                         Id = pc.Category.Id,
                         Name = pc.Category.Name
                     }).ToList(),
-                    IsWish = p.WishesUsers.Any(wu => wu.AppUserId == userId)
+                    IsWish = p.WishesUsers.Any(wu => wu.AppUserId == userId),
+                    IsShow = p.IsShow
                 })
                 .AsNoTracking()
                 .ToArrayAsync();

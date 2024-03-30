@@ -1,0 +1,109 @@
+﻿@model IEnumerable<ProductDTO>
+@{
+    ViewData["Title"] = "ADMIN Products";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" />
+}
+
+<partial name="_MenuAdminPartial" />
+<div class="content">
+    <div class="border rounded p-3">
+        <h5 class="my-4">Продукти</h5>
+        <p>Преглед на всички продукти и избор на продукт за редактиране</p>
+        <hr />
+                @if (Model.Count() == 0)
+        {
+        <div class="text-center mt-5">
+        <h5>Нямате продукти</h5>
+        <a asp-controller="" asp-action="Index" class="btn btn-sm">Добавете продукт</a>
+        </div>
+        }
+        else
+        {
+            <div class="row m-3">
+                <div class="col-2"><strong>Снимка</strong></div>
+                <div class="col-1">
+                    <p class="mb-0"><strong>Номер</strong></p>
+                    <a asp-area="Admin" asp-controller="Products" asp-action="OrderBy" asp-route-orderBy="0"
+                       class="text-decoration-none text-black">
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <a asp-area="Admin" asp-controller="Products" asp-action="OrderBy" asp-route-orderBy="1"
+                       class="text-decoration-none text-black">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+                <div class="col-4">
+                    <p class="mb-0"><strong>Продукт</strong></p>
+                        <a asp-area="Admin" asp-controller="Products" asp-action="OrderBy" asp-route-orderBy="2"
+                         class="text-decoration-none text-black">
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <a asp-area="Admin" asp-controller="Products" asp-action="OrderBy" asp-route-orderBy="3"
+                       class="text-decoration-none text-black">
+                            <i class="fa fa-angle-up"></i>
+                        </a>
+                </div>
+                <div class="col-2">
+                    <p class="mb-0"><strong>Цена</strong></p>
+                    <a asp-area="Admin" asp-controller="Products" asp-action="OrderBy" asp-route-orderBy="4"
+                       class="text-decoration-none text-black">
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <a asp-area="Admin" asp-controller="Products" asp-action="OrderBy" asp-route-orderBy="5"
+                       class="text-decoration-none text-black">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+                <div class="col-2">
+                    <p class="mb-0"><strong>Наличност</strong></p>
+                    <a asp-area="Admin" asp-controller="Products" asp-action="OrderBy" asp-route-orderBy="6"
+                       class="text-decoration-none text-black">
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <a asp-area="Admin" asp-controller="Products" asp-action="OrderBy" asp-route-orderBy="7"
+                       class="text-decoration-none text-black">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+                <div class="col-1">
+                    <p class="mb-0"><strong>Статус</strong></p>
+                    <a asp-area="Admin" asp-controller="Products" asp-action="OrderBy" asp-route-orderBy="8"
+                       class="text-decoration-none text-black">
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <a asp-area="Admin" asp-controller="Products" asp-action="OrderBy" asp-route-orderBy="9"
+                       class="text-decoration-none text-black">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+            </div>
+            @foreach (var product in Model)
+            {
+                <div class="row m-3" style=@(product.IsShow ? "" : "opacity:0.7")>
+                    <hr />
+                    <div class="col-2">
+                        <img src="@product.ImageUrl"
+                             style="max-width: 100%; height: 100px; object-fit: cover;" />
+                    </div>
+                    <div class="col-1">#@product.Id</div>
+                    <div class="col-4">@product.Name</div>
+                    <div class="col-2">@product.Price</div>
+                    <div class="col-2">@product.Quantity</div>
+                    <div class="col-1">
+                    @if(product.IsShow)
+                        {
+                            <i class="fa fa-check text-success"></i>
+                        }
+                        else
+                        {
+                            <i class="fa fa-xmark text-danger"></i>
+                        }
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

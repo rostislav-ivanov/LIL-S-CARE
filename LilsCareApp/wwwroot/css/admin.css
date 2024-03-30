@@ -1,0 +1,45 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.menu {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: px;
+    background-color: #333;
+    color: #fff;
+}
+
+    .menu ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .menu li {
+        padding: 10px;
+        border-bottom: 1px solid #555;
+    }
+
+        .menu li:last-child {
+            border-bottom: none;
+        }
+
+.content {
+    margin-left: 150px; /* Adjust this value to match the width of your menu */
+    padding: 20px;
+}
+
+/* Optional: Styles for links */
+.menu a {
+    color: #fff;
+    text-decoration: none;
+}
+
+    .menu a:hover {
+        background-color: #555;
+    }
