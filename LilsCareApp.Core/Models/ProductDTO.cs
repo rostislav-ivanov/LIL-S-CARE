@@ -15,5 +15,7 @@
         public required string ImageUrl { get; set; } = "https://via.placeholder.com/150";
 
         public bool IsWish { get; set; } = false;
+
+        public bool IsShow { get; set; } = true;
     }
 }
