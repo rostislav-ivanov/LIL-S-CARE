@@ -1,4 +1,5 @@
 ﻿using LilsCareApp.Core.Contracts;
+using LilsCareApp.Core.Extensions;
 using LilsCareApp.Core.Models;
 using LilsCareApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -17,20 +18,7 @@ namespace LilsCareApp.Core.Services
         async public Task<IEnumerable<ProductDTO>> GetAllProductsAsync()
         {
             var products = await _context.Products
-                .Select(p => new ProductDTO
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
-                    ImageUrl = p.Images.FirstOrDefault().ImagePath ?? "https://via.placeholder.com/150",
-                    Quantity = p.Quantity,
-                    Categories = p.ProductsCategories.Select(pc => new CategoryDTO
-                    {
-                        Id = pc.Category.Id,
-                        Name = pc.Category.Name
-                    }).ToList(),
-                    IsShow = p.IsShow
-                })
+                .ProjectToProductDTO()
                 .AsNoTracking()
                 .ToArrayAsync();
 
@@ -41,20 +29,7 @@ namespace LilsCareApp.Core.Services
         public async Task<IEnumerable<ProductDTO>> GetProductsOrderByIdAscAsync()
         {
             var products = await _context.Products
-                .Select(p => new ProductDTO
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
-                    ImageUrl = p.Images.FirstOrDefault().ImagePath ?? "https://via.placeholder.com/150",
-                    Quantity = p.Quantity,
-                    Categories = p.ProductsCategories.Select(pc => new CategoryDTO
-                    {
-                        Id = pc.Category.Id,
-                        Name = pc.Category.Name
-                    }).ToList(),
-                    IsShow = p.IsShow
-                })
+                .ProjectToProductDTO()
                 .OrderBy(p => p.Id)
                 .AsNoTracking()
                 .ToArrayAsync();
@@ -65,20 +40,7 @@ namespace LilsCareApp.Core.Services
         public async Task<IEnumerable<ProductDTO>> GetProductsOrderByIdDescAsync()
         {
             var products = await _context.Products
-                .Select(p => new ProductDTO
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
-                    ImageUrl = p.Images.FirstOrDefault().ImagePath ?? "https://via.placeholder.com/150",
-                    Quantity = p.Quantity,
-                    Categories = p.ProductsCategories.Select(pc => new CategoryDTO
-                    {
-                        Id = pc.Category.Id,
-                        Name = pc.Category.Name
-                    }).ToList(),
-                    IsShow = p.IsShow
-                })
+                .ProjectToProductDTO()
                 .OrderByDescending(p => p.Id)
                 .AsNoTracking()
                 .ToArrayAsync();
@@ -90,20 +52,7 @@ namespace LilsCareApp.Core.Services
         public async Task<IEnumerable<ProductDTO>> GetProductsOrderByNameAscAsync()
         {
             var products = await _context.Products
-                .Select(p => new ProductDTO
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
-                    ImageUrl = p.Images.FirstOrDefault().ImagePath ?? "https://via.placeholder.com/150",
-                    Quantity = p.Quantity,
-                    Categories = p.ProductsCategories.Select(pc => new CategoryDTO
-                    {
-                        Id = pc.Category.Id,
-                        Name = pc.Category.Name
-                    }).ToList(),
-                    IsShow = p.IsShow
-                })
+                .ProjectToProductDTO()
                 .OrderBy(p => p.Name)
                 .AsNoTracking()
                 .ToArrayAsync();
@@ -114,20 +63,7 @@ namespace LilsCareApp.Core.Services
         public async Task<IEnumerable<ProductDTO>> GetProductsOrderByNameDescAsync()
         {
             var products = await _context.Products
-                .Select(p => new ProductDTO
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
-                    ImageUrl = p.Images.FirstOrDefault().ImagePath ?? "https://via.placeholder.com/150",
-                    Quantity = p.Quantity,
-                    Categories = p.ProductsCategories.Select(pc => new CategoryDTO
-                    {
-                        Id = pc.Category.Id,
-                        Name = pc.Category.Name
-                    }).ToList(),
-                    IsShow = p.IsShow
-                })
+                .ProjectToProductDTO()
                 .OrderByDescending(p => p.Name)
                 .AsNoTracking()
                 .ToArrayAsync();
@@ -138,20 +74,7 @@ namespace LilsCareApp.Core.Services
         public async Task<IEnumerable<ProductDTO>> GetProductsOrderByPriceAscAsync()
         {
             var products = await _context.Products
-                .Select(p => new ProductDTO
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
-                    ImageUrl = p.Images.FirstOrDefault().ImagePath ?? "https://via.placeholder.com/150",
-                    Quantity = p.Quantity,
-                    Categories = p.ProductsCategories.Select(pc => new CategoryDTO
-                    {
-                        Id = pc.Category.Id,
-                        Name = pc.Category.Name
-                    }).ToList(),
-                    IsShow = p.IsShow
-                })
+                .ProjectToProductDTO()
                 .OrderBy(p => p.Price)
                 .AsNoTracking()
                 .ToArrayAsync();
@@ -162,20 +85,7 @@ namespace LilsCareApp.Core.Services
         public async Task<IEnumerable<ProductDTO>> GetProductsOrderByPriceDescAsync()
         {
             var products = await _context.Products
-                .Select(p => new ProductDTO
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
-                    ImageUrl = p.Images.FirstOrDefault().ImagePath ?? "https://via.placeholder.com/150",
-                    Quantity = p.Quantity,
-                    Categories = p.ProductsCategories.Select(pc => new CategoryDTO
-                    {
-                        Id = pc.Category.Id,
-                        Name = pc.Category.Name
-                    }).ToList(),
-                    IsShow = p.IsShow
-                })
+                .ProjectToProductDTO()
                 .OrderByDescending(p => p.Price)
                 .AsNoTracking()
                 .ToArrayAsync();
@@ -186,20 +96,7 @@ namespace LilsCareApp.Core.Services
         public async Task<IEnumerable<ProductDTO>> GetProductsOrderByQuantityAscAsync()
         {
             var products = await _context.Products
-                .Select(p => new ProductDTO
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
-                    ImageUrl = p.Images.FirstOrDefault().ImagePath ?? "https://via.placeholder.com/150",
-                    Quantity = p.Quantity,
-                    Categories = p.ProductsCategories.Select(pc => new CategoryDTO
-                    {
-                        Id = pc.Category.Id,
-                        Name = pc.Category.Name
-                    }).ToList(),
-                    IsShow = p.IsShow
-                })
+                .ProjectToProductDTO()
                 .OrderBy(p => p.Quantity)
                 .AsNoTracking()
                 .ToArrayAsync();
@@ -210,20 +107,7 @@ namespace LilsCareApp.Core.Services
         public async Task<IEnumerable<ProductDTO>> GetProductsOrderByQuantityDescAsync()
         {
             var products = await _context.Products
-                .Select(p => new ProductDTO
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
-                    ImageUrl = p.Images.FirstOrDefault().ImagePath ?? "https://via.placeholder.com/150",
-                    Quantity = p.Quantity,
-                    Categories = p.ProductsCategories.Select(pc => new CategoryDTO
-                    {
-                        Id = pc.Category.Id,
-                        Name = pc.Category.Name
-                    }).ToList(),
-                    IsShow = p.IsShow
-                })
+                .ProjectToProductDTO()
                 .OrderByDescending(p => p.Quantity)
                 .AsNoTracking()
                 .ToArrayAsync();
@@ -234,20 +118,7 @@ namespace LilsCareApp.Core.Services
         public async Task<IEnumerable<ProductDTO>> GetProductsOrderByIsShowAscAsync()
         {
             var products = await _context.Products
-                .Select(p => new ProductDTO
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
-                    ImageUrl = p.Images.FirstOrDefault().ImagePath ?? "https://via.placeholder.com/150",
-                    Quantity = p.Quantity,
-                    Categories = p.ProductsCategories.Select(pc => new CategoryDTO
-                    {
-                        Id = pc.Category.Id,
-                        Name = pc.Category.Name
-                    }).ToList(),
-                    IsShow = p.IsShow
-                })
+                .ProjectToProductDTO()
                 .OrderBy(p => p.IsShow)
                 .AsNoTracking()
                 .ToArrayAsync();
@@ -258,20 +129,7 @@ namespace LilsCareApp.Core.Services
         public async Task<IEnumerable<ProductDTO>> GetProductsOrderByIsShowDescAsync()
         {
             var products = await _context.Products
-                .Select(p => new ProductDTO
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
-                    ImageUrl = p.Images.FirstOrDefault().ImagePath ?? "https://via.placeholder.com/150",
-                    Quantity = p.Quantity,
-                    Categories = p.ProductsCategories.Select(pc => new CategoryDTO
-                    {
-                        Id = pc.Category.Id,
-                        Name = pc.Category.Name
-                    }).ToList(),
-                    IsShow = p.IsShow
-                })
+                .ProjectToProductDTO()
                 .OrderByDescending(p => p.IsShow)
                 .AsNoTracking()
                 .ToArrayAsync();
