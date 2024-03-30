@@ -13,5 +13,10 @@
         <li class="nav-item m-2">
             <a asp-area="Admin" asp-controller="Users" asp-action="Index" class="text-uppercase">Клиенти</a>
         </li>
+        <li class="nav-item m-2">
+            <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button class="nav-item" type="submit">Изход</button>
+            </form>
+        </li>
     </ul>
 </div>
