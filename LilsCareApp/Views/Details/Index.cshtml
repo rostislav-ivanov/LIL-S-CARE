@@ -112,7 +112,7 @@
         <div class="container px-0 py-4">
             <div class="row align-items-center">
                 <div class="col-auto">
-                    <p class="fs-5">Тегло: @Model.Weight</p>
+                    <p class="fs-5">@Model.Optional?.Key @Model.Optional?.Value</p>
                 </div>
 
             </div>
@@ -168,7 +168,19 @@
 <!-- Product Description Start -->
 <div class="d-flex justify-content-end">
     <div class="col-5">
-        @Html.Raw(Model.Description)
+        <div class="row">
+            @foreach (var paragraph in Model.Description)
+            {
+                if (paragraph != string.Empty)
+                {
+                    <span>@paragraph</span>
+                }
+                else
+                {
+                    <p></p>
+                }
+            }
+        </div>
     </div>
     <div class="col-6 px-5">
         <ul id="accordion" class="list-group list-group-flush">
@@ -183,7 +195,19 @@
                 </a>
                 <div id="collapse1" class="collapse" data-bs-parent="#accordion">
                     <div class="mt-4">
-                        @Html.Raw(Model.Ingredients)
+                        <div class="row">
+                            @foreach (var paragraph in Model.Ingredients)
+                            {
+                                if (paragraph != string.Empty)
+                                {
+                                    <span>@paragraph</span>
+                                }
+                                else
+                                {
+                                    <p></p>
+                                }
+                            }
+                        </div>
                     </div>
                 </div>
             </li>
@@ -198,7 +222,19 @@
                 </a>
                 <div id="collapse2" class="collapse" data-bs-parent="#accordion">
                     <div class="mt-4">
-                        @Html.Raw(Model.Purpose)
+                        <div class="row">
+                            @foreach (var paragraph in Model.Purpose)
+                            {
+                                if (paragraph != string.Empty)
+                                {
+                                    <span>@paragraph</span>
+                                }
+                                else
+                                {
+                                    <p></p>
+                                }
+                            }
+                        </div>
                     </div>
                 </div>
             </li>
@@ -213,13 +249,19 @@
                 </a>
                 <div id="collapse3" class="collapse" data-bs-parent="#accordion">
                     <div class="mt-4">
-                        <p>
-                            След като е посочен адрес за доставка или куриерски офис на
-                            Еконт или Спиди в полетата за адрес при поръчка, продуктите
-                            се опаковат внимателно в рециклирани картонена кутийка и
-                            хартиен пълнеж за уплътнение и се изпращат с доставка с
-                            преглед.
-                        </p>
+                        <div class="row">
+                            @foreach (var paragraph in Model.ShippingCondition)
+                            {
+                                if (paragraph != string.Empty)
+                                {
+                                    <span>@paragraph</span>
+                                }
+                                else
+                                {
+                                    <p></p>
+                                }
+                            }
+                        </div>
                     </div>
                 </div>
             </li>
@@ -234,7 +276,19 @@
                 </a>
                 <div id="collapse4" class="collapse" data-bs-parent="#accordion">
                     <div class="mt-4">
-                        @Html.Raw(Model.IngredientINCIs)
+                        <div class="row">
+                            @foreach (var paragraph in Model.IngredientINCIs)
+                            {
+                                if (paragraph != string.Empty)
+                                {
+                                    <span>@paragraph</span>
+                                }
+                                else
+                                {
+                                    <p></p>
+                                }
+                            }
+                        </div>
                     </div>
                 </div>
             </li>
