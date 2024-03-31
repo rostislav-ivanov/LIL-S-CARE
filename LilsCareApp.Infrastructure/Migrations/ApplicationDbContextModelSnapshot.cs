@@ -227,7 +227,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d4b96966-80f0-4f08-a1ce-0795f86977e4",
+                            ConcurrencyStamp = "6f29b217-a48a-4c07-b8ea-11e1d86097c3",
                             Email = "test@softuni.bg",
                             EmailConfirmed = true,
                             FirstName = "Test",
@@ -235,9 +235,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "TEST@SOFTUNI.BG",
                             NormalizedUserName = "TEST@SOFTUNI.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMf8qXFcBnGGfLtRjeAvIPeb7CjLv1eMO0+jlSjJI0YHib2amVR4wX+EdwppUxAZPA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEONhWOS32MHwov3RuBAjfJnyLPKgwXWdz+OX+jDDg/t9mW3C4TPjAEDDuQbdD5wy8g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "21ad0ea0-ad2d-400c-8151-b4e47498d015",
+                            SecurityStamp = "bc44a832-a02f-436c-85d1-e080cf060c6b",
                             TwoFactorEnabled = false,
                             UserName = "test@softuni.bg"
                         },
@@ -245,7 +245,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = "45fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b7148017-1e8b-430f-b8a3-247d8abacc63",
+                            ConcurrencyStamp = "a11d5903-6de8-43be-9b45-a161e3d91ad0",
                             Email = "admin@mail.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -253,9 +253,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGSMastdkkF+C4d3NDKNar5xHuOv8FAbjCYauBrjsGXwZuFMUA+aYwSDnruiFK+1Eg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIF1OWGzSTWH1McQZHZZn17RktJxToOj2JGUSbTwMgb6Nv7UyDvgiqytkee55zSBlg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d4c578a7-38c4-4f54-a1a0-b5d58da4124b",
+                            SecurityStamp = "6813d3d2-3678-4f05-b524-c02ce46e40ea",
                             TwoFactorEnabled = false,
                             UserName = "admin@mail.com"
                         });
@@ -381,260 +381,164 @@ namespace LilsCareApp.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_24a7b0d7f63d42048f5a05e97362f385~mv2.jpg/v1/fill/w_301,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_24a7b0d7f63d42048f5a05e97362f385~mv2.jpg",
+                            ImagePath = "/files/products/product-01-image-01.webp",
                             ProductId = 1
                         },
                         new
                         {
                             Id = 2,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_263e877cdb774516bea29e2155049a0d~mv2.jpg/v1/fill/w_301,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_263e877cdb774516bea29e2155049a0d~mv2.jpg",
+                            ImagePath = "/files/products/product-01-image-02.webp",
                             ProductId = 1
                         },
                         new
                         {
                             Id = 3,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_69a0f0f6f1cf4847983b2248749af6cc~mv2.jpg/v1/fill/w_301,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_69a0f0f6f1cf4847983b2248749af6cc~mv2.jpg",
+                            ImagePath = "/files/products/product-01-image-03.webp",
                             ProductId = 1
                         },
                         new
                         {
                             Id = 4,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_57415abd6b2b4d1f86e4ed35cf155e0d~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_57415abd6b2b4d1f86e4ed35cf155e0d~mv2.jpg",
+                            ImagePath = "/files/products/product-01-image-04.webp",
                             ProductId = 1
                         },
                         new
                         {
                             Id = 5,
-                            ImagePath = "https://video.wixstatic.com/video/a6694c_b61f40bc476a43578be260fce9fa6efa/1080p/mp4/file.mp4",
-                            ProductId = 1
+                            ImagePath = "/files/products/product-02-image-01.webp",
+                            ProductId = 2
                         },
                         new
                         {
                             Id = 6,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_75d8524a8fb046db82d0090671364c15~mv2.jpg/v1/fill/w_886,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_75d8524a8fb046db82d0090671364c15~mv2.jpg",
+                            ImagePath = "/files/products/product-02-image-02.webp",
                             ProductId = 2
                         },
                         new
                         {
                             Id = 7,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_2f611f06e55346e5b3b22c94c0bb8077~mv2.jpg/v1/fill/w_887,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_2f611f06e55346e5b3b22c94c0bb8077~mv2.jpg",
+                            ImagePath = "/files/products/product-02-image-03.webp",
                             ProductId = 2
                         },
                         new
                         {
                             Id = 8,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_1b60760d6a9e46f6ba0be663ab0cd432~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_1b60760d6a9e46f6ba0be663ab0cd432~mv2.jpg",
+                            ImagePath = "/files/products/product-02-image-04.webp",
                             ProductId = 2
                         },
                         new
                         {
                             Id = 9,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_7ce163b0f3e4461d9ee3ef5c16b972f4~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_7ce163b0f3e4461d9ee3ef5c16b972f4~mv2.jpg",
+                            ImagePath = "/files/products/product-02-image-05.webp",
                             ProductId = 2
                         },
                         new
                         {
                             Id = 10,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_8cf53b5caa60466b86d7e1e71035a5c1~mv2.jpg/v1/fill/w_886,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_8cf53b5caa60466b86d7e1e71035a5c1~mv2.jpg",
-                            ProductId = 2
+                            ImagePath = "/files/products/product-03-image-01.webp",
+                            ProductId = 3
                         },
                         new
                         {
                             Id = 11,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_dbfcc272e90a48f89dfa6930ee2b0355~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_dbfcc272e90a48f89dfa6930ee2b0355~mv2.jpg",
-                            ProductId = 2
+                            ImagePath = "/files/products/product-03-image-02.webp",
+                            ProductId = 3
                         },
                         new
                         {
                             Id = 12,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_44172c09d7974734aed4b4fa6474bac2~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_44172c09d7974734aed4b4fa6474bac2~mv2.jpg",
-                            ProductId = 2
+                            ImagePath = "/files/products/product-03-image-03.webp",
+                            ProductId = 3
                         },
                         new
                         {
                             Id = 13,
-                            ImagePath = "https://video.wixstatic.com/video/a6694c_688be81645b14d1f9707a985aad784fb/1080p/mp4/file.mp4",
-                            ProductId = 2
+                            ImagePath = "/files/products/product-03-image-04.webp",
+                            ProductId = 3
                         },
                         new
                         {
                             Id = 14,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_40945dc6b1754f74ab2b9331a5d4c692~mv2.jpg/v1/fill/w_887,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_40945dc6b1754f74ab2b9331a5d4c692~mv2.jpg",
+                            ImagePath = "/files/products/product-03-image-05.webp",
                             ProductId = 3
                         },
                         new
                         {
                             Id = 15,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_dcb7369410054c2b8ffc9fa2f7a7854c~mv2.jpg/v1/fill/w_374,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_dcb7369410054c2b8ffc9fa2f7a7854c~mv2.jpg",
-                            ProductId = 3
+                            ImagePath = "/files/products/product-04-image-01.webp",
+                            ProductId = 4
                         },
                         new
                         {
                             Id = 16,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_5e4516f6b7294324b75d8577ed3b7112~mv2.jpg/v1/fill/w_374,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_5e4516f6b7294324b75d8577ed3b7112~mv2.jpg",
-                            ProductId = 3
+                            ImagePath = "/files/products/product-04-image-02.webp",
+                            ProductId = 4
                         },
                         new
                         {
                             Id = 17,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_955cfb52005d4979a9d170045f3bf603~mv2.jpg/v1/fill/w_374,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_955cfb52005d4979a9d170045f3bf603~mv2.jpg",
-                            ProductId = 3
+                            ImagePath = "/files/products/product-04-image-03.webp",
+                            ProductId = 4
                         },
                         new
                         {
                             Id = 18,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_22c2642fbcb14b9c83a1b7b5349cb654~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_22c2642fbcb14b9c83a1b7b5349cb654~mv2.png",
-                            ProductId = 3
+                            ImagePath = "/files/products/product-04-image-04.webp",
+                            ProductId = 4
                         },
                         new
                         {
                             Id = 19,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_9feeef67f1174acb9d05de346a5380f3~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_9feeef67f1174acb9d05de346a5380f3~mv2.png",
-                            ProductId = 4
+                            ImagePath = "/files/products/product-05-image-01.webp",
+                            ProductId = 5
                         },
                         new
                         {
                             Id = 20,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_331b7666ec214d1cb9eab348b23156e6~mv2.png/v1/fill/w_832,h_665,al_c,usm_0.66_1.00_0.01/a6694c_331b7666ec214d1cb9eab348b23156e6~mv2.png",
-                            ProductId = 4
+                            ImagePath = "/files/products/product-05-image-02.webp",
+                            ProductId = 5
                         },
                         new
                         {
                             Id = 21,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_8c8ef3eb0c7b4c009a08aecabee93d26~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_8c8ef3eb0c7b4c009a08aecabee93d26~mv2.png",
-                            ProductId = 4
+                            ImagePath = "/files/products/product-05-image-03.webp",
+                            ProductId = 5
                         },
                         new
                         {
                             Id = 22,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_f3173997361b4b1b83ad90f807bbaf85~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_f3173997361b4b1b83ad90f807bbaf85~mv2.png",
-                            ProductId = 4
+                            ImagePath = "/files/products/product-05-image-04.webp",
+                            ProductId = 5
                         },
                         new
                         {
                             Id = 23,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_6180737a52184e20a160a44b8b00cbc6~mv2.png/v1/fill/w_832,h_665,al_c,usm_0.66_1.00_0.01/a6694c_6180737a52184e20a160a44b8b00cbc6~mv2.png",
-                            ProductId = 4
+                            ImagePath = "/files/products/product-06-image-01.webp",
+                            ProductId = 6
                         },
                         new
                         {
                             Id = 24,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_0d7a1d6d29d0432b85ad84001ad13a9b~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_0d7a1d6d29d0432b85ad84001ad13a9b~mv2.png",
-                            ProductId = 4
+                            ImagePath = "/files/products/product-06-image-02.webp",
+                            ProductId = 6
                         },
                         new
                         {
                             Id = 25,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_2485f5b6aa434f04a31a359a58f370ce~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_2485f5b6aa434f04a31a359a58f370ce~mv2.png",
-                            ProductId = 4
+                            ImagePath = "/files/products/product-06-image-03.webp",
+                            ProductId = 6
                         },
                         new
                         {
                             Id = 26,
-                            ImagePath = "https://video.wixstatic.com/video/a6694c_84516f7e298844d7954c342ceedba433/1080p/mp4/file.mp4",
-                            ProductId = 4
+                            ImagePath = "/files/products/product-06-image-04.webp",
+                            ProductId = 6
                         },
                         new
                         {
                             Id = 27,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_c3e384c8ca434dc6b7c2920f660579e3~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_c3e384c8ca434dc6b7c2920f660579e3~mv2.png",
-                            ProductId = 5
-                        },
-                        new
-                        {
-                            Id = 28,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_c4aefe2a5f294a0faf6a2f7c19af32db~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_c4aefe2a5f294a0faf6a2f7c19af32db~mv2.png",
-                            ProductId = 5
-                        },
-                        new
-                        {
-                            Id = 29,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_a730f2e789864a9cb75ce1dde1e52b07~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_a730f2e789864a9cb75ce1dde1e52b07~mv2.png",
-                            ProductId = 5
-                        },
-                        new
-                        {
-                            Id = 30,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_35eeecadd7f6495c99a3db846af81148~mv2.jpg/v1/fill/w_499,h_665,al_c,q_85,usm_0.66_1.00_0.01/a6694c_35eeecadd7f6495c99a3db846af81148~mv2.jpg",
-                            ProductId = 5
-                        },
-                        new
-                        {
-                            Id = 31,
-                            ImagePath = "https://video.wixstatic.com/video/a6694c_5b80835e03c94fd6b720fdd2ceaa8865/1080p/mp4/file.mp4",
-                            ProductId = 5
-                        },
-                        new
-                        {
-                            Id = 32,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_e95ca1c8158d4caba5b6e7bedaa0eeab~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_e95ca1c8158d4caba5b6e7bedaa0eeab~mv2.png",
+                            ImagePath = "/files/products/product-06-image-05.webp",
                             ProductId = 6
-                        },
-                        new
-                        {
-                            Id = 33,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_6381e01ae9c340d598e09ea221ff60f2~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_6381e01ae9c340d598e09ea221ff60f2~mv2.png",
-                            ProductId = 6
-                        },
-                        new
-                        {
-                            Id = 34,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_48c50850bac34de3911eb25953af593d~mv2.png/v1/fill/w_831,h_665,al_c,usm_0.66_1.00_0.01/a6694c_48c50850bac34de3911eb25953af593d~mv2.png",
-                            ProductId = 6
-                        },
-                        new
-                        {
-                            Id = 35,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_757ebf6a259740c19feb8b3a9a6bc8f5~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_757ebf6a259740c19feb8b3a9a6bc8f5~mv2.png",
-                            ProductId = 6
-                        },
-                        new
-                        {
-                            Id = 36,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_dcd9e99fe4d44425b1f77612e83ac7c3~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_dcd9e99fe4d44425b1f77612e83ac7c3~mv2.png",
-                            ProductId = 7
-                        },
-                        new
-                        {
-                            Id = 37,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_2fa731434bbc41df95694781b5de4092~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_2fa731434bbc41df95694781b5de4092~mv2.png",
-                            ProductId = 7
-                        },
-                        new
-                        {
-                            Id = 38,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_1a21a0325bd2422081c51946789b8adf~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_1a21a0325bd2422081c51946789b8adf~mv2.png",
-                            ProductId = 7
-                        },
-                        new
-                        {
-                            Id = 39,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_f5e3c9c920fe41f395dc3bbb35e0161d~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_f5e3c9c920fe41f395dc3bbb35e0161d~mv2.png",
-                            ProductId = 7
-                        },
-                        new
-                        {
-                            Id = 40,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_ec1aa69e21ac48dc9cfd0bf0522f8caa~mv2.png/v1/fill/w_532,h_665,al_c,usm_0.66_1.00_0.01/a6694c_ec1aa69e21ac48dc9cfd0bf0522f8caa~mv2.png",
-                            ProductId = 7
-                        },
-                        new
-                        {
-                            Id = 41,
-                            ImagePath = "https://video.wixstatic.com/video/a6694c_8570c70283b14cce830d5da15331979c/480p/mp4/file.mp4",
-                            ProductId = 7
-                        },
-                        new
-                        {
-                            Id = 42,
-                            ImagePath = "https://video.wixstatic.com/video/a6694c_3e25a17da1ba451786a46aa4daee1698/480p/mp4/file.mp4",
-                            ProductId = 7
-                        },
-                        new
-                        {
-                            Id = 43,
-                            ImagePath = "https://static.wixstatic.com/media/a6694c_c198248097424ec09f04d600b3ee3a40~mv2.png/v1/fill/w_886,h_665,al_c,usm_0.66_1.00_0.01/a6694c_c198248097424ec09f04d600b3ee3a40~mv2.png",
-                            ProductId = 7
                         });
                 });
 
@@ -705,6 +609,67 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.HasIndex("AppUserId");
 
                     b.ToTable("MessagesFromClients");
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Optional", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("The optional's primary key");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("Product's optional description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("Product's optional name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Optionals", t =>
+                        {
+                            t.HasComment("The optional property of product");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "25 г.",
+                            Name = "Тегло:"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "5 г.",
+                            Name = "Тегло"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "50 г.",
+                            Name = "Тегло:"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "100 мл.",
+                            Name = "Тегло:"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "20 мл.",
+                            Name = "Тегло:"
+                        });
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Order", b =>
@@ -798,8 +763,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Id = 1,
                             AddressDeliveryId = 1,
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                            CreatedOn = new DateTime(2024, 3, 31, 8, 24, 43, 595, DateTimeKind.Utc).AddTicks(3086),
-                            DateShipping = new DateTime(2024, 3, 31, 8, 24, 43, 595, DateTimeKind.Utc).AddTicks(4658),
+                            CreatedOn = new DateTime(2024, 3, 31, 13, 48, 21, 29, DateTimeKind.Utc).AddTicks(9753),
+                            DateShipping = new DateTime(2024, 3, 31, 13, 48, 21, 30, DateTimeKind.Utc).AddTicks(885),
                             Discount = 0m,
                             PaymentMethodId = 1,
                             ShippingPrice = 0m,
@@ -813,8 +778,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Id = 2,
                             AddressDeliveryId = 2,
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                            CreatedOn = new DateTime(2024, 3, 31, 8, 24, 43, 599, DateTimeKind.Utc).AddTicks(2127),
-                            DateShipping = new DateTime(2024, 3, 31, 8, 24, 43, 599, DateTimeKind.Utc).AddTicks(2131),
+                            CreatedOn = new DateTime(2024, 3, 31, 13, 48, 21, 30, DateTimeKind.Utc).AddTicks(1976),
+                            DateShipping = new DateTime(2024, 3, 31, 13, 48, 21, 30, DateTimeKind.Utc).AddTicks(1978),
                             Discount = 0m,
                             PaymentMethodId = 2,
                             ShippingPrice = 0m,
@@ -898,6 +863,10 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasComment("The product's name");
 
+                    b.Property<int?>("OptionalId")
+                        .HasColumnType("int")
+                        .HasComment("The optional property of product");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)")
                         .HasComment("The product's price");
@@ -911,12 +880,14 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasComment("The product's quantity");
 
-                    b.Property<string>("Weight")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)")
-                        .HasComment("The product's weight");
+                    b.Property<string>("ShippingCondition")
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)")
+                        .HasComment("Condition of shipping the product");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OptionalId");
 
                     b.ToTable("Products", t =>
                         {
@@ -927,93 +898,100 @@ namespace LilsCareApp.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "<p>Част от лимитирана колекция празнични продукти, които може да закупите поотделно или като подаръчен комплект. 💝</p><p>Захарен скраб за тяло - натурален, био и ръчно изработен, с аромат на топли и уютни празници - стествен шоколадов аромат и леко цитрусов от етерично масло сладък портокал.</p><p>💛Този сладък скраб за тяло в два цвята е домашно приготвен с любов, масло от гроздови семки и какаово масло. Цвета му е натуралне от червена мика (минерален пигмент). Този скраб е прекрасен подарък за всеки, който се нуждае от малко повече релаксиращи моменти и грижа за себе си този сезон.</p><p>Обогатен с витамин Е.</p><p class=\"mb-0\">100% натурален</p><p class=\"mb-0\">86% от България</p><p class=\"mb-0\">13% Био</p>",
-                            IngredientINCIs = "<p>Sucrose (Захар), Vitis Vinifera Seed Oil (Масло от гроздови семки), Theobroma Cacao Seed Butter (Какаово масло)*, Stearic Acid , Citrus Sinensis (Портокал) Peel Oil*, Limonene**,\r\nLinalool**, Citral**, Benzyl Alcohol, Ethylhexylglycerin, Tocopherol (Vit E), Mica***, CI 77491***. *Био **Компоненти на етерични масла ***Минерални пигменти От България 81,4% Био 14,5%</p>",
-                            Ingredients = "<p><strong>Какаовото масло* </strong>- придава лек и естествен шоколадов аромат и предпазва и подхранва кожата.</p>\r\n<p><strong>Етеричното масло от сладък </strong>- портокал придават лек празничен аромат*.</p>\r\n<p><strong>Масло от гроздови семки </strong>- подхранва кожата. То е леко, некомедогенно и попива бързо.</p>\r\n<p><strong>Стеаринова киселина </strong>- наситена мастна 'киселина' която в природата се намира в много масла. В натуралния състав на какаовото масло е 24-37%, а в масло от шеа / карите е между 20-50%.</p>\r\n<p><strong>Витамин Е </strong>- натурален антиоксидант, който предпазва и защитава кожата от свободни радикали, процеси на оксидация и вредни влияния от околната среда.</p>\r\n<p>*Био</p>",
+                            Description = "Нежен, изцяло натурален и ръчно изработен сух дезодорант. Подходящ за ежедневна употреба.\r\n\r\n \r\n\r\nБез парфюм и без етерични масла.\r\n\r\n \r\n\r\nВ нов твърд вариант за по-лесна употеба и нансяне дирктно.\r\n\r\n \r\n\r\nИли може да използвате стара опаковка от стик дезодорант, за да разтопите блокчето за удобна ежедневна употреба.\r\n\r\n \r\n\r\nСрежете блокчето на парченца и ги сложете в стик опаковка. Иползвайте микровълнова фурна на ниска температура и за картки интервали докато блокечето се разтопи. Оставете да изстине и стегне и готово!\r\n\r\n \r\n\r\nАко не разполагате с микровълнова фурна, може да го разтопите на водна баня в стик. Увийете плътно стик опковката със стреч фолио, за да не влиза вода в опковката и при продукта.\r\n\r\n \r\n\r\n100% натурален\r\n\r\n10 % от България\r\n\r\n78.4% био",
+                            IngredientINCIs = "Cocos Nucifera (Coconut) Oil*, Tapioca Starch*, Butyrospermum Parkii (Shea) Butter*, Cera Alba (Beeswax), Glyceryl Stearate, Sodium Bicarbonate, Tocopherol (Vit E), Helianthus Annuus (Sunflower) Seed Oil* \r\n\r\n*Bio",
+                            Ingredients = "Сухите съставки като био тапиока поддържат подмишниците сухи през деня.\r\n\r\nВитамин Е има антиоксидантен ефект.\r\n\r\nКокосово масло, масло от ший (карите) и пчелен восък.",
                             IsShow = true,
-                            Name = "СКРАБ ЗА ТЯЛО",
-                            Price = 9.00m,
-                            Purpose = "<p>Изцяло натурален, може да използвате 1-2 пъти седмично, когато желаете нежно да ексфолирате кожата и да я направите по-мека и гладка.</p>\r\n<p>Използвайте с чисти ръце върху чиста и мокра кожа. Нежно масажирайте за ексфолиращ ефект. Изплакнете.</p>\r\n<p>Само за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено, защитено от пряка слънчева светлина.</p> ",
+                            Name = "НАТУРАЛЕН СУХ ДЕЗОДОРАНТ",
+                            OptionalId = 1,
+                            Price = 5.50m,
+                            Purpose = "Вземете блокчето ор кутийката и намажете подмишничите.\r\n\r\n \r\n\r\nИли внимателно го разтопете в опаковка за стик дезодорант за по-лесна и удобна ежедневна употреба.\r\n\r\n \r\n\r\nМоже да преизползвате стара опаковка от предишен дезодорант.\r\n\r\n \r\n\r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено на сухо място, защитено от пряка слънчева светлина.",
                             Quantity = 10,
-                            Weight = "150 г"
+                            ShippingCondition = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед."
                         },
                         new
                         {
                             Id = 2,
-                            Description = "Description 2",
-                            IngredientINCIs = "IngredientINCIs 2",
-                            Ingredients = "Ingredients 2",
+                            Description = "Изцяло натурален и ръчно изработен балсам за устни, който носи усещане за уют и мекота. Създаден да е нежен и защитаващ.\r\n\r\n \r\n\r\nБио какаово масло\r\nЕстствен каков аромат\r\nКомбиниран с натурално масло от ванилия\r\nПчелен восък\r\n \r\n\r\nВ два варианта:\r\n\r\nЛек и блестящ прозрачен цвят\r\nИзцяло безцветен\r\n \r\n\r\nОбогатен с витамин Е и био масло от жожоба.\r\n\r\n \r\n\r\n100% натурален\r\n\r\n49% от България\r\n\r\n41% био",
+                            IngredientINCIs = "Apricot Kernel Oil (масло от кайсиеви ядки), Theobroma Cacao Seed Butter (какаово масло)*, Copernicia Cerifera Cera (Карнаубски восък, веган)*, Simmondsia Chinensis Seed Oil (масло от жожоба)*, Helianthus Annuus Seed Oil (слънчогледово масло), Vanilla Planifolia Fruit Extract (екстракт от шушулки ванилия), Mica**, CI 77491 (Iron Oxide)**, Tocopherol (витамин E).\r\n*Био 49% **Минерални пигменти 1%",
+                            Ingredients = "Какаовото масло* придава лек и естествен шоколадов аромат и предпазва устните.\r\n\r\n \r\n\r\nМаслото от жожоба* ги подхранва.\r\n\r\n \r\n\r\nПчелния восък* защитава устните, прави балсама траен както върху устните така и в тубичката да не свършва бързо. Придава усещане за възглванича и мекота върху устните.\r\n\r\n \r\n\r\nВитамин Е - натурален антиоксидант, който защитава от вредните влияния от околната среда.\r\n\r\n \r\n\r\n*Био 41% от състава",
                             IsShow = true,
                             Name = "БАЛСАМ ЗА УСТНИ С ЖОЖОБА, КАКАО И ПЧЕЛЕН ВОСЪК",
+                            OptionalId = 2,
                             Price = 4.00m,
-                            Purpose = "Purpose 2",
+                            Purpose = "Изцяло натурален, може да използвате винаги когато искате да подхраните и защитите устните си или просто да им придадете лек блясък за завършен вид на визията си.\r\n\r\n \r\n\r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте със затворено капаче, на сухо място и защитено от пряка слънчева светлина.",
                             Quantity = 20,
-                            Weight = "200g"
+                            ShippingCondition = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед."
                         },
                         new
                         {
                             Id = 3,
-                            Description = "Description 3",
-                            IngredientINCIs = "IngredientINCIs 3",
-                            Ingredients = "Ingredients 3",
+                            Description = "",
+                            IngredientINCIs = "Aqua (Вода), Rosa Canina Seed Oil* (масло от шипка, 10%) , Butyrospermum Parkii Butter* (масло от ший/карите), Glycerin (глицерин), Rosa Canina Fruit Extract (екстракт от шипка), Niacinamide (витамин B3), Cetearyl Olivate, Sorbitan Olivate (емулгатори), Sodium Hyaluronate (хиалуронова киселина), Tocopherol (витамин E), Helianthus Annuus (Слънчоглед) Seed Oil*, Sodium Benzoate, Potassium Sorbate (консерванти), Lactic Acid (млечна киселина, AHA, регулира pH на продукта).\r\n\r\n*Bio",
+                            Ingredients = "Българско студено пресовано масло от шипка* - натурален източник на витамин А, подхранва и стимулура регенерирнето на кожата.\r\n\r\n \r\n\r\nЕкстракт от шипка - ботанически глицернов екстракт, който в този крем е чъдесна комбинация с маслото от шипка.\r\n\r\n \r\n\r\nМасло от ший* - Най-лекото и с най-нисък комедогенен рейтинг (0-2) от всички твърди масла. Това означава, че има ниска вероятност да запуши порите като скалата е от 0 до 5.\r\n\r\n \r\n\r\nВитамин B3 - ниацинамид - антиоксидант, който изравнява тена, регулира себума, помага худратацията и изглажда финни бръчки. Наистирна звучи неверояно, a е доакзрно.\r\n\r\n \r\n\r\nВитамин Е - има ефективо и естетвено антиоксидантно действие:  забвя стареенето като помага за възстановяването на кожата и я предпазва от свободните радикали и вредите от околната среда.\r\n\r\n \r\n\r\nРастителни глицерин и хиалурон - хумектанти - привличат водата и хидратират кожата. Ключова е концентрацията! Твърде много от тях могат да изсушат кожата, като започнат да издърпват влагата от по-дълбоките слоеве на кожата, когато въздуха е сух. Важен е баланса между вода и хумектанти в продукта.\r\n\r\n \r\n\r\n*Био",
                             IsShow = true,
-                            Name = "ХИДРАТИРАЩ КРЕМ С ШИПКА",
+                            Name = "ХИДРАТИРАЩ КРЕМ С ШИПКА И НИАЦИНАМИД",
+                            OptionalId = 3,
                             Price = 12.00m,
-                            Purpose = "Purpose 3",
+                            Purpose = "Нанесете върху суха или влажна кожа. Малко количество е достатъчно за цялото лице и шия. Използвайте 1-2 пъти дневно според необходимостта и сухотата на кожата.\r\n\r\n \r\n\r\nМоже да нансете върху влажна кожа, например след душ и измивен гел, за да заключите хидратацията.\r\n\r\n \r\n\r\nИли върхъ суха кожа, за да я защитите.\r\n\r\n \r\n\r\nНанасяйте върху добре почистена кожа с чисти ръце. Само за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено, на сухо място, защитено от пряка слънчева светлина.",
                             Quantity = 30,
-                            Weight = "50 g"
+                            ShippingCondition = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед."
                         },
                         new
                         {
                             Id = 4,
-                            Description = "Description 4",
-                            IngredientINCIs = "IngredientINCIs 4",
-                            Ingredients = "Ingredients 4",
+                            Description = "Натурална мицеларна вода с два компонента. Разклатете преди употреба, за да се смесят двете фази. Идеална е за нежното отстраняване на грима в края на деня.\r\n\r\n \r\n\r\nИма двойно действие е като тоник за лице с екстракт от зелен чай и витамин Е.\r\n\r\n \r\n\r\nФаза 1 е изключително нежна. Има успокояващо и антиоксидантно действие благодарение на екстракта от зелен чай, сквален и пантенол (провитамин B3).\r\n\r\n \r\n\r\nФаза 2 е с био масло от жожоба и допринся за разтврянето на грима. Оставя кожата мека, подхранена и защитена.\r\n\r\n \r\n\r\nВ удобно шишенце с попма за лесно използване.\r\n\r\n \r\n\r\n100% натурална\r\n\r\n94% от България",
+                            IngredientINCIs = "Aqua, Vitis Vinifera (Grape) Seed Oil, Camellia Sinensis (Green Tea) Leaf Extract,  Glycerin, Caprylic / Capric Triglycerides (Fractioned Coconut Oil), Simmondsia Chinensis (Jojoba) Seed Oil*, D-panthenol (Provitamin B5, plant-based), Coco Glucoside, Squalane, Sodium Surfactin, Tocopherol (Vit E), Helianthus Annuus (Sunflower) Seed Oil*, Potassium Sorbate, Sodium Benzoate, Benzyl Alcohol, Citric Acid, Citrus Paradisi (Grapefruit) Peel Oil, Limonene, Citral, Linalool.\r\n\r\n*Био",
+                            Ingredients = "Екстракт от зелен чай - антиоксидантно и успокояващо действе, помага против появата на акне\r\n\r\n \r\n\r\nБио масло от Жожоба - помага за нежното разтваряне на грима и подхранва кожата\r\n\r\n \r\n\r\nВитамин Е - антиоксидант, успокоява раздразненията, бори се със свободните радикали и забавя стареенето на кожата\r\n\r\n \r\n\r\nПантенол - провитамин B5 - с растителен прозход. Хидратира и подхранва\r\n\r\n \r\n\r\nЕтерично масло грейпфрут - лек цитрусов аромат",
                             IsShow = true,
-                            Name = "НЕЖЕН ЛОСИОН С НЕВЕН",
-                            Price = 4.00m,
-                            Purpose = "Purpose 4",
+                            Name = "ДВУФАЗНА МИЦЕЛАРНА ВОДА ЗЕЛЕН ЧАЙ И ЖОЖОБА",
+                            OptionalId = 4,
+                            Price = 10.00m,
+                            Purpose = "Разклаете преди употреба.\r\n\r\n \r\n\r\nМоже да използвате винаги, когато искате нежно да премахнете грима. Разклатете преди употреба и напоете памучно тампонче. Нежно притиснете към кожата, за да се намокри и да започне да разтваря грима. След това отстранете грима с леки движения от центъра на лицето към страните.\r\n\r\n \r\n\r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте на сухо място, защитено от пряка слънчева светлина.",
                             Quantity = 0,
-                            Weight = "400g"
+                            ShippingCondition = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед."
                         },
                         new
                         {
                             Id = 5,
-                            Description = "Description 5",
-                            IngredientINCIs = "IngredientINCIs 5",
-                            Ingredients = "Ingredients 5",
+                            Description = "Нежен, изцяло натурален и ръчно изработен дезодорант. Подходящ за ежедневна употреба. Етеричните масла от сладък портокал и евкалипт придват лек цитрусов аромат.\r\n\r\n \r\n\r\nИзбрахме точно тези етерични масла не само заради приятния аромат. Те притежават и по-добър антибактериален фект спрямо повечето етерични масла. Дори пречат на развитието и на различни видове гъбички. Това ознчава, че натурално може да намали лошата миризма при потене, която е причинена от бактериите под мишниците.\r\n\r\n \r\n\r\n100% натурален\r\n\r\n45.7 % от България\r\n\r\n44.5% био",
+                            IngredientINCIs = "",
+                            Ingredients = "Етеричните масла от сладък портокал и евкалипт придават свеж, леко ментов цитрусов аромат и имат антибактериален ефект.\r\n\r\n \r\n\r\nСухите съставки като био тапиока поддържат подмишниците сухи през деня.\r\n\r\n \r\n\r\nВитамин Е има антиоксидантен ефект.\r\n\r\n \r\n\r\nА цялата комбинация от съставки държи неприятните миризми далеч.",
                             IsShow = true,
-                            Name = "ДВУФАЗНА МИЦЕЛАРНА ВОДА",
-                            Price = 10.00m,
-                            Purpose = "Purpose 5",
-                            Quantity = 50,
-                            Weight = "100 мл"
+                            Name = "НАТУРАЛЕН КРЕМ ДЕЗОДОРАНТ",
+                            OptionalId = 5,
+                            Price = 8.50m,
+                            Purpose = "Вземете на върха на пръстите много малко количесто (по-малко дори от грахово зрънце), леко го затоплете между пръстите и разнесете добре подмишниците.\r\n\r\n \r\n\r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено на сухо място, защитено от пряка слънчева светлина.",
+                            Quantity = 10,
+                            ShippingCondition = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед."
                         },
                         new
                         {
                             Id = 6,
-                            Description = "Description 6",
-                            IngredientINCIs = "IngredientINCIs 6",
-                            Ingredients = "Ingredients 6",
+                            Description = "Създаден, за да се поглезите - с био масла от: шипка, ягодови семки, арган и жожба. Подхранва и защитава кожата. Запазва хидратацията като предпазва кожата от загуба на вода и я оставя мека и гладка.\r\n\r\n \r\n\r\nОбогатен с витамин Е за добър антиоксидантен ефект, който предпазва клетките от вредното въздействие отоколната среда, свободните радикали и оксидативни процеси. По този начин поддържа кожата млада и елстична.\r\n\r\n \r\n\r\nМаслото от шипка е натурален източник на витамин А. Аргановото масло и маслото от ягодови семки подхранват кожата, а маслото от жожоба съдържа натурални серамиди, подсилват кожната бариера и заздравяват връзките между клетките.\r\n\r\n\r\nНекомедогенен.\r\n\r\nНай-подходящ за суха кожа.\r\n\r\nИли като защита след по-изтощаваща рутина, напр. след химичен пилинг.\r\n\r\nПодхранва, заздравява и защитава кожната бариера.\r\n\r\n \r\n\r\nИзползвате няколко капки върху суха или влажна кожа (на пример след душ) или след хидратиращ лосион, за да 'заклчючите' хидратацията и да защитите кожата. \r\n\r\n \r\n\r\n100% натурален\r\n\r\n80% от България\r\n\r\n31% био",
+                            IngredientINCIs = "Vitis Vinifera Seed Oil (масло от гроздови смеки), Rosa Canina Seed Oil (българско студенпресовно био масло от семената на шипка)*, Fragaria Ananassa Seed Oil (студенопресовано масло от семки на ягода), Argania Spinosa Kernel Oil (арганово масло)*, Simmondsia Chinensis Seed Oil (масло от жожоба)*, Tocopherol (Витамин E), Helianthus Annuus Seed Oil (Слънчогледово масло <0,2%) *,  Citrus Reticulata Oil (Етерично масло от мандарина) , Limonene**, Linalool**, Cananga Odorata flower Oil (Етерично масло от Иланг Иланф) *.\r\n*Био, 31%\r\n**Компоненети на етерични масла",
+                            Ingredients = "Масло от шипка - помога ревитализирането на кожата \r\n\r\nМасло от ягодови семки - хидратира в дълбочина и има протививъзвпалителен ефект\r\n\r\nМасло от жожоба* - натурално съдържа над 95% серамиди, подхранва кожата и заздравява кожната бариера\r\n\r\nАрганово масло* - подхранва, защитава и подобрява хидратацията и еластичносттна на кожата\r\n\r\nМсла от мандарина и иланг-иланг* - придават лек, свеж и релаксиращ аромат, за да се насладите максимално на момента в грижа за кожата\r\n\r\nВитамин Е* - антиоксидант - успокоява раздразнената кожа и забавя страеенето като бори се със свободните радикали, UV уверждането и процесите на оксидация\r\n\r\n*Био",
                             IsShow = true,
-                            Name = "НАТУРАЛЕН КРЕМ ДЕЗОДОРАНТ",
-                            Price = 8.50m,
-                            Purpose = "Purpose 6",
-                            Quantity = 70,
-                            Weight = "50 g"
+                            Name = "ДВУФАЗНА МИЦЕЛАРНА ВОДА ЗЕЛЕН ЧАЙ И ЖОЖОБА",
+                            OptionalId = 3,
+                            Price = 10.00m,
+                            Purpose = "Например след лек хидратиращ лосион, за да заключи хидратацията и полезните съставки.\r\n\r\nДиректно върху влажна кожа за по-добро абсорбиране и защита.\r\n\r\nИли върху суха кожа, за да предотврати трансепидеррмалната загуба на вода от кожата.\r\n\r\n \r\n\r\nПодходящ за защита на кожата в края на рутината. Комбинира се добре след ексфолиращи и/или хидратиращи продукти.\r\n\r\n \r\n\r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Използвайте с чисти ръце и кожа. Съхранявайте добре затворено, на сухо място, защитено от пряка слънчева светлина.",
+                            Quantity = 20,
+                            ShippingCondition = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед."
                         },
                         new
                         {
                             Id = 7,
-                            Description = "Description 7",
-                            IngredientINCIs = "IngredientINCIs 7",
-                            Ingredients = "Ingredients 7",
+                            Description = "",
+                            IngredientINCIs = "",
+                            Ingredients = "",
                             IsShow = true,
-                            Name = "СЕРУМ МАСЛО С ШИПКА И ЖОЖОБА",
-                            Price = 9.00m,
-                            Purpose = "Purpose 7",
-                            Quantity = 80,
-                            Weight = "20 мл"
+                            Name = "ДВУФАЗНА МИЦЕЛАРНА ВОДА ЗЕЛЕН ЧАЙ И ЖОЖОБА",
+                            OptionalId = 4,
+                            Price = 10.00m,
+                            Purpose = "",
+                            Quantity = 0,
+                            ShippingCondition = ""
                         });
                 });
 
@@ -1262,7 +1240,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Code = "-10 % за регистрация",
                             Discount = 0.1m,
-                            ExpirationDate = new DateTime(2025, 3, 31, 8, 24, 44, 961, DateTimeKind.Utc).AddTicks(4533)
+                            ExpirationDate = new DateTime(2025, 3, 31, 13, 48, 21, 779, DateTimeKind.Utc).AddTicks(6214)
                         },
                         new
                         {
@@ -1270,7 +1248,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Code = "-20 % отстъпка",
                             Discount = 0.2m,
-                            ExpirationDate = new DateTime(2025, 3, 31, 8, 24, 44, 961, DateTimeKind.Utc).AddTicks(4540)
+                            ExpirationDate = new DateTime(2025, 3, 31, 13, 48, 21, 779, DateTimeKind.Utc).AddTicks(6222)
                         });
                 });
 
@@ -1317,7 +1295,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 2,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 3, 31, 11, 24, 44, 961, DateTimeKind.Local).AddTicks(3944),
+                            CreatedOn = new DateTime(2024, 3, 31, 16, 48, 21, 779, DateTimeKind.Local).AddTicks(5480),
                             Rating = 4,
                             Title = "Great product"
                         },
@@ -1326,7 +1304,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 3,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 3, 31, 11, 24, 44, 961, DateTimeKind.Local).AddTicks(4011),
+                            CreatedOn = new DateTime(2024, 3, 31, 16, 48, 21, 779, DateTimeKind.Local).AddTicks(5538),
                             Rating = 3,
                             Title = "Great product"
                         },
@@ -1335,7 +1313,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 4,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 3, 31, 11, 24, 44, 961, DateTimeKind.Local).AddTicks(4016),
+                            CreatedOn = new DateTime(2024, 3, 31, 16, 48, 21, 779, DateTimeKind.Local).AddTicks(5543),
                             Rating = 3,
                             Title = "Great product"
                         });
@@ -1856,6 +1834,15 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Navigation("StatusOrder");
                 });
 
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Product", b =>
+                {
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.Optional", "Optional")
+                        .WithMany("Products")
+                        .HasForeignKey("OptionalId");
+
+                    b.Navigation("Optional");
+                });
+
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ProductCategory", b =>
                 {
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.Category", "Category")
@@ -2029,6 +2016,11 @@ namespace LilsCareApp.Infrastructure.Migrations
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Category", b =>
                 {
                     b.Navigation("ProductsCategories");
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Optional", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Order", b =>

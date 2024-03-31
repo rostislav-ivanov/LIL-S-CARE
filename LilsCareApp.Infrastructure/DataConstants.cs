@@ -33,6 +33,7 @@
             public const string PriceMaxValue = "1000.00";
             public const int WeightMaxLength = 250;
             public const int PurposeMaxLength = 1500;
+            public const int ShippingConditionMaxLength = 1500;
             public const int DescriptionMaxLength = 1500;
             public const int IngredientINCIsMaxLength = 1500;
             public const int IngredientsMaxLength = 1500;
@@ -96,6 +97,14 @@
             public const int CountryMaxLength = 100;
             public const int PostCodeMaxLength = 50;
             public const int EmailMaxLength = 50;
+        }
+
+        public static class Optional
+        {
+            public const int NameMinLength = 3;
+            public const int NameMaxLength = 50;
+            public const int DescriptionMinLength = 3;
+            public const int DescriptionMaxLength = 50;
         }
     }
 }
