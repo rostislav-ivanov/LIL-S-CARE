@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LilsCareApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240322083004_InitialMigration")]
+    [Migration("20240331122628_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace LilsCareApp.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasAnnotation("ProductVersion", "8.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -338,6 +338,35 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.ToTable("MessagesFromClients");
                 });
 
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Optional", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("The optional's primary key");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("Product's optional description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("Product's optional name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Optionals", t =>
+                        {
+                            t.HasComment("The optional property of product");
+                        });
+                });
+
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -470,11 +499,19 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasColumnType("nvarchar(1500)")
                         .HasComment("The product ingredients");
 
+                    b.Property<bool>("IsShow")
+                        .HasColumnType("bit")
+                        .HasComment("Is the product show on online store");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasComment("The product's name");
+
+                    b.Property<int?>("OptionalId")
+                        .HasColumnType("int")
+                        .HasComment("The optional property of product");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)")
@@ -489,12 +526,14 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasComment("The product's quantity");
 
-                    b.Property<string>("Weight")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)")
-                        .HasComment("The product's weight");
+                    b.Property<string>("ShippingCondition")
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)")
+                        .HasComment("Condition of shipping the product");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OptionalId");
 
                     b.ToTable("Products", t =>
                         {
@@ -900,7 +939,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasForeignKey("AppUserId");
 
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.ShippingOffice", "ShippingOffice")
-                        .WithMany()
+                        .WithMany("DeliveryAddresses")
                         .HasForeignKey("ShippingOfficeId");
 
                     b.Navigation("AppUser");
@@ -1000,6 +1039,15 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Navigation("PromoCode");
 
                     b.Navigation("StatusOrder");
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Product", b =>
+                {
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.Optional", "Optional")
+                        .WithMany("Products")
+                        .HasForeignKey("OptionalId");
+
+                    b.Navigation("Optional");
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ProductCategory", b =>
@@ -1177,6 +1225,11 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Navigation("ProductsCategories");
                 });
 
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Optional", b =>
+                {
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Order", b =>
                 {
                     b.Navigation("ProductsOrders");
@@ -1210,6 +1263,11 @@ namespace LilsCareApp.Infrastructure.Migrations
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Review", b =>
                 {
                     b.Navigation("Images");
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ShippingOffice", b =>
+                {
+                    b.Navigation("DeliveryAddresses");
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ShippingProvider", b =>

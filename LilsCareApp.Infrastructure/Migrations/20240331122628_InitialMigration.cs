@@ -40,6 +40,21 @@ namespace LilsCareApp.Infrastructure.Migrations
                 comment: "The category of the product");
 
             migrationBuilder.CreateTable(
+                name: "Optionals",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false, comment: "The optional's primary key")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "Product's optional name"),
+                    Description = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "Product's optional description")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Optionals", x => x.Id);
+                },
+                comment: "The optional property of product");
+
+            migrationBuilder.CreateTable(
                 name: "PaymentMethods",
                 columns: table => new
                 {
@@ -52,27 +67,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                     table.PrimaryKey("PK_PaymentMethods", x => x.Id);
                 },
                 comment: "Payment methods");
-
-            migrationBuilder.CreateTable(
-                name: "Products",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false, comment: "The product's primary key")
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, comment: "The product's name"),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false, comment: "The product's price"),
-                    Quantity = table.Column<int>(type: "int", nullable: false, comment: "The product's quantity"),
-                    Weight = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true, comment: "The product's weight"),
-                    Purpose = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: true, comment: "Properties of the product"),
-                    Description = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: true, comment: "The product's description"),
-                    IngredientINCIs = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: true, comment: "The product ingredients INCI"),
-                    Ingredients = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: true, comment: "The product ingredients")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.Id);
-                },
-                comment: "The product model");
 
             migrationBuilder.CreateTable(
                 name: "ShippingProviders",
@@ -124,6 +118,56 @@ namespace LilsCareApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false, comment: "The product's primary key")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, comment: "The product's name"),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false, comment: "The product's price"),
+                    Quantity = table.Column<int>(type: "int", nullable: false, comment: "The product's quantity"),
+                    OptionalId = table.Column<int>(type: "int", nullable: true, comment: "The optional property of product"),
+                    Description = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: true, comment: "The product's description"),
+                    Ingredients = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: true, comment: "The product ingredients"),
+                    Purpose = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: true, comment: "Properties of the product"),
+                    ShippingCondition = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: true, comment: "Condition of shipping the product"),
+                    IngredientINCIs = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: true, comment: "The product ingredients INCI"),
+                    IsShow = table.Column<bool>(type: "bit", nullable: false, comment: "Is the product show on online store")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Products_Optionals_OptionalId",
+                        column: x => x.OptionalId,
+                        principalTable: "Optionals",
+                        principalColumn: "Id");
+                },
+                comment: "The product model");
+
+            migrationBuilder.CreateTable(
+                name: "ShippingOffices",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OfficeAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false, comment: "Price of shipping"),
+                    ShippingDuration = table.Column<int>(type: "int", nullable: false, comment: "Duration of shipping"),
+                    ShippingProviderId = table.Column<int>(type: "int", nullable: true, comment: "Shipping Provider Id")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShippingOffices", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ShippingOffices_ShippingProviders_ShippingProviderId",
+                        column: x => x.ShippingProviderId,
+                        principalTable: "ShippingProviders",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ImageProducts",
                 columns: table => new
                 {
@@ -168,28 +212,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 },
                 comment: "Many to many relation between products and categories");
-
-            migrationBuilder.CreateTable(
-                name: "ShippingOffices",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OfficeAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false, comment: "Price of shipping"),
-                    ShippingDuration = table.Column<int>(type: "int", nullable: false, comment: "Duration of shipping"),
-                    ShippingProviderId = table.Column<int>(type: "int", nullable: true, comment: "Shipping Provider Id")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ShippingOffices", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ShippingOffices_ShippingProviders_ShippingProviderId",
-                        column: x => x.ShippingProviderId,
-                        principalTable: "ShippingProviders",
-                        principalColumn: "Id");
-                });
 
             migrationBuilder.CreateTable(
                 name: "AddressDeliveries",
@@ -698,6 +720,11 @@ namespace LilsCareApp.Infrastructure.Migrations
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Products_OptionalId",
+                table: "Products",
+                column: "OptionalId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductsCategories_CategoryId",
                 table: "ProductsCategories",
                 column: "CategoryId");
@@ -804,6 +831,9 @@ namespace LilsCareApp.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "StatusOrders");
+
+            migrationBuilder.DropTable(
+                name: "Optionals");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

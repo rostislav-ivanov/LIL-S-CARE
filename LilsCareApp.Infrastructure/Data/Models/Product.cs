@@ -23,25 +23,32 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("The product's quantity")]
         public int Quantity { get; set; }
 
-        [Comment("The product's weight")]
-        [MaxLength(WeightMaxLength)]
-        public string? Weight { get; set; }
+        [Comment("The optional property of product")]
+        public int? OptionalId { get; set; }
 
-        [Comment("Properties of the product")]
-        [MaxLength(PurposeMaxLength)]
-        public string? Purpose { get; set; }
+        [Comment("Navigation property to the optional property of product")]
+        [ForeignKey(nameof(OptionalId))]
+        public Optional Optional { get; set; } = null!;
 
         [Comment("The product's description")]
         [MaxLength(DescriptionMaxLength)]
         public string? Description { get; set; }
 
-        [Comment("The product ingredients INCI")]
-        [MaxLength(IngredientINCIsMaxLength)]
-        public string? IngredientINCIs { get; set; }
-
         [Comment("The product ingredients")]
         [MaxLength(IngredientsMaxLength)]
         public string? Ingredients { get; set; }
+
+        [Comment("Properties of the product")]
+        [MaxLength(PurposeMaxLength)]
+        public string? Purpose { get; set; }
+
+        [Comment("Condition of shipping the product")]
+        [MaxLength(ShippingConditionMaxLength)]
+        public string? ShippingCondition { get; set; }
+
+        [Comment("The product ingredients INCI")]
+        [MaxLength(IngredientINCIsMaxLength)]
+        public string? IngredientINCIs { get; set; }
 
         [Comment("Is the product show on online store")]
         public bool IsShow { get; set; }
