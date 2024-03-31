@@ -28,11 +28,12 @@ namespace LilsCareApp.Core.Services
                     Price = p.Price,
                     Quantity = 1,
                     AvailableQuantity = p.Quantity,
-                    Weight = p.Weight ?? string.Empty,
-                    Purpose = p.Purpose ?? string.Empty,
-                    Description = p.Description ?? string.Empty,
-                    IngredientINCIs = p.IngredientINCIs ?? string.Empty,
-                    Ingredients = p.Ingredients ?? string.Empty,
+                    Optional = new KeyValuePair<string, string>(p.Optional.Name, p.Optional.Description),
+                    Description = p.Description.Split(new string[] { "\r\n\r\n" }, StringSplitOptions.None),
+                    Ingredients = p.Ingredients.Split(new string[] { "\r\n\r\n" }, StringSplitOptions.None),
+                    Purpose = p.Purpose.Split(new string[] { "\r\n\r\n" }, StringSplitOptions.None),
+                    ShippingCondition = p.ShippingCondition.Split(new string[] { "\r\n\r\n" }, StringSplitOptions.None),
+                    IngredientINCIs = p.IngredientINCIs.Split(new string[] { "\r\n\r\n" }, StringSplitOptions.None),
                     Images = p.Images
                         .Where(im => im.ProductId == p.Id)
                         .Select(im => new ImageDTO
