@@ -6,8 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Claims;
-using static LilsCareApp.Areas.Admin.AdminConstants;
-
+using static LilsCareApp.Infrastructure.DataConstants.AdminConstants;
 namespace LilsCareApp.Controllers
 {
     public class HomeController : BaseController

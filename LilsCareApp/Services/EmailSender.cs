@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using static LilsCareApp.Areas.Admin.AdminConstants;
+using static LilsCareApp.Infrastructure.DataConstants.AdminConstants;
 
 namespace LilsCareApp.Services
 {

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using static LilsCareApp.Infrastructure.DataConstants.AdminConstants;
 
 namespace LilsCareApp.Infrastructure.Data.DataConfiguration
 {
@@ -24,7 +25,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                     await roleManager.CreateAsync(adminRole);
                 }
 
-                var adminUser = await userManager.FindByNameAsync("rosti@abv.bg");
+                var adminUser = await userManager.FindByNameAsync(AdminEmail);
 
                 if (adminUser != null)
                 {
