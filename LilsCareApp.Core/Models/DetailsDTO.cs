@@ -11,15 +11,18 @@
 
         public int AvailableQuantity { get; set; }
 
-        public string Weight { get; set; } = string.Empty;
+        public KeyValuePair<string, string>? Optional { get; set; }
 
-        public string Purpose { get; set; } = string.Empty;
+        public IEnumerable<string>? Description { get; set; }
 
-        public string Description { get; set; } = string.Empty;
+        public IEnumerable<string>? Ingredients { get; set; }
 
-        public string IngredientINCIs { get; set; } = string.Empty;
+        public IEnumerable<string>? Purpose { get; set; }
 
-        public string Ingredients { get; set; } = string.Empty;
+        public IEnumerable<string>? ShippingCondition { get; set; }
+
+        public IEnumerable<string>? IngredientINCIs { get; set; }
+
 
         public List<ImageDTO> Images { get; set; } = new List<ImageDTO>();
 
