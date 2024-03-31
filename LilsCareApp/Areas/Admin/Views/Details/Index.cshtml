@@ -1,0 +1,316 @@
+﻿@model AdminDetailsDTO
+@{
+    ViewData["Title"] = "ADMIN Products";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" />
+}
+
+<partial name="_MenuAdminPartial" />
+<!-- Details Product Start -->
+<div class="content">
+    <h3>@Model.Product.Name</h3>
+    <div class="row">
+        <!-- Left Side Start-->
+        <div class="col-8">
+            <!-- Product Images Start-->
+            <div class="col-lg border rounded p-2">
+                <h4 class="text-center">Снимки</h4>
+                <hr />
+                <div class="row">
+                    @foreach (var image in Model.Product.Images)
+                    {
+                        <div class="col-md-6 col-lg-4 col-xl-4">
+                            <img src="@image.ImagePath"
+                                 width="180"
+                                 height="180"
+                                 style="object-fit: cover"
+                                 class="border rounded m-2" />
+                            <div class="d-flex">
+                                <a href="#" class="nav-link">
+                                    <i class="fa fa-repeat text-warning ms-2"></i>
+                                </a>
+                                <a href="#" class="nav-link">
+                                    <i class="fa fa-xmark text-danger ms-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="d-flex justify-content-between m-3">
+                    <input for
+                           id="file-upload-1"
+                           type="file"
+                           class="form-control"
+                           name="attachment"
+                           accept="image/*" />
+                    <button class="btn ms-3 bg-success">Добави</button>
+                </div>
+            </div>
+            <!-- Product Images End-->
+            <!-- Product Description Start-->
+            <div class="col-lg border rounded mt-3 p-2">
+                <h4 class="text-center">Описание</h4>
+                <hr />
+                <div class="row">
+                    @foreach (var paragraph in Model.Product.Description)
+                    {
+                        if (paragraph != string.Empty)
+                        {
+                            <span>@paragraph</span>
+                        }
+                        else
+                        {
+                            <p></p>
+                        }
+                    }
+                </div>
+                <textarea name="" id="" rows="7" style="width: 100%"></textarea>
+                <div class="d-flex">
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-repeat text-warning ms-2"></i>
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-xmark text-danger ms-2"></i>
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-check text-success ms-2"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- Product Description End-->
+            <!-- Product Ingredients Start-->
+            <div class="col-lg border rounded mt-3 p-2">
+                <h4 class="text-center">ЗА СЪСТАВКИТЕ</h4>
+                <hr />
+                <div class="row">
+                    @foreach (var paragraph in Model.Product.Ingredients)
+                    {
+                        if (paragraph != string.Empty)
+                        {
+                            <span>@paragraph</span>
+                        }
+                        else
+                        {
+                            <p></p>
+                        }
+                    }
+                </div>
+                <textarea name="" id="" rows="7" style="width: 100%"></textarea>
+                <div class="d-flex">
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-repeat text-warning ms-2"></i>
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-xmark text-danger ms-2"></i>
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-check text-success ms-2"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- Product Ingredients End-->
+            <!-- Product Purpose Start-->
+            <div class="col-lg border rounded mt-3 p-2">
+                <h4 class="text-center">УПОТРЕБА</h4>
+                <hr />
+                <div class="row">
+                    @foreach (var paragraph in Model.Product.Purpose)
+                    {
+                        if (paragraph != string.Empty)
+                        {
+                            <span>@paragraph</span>
+                        }
+                        else
+                        {
+                            <p></p>
+                        }
+                    }
+                </div>
+                <textarea name="" id="" rows="7" style="width: 100%"></textarea>
+                <div class="d-flex">
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-repeat text-warning ms-2"></i>
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-xmark text-danger ms-2"></i>
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-check text-success ms-2"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- Product Purpose End-->
+            <!-- Product Shipping Conditions Start-->
+            <div class="col-lg border rounded mt-3 p-2">
+                <h4 class="text-center">ИЗПАЩАНЕ И ДОСТАВКА</h4>
+                <hr />
+                <div class="row">
+                    @foreach (var paragraph in Model.Product.ShippingCondition)
+                    {
+                        if (paragraph != string.Empty)
+                        {
+                            <span>@paragraph</span>
+                        }
+                        else
+                        {
+                            <p></p>
+                        }
+                    }
+                </div>
+                <textarea name="" id="" rows="7" style="width: 100%"></textarea>
+                <div class="d-flex">
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-repeat text-warning ms-2"></i>
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-xmark text-danger ms-2"></i>
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-check text-success ms-2"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- Product Shipping Conditions End-->
+            <!-- Product IngredientINCIs Start-->
+            <div class="col-lg border rounded mt-3 p-2">
+                <h4 class="text-center">СЪСТАВ, INCI</h4>
+                <hr />
+                <div class="row">
+                    @foreach (var paragraph in Model.Product.IngredientINCIs)
+                    {
+                        if (paragraph != string.Empty)
+                        {
+                            <span>@paragraph</span>
+                        }
+                        else
+                        {
+                            <p></p>
+                        }
+                    }
+                </div>
+                <textarea name="" id="" rows="7" style="width: 100%"></textarea>
+                <div class="d-flex">
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-repeat text-warning ms-2"></i>
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-xmark text-danger ms-2"></i>
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-check text-success ms-2"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- Product IngredientINCIs End-->
+        </div>
+        <!-- Left Side End-->
+        <!-- Right Side Start-->
+        <div class="col-4">
+            <div class="row">
+                <!-- Product Is Show Start-->
+                <div class="d-flex justify-content-between border rounded p-2">
+                    <p>
+                        Продукта е в продажба
+                        <a href=""><i class="fa fa-check text-success ms-2"></i></a>
+                        <a href=""><i class="fa fa-xmark text-danger ms-2"></i></a>
+                    </p>
+                </div>
+                <!-- Product Is Show End-->
+                <!-- Product Category Start-->
+                <div class="border rounded p-2 mt-3">
+                    <div class="d-flex align-items-center">
+                        <span class="me-2">
+                            <strong>Категории:</strong>
+                            <ul>
+                                @foreach(var category in Model.Product.ProductsCategories)
+                                {
+                                    <li><strong>@category.Name</strong></li>
+                                }
+                            </ul>
+                        </span>
+                    </div>
+                    @foreach (var category in Model.Categories)
+                    {
+                        if (Model.GetProductCateegoriesId().Contains(category.Id))
+                        {
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="#" class="nav-link text-success">
+                                    <i class="fa-regular fa-square-check me-2"></i>
+                                    @category.Name
+                                </a>
+                                <a href="#" class="nav-link">
+                                    <i class="fa-solid fa-trash-can text-danger"></i>
+                                </a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="#" class="nav-link">
+                                    <i class="fa-regular fa-square me-2"></i>
+                                    @category.Name
+                                </a>
+                                <a href="#" class="nav-link">
+                                    <i class="fa-solid fa-trash-can text-danger"></i>
+                                </a>
+                            </div>
+                        }
+                    }
+                    <a href="#" class="nav-link mt-2">
+                        <i class="fa fa-plus me-2"></i>
+                        Добави категория
+                    </a>
+                </div>
+                <!-- Product Category End-->
+                <!-- Product Price Start-->
+                <div class="border rounded p-2 mt-3">
+                    <p><strong>Цена: @Model.Product.Price лв.</strong></p>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2">Цена:</span>
+                        <input type="text" class="form-control" />
+                    </div>
+                </div>
+                <!-- Product Price End-->
+                <!-- Product Quantity Start-->
+                <div class="border rounded p-2 mt-3">
+                    <p><strong>Наличност: @Model.Product.Quantity бр.</strong></p>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2">Добави:</span>
+                        <input type="text" class="form-control" />
+                    </div>
+                </div>
+                <!-- Product Quantity End-->
+                <!-- Product Option Start-->
+                <div class="border rounded p-2 mt-3">
+                    <div class="d-flex align-items-center">
+                        <p class="me-2">
+                            <strong>@Model.Product.Optional?.Key  @Model.Product.Optional?.Value</strong>
+                        </p>
+                    </div>
+                    <a href="#" class="nav-link text-success">
+                        <i class="fa-regular fa-square-check me-2"></i>
+                        option.Name
+                    </a>
+                    <a href="#" class="nav-link text-success">
+                        <i class="fa-regular fa-square me-2"></i>
+                        option.Name
+                    </a>
+
+                    <a href="#" class="nav-link mt-2">
+                        <i class="fa fa-plus me-2"></i>
+                        Добави опция
+                    </a>
+                    <div class="d-flex align-items-center mt-2">
+                        <span class="me-2">Съдържание:</span>
+                        <input type="text" class="form-control" />
+                    </div>
+                </div>
+                <!-- Product Option End-->
+            </div>
+        </div>
+        <!-- Right Side End-->
+    </div>
+</div>
+<!-- Details Product End -->
