@@ -11,17 +11,17 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 new WishUser
                 {
                     ProductId = 1,
-                    AppUserId = ConfigurationHelper.AppUser.Id
+                    AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef"
                 },
                 new WishUser
                 {
                     ProductId = 3,
-                    AppUserId = ConfigurationHelper.AppUser.Id
+                    AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef"
                 },
                 new WishUser
                 {
                     ProductId = 4,
-                    AppUserId = ConfigurationHelper.AppUser.Id
+                    AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef"
                 }
             };
         public void Configure(EntityTypeBuilder<WishUser> builder)

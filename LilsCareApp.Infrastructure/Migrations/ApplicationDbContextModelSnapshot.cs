@@ -105,7 +105,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 1,
                             Address = "bul. Vitosha",
-                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
+                            AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Country = "Bulgaria",
                             District = "Sofia",
                             FirstName = "Ivan",
@@ -120,7 +120,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 2,
                             Address = "bul. Vitosha",
-                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
+                            AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Country = "Bulgaria",
                             District = "Sofia",
                             FirstName = "Petar",
@@ -225,17 +225,39 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
+                            Id = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "71813380-c3f5-4766-83a1-2ef768732c12",
-                            EmailConfirmed = false,
+                            ConcurrencyStamp = "d4b96966-80f0-4f08-a1ce-0795f86977e4",
+                            Email = "test@softuni.bg",
+                            EmailConfirmed = true,
+                            FirstName = "Test",
+                            LastName = "Testov",
                             LockoutEnabled = false,
+                            NormalizedEmail = "TEST@SOFTUNI.BG",
                             NormalizedUserName = "TEST@SOFTUNI.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFKm2jIULvp9FQtblOeg2jVt8XOQRpHTbZ/SUzdkuo8Vj73PdHmO40r5BI9SM+SIbA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMf8qXFcBnGGfLtRjeAvIPeb7CjLv1eMO0+jlSjJI0YHib2amVR4wX+EdwppUxAZPA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d03e385c-4ca5-4e9f-9e98-4219183f644a",
+                            SecurityStamp = "21ad0ea0-ad2d-400c-8151-b4e47498d015",
                             TwoFactorEnabled = false,
                             UserName = "test@softuni.bg"
+                        },
+                        new
+                        {
+                            Id = "45fbe739-6be0-429d-b44b-1ce6cf7eeef",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "b7148017-1e8b-430f-b8a3-247d8abacc63",
+                            Email = "admin@mail.com",
+                            EmailConfirmed = true,
+                            FirstName = "Admin",
+                            LastName = "Adminov",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@MAIL.COM",
+                            NormalizedUserName = "ADMIN@MAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGSMastdkkF+C4d3NDKNar5xHuOv8FAbjCYauBrjsGXwZuFMUA+aYwSDnruiFK+1Eg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "d4c578a7-38c4-4f54-a1a0-b5d58da4124b",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@mail.com"
                         });
                 });
 
@@ -265,19 +287,19 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
+                            AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             ProductId = 1,
                             Quantity = 2
                         },
                         new
                         {
-                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
+                            AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             ProductId = 2,
                             Quantity = 3
                         },
                         new
                         {
-                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
+                            AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             ProductId = 3,
                             Quantity = 4
                         });
@@ -775,9 +797,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 1,
                             AddressDeliveryId = 1,
-                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
-                            CreatedOn = new DateTime(2024, 3, 29, 15, 58, 55, 10, DateTimeKind.Utc).AddTicks(6987),
-                            DateShipping = new DateTime(2024, 3, 29, 15, 58, 55, 10, DateTimeKind.Utc).AddTicks(8194),
+                            AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
+                            CreatedOn = new DateTime(2024, 3, 31, 8, 24, 43, 595, DateTimeKind.Utc).AddTicks(3086),
+                            DateShipping = new DateTime(2024, 3, 31, 8, 24, 43, 595, DateTimeKind.Utc).AddTicks(4658),
                             Discount = 0m,
                             PaymentMethodId = 1,
                             ShippingPrice = 0m,
@@ -790,9 +812,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 2,
                             AddressDeliveryId = 2,
-                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
-                            CreatedOn = new DateTime(2024, 3, 29, 15, 58, 55, 10, DateTimeKind.Utc).AddTicks(9378),
-                            DateShipping = new DateTime(2024, 3, 29, 15, 58, 55, 10, DateTimeKind.Utc).AddTicks(9381),
+                            AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
+                            CreatedOn = new DateTime(2024, 3, 31, 8, 24, 43, 599, DateTimeKind.Utc).AddTicks(2127),
+                            DateShipping = new DateTime(2024, 3, 31, 8, 24, 43, 599, DateTimeKind.Utc).AddTicks(2131),
                             Discount = 0m,
                             PaymentMethodId = 2,
                             ShippingPrice = 0m,
@@ -1237,18 +1259,18 @@ namespace LilsCareApp.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
+                            AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Code = "-10 % за регистрация",
                             Discount = 0.1m,
-                            ExpirationDate = new DateTime(2025, 3, 29, 15, 58, 55, 578, DateTimeKind.Utc).AddTicks(6793)
+                            ExpirationDate = new DateTime(2025, 3, 31, 8, 24, 44, 961, DateTimeKind.Utc).AddTicks(4533)
                         },
                         new
                         {
                             Id = 2,
-                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
+                            AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Code = "-20 % отстъпка",
                             Discount = 0.2m,
-                            ExpirationDate = new DateTime(2025, 3, 29, 15, 58, 55, 578, DateTimeKind.Utc).AddTicks(6802)
+                            ExpirationDate = new DateTime(2025, 3, 31, 8, 24, 44, 961, DateTimeKind.Utc).AddTicks(4540)
                         });
                 });
 
@@ -1293,27 +1315,27 @@ namespace LilsCareApp.Infrastructure.Migrations
                         new
                         {
                             ProductId = 2,
-                            AuthorId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
+                            AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 3, 29, 17, 58, 55, 578, DateTimeKind.Local).AddTicks(6244),
+                            CreatedOn = new DateTime(2024, 3, 31, 11, 24, 44, 961, DateTimeKind.Local).AddTicks(3944),
                             Rating = 4,
                             Title = "Great product"
                         },
                         new
                         {
                             ProductId = 3,
-                            AuthorId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
+                            AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 3, 29, 17, 58, 55, 578, DateTimeKind.Local).AddTicks(6310),
+                            CreatedOn = new DateTime(2024, 3, 31, 11, 24, 44, 961, DateTimeKind.Local).AddTicks(4011),
                             Rating = 3,
                             Title = "Great product"
                         },
                         new
                         {
                             ProductId = 4,
-                            AuthorId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
+                            AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 3, 29, 17, 58, 55, 578, DateTimeKind.Local).AddTicks(6314),
+                            CreatedOn = new DateTime(2024, 3, 31, 11, 24, 44, 961, DateTimeKind.Local).AddTicks(4016),
                             Rating = 3,
                             Title = "Great product"
                         });
@@ -1573,17 +1595,17 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
+                            AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             ProductId = 1
                         },
                         new
                         {
-                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
+                            AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             ProductId = 3
                         },
                         new
                         {
-                            AppUserId = "4ae56886-4229-49e3-a6ae-96ee6e340c4a",
+                            AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             ProductId = 4
                         });
                 });

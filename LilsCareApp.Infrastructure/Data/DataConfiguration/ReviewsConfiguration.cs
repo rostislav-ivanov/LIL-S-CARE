@@ -1,5 +1,4 @@
-﻿using LilsCareApp.Infrastructure.Data.DataConfiguration;
-using LilsCareApp.Infrastructure.Data.Models;
+﻿using LilsCareApp.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -16,7 +15,7 @@ namespace LilsCareApp.Infrastructure.Data
                 Comment = "Great product, I love it!",
                 CreatedOn = DateTime.Now,
                 ProductId = 2,
-                AuthorId = ConfigurationHelper.AppUser.Id,
+                AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
             },
             new Review
             {
@@ -25,7 +24,7 @@ namespace LilsCareApp.Infrastructure.Data
                 Comment = "Great product, I love it!",
                 CreatedOn = DateTime.Now,
                 ProductId = 3,
-                AuthorId = ConfigurationHelper.AppUser.Id,
+                AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
             },
             new Review
             {
@@ -34,7 +33,7 @@ namespace LilsCareApp.Infrastructure.Data
                 Comment = "Great product, I love it!",
                 CreatedOn = DateTime.Now,
                 ProductId = 4,
-                AuthorId = ConfigurationHelper.AppUser.Id,
+                AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
             },
         };
         public void Configure(EntityTypeBuilder<Review> builder)

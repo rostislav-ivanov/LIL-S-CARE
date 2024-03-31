@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using static LilsCareApp.Areas.Admin.AdminConstants;
+using static LilsCareApp.Infrastructure.DataConstants.AdminConstants;
 
 namespace LilsCareApp.Areas.Admin.Controllers
 {
