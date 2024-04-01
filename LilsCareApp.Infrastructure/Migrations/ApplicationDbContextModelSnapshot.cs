@@ -227,7 +227,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6f29b217-a48a-4c07-b8ea-11e1d86097c3",
+                            ConcurrencyStamp = "69f1c7b2-d28d-4a56-9d26-67a270729390",
                             Email = "test@softuni.bg",
                             EmailConfirmed = true,
                             FirstName = "Test",
@@ -235,9 +235,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "TEST@SOFTUNI.BG",
                             NormalizedUserName = "TEST@SOFTUNI.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAEONhWOS32MHwov3RuBAjfJnyLPKgwXWdz+OX+jDDg/t9mW3C4TPjAEDDuQbdD5wy8g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEO31/o23/qoSCsPPmGy5IIopzEeQn9ZHIaRlN88qPOAC+Nt8zFCQDHblD77vp3FdBw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bc44a832-a02f-436c-85d1-e080cf060c6b",
+                            SecurityStamp = "187d17d7-1e7a-4c9b-8b25-943ebd46544c",
                             TwoFactorEnabled = false,
                             UserName = "test@softuni.bg"
                         },
@@ -245,7 +245,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = "45fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a11d5903-6de8-43be-9b45-a161e3d91ad0",
+                            ConcurrencyStamp = "fff926c9-5a4a-4fde-88c1-985eb404bde2",
                             Email = "admin@mail.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -253,9 +253,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIF1OWGzSTWH1McQZHZZn17RktJxToOj2JGUSbTwMgb6Nv7UyDvgiqytkee55zSBlg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFOuqKJhD5Thv4RR8bV2ouzYDsqKSKuQAlRDmoubKIZuPWZAd9i61m6dDmBHv02UBg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6813d3d2-3678-4f05-b524-c02ce46e40ea",
+                            SecurityStamp = "fa41b08c-661a-437d-a28c-67f01dc8dd1b",
                             TwoFactorEnabled = false,
                             UserName = "admin@mail.com"
                         });
@@ -611,67 +611,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.ToTable("MessagesFromClients");
                 });
 
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Optional", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasComment("The optional's primary key");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasComment("Product's optional description");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasComment("Product's optional name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Optionals", t =>
-                        {
-                            t.HasComment("The optional property of product");
-                        });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "25 г.",
-                            Name = "Тегло:"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "5 г.",
-                            Name = "Тегло"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "50 г.",
-                            Name = "Тегло:"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "100 мл.",
-                            Name = "Тегло:"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Description = "20 мл.",
-                            Name = "Тегло:"
-                        });
-                });
-
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -763,8 +702,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Id = 1,
                             AddressDeliveryId = 1,
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                            CreatedOn = new DateTime(2024, 3, 31, 13, 48, 21, 29, DateTimeKind.Utc).AddTicks(9753),
-                            DateShipping = new DateTime(2024, 3, 31, 13, 48, 21, 30, DateTimeKind.Utc).AddTicks(885),
+                            CreatedOn = new DateTime(2024, 4, 1, 4, 41, 9, 387, DateTimeKind.Utc).AddTicks(8029),
+                            DateShipping = new DateTime(2024, 4, 1, 4, 41, 9, 387, DateTimeKind.Utc).AddTicks(9384),
                             Discount = 0m,
                             PaymentMethodId = 1,
                             ShippingPrice = 0m,
@@ -778,8 +717,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Id = 2,
                             AddressDeliveryId = 2,
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                            CreatedOn = new DateTime(2024, 3, 31, 13, 48, 21, 30, DateTimeKind.Utc).AddTicks(1976),
-                            DateShipping = new DateTime(2024, 3, 31, 13, 48, 21, 30, DateTimeKind.Utc).AddTicks(1978),
+                            CreatedOn = new DateTime(2024, 4, 1, 4, 41, 9, 388, DateTimeKind.Utc).AddTicks(6693),
+                            DateShipping = new DateTime(2024, 4, 1, 4, 41, 9, 388, DateTimeKind.Utc).AddTicks(6700),
                             Discount = 0m,
                             PaymentMethodId = 2,
                             ShippingPrice = 0m,
@@ -863,8 +802,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasComment("The product's name");
 
-                    b.Property<int?>("OptionalId")
-                        .HasColumnType("int")
+                    b.Property<string>("Optional")
+                        .HasColumnType("nvarchar(max)")
                         .HasComment("The optional property of product");
 
                     b.Property<decimal>("Price")
@@ -887,8 +826,6 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OptionalId");
-
                     b.ToTable("Products", t =>
                         {
                             t.HasComment("The product model");
@@ -903,9 +840,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Ingredients = "Сухите съставки като био тапиока поддържат подмишниците сухи през деня.\r\n\r\nВитамин Е има антиоксидантен ефект.\r\n\r\nКокосово масло, масло от ший (карите) и пчелен восък.",
                             IsShow = true,
                             Name = "НАТУРАЛЕН СУХ ДЕЗОДОРАНТ",
-                            OptionalId = 1,
+                            Optional = "Тегло:  25 г.",
                             Price = 5.50m,
-                            Purpose = "Вземете блокчето ор кутийката и намажете подмишничите.\r\n\r\n \r\n\r\nИли внимателно го разтопете в опаковка за стик дезодорант за по-лесна и удобна ежедневна употреба.\r\n\r\n \r\n\r\nМоже да преизползвате стара опаковка от предишен дезодорант.\r\n\r\n \r\n\r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено на сухо място, защитено от пряка слънчева светлина.",
+                            Purpose = "Вземете блокчето от кутийката и намажете подмишничите.\r\n\r\n \r\n\r\nИли внимателно го разтопете в опаковка за стик дезодорант за по-лесна и удобна ежедневна употреба.\r\n\r\n \r\n\r\nМоже да преизползвате стара опаковка от предишен дезодорант.\r\n\r\n \r\n\r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено на сухо място, защитено от пряка слънчева светлина.",
                             Quantity = 10,
                             ShippingCondition = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед."
                         },
@@ -917,7 +854,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Ingredients = "Какаовото масло* придава лек и естествен шоколадов аромат и предпазва устните.\r\n\r\n \r\n\r\nМаслото от жожоба* ги подхранва.\r\n\r\n \r\n\r\nПчелния восък* защитава устните, прави балсама траен както върху устните така и в тубичката да не свършва бързо. Придава усещане за възглванича и мекота върху устните.\r\n\r\n \r\n\r\nВитамин Е - натурален антиоксидант, който защитава от вредните влияния от околната среда.\r\n\r\n \r\n\r\n*Био 41% от състава",
                             IsShow = true,
                             Name = "БАЛСАМ ЗА УСТНИ С ЖОЖОБА, КАКАО И ПЧЕЛЕН ВОСЪК",
-                            OptionalId = 2,
+                            Optional = "Тегло:  5 г.",
                             Price = 4.00m,
                             Purpose = "Изцяло натурален, може да използвате винаги когато искате да подхраните и защитите устните си или просто да им придадете лек блясък за завършен вид на визията си.\r\n\r\n \r\n\r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте със затворено капаче, на сухо място и защитено от пряка слънчева светлина.",
                             Quantity = 20,
@@ -931,7 +868,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Ingredients = "Българско студено пресовано масло от шипка* - натурален източник на витамин А, подхранва и стимулура регенерирнето на кожата.\r\n\r\n \r\n\r\nЕкстракт от шипка - ботанически глицернов екстракт, който в този крем е чъдесна комбинация с маслото от шипка.\r\n\r\n \r\n\r\nМасло от ший* - Най-лекото и с най-нисък комедогенен рейтинг (0-2) от всички твърди масла. Това означава, че има ниска вероятност да запуши порите като скалата е от 0 до 5.\r\n\r\n \r\n\r\nВитамин B3 - ниацинамид - антиоксидант, който изравнява тена, регулира себума, помага худратацията и изглажда финни бръчки. Наистирна звучи неверояно, a е доакзрно.\r\n\r\n \r\n\r\nВитамин Е - има ефективо и естетвено антиоксидантно действие:  забвя стареенето като помага за възстановяването на кожата и я предпазва от свободните радикали и вредите от околната среда.\r\n\r\n \r\n\r\nРастителни глицерин и хиалурон - хумектанти - привличат водата и хидратират кожата. Ключова е концентрацията! Твърде много от тях могат да изсушат кожата, като започнат да издърпват влагата от по-дълбоките слоеве на кожата, когато въздуха е сух. Важен е баланса между вода и хумектанти в продукта.\r\n\r\n \r\n\r\n*Био",
                             IsShow = true,
                             Name = "ХИДРАТИРАЩ КРЕМ С ШИПКА И НИАЦИНАМИД",
-                            OptionalId = 3,
+                            Optional = "Тегло:  50 г.",
                             Price = 12.00m,
                             Purpose = "Нанесете върху суха или влажна кожа. Малко количество е достатъчно за цялото лице и шия. Използвайте 1-2 пъти дневно според необходимостта и сухотата на кожата.\r\n\r\n \r\n\r\nМоже да нансете върху влажна кожа, например след душ и измивен гел, за да заключите хидратацията.\r\n\r\n \r\n\r\nИли върхъ суха кожа, за да я защитите.\r\n\r\n \r\n\r\nНанасяйте върху добре почистена кожа с чисти ръце. Само за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено, на сухо място, защитено от пряка слънчева светлина.",
                             Quantity = 30,
@@ -945,7 +882,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Ingredients = "Екстракт от зелен чай - антиоксидантно и успокояващо действе, помага против появата на акне\r\n\r\n \r\n\r\nБио масло от Жожоба - помага за нежното разтваряне на грима и подхранва кожата\r\n\r\n \r\n\r\nВитамин Е - антиоксидант, успокоява раздразненията, бори се със свободните радикали и забавя стареенето на кожата\r\n\r\n \r\n\r\nПантенол - провитамин B5 - с растителен прозход. Хидратира и подхранва\r\n\r\n \r\n\r\nЕтерично масло грейпфрут - лек цитрусов аромат",
                             IsShow = true,
                             Name = "ДВУФАЗНА МИЦЕЛАРНА ВОДА ЗЕЛЕН ЧАЙ И ЖОЖОБА",
-                            OptionalId = 4,
+                            Optional = "Тегло:  100 мл.",
                             Price = 10.00m,
                             Purpose = "Разклаете преди употреба.\r\n\r\n \r\n\r\nМоже да използвате винаги, когато искате нежно да премахнете грима. Разклатете преди употреба и напоете памучно тампонче. Нежно притиснете към кожата, за да се намокри и да започне да разтваря грима. След това отстранете грима с леки движения от центъра на лицето към страните.\r\n\r\n \r\n\r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте на сухо място, защитено от пряка слънчева светлина.",
                             Quantity = 0,
@@ -959,7 +896,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Ingredients = "Етеричните масла от сладък портокал и евкалипт придават свеж, леко ментов цитрусов аромат и имат антибактериален ефект.\r\n\r\n \r\n\r\nСухите съставки като био тапиока поддържат подмишниците сухи през деня.\r\n\r\n \r\n\r\nВитамин Е има антиоксидантен ефект.\r\n\r\n \r\n\r\nА цялата комбинация от съставки държи неприятните миризми далеч.",
                             IsShow = true,
                             Name = "НАТУРАЛЕН КРЕМ ДЕЗОДОРАНТ",
-                            OptionalId = 5,
+                            Optional = "Тегло:  50 г.",
                             Price = 8.50m,
                             Purpose = "Вземете на върха на пръстите много малко количесто (по-малко дори от грахово зрънце), леко го затоплете между пръстите и разнесете добре подмишниците.\r\n\r\n \r\n\r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено на сухо място, защитено от пряка слънчева светлина.",
                             Quantity = 10,
@@ -973,7 +910,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Ingredients = "Масло от шипка - помога ревитализирането на кожата \r\n\r\nМасло от ягодови семки - хидратира в дълбочина и има протививъзвпалителен ефект\r\n\r\nМасло от жожоба* - натурално съдържа над 95% серамиди, подхранва кожата и заздравява кожната бариера\r\n\r\nАрганово масло* - подхранва, защитава и подобрява хидратацията и еластичносттна на кожата\r\n\r\nМсла от мандарина и иланг-иланг* - придават лек, свеж и релаксиращ аромат, за да се насладите максимално на момента в грижа за кожата\r\n\r\nВитамин Е* - антиоксидант - успокоява раздразнената кожа и забавя страеенето като бори се със свободните радикали, UV уверждането и процесите на оксидация\r\n\r\n*Био",
                             IsShow = true,
                             Name = "ДВУФАЗНА МИЦЕЛАРНА ВОДА ЗЕЛЕН ЧАЙ И ЖОЖОБА",
-                            OptionalId = 3,
+                            Optional = "Тегло:  20 мл.",
                             Price = 10.00m,
                             Purpose = "Например след лек хидратиращ лосион, за да заключи хидратацията и полезните съставки.\r\n\r\nДиректно върху влажна кожа за по-добро абсорбиране и защита.\r\n\r\nИли върху суха кожа, за да предотврати трансепидеррмалната загуба на вода от кожата.\r\n\r\n \r\n\r\nПодходящ за защита на кожата в края на рутината. Комбинира се добре след ексфолиращи и/или хидратиращи продукти.\r\n\r\n \r\n\r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Използвайте с чисти ръце и кожа. Съхранявайте добре затворено, на сухо място, защитено от пряка слънчева светлина.",
                             Quantity = 20,
@@ -982,16 +919,10 @@ namespace LilsCareApp.Infrastructure.Migrations
                         new
                         {
                             Id = 7,
-                            Description = "",
-                            IngredientINCIs = "",
-                            Ingredients = "",
                             IsShow = true,
-                            Name = "ДВУФАЗНА МИЦЕЛАРНА ВОДА ЗЕЛЕН ЧАЙ И ЖОЖОБА",
-                            OptionalId = 4,
+                            Name = "Some name",
                             Price = 10.00m,
-                            Purpose = "",
-                            Quantity = 0,
-                            ShippingCondition = ""
+                            Quantity = 10
                         });
                 });
 
@@ -1240,7 +1171,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Code = "-10 % за регистрация",
                             Discount = 0.1m,
-                            ExpirationDate = new DateTime(2025, 3, 31, 13, 48, 21, 779, DateTimeKind.Utc).AddTicks(6214)
+                            ExpirationDate = new DateTime(2025, 4, 1, 4, 41, 10, 237, DateTimeKind.Utc).AddTicks(6633)
                         },
                         new
                         {
@@ -1248,7 +1179,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Code = "-20 % отстъпка",
                             Discount = 0.2m,
-                            ExpirationDate = new DateTime(2025, 3, 31, 13, 48, 21, 779, DateTimeKind.Utc).AddTicks(6222)
+                            ExpirationDate = new DateTime(2025, 4, 1, 4, 41, 10, 237, DateTimeKind.Utc).AddTicks(6643)
                         });
                 });
 
@@ -1295,7 +1226,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 2,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 3, 31, 16, 48, 21, 779, DateTimeKind.Local).AddTicks(5480),
+                            CreatedOn = new DateTime(2024, 4, 1, 7, 41, 10, 237, DateTimeKind.Local).AddTicks(6211),
                             Rating = 4,
                             Title = "Great product"
                         },
@@ -1304,7 +1235,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 3,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 3, 31, 16, 48, 21, 779, DateTimeKind.Local).AddTicks(5538),
+                            CreatedOn = new DateTime(2024, 4, 1, 7, 41, 10, 237, DateTimeKind.Local).AddTicks(6272),
                             Rating = 3,
                             Title = "Great product"
                         },
@@ -1313,7 +1244,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 4,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 3, 31, 16, 48, 21, 779, DateTimeKind.Local).AddTicks(5543),
+                            CreatedOn = new DateTime(2024, 4, 1, 7, 41, 10, 237, DateTimeKind.Local).AddTicks(6276),
                             Rating = 3,
                             Title = "Great product"
                         });
@@ -1834,15 +1765,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Navigation("StatusOrder");
                 });
 
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Product", b =>
-                {
-                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.Optional", "Optional")
-                        .WithMany("Products")
-                        .HasForeignKey("OptionalId");
-
-                    b.Navigation("Optional");
-                });
-
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ProductCategory", b =>
                 {
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.Category", "Category")
@@ -2016,11 +1938,6 @@ namespace LilsCareApp.Infrastructure.Migrations
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Category", b =>
                 {
                     b.Navigation("ProductsCategories");
-                });
-
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Optional", b =>
-                {
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Order", b =>

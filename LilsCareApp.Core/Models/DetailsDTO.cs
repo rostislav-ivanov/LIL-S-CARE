@@ -11,7 +11,7 @@
 
         public int AvailableQuantity { get; set; }
 
-        public KeyValuePair<string, string>? Optional { get; set; }
+        public string? Optional { get; set; }
 
         public IEnumerable<string>? Description { get; set; }
 
