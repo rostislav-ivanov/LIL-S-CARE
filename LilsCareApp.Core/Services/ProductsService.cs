@@ -104,7 +104,7 @@ namespace LilsCareApp.Core.Services
                 {
                     Id = bu.Product.Id,
                     Name = bu.Product.Name,
-                    Optional = new KeyValuePair<string, string>(bu.Product.Optional.Name, bu.Product.Optional.Description),
+                    Optional = bu.Product.Optional,
                     Price = bu.Product.Price,
                     ImageUrl = bu.Product.Images.FirstOrDefault().ImagePath,
                     Quantity = bu.Quantity

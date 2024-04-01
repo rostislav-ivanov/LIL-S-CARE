@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LilsCareApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240331122628_InitialMigration")]
+    [Migration("20240401043917_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -338,35 +338,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.ToTable("MessagesFromClients");
                 });
 
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Optional", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasComment("The optional's primary key");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasComment("Product's optional description");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasComment("Product's optional name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Optionals", t =>
-                        {
-                            t.HasComment("The optional property of product");
-                        });
-                });
-
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -509,8 +480,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasComment("The product's name");
 
-                    b.Property<int?>("OptionalId")
-                        .HasColumnType("int")
+                    b.Property<string>("Optional")
+                        .HasColumnType("nvarchar(max)")
                         .HasComment("The optional property of product");
 
                     b.Property<decimal>("Price")
@@ -532,8 +503,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasComment("Condition of shipping the product");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OptionalId");
 
                     b.ToTable("Products", t =>
                         {
@@ -1041,15 +1010,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Navigation("StatusOrder");
                 });
 
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Product", b =>
-                {
-                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.Optional", "Optional")
-                        .WithMany("Products")
-                        .HasForeignKey("OptionalId");
-
-                    b.Navigation("Optional");
-                });
-
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ProductCategory", b =>
                 {
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.Category", "Category")
@@ -1223,11 +1183,6 @@ namespace LilsCareApp.Infrastructure.Migrations
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Category", b =>
                 {
                     b.Navigation("ProductsCategories");
-                });
-
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Optional", b =>
-                {
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Order", b =>

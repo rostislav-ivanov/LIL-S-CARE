@@ -90,7 +90,7 @@ namespace LilsCareApp.Services
                     {
                         Id = p.Id,
                         Name = p.Name,
-                        Optional = new KeyValuePair<string, string>(p.Optional.Name, p.Optional.Description),
+                        Optional = p.Optional,
                         Price = p.Price,
                         ImageUrl = p.Images!.FirstOrDefault()!.ImagePath,
                         Quantity = guestProduct.Quantity

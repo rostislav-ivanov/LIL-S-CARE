@@ -24,11 +24,7 @@ namespace LilsCareApp.Infrastructure.Data.Models
         public int Quantity { get; set; }
 
         [Comment("The optional property of product")]
-        public int? OptionalId { get; set; }
-
-        [Comment("Navigation property to the optional property of product")]
-        [ForeignKey(nameof(OptionalId))]
-        public Optional Optional { get; set; } = null!;
+        public string? Optional { get; set; }
 
         [Comment("The product's description")]
         [MaxLength(DescriptionMaxLength)]

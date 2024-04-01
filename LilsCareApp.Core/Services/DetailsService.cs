@@ -11,6 +11,7 @@ namespace LilsCareApp.Core.Services
     {
         private readonly ApplicationDbContext _context;
         private const string patternVideo = @"\.mp(4)?$";
+        private const string pattern = "\r\n\r\n";
 
         public DetailsService(ApplicationDbContext context)
         {
@@ -28,12 +29,12 @@ namespace LilsCareApp.Core.Services
                     Price = p.Price,
                     Quantity = 1,
                     AvailableQuantity = p.Quantity,
-                    Optional = new KeyValuePair<string, string>(p.Optional.Name, p.Optional.Description),
-                    Description = p.Description.Split(new string[] { "\r\n\r\n" }, StringSplitOptions.None),
-                    Ingredients = p.Ingredients.Split(new string[] { "\r\n\r\n" }, StringSplitOptions.None),
-                    Purpose = p.Purpose.Split(new string[] { "\r\n\r\n" }, StringSplitOptions.None),
-                    ShippingCondition = p.ShippingCondition.Split(new string[] { "\r\n\r\n" }, StringSplitOptions.None),
-                    IngredientINCIs = p.IngredientINCIs.Split(new string[] { "\r\n\r\n" }, StringSplitOptions.None),
+                    Optional = p.Optional,
+                    Description = p.Description.Split(new string[] { pattern }, StringSplitOptions.None) ?? null,
+                    Ingredients = p.Ingredients.Split(new string[] { pattern }, StringSplitOptions.None) ?? null,
+                    Purpose = p.Purpose.Split(new string[] { pattern }, StringSplitOptions.None) ?? null,
+                    ShippingCondition = p.ShippingCondition.Split(new string[] { pattern } ?? null, StringSplitOptions.None) ?? null,
+                    IngredientINCIs = p.IngredientINCIs.Split(new string[] { pattern }, StringSplitOptions.None) ?? null,
                     Images = p.Images
                         .Where(im => im.ProductId == p.Id)
                         .Select(im => new ImageDTO
