@@ -62,12 +62,12 @@ namespace LilsCareApp.Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, comment: "The product's name"),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false, comment: "The product's price"),
                     Quantity = table.Column<int>(type: "int", nullable: false, comment: "The product's quantity"),
-                    Optional = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "The optional property of product"),
-                    Description = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: true, comment: "The product's description"),
-                    Ingredients = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: true, comment: "The product ingredients"),
-                    Purpose = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: true, comment: "Properties of the product"),
-                    ShippingCondition = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: true, comment: "Condition of shipping the product"),
-                    IngredientINCIs = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: true, comment: "The product ingredients INCI"),
+                    Optional = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "The optional property of product"),
+                    Description = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: false, comment: "The product's description"),
+                    Ingredients = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: false, comment: "The product ingredients"),
+                    Purpose = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: false, comment: "Properties of the product"),
+                    ShippingCondition = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: false, comment: "Condition of shipping the product"),
+                    IngredientINCIs = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: false, comment: "The product ingredients INCI"),
                     IsShow = table.Column<bool>(type: "bit", nullable: false, comment: "Is the product show on online store")
                 },
                 constraints: table =>

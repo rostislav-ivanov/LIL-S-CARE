@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LilsCareApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240401043917_InitialMigration")]
+    [Migration("20240401051831_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -456,16 +456,19 @@ namespace LilsCareApp.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasMaxLength(1500)
                         .HasColumnType("nvarchar(1500)")
                         .HasComment("The product's description");
 
                     b.Property<string>("IngredientINCIs")
+                        .IsRequired()
                         .HasMaxLength(1500)
                         .HasColumnType("nvarchar(1500)")
                         .HasComment("The product ingredients INCI");
 
                     b.Property<string>("Ingredients")
+                        .IsRequired()
                         .HasMaxLength(1500)
                         .HasColumnType("nvarchar(1500)")
                         .HasComment("The product ingredients");
@@ -481,6 +484,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasComment("The product's name");
 
                     b.Property<string>("Optional")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasComment("The optional property of product");
 
@@ -489,6 +493,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasComment("The product's price");
 
                     b.Property<string>("Purpose")
+                        .IsRequired()
                         .HasMaxLength(1500)
                         .HasColumnType("nvarchar(1500)")
                         .HasComment("Properties of the product");
@@ -498,6 +503,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasComment("The product's quantity");
 
                     b.Property<string>("ShippingCondition")
+                        .IsRequired()
                         .HasMaxLength(1500)
                         .HasColumnType("nvarchar(1500)")
                         .HasComment("Condition of shipping the product");

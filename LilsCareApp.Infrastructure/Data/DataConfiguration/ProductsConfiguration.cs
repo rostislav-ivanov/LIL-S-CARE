@@ -95,10 +95,16 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 new Product
                 {
                     Id = 7,
-                    Name = "Some name",
+                    Name = "",
                     Price = 10.00m,
-                    Quantity = 10,
+                    Optional = "",
+                    Quantity = 0,
                     IsShow = true,
+                    Description = "",
+                    Ingredients = "",
+                    Purpose = "",
+                    ShippingCondition = "",
+                    IngredientINCIs = "",
                 },
 
         };

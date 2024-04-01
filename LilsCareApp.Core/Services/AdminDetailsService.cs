@@ -28,7 +28,7 @@ namespace LilsCareApp.Core.Services
                  Price = p.Price,
                  Quantity = p.Quantity,
                  Optional = p.Optional,
-                 Description = p.Description.Split(new string[] { "\r\n\r\n" }, StringSplitOptions.None),
+                 Description = p.Description.Split(new string[] { pattern }, StringSplitOptions.None),
                  Ingredients = p.Ingredients.Split(new string[] { pattern }, StringSplitOptions.None),
                  Purpose = p.Purpose.Split(new string[] { pattern }, StringSplitOptions.None),
                  ShippingCondition = p.ShippingCondition.Split(new string[] { pattern }, StringSplitOptions.None),

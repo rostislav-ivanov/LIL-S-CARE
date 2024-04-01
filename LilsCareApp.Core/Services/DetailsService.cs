@@ -30,10 +30,10 @@ namespace LilsCareApp.Core.Services
                     Quantity = 1,
                     AvailableQuantity = p.Quantity,
                     Optional = p.Optional,
-                    Description = p.Description.Split(new string[] { pattern }, StringSplitOptions.None) ?? null,
-                    Ingredients = p.Ingredients.Split(new string[] { pattern }, StringSplitOptions.None) ?? null,
+                    Description = p.Description.Split(new string[] { pattern }, StringSplitOptions.None),
+                    Ingredients = p.Ingredients.Split(new string[] { pattern }, StringSplitOptions.None),
                     Purpose = p.Purpose.Split(new string[] { pattern }, StringSplitOptions.None) ?? null,
-                    ShippingCondition = p.ShippingCondition.Split(new string[] { pattern } ?? null, StringSplitOptions.None) ?? null,
+                    ShippingCondition = p.ShippingCondition.Split(new string[] { pattern }, StringSplitOptions.None),
                     IngredientINCIs = p.IngredientINCIs.Split(new string[] { pattern }, StringSplitOptions.None) ?? null,
                     Images = p.Images
                         .Where(im => im.ProductId == p.Id)
