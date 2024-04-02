@@ -23,7 +23,7 @@ namespace LilsCareApp.Core.Services
                     Id = p.Id,
                     Name = p.Name,
                     Price = p.Price,
-                    ImageUrl = p.Images.FirstOrDefault().ImagePath ?? "https://via.placeholder.com/150",
+                    ImageUrl = p.Images.FirstOrDefault(im => im.ImageOrder == 1).ImagePath ?? "https://via.placeholder.com/150",
                     Quantity = p.Quantity,
                     Categories = p.ProductsCategories.Select(pc => new CategoryDTO
                     {
@@ -48,7 +48,7 @@ namespace LilsCareApp.Core.Services
                     Id = p.Id,
                     Name = p.Name,
                     Price = p.Price,
-                    ImageUrl = p.Images.FirstOrDefault().ImagePath ?? "https://via.placeholder.com/150",
+                    ImageUrl = p.Images.FirstOrDefault(im => im.ImageOrder == 1).ImagePath ?? "https://via.placeholder.com/150",
                     Quantity = p.Quantity,
                     Categories = p.ProductsCategories.Select(pc => new CategoryDTO
                     {
@@ -106,7 +106,7 @@ namespace LilsCareApp.Core.Services
                     Name = bu.Product.Name,
                     Optional = bu.Product.Optional,
                     Price = bu.Product.Price,
-                    ImageUrl = bu.Product.Images.FirstOrDefault().ImagePath,
+                    ImageUrl = bu.Product.Images.FirstOrDefault(im => im.ImageOrder == 1).ImagePath,
                     Quantity = bu.Quantity
                 })
                 .AsNoTracking()
@@ -173,7 +173,7 @@ namespace LilsCareApp.Core.Services
                     Id = p.Id,
                     Name = p.Name,
                     Price = p.Price,
-                    ImageUrl = p.Images.FirstOrDefault().ImagePath ?? "https://via.placeholder.com/150",
+                    ImageUrl = p.Images.FirstOrDefault(im => im.ImageOrder == 1).ImagePath ?? "https://via.placeholder.com/150",
                     Quantity = p.Quantity,
                     Categories = p.ProductsCategories.Select(pc => new CategoryDTO
                     {

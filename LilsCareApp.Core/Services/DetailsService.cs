@@ -11,7 +11,6 @@ namespace LilsCareApp.Core.Services
     {
         private readonly ApplicationDbContext _context;
         private const string patternVideo = @"\.mp(4)?$";
-        private const string pattern = "\r\n\r\n";
 
         public DetailsService(ApplicationDbContext context)
         {
@@ -30,18 +29,20 @@ namespace LilsCareApp.Core.Services
                     Quantity = 1,
                     AvailableQuantity = p.Quantity,
                     Optional = p.Optional,
-                    Description = p.Description.Split(new string[] { pattern }, StringSplitOptions.None),
-                    Ingredients = p.Ingredients.Split(new string[] { pattern }, StringSplitOptions.None),
-                    Purpose = p.Purpose.Split(new string[] { pattern }, StringSplitOptions.None) ?? null,
-                    ShippingCondition = p.ShippingCondition.Split(new string[] { pattern }, StringSplitOptions.None),
-                    IngredientINCIs = p.IngredientINCIs.Split(new string[] { pattern }, StringSplitOptions.None) ?? null,
+                    Description = p.Description,
+                    Ingredients = p.Ingredients,
+                    Purpose = p.Purpose ?? null,
+                    ShippingCondition = p.ShippingCondition,
+                    IngredientINCIs = p.IngredientINCIs ?? null,
                     Images = p.Images
                         .Where(im => im.ProductId == p.Id)
+                        .OrderBy(im => im.ImageOrder)
                         .Select(im => new ImageDTO
                         {
                             ImagePath = im.ImagePath,
                             IsVideo = Regex.IsMatch(im.ImagePath, patternVideo, RegexOptions.IgnoreCase)
-                        }).ToList(),
+                        })
+                        .ToList(),
                     Reviews = p.Reviews
                         .Select(r => new GetReviewDTO
                         {
@@ -96,7 +97,7 @@ namespace LilsCareApp.Core.Services
                 {
                     ProductId = r.ProductId,
                     ProductName = r.Product.Name,
-                    ProductImage = r.Product.Images.FirstOrDefault().ImagePath,
+                    ProductImage = r.Product.Images.FirstOrDefault(im => im.ImageOrder == 1).ImagePath,
                     AuthorId = r.AuthorId,
                     AuthorName = r.Author.UserName ?? string.Empty,
                     Email = r.Author.Email ?? string.Empty,

@@ -23,5 +23,8 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("Navigation to the products that the image is for")]
         [ForeignKey(nameof(ProductId))]
         public Product Product { get; set; } = null!;
+
+        [Comment("The order of the image in the product")]
+        public int ImageOrder { get; set; }
     }
 }
