@@ -169,7 +169,7 @@
 <div class="d-flex justify-content-end">
     <div class="col-5">
         <div class="row">
-            @foreach (var paragraph in Model.GetDescription())
+            @foreach (var paragraph in Model.GetSection(1))
             {
                 if (paragraph != " ")
                 {
@@ -184,117 +184,36 @@
     </div>
     <div class="col-6 px-5">
         <ul id="accordion" class="list-group list-group-flush">
-            <li class="list-group-item">
-                <a class="nav-link toggle-sign fs-6"
-                   data-bs-toggle="collapse"
-                   href="#collapse1">
-                    <div class="d-flex justify-content-between">
-                        <div>ЗА СЪСТАВКИТЕ</div>
-                        <span>+</span>
-                    </div>
-                </a>
-                <div id="collapse1" class="collapse" data-bs-parent="#accordion">
-                    <div class="mt-4">
-                        <div class="row">
-                            @foreach (var paragraph in Model.GetIngredients())
-                            {
-                                if (paragraph != " ")
+            @for (int i = 1; i < Model.Sections.Count(); i++)
+            {
+                <li class="list-group-item">
+                    <a class="nav-link toggle-sign fs-6"
+                       data-bs-toggle="collapse"
+                       href="#collapse@(i)">
+                        <div class="d-flex justify-content-between">
+                            <div>@Model.Sections[i].Title</div>
+                            <span>+</span>
+                        </div>
+                    </a>
+                    <div id="collapse@(i)" class="collapse" data-bs-parent="#accordion">
+                        <div class="mt-4">
+                            <div class="row">
+                                @foreach (var paragraph in Model.GetSection(i+1))
                                 {
-                                    <span>@paragraph</span>
+                                    if (paragraph != " ")
+                                    {
+                                        <span>@paragraph</span>
+                                    }
+                                    else
+                                    {
+                                        <p></p>
+                                    }
                                 }
-                                else
-                                {
-                                    <p></p>
-                                }
-                            }
+                            </div>
                         </div>
                     </div>
-                </div>
-            </li>
-            <li class="list-group-item">
-                <a class="nav-link toggle-sign fs-6"
-                   data-bs-toggle="collapse"
-                   href="#collapse2">
-                    <div class="d-flex justify-content-between">
-                        <div>УПОТРЕБА</div>
-                        <span>+</span>
-                    </div>
-                </a>
-                <div id="collapse2" class="collapse" data-bs-parent="#accordion">
-                    <div class="mt-4">
-                        <div class="row">
-                            @foreach (var paragraph in Model.GetPurpose())
-                            {
-                                if (paragraph != " ")
-                                {
-                                    <span>@paragraph</span>
-                                }
-                                else
-                                {
-                                    <p></p>
-                                }
-                            }
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="list-group-item">
-                <a class="nav-link toggle-sign fs-6"
-                   data-bs-toggle="collapse"
-                   href="#collapse3">
-                    <div class="d-flex justify-content-between">
-                        <div>ИЗПРАЩАНЕ И ДОСТАВКА</div>
-                        <span>+</span>
-                    </div>
-                </a>
-                <div id="collapse3" class="collapse" data-bs-parent="#accordion">
-                    <div class="mt-4">
-                        <div class="row">
-                            @foreach (var paragraph in Model.GetShippingCondition())
-                            {
-                                if (paragraph != " ")
-                                {
-                                    <span>@paragraph</span>
-                                }
-                                else
-                                {
-                                    <p></p>
-                                }
-                            }
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="list-group-item">
-                <a class="nav-link toggle-sign fs-6"
-                   data-bs-toggle="collapse"
-                   href="#collapse4">
-                    <div class="d-flex justify-content-between">
-                        <div>СЪСТАВ, INCI</div>
-                        <span>+</span>
-                    </div>
-                </a>
-                <div id="collapse4" class="collapse" data-bs-parent="#accordion">
-                    <div class="mt-4">
-                        <div class="row">
-                            @foreach (var paragraph in Model.GetIngredientINCIs())
-                            {
-                                if (paragraph != " ")
-                                {
-                                    <span>@paragraph</span>
-                                }
-                                else
-                                {
-                                    <p></p>
-                                }
-                            }
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
-</div>
+                </li>
+            }
 <!-- Product Description End -->
 <!-- Product Reviews Start -->
 @if (Model.Reviews.Count == 0)
@@ -302,7 +221,7 @@
     <div id="leave-comment" class="text-center">
         <p class="fs-5">Все още няма отзиви</p>
         <p>Споделете вашите мисли. Бъдете първият, който ще остави отзив.</p>
-        <a type="submit" asp-controller="Details" asp-action="AddReview" asp-route-productId="@Model.Id" class="btn btn-lg">Отзив</a>
+        <a type="submit" asp-controller="Details" asp-action="AddReview" asp-route-productId="@Model.Id" class="btn btn-sm">Отзив</a>
     </div>
   
 }

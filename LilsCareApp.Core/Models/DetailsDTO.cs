@@ -14,34 +14,26 @@
 
         public string? Optional { get; set; }
 
-        public string Description { get; set; } = string.Empty;
+        public List<SectionDTO> Sections { get; set; } = [];
 
-        public string Ingredients { get; set; } = string.Empty;
+        public List<ImageDTO> Images { get; set; } = [];
 
-        public string Purpose { get; set; } = string.Empty;
-
-        public string ShippingCondition { get; set; } = string.Empty;
-
-        public string IngredientINCIs { get; set; } = string.Empty;
-
-        public List<ImageDTO> Images { get; set; } = new List<ImageDTO>();
-
-        public List<GetReviewDTO> Reviews { get; set; } = new List<GetReviewDTO>();
+        public List<GetReviewDTO> Reviews { get; set; } = [];
 
         public double Rating { get; set; }
 
-        public List<CategoryDTO> ProductsCategories { get; set; } = new List<CategoryDTO>();
+        public List<CategoryDTO> ProductsCategories { get; set; } = [];
 
         public bool IsWish { get; set; }
 
         public AddReviewDTO? AddReview { get; set; }
 
-        public IEnumerable<string> GetDescription() => Description.Split(new string[] { separator }, StringSplitOptions.RemoveEmptyEntries);
-        public IEnumerable<string> GetIngredients() => Ingredients.Split(new string[] { separator }, StringSplitOptions.RemoveEmptyEntries);
-        public IEnumerable<string> GetPurpose() => Purpose.Split(new string[] { separator }, StringSplitOptions.RemoveEmptyEntries);
-        public IEnumerable<string> GetShippingCondition() => ShippingCondition.Split(new string[] { separator }, StringSplitOptions.RemoveEmptyEntries);
-        public IEnumerable<string> GetIngredientINCIs() => IngredientINCIs.Split(new string[] { separator }, StringSplitOptions.RemoveEmptyEntries);
 
-
+        public List<string> GetSection(int sectionOrder)
+        {
+            var section = Sections
+                .FirstOrDefault(s => s.SectionOrder == sectionOrder);
+            return section != null ? section.Description.Split(new string[] { separator }, StringSplitOptions.RemoveEmptyEntries).ToList() : [];
+        }
     }
 }

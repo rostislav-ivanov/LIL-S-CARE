@@ -227,7 +227,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "08210cb9-766b-455b-b44d-7946caea3ec2",
+                            ConcurrencyStamp = "60a40ad3-cc7d-40c6-a5c9-6baacfdde8a4",
                             Email = "test@softuni.bg",
                             EmailConfirmed = true,
                             FirstName = "Test",
@@ -235,9 +235,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "TEST@SOFTUNI.BG",
                             NormalizedUserName = "TEST@SOFTUNI.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPvNV8ylQ6C3WiPPRFkPPq9mz5x8ML+QIgOqPeQo5f9rq+mj7agPB0So6HCkuNjiIA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFhw60llp4BnOvJ6ONvGpzVHIMScd9pxVzEYtSzqdkFo08Iz6avghvOeMGs4j2VG4w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0ff4730e-b84f-4118-bb28-d1c602ccfb40",
+                            SecurityStamp = "30cb04e6-38e2-4d9e-8a3d-d9dbf9717391",
                             TwoFactorEnabled = false,
                             UserName = "test@softuni.bg"
                         },
@@ -245,7 +245,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = "45fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5d45ef54-109c-4937-8781-80f55c050a7d",
+                            ConcurrencyStamp = "64a0ade4-28e5-449d-94a2-cdb743d6636b",
                             Email = "admin@mail.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -253,9 +253,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHKC/Rin1h/fRlyVyD8YhE5+F60/a9qDIrvS/pHQGfsJBtSTy8Cuf/LpzcaJ0Benlw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFAc5TExRW5WlolqWSTQ0ppjP4mX3mJfm0okz0u+jHMSIkWMGbpZInNXx9NhKUl87g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "127935f5-856b-40bf-a93d-f449ddb17d6f",
+                            SecurityStamp = "a4076b35-f265-4589-83db-9a7de2f01059",
                             TwoFactorEnabled = false,
                             UserName = "admin@mail.com"
                         });
@@ -733,8 +733,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Id = 1,
                             AddressDeliveryId = 1,
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                            CreatedOn = new DateTime(2024, 4, 2, 5, 36, 27, 509, DateTimeKind.Utc).AddTicks(8754),
-                            DateShipping = new DateTime(2024, 4, 2, 5, 36, 27, 509, DateTimeKind.Utc).AddTicks(9941),
+                            CreatedOn = new DateTime(2024, 4, 2, 15, 4, 20, 579, DateTimeKind.Utc).AddTicks(5010),
+                            DateShipping = new DateTime(2024, 4, 2, 15, 4, 20, 579, DateTimeKind.Utc).AddTicks(6262),
                             Discount = 0m,
                             PaymentMethodId = 1,
                             ShippingPrice = 0m,
@@ -748,8 +748,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Id = 2,
                             AddressDeliveryId = 2,
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                            CreatedOn = new DateTime(2024, 4, 2, 5, 36, 27, 510, DateTimeKind.Utc).AddTicks(1069),
-                            DateShipping = new DateTime(2024, 4, 2, 5, 36, 27, 510, DateTimeKind.Utc).AddTicks(1071),
+                            CreatedOn = new DateTime(2024, 4, 2, 15, 4, 20, 580, DateTimeKind.Utc).AddTicks(6633),
+                            DateShipping = new DateTime(2024, 4, 2, 15, 4, 20, 580, DateTimeKind.Utc).AddTicks(6635),
                             Discount = 0m,
                             PaymentMethodId = 2,
                             ShippingPrice = 0m,
@@ -808,24 +808,6 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(1500)
-                        .HasColumnType("nvarchar(1500)")
-                        .HasComment("The product's description");
-
-                    b.Property<string>("IngredientINCIs")
-                        .IsRequired()
-                        .HasMaxLength(1500)
-                        .HasColumnType("nvarchar(1500)")
-                        .HasComment("The product ingredients INCI");
-
-                    b.Property<string>("Ingredients")
-                        .IsRequired()
-                        .HasMaxLength(1500)
-                        .HasColumnType("nvarchar(1500)")
-                        .HasComment("The product ingredients");
-
                     b.Property<bool>("IsShow")
                         .HasColumnType("bit")
                         .HasComment("Is the product show on online store");
@@ -838,28 +820,17 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     b.Property<string>("Optional")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasComment("The optional property of product");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)")
                         .HasComment("The product's price");
 
-                    b.Property<string>("Purpose")
-                        .IsRequired()
-                        .HasMaxLength(1500)
-                        .HasColumnType("nvarchar(1500)")
-                        .HasComment("Properties of the product");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int")
                         .HasComment("The product's quantity");
-
-                    b.Property<string>("ShippingCondition")
-                        .IsRequired()
-                        .HasMaxLength(1500)
-                        .HasColumnType("nvarchar(1500)")
-                        .HasComment("Condition of shipping the product");
 
                     b.HasKey("Id");
 
@@ -872,100 +843,65 @@ namespace LilsCareApp.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Нежен, изцяло натурален и ръчно изработен сух дезодорант. Подходящ за ежедневна употреба.\r\n \r\nБез парфюм и без етерични масла.\r\n \r\nВ нов твърд вариант за по-лесна употеба и нансяне дирктно.\r\n \r\nИли може да използвате стара опаковка от стик дезодорант, за да разтопите блокчето за удобна ежедневна употреба.\r\n \r\nСрежете блокчето на парченца и ги сложете в стик опаковка. Иползвайте микровълнова фурна на ниска температура и за картки интервали докато блокечето се разтопи. Оставете да изстине и стегне и готово!\r\n \r\nАко не разполагате с микровълнова фурна, може да го разтопите на водна баня в стик. Увийете плътно стик опковката със стреч фолио, за да не влиза вода в опковката и при продукта.\r\n \r\n100% натурален\r\n10 % от България\r\n78.4% био",
-                            IngredientINCIs = "Cocos Nucifera (Coconut) Oil*, Tapioca Starch*, Butyrospermum Parkii (Shea) Butter*, Cera Alba (Beeswax), Glyceryl Stearate, Sodium Bicarbonate, Tocopherol (Vit E), Helianthus Annuus (Sunflower) Seed Oil* \r\n*Bio",
-                            Ingredients = "Сухите съставки като био тапиока поддържат подмишниците сухи през деня.\r\nВитамин Е има антиоксидантен ефект.\r\nКокосово масло, масло от ший (карите) и пчелен восък.",
                             IsShow = true,
                             Name = "НАТУРАЛЕН СУХ ДЕЗОДОРАНТ",
                             Optional = "Тегло:  25 г.",
                             Price = 5.50m,
-                            Purpose = "Вземете блокчето от кутийката и намажете подмишничите.\r\n \r\nИли внимателно го разтопете в опаковка за стик дезодорант за по-лесна и удобна ежедневна употреба.\r\n \r\nМоже да преизползвате стара опаковка от предишен дезодорант.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено на сухо място, защитено от пряка слънчева светлина.",
-                            Quantity = 10,
-                            ShippingCondition = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед."
+                            Quantity = 10
                         },
                         new
                         {
                             Id = 2,
-                            Description = "Изцяло натурален и ръчно изработен балсам за устни, който носи усещане за уют и мекота. Създаден да е нежен и защитаващ.\r\n \r\nБио какаово масло\r\nЕстствен каков аромат\r\nКомбиниран с натурално масло от ванилия\r\nПчелен восък\r\n \r\nВ два варианта:\r\nЛек и блестящ прозрачен цвят\r\nИзцяло безцветен\r\n \r\nОбогатен с витамин Е и био масло от жожоба.\r\n \r\n100% натурален\r\n49% от България\r\n41% био",
-                            IngredientINCIs = "Apricot Kernel Oil (масло от кайсиеви ядки), Theobroma Cacao Seed Butter (какаово масло)*, Copernicia Cerifera Cera (Карнаубски восък, веган)*, Simmondsia Chinensis Seed Oil (масло от жожоба)*, Helianthus Annuus Seed Oil (слънчогледово масло), Vanilla Planifolia Fruit Extract (екстракт от шушулки ванилия), Mica**, CI 77491 (Iron Oxide)**, Tocopherol (витамин E).\r\n*Био 49% **Минерални пигменти 1%",
-                            Ingredients = "Какаовото масло* придава лек и естествен шоколадов аромат и предпазва устните.\r\n \r\nМаслото от жожоба* ги подхранва.\r\n \r\nПчелния восък* защитава устните, прави балсама траен както върху устните така и в тубичката да не свършва бързо. Придава усещане за възглванича и мекота върху устните.\r\n \r\nВитамин Е - натурален антиоксидант, който защитава от вредните влияния от околната среда.\r\n \r\n*Био 41% от състава",
                             IsShow = true,
                             Name = "БАЛСАМ ЗА УСТНИ С ЖОЖОБА, КАКАО И ПЧЕЛЕН ВОСЪК",
                             Optional = "Тегло:  5 г.",
                             Price = 4.00m,
-                            Purpose = "Изцяло натурален, може да използвате винаги когато искате да подхраните и защитите устните си или просто да им придадете лек блясък за завършен вид на визията си.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте със затворено капаче, на сухо място и защитено от пряка слънчева светлина.",
-                            Quantity = 20,
-                            ShippingCondition = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед."
+                            Quantity = 20
                         },
                         new
                         {
                             Id = 3,
-                            Description = "",
-                            IngredientINCIs = "Aqua (Вода), Rosa Canina Seed Oil* (масло от шипка, 10%) , Butyrospermum Parkii Butter* (масло от ший/карите), Glycerin (глицерин), Rosa Canina Fruit Extract (екстракт от шипка), Niacinamide (витамин B3), Cetearyl Olivate, Sorbitan Olivate (емулгатори), Sodium Hyaluronate (хиалуронова киселина), Tocopherol (витамин E), Helianthus Annuus (Слънчоглед) Seed Oil*, Sodium Benzoate, Potassium Sorbate (консерванти), Lactic Acid (млечна киселина, AHA, регулира pH на продукта).\r\n*Bio",
-                            Ingredients = "Българско студено пресовано масло от шипка* - натурален източник на витамин А, подхранва и стимулура регенерирнето на кожата.\r\n \r\nЕкстракт от шипка - ботанически глицернов екстракт, който в този крем е чъдесна комбинация с маслото от шипка.\r\n \r\nМасло от ший* - Най-лекото и с най-нисък комедогенен рейтинг (0-2) от всички твърди масла. Това означава, че има ниска вероятност да запуши порите като скалата е от 0 до 5.\r\n \r\nВитамин B3 - ниацинамид - антиоксидант, който изравнява тена, регулира себума, помага худратацията и изглажда финни бръчки. Наистирна звучи неверояно, a е доакзрно.\r\n \r\nВитамин Е - има ефективо и естетвено антиоксидантно действие:  забвя стареенето като помага за възстановяването на кожата и я предпазва от свободните радикали и вредите от околната среда.\r\n \r\nРастителни глицерин и хиалурон - хумектанти - привличат водата и хидратират кожата. Ключова е концентрацията! Твърде много от тях могат да изсушат кожата, като започнат да издърпват влагата от по-дълбоките слоеве на кожата, когато въздуха е сух. Важен е баланса между вода и хумектанти в продукта.\r\n \r\n*Био",
                             IsShow = true,
                             Name = "ХИДРАТИРАЩ КРЕМ С ШИПКА И НИАЦИНАМИД",
                             Optional = "Тегло:  50 г.",
                             Price = 12.00m,
-                            Purpose = "Нанесете върху суха или влажна кожа. Малко количество е достатъчно за цялото лице и шия. Използвайте 1-2 пъти дневно според необходимостта и сухотата на кожата.\r\n \r\nМоже да нансете върху влажна кожа, например след душ и измивен гел, за да заключите хидратацията.\r\n \r\nИли върхъ суха кожа, за да я защитите.\r\n \r\nНанасяйте върху добре почистена кожа с чисти ръце. Само за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено, на сухо място, защитено от пряка слънчева светлина.",
-                            Quantity = 30,
-                            ShippingCondition = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед."
+                            Quantity = 30
                         },
                         new
                         {
                             Id = 4,
-                            Description = "Натурална мицеларна вода с два компонента. Разклатете преди употреба, за да се смесят двете фази. Идеална е за нежното отстраняване на грима в края на деня.\r\n \r\nИма двойно действие е като тоник за лице с екстракт от зелен чай и витамин Е.\r\n \r\nФаза 1 е изключително нежна. Има успокояващо и антиоксидантно действие благодарение на екстракта от зелен чай, сквален и пантенол (провитамин B3).\r\n \r\nФаза 2 е с био масло от жожоба и допринся за разтврянето на грима. Оставя кожата мека, подхранена и защитена.\r\n \r\nВ удобно шишенце с попма за лесно използване.\r\n \r\n100% натурална\r\n94% от България",
-                            IngredientINCIs = "Aqua, Vitis Vinifera (Grape) Seed Oil, Camellia Sinensis (Green Tea) Leaf Extract,  Glycerin, Caprylic / Capric Triglycerides (Fractioned Coconut Oil), Simmondsia Chinensis (Jojoba) Seed Oil*, D-panthenol (Provitamin B5, plant-based), Coco Glucoside, Squalane, Sodium Surfactin, Tocopherol (Vit E), Helianthus Annuus (Sunflower) Seed Oil*, Potassium Sorbate, Sodium Benzoate, Benzyl Alcohol, Citric Acid, Citrus Paradisi (Grapefruit) Peel Oil, Limonene, Citral, Linalool.\r\n*Био",
-                            Ingredients = "Екстракт от зелен чай - антиоксидантно и успокояващо действе, помага против появата на акне\r\n \r\nБио масло от Жожоба - помага за нежното разтваряне на грима и подхранва кожата\r\n \r\nВитамин Е - антиоксидант, успокоява раздразненията, бори се със свободните радикали и забавя стареенето на кожата\r\n \r\nПантенол - провитамин B5 - с растителен прозход. Хидратира и подхранва\r\n \r\nЕтерично масло грейпфрут - лек цитрусов аромат",
                             IsShow = true,
                             Name = "ДВУФАЗНА МИЦЕЛАРНА ВОДА ЗЕЛЕН ЧАЙ И ЖОЖОБА",
                             Optional = "Тегло:  100 мл.",
                             Price = 10.00m,
-                            Purpose = "Разклаете преди употреба.\r\n \r\nМоже да използвате винаги, когато искате нежно да премахнете грима. Разклатете преди употреба и напоете памучно тампонче. Нежно притиснете към кожата, за да се намокри и да започне да разтваря грима. След това отстранете грима с леки движения от центъра на лицето към страните.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте на сухо място, защитено от пряка слънчева светлина.",
-                            Quantity = 0,
-                            ShippingCondition = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед."
+                            Quantity = 0
                         },
                         new
                         {
                             Id = 5,
-                            Description = "Нежен, изцяло натурален и ръчно изработен дезодорант. Подходящ за ежедневна употреба. Етеричните масла от сладък портокал и евкалипт придват лек цитрусов аромат.\r\n \r\nИзбрахме точно тези етерични масла не само заради приятния аромат. Те притежават и по-добър антибактериален фект спрямо повечето етерични масла. Дори пречат на развитието и на различни видове гъбички. Това ознчава, че натурално може да намали лошата миризма при потене, която е причинена от бактериите под мишниците.\r\n \r\n100% натурален\r\n45.7 % от България\r\n44.5% био",
-                            IngredientINCIs = "",
-                            Ingredients = "Етеричните масла от сладък портокал и евкалипт придават свеж, леко ментов цитрусов аромат и имат антибактериален ефект.\r\n \r\nСухите съставки като био тапиока поддържат подмишниците сухи през деня.\r\n \r\nВитамин Е има антиоксидантен ефект.\r\n \r\nА цялата комбинация от съставки държи неприятните миризми далеч.",
                             IsShow = true,
                             Name = "НАТУРАЛЕН КРЕМ ДЕЗОДОРАНТ",
                             Optional = "Тегло:  50 г.",
                             Price = 8.50m,
-                            Purpose = "Вземете на върха на пръстите много малко количесто (по-малко дори от грахово зрънце), леко го затоплете между пръстите и разнесете добре подмишниците.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено на сухо място, защитено от пряка слънчева светлина.",
-                            Quantity = 10,
-                            ShippingCondition = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед."
+                            Quantity = 10
                         },
                         new
                         {
                             Id = 6,
-                            Description = "Създаден, за да се поглезите - с био масла от: шипка, ягодови семки, арган и жожба. Подхранва и защитава кожата. Запазва хидратацията като предпазва кожата от загуба на вода и я оставя мека и гладка.\r\n \r\nОбогатен с витамин Е за добър антиоксидантен ефект, който предпазва клетките от вредното въздействие отоколната среда, свободните радикали и оксидативни процеси. По този начин поддържа кожата млада и елстична.\r\n \r\nМаслото от шипка е натурален източник на витамин А. Аргановото масло и маслото от ягодови семки подхранват кожата, а маслото от жожоба съдържа натурални серамиди, подсилват кожната бариера и заздравяват връзките между клетките.\r\n\r\nНекомедогенен.\r\nНай-подходящ за суха кожа.\r\nИли като защита след по-изтощаваща рутина, напр. след химичен пилинг.\r\nПодхранва, заздравява и защитава кожната бариера.\r\n \r\nИзползвате няколко капки върху суха или влажна кожа (на пример след душ) или след хидратиращ лосион, за да 'заклчючите' хидратацията и да защитите кожата. \r\n \r\n100% натурален\r\n80% от България\r\n31% био",
-                            IngredientINCIs = "Vitis Vinifera Seed Oil (масло от гроздови смеки), Rosa Canina Seed Oil (българско студенпресовно био масло от семената на шипка)*, Fragaria Ananassa Seed Oil (студенопресовано масло от семки на ягода), Argania Spinosa Kernel Oil (арганово масло)*, Simmondsia Chinensis Seed Oil (масло от жожоба)*, Tocopherol (Витамин E), Helianthus Annuus Seed Oil (Слънчогледово масло <0,2%) *,  Citrus Reticulata Oil (Етерично масло от мандарина) , Limonene**, Linalool**, Cananga Odorata flower Oil (Етерично масло от Иланг Иланф) *.\r\n*Био, 31%\r\n**Компоненети на етерични масла",
-                            Ingredients = "Масло от шипка - помога ревитализирането на кожата \r\nМасло от ягодови семки - хидратира в дълбочина и има протививъзвпалителен ефект\r\nМасло от жожоба* - натурално съдържа над 95% серамиди, подхранва кожата и заздравява кожната бариера\r\nАрганово масло* - подхранва, защитава и подобрява хидратацията и еластичносттна на кожата\r\nМсла от мандарина и иланг-иланг* - придават лек, свеж и релаксиращ аромат, за да се насладите максимално на момента в грижа за кожата\r\nВитамин Е* - антиоксидант - успокоява раздразнената кожа и забавя страеенето като бори се със свободните радикали, UV уверждането и процесите на оксидация\r\n*Био",
                             IsShow = true,
                             Name = "ДВУФАЗНА МИЦЕЛАРНА ВОДА ЗЕЛЕН ЧАЙ И ЖОЖОБА",
                             Optional = "Тегло:  20 мл.",
                             Price = 10.00m,
-                            Purpose = "Например след лек хидратиращ лосион, за да заключи хидратацията и полезните съставки.\r\nДиректно върху влажна кожа за по-добро абсорбиране и защита.\r\nИли върху суха кожа, за да предотврати трансепидеррмалната загуба на вода от кожата.\r\n \r\nПодходящ за защита на кожата в края на рутината. Комбинира се добре след ексфолиращи и/или хидратиращи продукти.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Използвайте с чисти ръце и кожа. Съхранявайте добре затворено, на сухо място, защитено от пряка слънчева светлина.",
-                            Quantity = 20,
-                            ShippingCondition = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед."
+                            Quantity = 20
                         },
                         new
                         {
                             Id = 7,
-                            Description = "",
-                            IngredientINCIs = "",
-                            Ingredients = "",
                             IsShow = true,
                             Name = "",
                             Optional = "",
                             Price = 10.00m,
-                            Purpose = "",
-                            Quantity = 0,
-                            ShippingCondition = ""
+                            Quantity = 0
                         });
                 });
 
@@ -1214,7 +1150,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Code = "-10 % за регистрация",
                             Discount = 0.1m,
-                            ExpirationDate = new DateTime(2025, 4, 2, 5, 36, 28, 184, DateTimeKind.Utc).AddTicks(9627)
+                            ExpirationDate = new DateTime(2025, 4, 2, 15, 4, 21, 308, DateTimeKind.Utc).AddTicks(8598)
                         },
                         new
                         {
@@ -1222,7 +1158,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Code = "-20 % отстъпка",
                             Discount = 0.2m,
-                            ExpirationDate = new DateTime(2025, 4, 2, 5, 36, 28, 184, DateTimeKind.Utc).AddTicks(9637)
+                            ExpirationDate = new DateTime(2025, 4, 2, 15, 4, 21, 308, DateTimeKind.Utc).AddTicks(8607)
                         });
                 });
 
@@ -1269,7 +1205,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 2,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 4, 2, 8, 36, 28, 184, DateTimeKind.Local).AddTicks(8039),
+                            CreatedOn = new DateTime(2024, 4, 2, 18, 4, 21, 308, DateTimeKind.Local).AddTicks(7953),
                             Rating = 4,
                             Title = "Great product"
                         },
@@ -1278,7 +1214,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 3,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 4, 2, 8, 36, 28, 184, DateTimeKind.Local).AddTicks(8099),
+                            CreatedOn = new DateTime(2024, 4, 2, 18, 4, 21, 308, DateTimeKind.Local).AddTicks(8014),
                             Rating = 3,
                             Title = "Great product"
                         },
@@ -1287,9 +1223,290 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 4,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 4, 2, 8, 36, 28, 184, DateTimeKind.Local).AddTicks(8103),
+                            CreatedOn = new DateTime(2024, 4, 2, 18, 4, 21, 308, DateTimeKind.Local).AddTicks(8019),
                             Rating = 3,
                             Title = "Great product"
+                        });
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Section", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("The section's primary key");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)")
+                        .HasComment("The section's description");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int")
+                        .HasComment("The product's primary key");
+
+                    b.Property<int>("SectionOrder")
+                        .HasColumnType("int")
+                        .HasComment("The section's order in page");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("The section's title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Sections", t =>
+                        {
+                            t.HasComment("The section model. Keeping descriptions of product");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Нежен, изцяло натурален и ръчно изработен сух дезодорант. Подходящ за ежедневна употреба.\r\n \r\nБез парфюм и без етерични масла.\r\n \r\nВ нов твърд вариант за по-лесна употеба и нансяне дирктно.\r\n \r\nИли може да използвате стара опаковка от стик дезодорант, за да разтопите блокчето за удобна ежедневна употреба.\r\n \r\nСрежете блокчето на парченца и ги сложете в стик опаковка. Иползвайте микровълнова фурна на ниска температура и за картки интервали докато блокечето се разтопи. Оставете да изстине и стегне и готово!\r\n \r\nАко не разполагате с микровълнова фурна, може да го разтопите на водна баня в стик. Увийете плътно стик опковката със стреч фолио, за да не влиза вода в опковката и при продукта.\r\n \r\n100% натурален\r\n10 % от България\r\n78.4% био",
+                            ProductId = 1,
+                            SectionOrder = 1,
+                            Title = "ОПИСАНИЕ"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Сухите съставки като био тапиока поддържат подмишниците сухи през деня.\r\nВитамин Е има антиоксидантен ефект.\r\nКокосово масло, масло от ший (карите) и пчелен восък.",
+                            ProductId = 1,
+                            SectionOrder = 2,
+                            Title = "ЗА СЪСТАВКИТЕ"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Вземете блокчето от кутийката и намажете подмишничите.\r\n \r\nИли внимателно го разтопете в опаковка за стик дезодорант за по-лесна и удобна ежедневна употреба.\r\n \r\nМоже да преизползвате стара опаковка от предишен дезодорант.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено на сухо място, защитено от пряка слънчева светлина.",
+                            ProductId = 1,
+                            SectionOrder = 3,
+                            Title = "УПОТРЕБА"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.",
+                            ProductId = 1,
+                            SectionOrder = 4,
+                            Title = "ИЗПАЩАНЕ И ДОСТАВКА"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Cocos Nucifera (Coconut) Oil*, Tapioca Starch*, Butyrospermum Parkii (Shea) Butter*, Cera Alba (Beeswax), Glyceryl Stearate, Sodium Bicarbonate, Tocopherol (Vit E), Helianthus Annuus (Sunflower) Seed Oil* \r\n*Bio",
+                            ProductId = 1,
+                            SectionOrder = 5,
+                            Title = "СЪСТАВ, INCI"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Изцяло натурален и ръчно изработен балсам за устни, който носи усещане за уют и мекота. Създаден да е нежен и защитаващ.\r\n \r\nБио какаово масло\r\nЕстствен каков аромат\r\nКомбиниран с натурално масло от ванилия\r\nПчелен восък\r\n \r\nВ два варианта:\r\nЛек и блестящ прозрачен цвят\r\nИзцяло безцветен\r\n \r\nОбогатен с витамин Е и био масло от жожоба.\r\n \r\n100% натурален\r\n49% от България\r\n41% био",
+                            ProductId = 2,
+                            SectionOrder = 1,
+                            Title = "ОПИСАНИЕ"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "Какаовото масло* придава лек и естествен шоколадов аромат и предпазва устните.\r\n \r\nМаслото от жожоба* ги подхранва.\r\n \r\nПчелния восък* защитава устните, прави балсама траен както върху устните така и в тубичката да не свършва бързо. Придава усещане за възглванича и мекота върху устните.\r\n \r\nВитамин Е - натурален антиоксидант, който защитава от вредните влияния от околната среда.\r\n \r\n*Био 41% от състава",
+                            ProductId = 2,
+                            SectionOrder = 2,
+                            Title = "ЗА СЪСТАВКИТЕ"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Description = "Изцяло натурален, може да използвате винаги когато искате да подхраните и защитите устните си или просто да им придадете лек блясък за завършен вид на визията си.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте със затворено капаче, на сухо място и защитено от пряка слънчева светлина.",
+                            ProductId = 2,
+                            SectionOrder = 3,
+                            Title = "УПОТРЕБА"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Description = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.",
+                            ProductId = 2,
+                            SectionOrder = 4,
+                            Title = "ИЗПАЩАНЕ И ДОСТАВКА"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Description = "Apricot Kernel Oil (масло от кайсиеви ядки), Theobroma Cacao Seed Butter (какаово масло)*, Copernicia Cerifera Cera (Карнаубски восък, веган)*, Simmondsia Chinensis Seed Oil (масло от жожоба)*, Helianthus Annuus Seed Oil (слънчогледово масло), Vanilla Planifolia Fruit Extract (екстракт от шушулки ванилия), Mica**, CI 77491 (Iron Oxide)**, Tocopherol (витамин E).\r\n*Био 49% **Минерални пигменти 1%",
+                            ProductId = 2,
+                            SectionOrder = 5,
+                            Title = "СЪСТАВ, INCI"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Description = "",
+                            ProductId = 3,
+                            SectionOrder = 1,
+                            Title = "ОПИСАНИЕ"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Description = "Българско студено пресовано масло от шипка* - натурален източник на витамин А, подхранва и стимулура регенерирнето на кожата.\r\n \r\nЕкстракт от шипка - ботанически глицернов екстракт, който в този крем е чъдесна комбинация с маслото от шипка.\r\n \r\nМасло от ший* - Най-лекото и с най-нисък комедогенен рейтинг (0-2) от всички твърди масла. Това означава, че има ниска вероятност да запуши порите като скалата е от 0 до 5.\r\n \r\nВитамин B3 - ниацинамид - антиоксидант, който изравнява тена, регулира себума, помага худратацията и изглажда финни бръчки. Наистирна звучи неверояно, a е доакзрно.\r\n \r\nВитамин Е - има ефективо и естетвено антиоксидантно действие:  забвя стареенето като помага за възстановяването на кожата и я предпазва от свободните радикали и вредите от околната среда.\r\n \r\nРастителни глицерин и хиалурон - хумектанти - привличат водата и хидратират кожата. Ключова е концентрацията! Твърде много от тях могат да изсушат кожата, като започнат да издърпват влагата от по-дълбоките слоеве на кожата, когато въздуха е сух. Важен е баланса между вода и хумектанти в продукта.\r\n \r\n*Био",
+                            ProductId = 3,
+                            SectionOrder = 2,
+                            Title = "ЗА СЪСТАВКИТЕ"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Description = "Нанесете върху суха или влажна кожа. Малко количество е достатъчно за цялото лице и шия. Използвайте 1-2 пъти дневно според необходимостта и сухотата на кожата.\r\n \r\nМоже да нансете върху влажна кожа, например след душ и измивен гел, за да заключите хидратацията.\r\n \r\nИли върхъ суха кожа, за да я защитите.\r\n \r\nНанасяйте върху добре почистена кожа с чисти ръце. Само за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено, на сухо място, защитено от пряка слънчева светлина.",
+                            ProductId = 3,
+                            SectionOrder = 3,
+                            Title = "УПОТРЕБА"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Description = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.",
+                            ProductId = 3,
+                            SectionOrder = 4,
+                            Title = "ИЗПАЩАНЕ И ДОСТАВКА"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Description = "Aqua (Вода), Rosa Canina Seed Oil* (масло от шипка, 10%) , Butyrospermum Parkii Butter* (масло от ший/карите), Glycerin (глицерин), Rosa Canina Fruit Extract (екстракт от шипка), Niacinamide (витамин B3), Cetearyl Olivate, Sorbitan Olivate (емулгатори), Sodium Hyaluronate (хиалуронова киселина), Tocopherol (витамин E), Helianthus Annuus (Слънчоглед) Seed Oil*, Sodium Benzoate, Potassium Sorbate (консерванти), Lactic Acid (млечна киселина, AHA, регулира pH на продукта).\r\n*Bio",
+                            ProductId = 3,
+                            SectionOrder = 5,
+                            Title = "СЪСТАВ, INCI"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Description = "Натурална мицеларна вода с два компонента. Разклатете преди употреба, за да се смесят двете фази. Идеална е за нежното отстраняване на грима в края на деня.\r\n \r\nИма двойно действие е като тоник за лице с екстракт от зелен чай и витамин Е.\r\n \r\nФаза 1 е изключително нежна. Има успокояващо и антиоксидантно действие благодарение на екстракта от зелен чай, сквален и пантенол (провитамин B3).\r\n \r\nФаза 2 е с био масло от жожоба и допринся за разтврянето на грима. Оставя кожата мека, подхранена и защитена.\r\n \r\nВ удобно шишенце с попма за лесно използване.\r\n \r\n100% натурална\r\n94% от България",
+                            ProductId = 4,
+                            SectionOrder = 1,
+                            Title = "ОПИСАНИЕ"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Description = "Екстракт от зелен чай - антиоксидантно и успокояващо действе, помага против появата на акне\r\n \r\nБио масло от Жожоба - помага за нежното разтваряне на грима и подхранва кожата\r\n \r\nВитамин Е - антиоксидант, успокоява раздразненията, бори се със свободните радикали и забавя стареенето на кожата\r\n \r\nПантенол - провитамин B5 - с растителен прозход. Хидратира и подхранва\r\n \r\nЕтерично масло грейпфрут - лек цитрусов аромат",
+                            ProductId = 4,
+                            SectionOrder = 2,
+                            Title = "ЗА СЪСТАВКИТЕ"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Description = "Разклаете преди употреба.\r\n \r\nМоже да използвате винаги, когато искате нежно да премахнете грима. Разклатете преди употреба и напоете памучно тампонче. Нежно притиснете към кожата, за да се намокри и да започне да разтваря грима. След това отстранете грима с леки движения от центъра на лицето към страните.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте на сухо място, защитено от пряка слънчева светлина.",
+                            ProductId = 4,
+                            SectionOrder = 3,
+                            Title = "УПОТРЕБА"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Description = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.",
+                            ProductId = 4,
+                            SectionOrder = 4,
+                            Title = "ИЗПАЩАНЕ И ДОСТАВКА"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Description = "Aqua, Vitis Vinifera (Grape) Seed Oil, Camellia Sinensis (Green Tea) Leaf Extract,  Glycerin, Caprylic / Capric Triglycerides (Fractioned Coconut Oil), Simmondsia Chinensis (Jojoba) Seed Oil*, D-panthenol (Provitamin B5, plant-based), Coco Glucoside, Squalane, Sodium Surfactin, Tocopherol (Vit E), Helianthus Annuus (Sunflower) Seed Oil*, Potassium Sorbate, Sodium Benzoate, Benzyl Alcohol, Citric Acid, Citrus Paradisi (Grapefruit) Peel Oil, Limonene, Citral, Linalool.\r\n*Био",
+                            ProductId = 4,
+                            SectionOrder = 5,
+                            Title = "СЪСТАВ, INCI"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Description = "Нежен, изцяло натурален и ръчно изработен дезодорант. Подходящ за ежедневна употреба. Етеричните масла от сладък портокал и евкалипт придват лек цитрусов аромат.\r\n \r\nИзбрахме точно тези етерични масла не само заради приятния аромат. Те притежават и по-добър антибактериален фект спрямо повечето етерични масла. Дори пречат на развитието и на различни видове гъбички. Това ознчава, че натурално може да намали лошата миризма при потене, която е причинена от бактериите под мишниците.\r\n \r\n100% натурален\r\n45.7 % от България\r\n44.5% био",
+                            ProductId = 5,
+                            SectionOrder = 1,
+                            Title = "ОПИСАНИЕ"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Description = "Етеричните масла от сладък портокал и евкалипт придават свеж, леко ментов цитрусов аромат и имат антибактериален ефект.\r\n \r\nСухите съставки като био тапиока поддържат подмишниците сухи през деня.\r\n \r\nВитамин Е има антиоксидантен ефект.\r\n \r\nА цялата комбинация от съставки държи неприятните миризми далеч.",
+                            ProductId = 5,
+                            SectionOrder = 2,
+                            Title = "ЗА СЪСТАВКИТЕ"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Description = "Вземете на върха на пръстите много малко количесто (по-малко дори от грахово зрънце), леко го затоплете между пръстите и разнесете добре подмишниците.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено на сухо място, защитено от пряка слънчева светлина.",
+                            ProductId = 5,
+                            SectionOrder = 3,
+                            Title = "УПОТРЕБА"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Description = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.",
+                            ProductId = 5,
+                            SectionOrder = 4,
+                            Title = "ИЗПАЩАНЕ И ДОСТАВКА"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Description = "Vitis Vinifera (Grape) Seed Oil, Tapioca Starch*, Theobroma Cacao (Cocoa) Seed Butter*, Copernicia Cerifera Cera (Carnauba Wax)*, Sodium Bicarbonate, Glyceryl Stearate, Citrus Sinensis (Orange) Peel Oil*, Eucalyptus Globulus Leaf Oil*, Limonene**, Linalool**, Citral**, Tocopherol (Vit E), Helianthus Annuus (Sunflower) Seed Oil*\r\n*Bio\r\n**Компоненти на етерини масла",
+                            ProductId = 5,
+                            SectionOrder = 5,
+                            Title = "СЪСТАВ, INCI"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Description = "Създаден, за да се поглезите - с био масла от: шипка, ягодови семки, арган и жожба. Подхранва и защитава кожата. Запазва хидратацията като предпазва кожата от загуба на вода и я оставя мека и гладка.\r\n \r\nОбогатен с витамин Е за добър антиоксидантен ефект, който предпазва клетките от вредното въздействие отоколната среда, свободните радикали и оксидативни процеси. По този начин поддържа кожата млада и елстична.\r\n \r\nМаслото от шипка е натурален източник на витамин А. Аргановото масло и маслото от ягодови семки подхранват кожата, а маслото от жожоба съдържа натурални серамиди, подсилват кожната бариера и заздравяват връзките между клетките.\r\n\r\nНекомедогенен.\r\nНай-подходящ за суха кожа.\r\nИли като защита след по-изтощаваща рутина, напр. след химичен пилинг.\r\nПодхранва, заздравява и защитава кожната бариера.\r\n \r\nИзползвате няколко капки върху суха или влажна кожа (на пример след душ) или след хидратиращ лосион, за да 'заклчючите' хидратацията и да защитите кожата. \r\n \r\n100% натурален\r\n80% от България\r\n31% био",
+                            ProductId = 6,
+                            SectionOrder = 1,
+                            Title = "ОПИСАНИЕ"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Description = "Масло от шипка - помога ревитализирането на кожата \r\nМасло от ягодови семки - хидратира в дълбочина и има протививъзвпалителен ефект\r\nМасло от жожоба* - натурално съдържа над 95% серамиди, подхранва кожата и заздравява кожната бариера\r\nАрганово масло* - подхранва, защитава и подобрява хидратацията и еластичносттна на кожата\r\nМсла от мандарина и иланг-иланг* - придават лек, свеж и релаксиращ аромат, за да се насладите максимално на момента в грижа за кожата\r\nВитамин Е* - антиоксидант - успокоява раздразнената кожа и забавя страеенето като бори се със свободните радикали, UV уверждането и процесите на оксидация\r\n*Био",
+                            ProductId = 6,
+                            SectionOrder = 2,
+                            Title = "ЗА СЪСТАВКИТЕ"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Description = "Например след лек хидратиращ лосион, за да заключи хидратацията и полезните съставки.\r\nДиректно върху влажна кожа за по-добро абсорбиране и защита.\r\nИли върху суха кожа, за да предотврати трансепидеррмалната загуба на вода от кожата.\r\n \r\nПодходящ за защита на кожата в края на рутината. Комбинира се добре след ексфолиращи и/или хидратиращи продукти.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Използвайте с чисти ръце и кожа. Съхранявайте добре затворено, на сухо място, защитено от пряка слънчева светлина.",
+                            ProductId = 6,
+                            SectionOrder = 3,
+                            Title = "УПОТРЕБА"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Description = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.",
+                            ProductId = 6,
+                            SectionOrder = 4,
+                            Title = "ИЗПАЩАНЕ И ДОСТАВКА"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Description = "Vitis Vinifera Seed Oil (масло от гроздови смеки), Rosa Canina Seed Oil (българско студенпресовно био масло от семената на шипка)*, Fragaria Ananassa Seed Oil (студенопресовано масло от семки на ягода), Argania Spinosa Kernel Oil (арганово масло)*, Simmondsia Chinensis Seed Oil (масло от жожоба)*, Tocopherol (Витамин E), Helianthus Annuus Seed Oil (Слънчогледово масло <0,2%) *,  Citrus Reticulata Oil (Етерично масло от мандарина) , Limonene**, Linalool**, Cananga Odorata flower Oil (Етерично масло от Иланг Иланф) *.\r\n*Био, 31%\r\n**Компоненети на етерични масла",
+                            ProductId = 6,
+                            SectionOrder = 5,
+                            Title = "СЪСТАВ, INCI"
                         });
                 });
 
@@ -1876,6 +2093,17 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Section", b =>
+                {
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.Product", "Product")
+                        .WithMany("Sections")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ShippingOffice", b =>
                 {
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.ShippingProvider", "ShippingProvider")
@@ -2004,6 +2232,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Navigation("ProductsOrders");
 
                     b.Navigation("Reviews");
+
+                    b.Navigation("Sections");
 
                     b.Navigation("WishesUsers");
                 });
