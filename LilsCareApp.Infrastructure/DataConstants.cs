@@ -31,13 +31,7 @@
             public const int NameMaxLength = 100;
             public const string PriceMinValue = "0.00";
             public const string PriceMaxValue = "1000.00";
-            public const int WeightMaxLength = 250;
-            public const int PurposeMaxLength = 1500;
-            public const int ShippingConditionMaxLength = 1500;
-            public const int DescriptionMaxLength = 1500;
-            public const int IngredientINCIsMaxLength = 1500;
-            public const int IngredientsMaxLength = 1500;
-
+            public const int OptionalMaxLength = 200;
         }
 
         public static class Category
@@ -99,12 +93,12 @@
             public const int EmailMaxLength = 50;
         }
 
-        public static class Optional
+        public static class Section
         {
-            public const int NameMinLength = 3;
-            public const int NameMaxLength = 50;
+            public const int TitleMinLength = 3;
+            public const int TitleMaxLength = 50;
             public const int DescriptionMinLength = 3;
-            public const int DescriptionMaxLength = 50;
+            public const int DescriptionMaxLength = 1500;
         }
     }
 }

@@ -28,11 +28,17 @@ namespace LilsCareApp.Core.Services
                  Price = p.Price,
                  Quantity = p.Quantity,
                  Optional = p.Optional,
-                 Description = p.Description,
-                 Ingredients = p.Ingredients,
-                 Purpose = p.Purpose,
-                 ShippingCondition = p.ShippingCondition,
-                 IngredientINCIs = p.IngredientINCIs,
+                 Sections = p.Sections
+                        .Where(s => s.ProductId == p.Id)
+                        .OrderBy(s => s.SectionOrder)
+                        .Select(s => new SectionDTO
+                        {
+                            Id = s.Id,
+                            Title = s.Title,
+                            Description = s.Description,
+                            SectionOrder = s.SectionOrder
+                        })
+                        .ToList(),
                  Images = p.Images
                      .Where(im => im.ProductId == p.Id)
                      .OrderBy(im => im.ImageOrder)

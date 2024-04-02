@@ -46,6 +46,8 @@ namespace LilsCareApp.Infrastructure.Data
 
         public DbSet<PromoCode> PromoCodes { get; set; } = null!;
 
+        public DbSet<Section> Sections { get; set; } = null!;
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -70,6 +72,7 @@ namespace LilsCareApp.Infrastructure.Data
             builder.ApplyConfiguration(new ProductsConfiguration());
             builder.ApplyConfiguration(new CategoriesConfiguration());
             builder.ApplyConfiguration(new ProductsCategoriesConfiguration());
+            builder.ApplyConfiguration(new SectionsConfiguration());
             builder.ApplyConfiguration(new WishesUsersConfiguration());
             builder.ApplyConfiguration(new BagsUsersConfiguration());
             builder.ApplyConfiguration(new ShippingOfficeConfiguration());

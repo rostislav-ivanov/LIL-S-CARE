@@ -75,7 +75,7 @@
                 <h4 class="text-center">Описание</h4>
                 <hr />
                 <div class="row">
-                    @foreach (var paragraph in Model.Product.GetDescription())
+                    @foreach (var paragraph in Model.Product.GetSection(1))
                     {
                         if (paragraph != " ")
                         {
@@ -89,7 +89,7 @@
                 </div>
                 <form asp-area="Admin" asp-controller="Details" asp-action="Description" method="post">
                     <input asp-for="@Model.Product.Id" type="hidden" name="id" value="@Model.Product.Id" />
-                    <textarea asp-for="@Model.Product.Description" name="description" id="" rows="7" style="width: 100%">
+                    <textarea asp-for="@Model.Product.Sections[0].Description" name="description" id="" rows="7" style="width: 100%">
                     </textarea>
                     <div class="d-flex">
                         <button type="submit" class="nav-link">
@@ -107,7 +107,7 @@
                 <h4 class="text-center">ЗА СЪСТАВКИТЕ</h4>
                 <hr />
                 <div class="row">
-                    @foreach (var paragraph in Model.Product.GetIngredients())
+                    @foreach (var paragraph in Model.Product.GetSection(2))
                     {
                         if (paragraph != " ")
                         {
@@ -138,7 +138,7 @@
                 <h4 class="text-center">УПОТРЕБА</h4>
                 <hr />
                 <div class="row">
-                    @foreach (var paragraph in Model.Product.GetPurpose())
+                    @foreach (var paragraph in Model.Product.GetSection(3))
                     {
                         if (paragraph != " ")
                         {
@@ -169,7 +169,7 @@
                 <h4 class="text-center">ИЗПАЩАНЕ И ДОСТАВКА</h4>
                 <hr />
                 <div class="row">
-                    @foreach (var paragraph in Model.Product.GetShippingCondition())
+                    @foreach (var paragraph in Model.Product.GetSection(4))
                     {
                         if (paragraph != " ")
                         {
@@ -200,7 +200,7 @@
                 <h4 class="text-center">СЪСТАВ, INCI</h4>
                 <hr />
                 <div class="row">
-                    @foreach (var paragraph in Model.Product.GetIngredientINCIs())
+                    @foreach (var paragraph in Model.Product.GetSection(5))
                     {
                         if (paragraph != " ")
                         {

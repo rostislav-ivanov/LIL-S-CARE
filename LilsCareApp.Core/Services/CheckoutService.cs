@@ -199,7 +199,6 @@ namespace LilsCareApp.Core.Services
                         {
                             Id = po.Product.Id,
                             Name = po.Product.Name,
-                            Description = po.Product.Description,
                             ImagePath = po.ImagePath,
                             Quantity = po.Quantity,
                             Price = po.Price,
