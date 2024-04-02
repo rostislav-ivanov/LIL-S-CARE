@@ -28,25 +28,46 @@
                                  style="object-fit: cover"
                                  class="border rounded m-2" />
                             <div class="d-flex">
-                                <a href="#" class="nav-link">
-                                    <i class="fa fa-repeat text-warning ms-2"></i>
+                                <a asp-area="Admin" 
+                                    asp-controller="Details" 
+                                    asp-action="MoveImageLeft" 
+                                    asp-route-id="@Model.Product.Id"
+                                    asp-route-image="@image.ImageOrder"
+                                    class="nav-link">
+                                    <i class="fa fa-arrow-left text-primary ms-2"></i>
                                 </a>
-                                <a href="#" class="nav-link">
+                                <a asp-area="Admin"
+                                   asp-controller="Details"
+                                   asp-action="MoveImageRight"
+                                   asp-route-id="@Model.Product.Id"
+                                   asp-route-image="@image.ImageOrder"
+                                   class="nav-link">
+                                    <i class="fa fa-arrow-right text-primary ms-2"></i>
+                                </a>
+                                <a asp-area="Admin"
+                                   asp-controller="Details"
+                                   asp-action="RemoveImage"
+                                   asp-route-id="@Model.Product.Id"
+                                   asp-route-imageId="@image.Id"
+                                   class="nav-link">
                                     <i class="fa fa-xmark text-danger ms-2"></i>
                                 </a>
                             </div>
                         </div>
                     }
                 </div>
-                <div class="d-flex justify-content-between m-3">
-                    <input for
-                           id="file-upload-1"
-                           type="file"
-                           class="form-control"
-                           name="attachment"
-                           accept="image/*" />
-                    <button class="btn ms-3 bg-success">Добави</button>
-                </div>
+                <form asp-area="Admin" asp-controller="Details" asp-action="AddProductImage" enctype="multipart/form-data" method="post">
+                    <input asp-for="@Model.Product.Id" type="hidden" name="id" value="@Model.Product.Id" />
+                    <div class="d-flex justify-content-between m-3">
+                        <input for
+                               id="file-upload-1"
+                               type="file"
+                               class="form-control"
+                               name="attachment"
+                               accept="image/*" />
+                        <button type="submit" class="btn ms-3 bg-success">Добави</button>
+                    </div>
+                </form>
             </div>
             <!-- Product Images End-->
             <!-- Product Description Start-->
@@ -54,30 +75,31 @@
                 <h4 class="text-center">Описание</h4>
                 <hr />
                 <div class="row">
-                    @foreach (var paragraph in Model.Product.Description)
+                    @foreach (var paragraph in Model.Product.GetDescription())
                     {
-                        if (paragraph != string.Empty)
+                        if (paragraph != " ")
                         {
                             <span>@paragraph</span>
                         }
                         else
                         {
-                            <p></p>
+                            <p></p>  
                         }
                     }
                 </div>
-                <textarea name="" id="" rows="7" style="width: 100%"></textarea>
-                <div class="d-flex">
-                    <a href="#" class="nav-link">
-                        <i class="fa fa-repeat text-warning ms-2"></i>
-                    </a>
-                    <a href="#" class="nav-link">
-                        <i class="fa fa-xmark text-danger ms-2"></i>
-                    </a>
-                    <a href="#" class="nav-link">
-                        <i class="fa fa-check text-success ms-2"></i>
-                    </a>
-                </div>
+                <form asp-area="Admin" asp-controller="Details" asp-action="Description" method="post">
+                    <input asp-for="@Model.Product.Id" type="hidden" name="id" value="@Model.Product.Id" />
+                    <textarea asp-for="@Model.Product.Description" name="description" id="" rows="7" style="width: 100%">
+                    </textarea>
+                    <div class="d-flex">
+                        <button type="submit" class="nav-link">
+                            <i class="fa fa-xmark text-danger ms-2"></i>
+                        </button>
+                        <button type="submit" class="nav-link">
+                            <i class="fa fa-check text-success ms-2"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
             <!-- Product Description End-->
             <!-- Product Ingredients Start-->
@@ -85,9 +107,9 @@
                 <h4 class="text-center">ЗА СЪСТАВКИТЕ</h4>
                 <hr />
                 <div class="row">
-                    @foreach (var paragraph in Model.Product.Ingredients)
+                    @foreach (var paragraph in Model.Product.GetIngredients())
                     {
-                        if (paragraph != string.Empty)
+                        if (paragraph != " ")
                         {
                             <span>@paragraph</span>
                         }
@@ -116,9 +138,9 @@
                 <h4 class="text-center">УПОТРЕБА</h4>
                 <hr />
                 <div class="row">
-                    @foreach (var paragraph in Model.Product.Purpose)
+                    @foreach (var paragraph in Model.Product.GetPurpose())
                     {
-                        if (paragraph != string.Empty)
+                        if (paragraph != " ")
                         {
                             <span>@paragraph</span>
                         }
@@ -147,9 +169,9 @@
                 <h4 class="text-center">ИЗПАЩАНЕ И ДОСТАВКА</h4>
                 <hr />
                 <div class="row">
-                    @foreach (var paragraph in Model.Product.ShippingCondition)
+                    @foreach (var paragraph in Model.Product.GetShippingCondition())
                     {
-                        if (paragraph != string.Empty)
+                        if (paragraph != " ")
                         {
                             <span>@paragraph</span>
                         }
@@ -178,9 +200,9 @@
                 <h4 class="text-center">СЪСТАВ, INCI</h4>
                 <hr />
                 <div class="row">
-                    @foreach (var paragraph in Model.Product.IngredientINCIs)
+                    @foreach (var paragraph in Model.Product.GetIngredientINCIs())
                     {
-                        if (paragraph != string.Empty)
+                        if (paragraph != " ")
                         {
                             <span>@paragraph</span>
                         }
@@ -233,7 +255,7 @@
                     </div>
                     @foreach (var category in Model.Categories)
                     {
-                        if (Model.GetProductCateegoriesId().Contains(category.Id))
+                        if (Model.GetProductCategoriesId().Contains(category.Id))
                         {
                             <div class="d-flex justify-content-between align-items-center">
                                 <a href="#" class="nav-link text-success">

@@ -2,6 +2,7 @@
 {
     public class DetailsDTO
     {
+        private const string separator = "\r\n";
         public int Id { get; set; }
         public required string Name { get; set; }
 
@@ -13,16 +14,15 @@
 
         public string? Optional { get; set; }
 
-        public IEnumerable<string>? Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
-        public IEnumerable<string>? Ingredients { get; set; }
+        public string Ingredients { get; set; } = string.Empty;
 
-        public IEnumerable<string>? Purpose { get; set; }
+        public string Purpose { get; set; } = string.Empty;
 
-        public IEnumerable<string>? ShippingCondition { get; set; }
+        public string ShippingCondition { get; set; } = string.Empty;
 
-        public IEnumerable<string>? IngredientINCIs { get; set; }
-
+        public string IngredientINCIs { get; set; } = string.Empty;
 
         public List<ImageDTO> Images { get; set; } = new List<ImageDTO>();
 
@@ -35,6 +35,13 @@
         public bool IsWish { get; set; }
 
         public AddReviewDTO? AddReview { get; set; }
+
+        public IEnumerable<string> GetDescription() => Description.Split(new string[] { separator }, StringSplitOptions.RemoveEmptyEntries);
+        public IEnumerable<string> GetIngredients() => Ingredients.Split(new string[] { separator }, StringSplitOptions.RemoveEmptyEntries);
+        public IEnumerable<string> GetPurpose() => Purpose.Split(new string[] { separator }, StringSplitOptions.RemoveEmptyEntries);
+        public IEnumerable<string> GetShippingCondition() => ShippingCondition.Split(new string[] { separator }, StringSplitOptions.RemoveEmptyEntries);
+        public IEnumerable<string> GetIngredientINCIs() => IngredientINCIs.Split(new string[] { separator }, StringSplitOptions.RemoveEmptyEntries);
+
 
     }
 }

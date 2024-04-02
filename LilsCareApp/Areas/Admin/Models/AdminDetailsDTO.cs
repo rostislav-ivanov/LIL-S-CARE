@@ -8,6 +8,6 @@ namespace LilsCareApp.Areas.Admin.Models
 
         public IEnumerable<CategoryDTO> Categories { get; set; } = null!;
 
-        public IEnumerable<int> GetProductCateegoriesId() => Product.ProductsCategories.Select(x => x.Id);
+        public IEnumerable<int> GetProductCategoriesId() => Product.ProductsCategories.Select(x => x.Id);
     }
 }

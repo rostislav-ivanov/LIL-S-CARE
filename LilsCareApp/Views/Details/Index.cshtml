@@ -169,9 +169,9 @@
 <div class="d-flex justify-content-end">
     <div class="col-5">
         <div class="row">
-            @foreach (var paragraph in Model.Description)
+            @foreach (var paragraph in Model.GetDescription())
             {
-                if (paragraph != string.Empty)
+                if (paragraph != " ")
                 {
                     <span>@paragraph</span>
                 }
@@ -196,9 +196,9 @@
                 <div id="collapse1" class="collapse" data-bs-parent="#accordion">
                     <div class="mt-4">
                         <div class="row">
-                            @foreach (var paragraph in Model.Ingredients)
+                            @foreach (var paragraph in Model.GetIngredients())
                             {
-                                if (paragraph != string.Empty)
+                                if (paragraph != " ")
                                 {
                                     <span>@paragraph</span>
                                 }
@@ -223,9 +223,9 @@
                 <div id="collapse2" class="collapse" data-bs-parent="#accordion">
                     <div class="mt-4">
                         <div class="row">
-                            @foreach (var paragraph in Model.Purpose)
+                            @foreach (var paragraph in Model.GetPurpose())
                             {
-                                if (paragraph != string.Empty)
+                                if (paragraph != " ")
                                 {
                                     <span>@paragraph</span>
                                 }
@@ -250,9 +250,9 @@
                 <div id="collapse3" class="collapse" data-bs-parent="#accordion">
                     <div class="mt-4">
                         <div class="row">
-                            @foreach (var paragraph in Model.ShippingCondition)
+                            @foreach (var paragraph in Model.GetShippingCondition())
                             {
-                                if (paragraph != string.Empty)
+                                if (paragraph != " ")
                                 {
                                     <span>@paragraph</span>
                                 }
@@ -277,9 +277,9 @@
                 <div id="collapse4" class="collapse" data-bs-parent="#accordion">
                     <div class="mt-4">
                         <div class="row">
-                            @foreach (var paragraph in Model.IngredientINCIs)
+                            @foreach (var paragraph in Model.GetIngredientINCIs())
                             {
-                                if (paragraph != string.Empty)
+                                if (paragraph != " ")
                                 {
                                     <span>@paragraph</span>
                                 }
