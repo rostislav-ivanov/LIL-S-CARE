@@ -138,33 +138,20 @@ namespace LilsCareApp.Core.Services
 
             await _context.SaveChangesAsync();
 
-            DetailsDTO details = new DetailsDTO
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Price = product.Price,
-                Quantity = product.Quantity,
-                Optional = product.Optional,
-                Sections = product.Sections
-                    .Select(s => new SectionDTO
-                    {
-                        Id = s.Id,
-                        Title = s.Title,
-                        Description = s.Description,
-                        SectionOrder = s.SectionOrder
-                    })
-                    .ToList(),
-                ProductsCategories = await _context.ProductsCategories
-                    .Where(pc => pc.ProductId == product.Id)
-                    .Select(pc => new CategoryDTO
-                    {
-                        Id = pc.CategoryId,
-                        Name = pc.Category.Name
-                    })
-                    .ToListAsync()
-            };
+            return await GetProductByIdAsync(product.Id);
+        }
 
-            return details;
+        public async Task EditNameAsync(int id, string name)
+        {
+            var product = await _context.Products
+                .FirstOrDefaultAsync(p => p.Id == id);
+            if (product == null)
+            {
+                return;
+            }
+
+            product.Name = name;
+            await _context.SaveChangesAsync();
         }
 
         public async Task MoveImageLeftAsync(int id, int imageOrder)
@@ -261,6 +248,143 @@ namespace LilsCareApp.Core.Services
             };
 
             await _context.ImageProducts.AddAsync(image);
+
+            await _context.SaveChangesAsync();
+        }
+
+
+        public async Task AddSectionAsync(int id)
+        {
+            var product = await _context.Products
+                .Include(p => p.Sections)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (product == null)
+            {
+                return;
+            }
+
+            int count = product.Sections.Count;
+            Section section = new Section
+            {
+                Title = "",
+                Description = "",
+                SectionOrder = count + 1,
+                ProductId = id
+            };
+
+            await _context.Sections.AddAsync(section);
+            await _context.SaveChangesAsync();
+        }
+
+
+        public async Task EditSectionAsync(int sectionId, string title, string description)
+        {
+            var section = await _context.Sections
+                .FirstOrDefaultAsync(s => s.Id == sectionId);
+
+            if (section == null)
+            {
+                return;
+            }
+
+            section.Title = title;
+            section.Description = description;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteSectionAsync(int productId, int sectionId)
+        {
+            var section = await _context.Sections
+                .FirstOrDefaultAsync(s => s.Id == sectionId);
+
+            if (section == null)
+            {
+                return;
+            }
+
+            var sections = await _context.Sections
+                .Where(s => s.ProductId == productId)
+                .OrderBy(ip => ip.SectionOrder)
+                .ToListAsync();
+
+            for (int i = 0; i < sections.Count; i++)
+            {
+                if (sections[i].SectionOrder > section.SectionOrder)
+                {
+                    sections[i].SectionOrder--;
+                }
+            }
+
+            _context.Sections.Remove(section);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task MoveSectionDownAsync(int id, int sectionOrder)
+        {
+            var section = await _context.Sections
+                .FirstOrDefaultAsync(s => s.ProductId == id && s.SectionOrder == sectionOrder);
+
+            if (section == null)
+            {
+                return;
+            }
+
+            var sectionDown = await _context.Sections
+                .FirstOrDefaultAsync(s => s.ProductId == id && s.SectionOrder == sectionOrder + 1);
+
+            if (sectionDown == null)
+            {
+                return;
+            }
+
+            section.SectionOrder++;
+            sectionDown.SectionOrder--;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task MoveSectionUpAsync(int id, int sectionOrder)
+        {
+            var section = await _context.Sections
+                .FirstOrDefaultAsync(s => s.ProductId == id && s.SectionOrder == sectionOrder);
+
+            if (section == null)
+            {
+                return;
+            }
+
+            var sectionUp = await _context.Sections
+                .FirstOrDefaultAsync(s => s.ProductId == id && s.SectionOrder == sectionOrder - 1);
+
+            if (sectionUp == null)
+            {
+                return;
+            }
+
+            section.SectionOrder--;
+            sectionUp.SectionOrder++;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddRemoveCategoryAsync(int id, int categoryId)
+        {
+            var productCategory = await _context.ProductsCategories
+                .FirstOrDefaultAsync(pc => pc.ProductId == id && pc.CategoryId == categoryId);
+
+            if (productCategory == null)
+            {
+                await _context.ProductsCategories.AddAsync(new ProductCategory
+                {
+                    ProductId = id,
+                    CategoryId = categoryId
+                });
+            }
+            else
+            {
+                _context.ProductsCategories.Remove(productCategory);
+            }
 
             await _context.SaveChangesAsync();
         }

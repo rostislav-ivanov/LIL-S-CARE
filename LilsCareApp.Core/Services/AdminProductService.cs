@@ -137,7 +137,7 @@ namespace LilsCareApp.Core.Services
             return products;
         }
 
-        public async Task RemoveProductAsync(int id)
+        public async Task ProductToShopAsync(int id)
         {
             var product = await _context.Products
                 .FirstOrDefaultAsync(p => p.Id == id);
@@ -149,6 +149,28 @@ namespace LilsCareApp.Core.Services
             product.IsShow = !product.IsShow;
 
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var product = await _context.Products
+                .FirstOrDefaultAsync(p => p.Id == id);
+            if (product == null)
+            {
+                return false;
+            }
+
+            bool isOrdered = await _context.ProductsOrders
+                .AnyAsync(po => po.ProductId == id);
+            if (isOrdered)
+            {
+                return false;
+            }
+
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

@@ -81,7 +81,7 @@
                 </div>
                 <div class="col-2">
                     <a asp-area="Admin" asp-controller="Details" asp-action="Add" 
-                       class="nav-link text-primary mt-2">
+                       class="nav-link text-primary">
                         Добави продукт <i class="fa-regular fa-square-plus"></i>
                     </a>
                 </div>
@@ -122,23 +122,26 @@
                             </a>
                             <a asp-area="Admin" asp-controller="Details" asp-action="Add" asp-route-id="@product.Id"
                                class="nav-link text-primary mt-2">
-                                Вземи като шаблон <i class="fa fa-clone"></i>
+                                Вземи като шаблон <i class="fa-regular fa-clone"></i>
                             </a>
                             @if (product.IsShow)
                             {
-                                <a asp-area="Admin" asp-controller="Products" asp-action="Remove" asp-route-id="@product.Id"
-                                   class="nav-link text-danger mt-2">
-                                    Премахни от магазина <i class="fa fa-xmark"></i>
+                                <a asp-area="Admin" asp-controller="Products" asp-action="ProductToShop" asp-route-id="@product.Id"
+                                   class="nav-link text-secondary mt-2">
+                                    Извади от магазина <i class="fa-regular fa-eye-slash"></i>
                                 </a>
                             }
                             else
                             {
-                                <a asp-area="Admin" asp-controller="Products" asp-action="Remove" asp-route-id="@product.Id"
+                                <a asp-area="Admin" asp-controller="Products" asp-action="ProductToShop" asp-route-id="@product.Id"
                                    class="nav-link text-success mt-2">
-                                    Добави в магазина <i class="fa fa-check"></i>
+                                    Добави в магазина <i class="fa-regular fa-eye"></i>
                                 </a>
                             }
-
+                            <a asp-area="Admin" asp-controller="Products" asp-action="Delete" asp-route-id="@product.Id"
+                               class="nav-link text-danger mt-2">
+                                Изтриване <i class="fa fa-xmark"></i>
+                            </a>
                         </div>
                     </div>
                 </div>

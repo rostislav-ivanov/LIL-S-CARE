@@ -67,9 +67,16 @@ namespace LilsCareApp.Areas.Admin.Controllers
             return View(nameof(Index), products);
         }
 
-        public async Task<IActionResult> Remove(int id)
+        public async Task<IActionResult> ProductToShop(int id)
         {
-            await _service.RemoveProductAsync(id);
+            await _service.ProductToShopAsync(id);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            bool isOrdered = await _service.DeleteAsync(id);
 
             return RedirectToAction(nameof(Index));
         }

@@ -14,8 +14,21 @@
     <div class="row">
         <!-- Left Side Start-->
         <div class="col-8">
+            <!-- Product Name Start-->
+            <div class="col-lg border rounded p-2 mt-3">
+                <form asp-area="Admin" asp-controller="Details" asp-action="EditName" method="post">
+                    <input asp-for="@Model.Product.Id" type="hidden" name="id" value="@Model.Product.Id" />
+                    <span asp-validation-for="@Model.Product.Name" class="text-danger"></span>
+                    <div class="d-flex align-items-center mt-2">
+                        <span class="mx-2" style="white-space: nowrap;">Име на продукта:</span>
+                        <input asp-for="@Model.Product.Name" type="text" name="name" class="form-control" />
+                        <button type="submit" class="btn btn-sm bg-success ms-3">Запази</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Product Name End-->
             <!-- Product Images Start-->
-            <div class="col-lg border rounded p-2">
+            <div class="col-lg border rounded p-2 mt-3">
                 <h4 class="text-center">Снимки</h4>
                 <hr />
                 <div class="row">
@@ -65,46 +78,76 @@
                                class="form-control"
                                name="attachment"
                                accept="image/*" />
-                        <button type="submit" class="btn ms-3 bg-success">Добави</button>
+                        <button type="submit" class="btn btn-sm ms-3 bg-success">Добави</button>
                     </div>
                 </form>
             </div>
             <!-- Product Images End-->
-            <!-- Product Description Start-->
+            <!-- Product Sections Start-->
             @for (int i = 0; i < Model.Product.Sections.Count; i++)
             {
                 <div class="col-lg border rounded mt-3 p-2">
                     <h4 class="text-center">@Model.Product.Sections[i].Title</h4>
-                    <hr />
-                    <div class="row">
-                        @foreach (var paragraph in Model.Product.GetSection(i+1))
-                        {
-                            if (paragraph != " ")
-                            {
-                                <span>@paragraph</span>
-                            }
-                            else
-                            {
-                                <p></p>
-                            }
-                        }
-                    </div>
-                    <form asp-area="Admin" asp-controller="Details" asp-action="Description" method="post">
+                    <form asp-area="Admin" asp-controller="Details" asp-action="EditSection" method="post">
                         <input asp-for="@Model.Product.Id" type="hidden" name="id" value="@Model.Product.Id" />
+                        <input asp-for="@Model.Product.Sections[i].Id" type="hidden" name="sectionId" value="@Model.Product.Sections[i].Id" />
+                        <div class="d-flex align-items-center mt-2">
+                            <span class="mx-2" style="white-space: nowrap;">Име на секция @Model.Product.Sections[i].SectionOrder:</span>
+                            <input asp-for="@Model.Product.Sections[i].Title" type="text" name="title" class="form-control" />
+                        </div>
+                        <hr />
+                        <div class="row">
+                            @foreach (var paragraph in Model.Product.GetSection(i + 1))
+                            {
+                                if (paragraph != " ")
+                                {
+                                    <span>@paragraph</span>
+                                }
+                                else
+                                {
+                                    <p></p>
+                                }
+                            }
+                        </div>
                         <textarea asp-for="@Model.Product.Sections[i].Description" name="description" id="" rows="7" style="width: 100%">
-                        </textarea>
+                            </textarea>
                         <div class="d-flex">
-                            <button type="submit" class="nav-link">
+                            <a asp-area="Admin"
+                               asp-controller="Details"
+                               asp-action="DeleteSection"
+                               asp-route-id="@Model.Product.Id"
+                               asp-route-sectionId="@Model.Product.Sections[i].Id"
+                               class="nav-link">
                                 <i class="fa fa-xmark text-danger ms-2"></i>
-                            </button>
+                            </a>
                             <button type="submit" class="nav-link">
                                 <i class="fa fa-check text-success ms-2"></i>
                             </button>
+                            <a asp-area="Admin"
+                               asp-controller="Details"
+                               asp-action="MoveSectionUp"
+                               asp-route-id="@Model.Product.Id"
+                               asp-route-sectionOrder="@Model.Product.Sections[i].SectionOrder"
+                               class="nav-link">
+                                <i class="fa fa-arrow-up text-primary ms-2"></i>
+                            </a>
+                            <a asp-area="Admin"
+                               asp-controller="Details"
+                               asp-action="MoveSectionDown"
+                               asp-route-id="@Model.Product.Id"
+                               asp-route-sectionOrder="@Model.Product.Sections[i].SectionOrder"
+                               class="nav-link">
+                                <i class="fa fa-arrow-down text-primary ms-2"></i>
+                            </a>
                         </div>
                     </form>
                 </div>
             }
-            <!-- Product Description End-->
+            <div class="col-lg border rounded mt-3 p-2 text-center">
+                <a asp-area="Admin" asp-controller="Details" asp-action="AddSection" asp-route-id="@Model.Product.Id"
+                class="btn btn-sm bg-success text-center">Добави нова секция</a>
+            </div>
+            <!-- Product Sections End-->
         </div>
         <!-- Left Side End-->
         <!-- Right Side Start-->
@@ -123,32 +166,33 @@
                             </ul>
                         </span>
                     </div>
+                    <hr/>
                     @foreach (var category in Model.Categories)
                     {
-                        if (Model.GetProductCategoriesId().Contains(category.Id))
-                        {
-                            <div class="d-flex justify-content-between align-items-center">
-                                <a href="#" class="nav-link text-success">
-                                    <i class="fa-regular fa-square-check me-2"></i>
-                                    @category.Name
-                                </a>
-                                <a href="#" class="nav-link">
-                                    <i class="fa-solid fa-trash-can text-danger"></i>
-                                </a>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="d-flex justify-content-between align-items-center">
-                                <a href="#" class="nav-link">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a asp-area="Admin"
+                               asp-controller="Details"
+                               asp-action="AddRemoveCategory"
+                               asp-route-id="@Model.Product.Id"
+                               asp-route-categoryId="@category.Id"
+                               class="nav-link">
+                                @if (Model.GetProductCategoriesId().Contains(category.Id))
+                                {
+                                    <div class="text-success">
+                                        <i class="fa-regular fa-square-check me-2"></i>
+                                        @category.Name
+                                    </div>
+                                }
+                                else
+                                {
                                     <i class="fa-regular fa-square me-2"></i>
                                     @category.Name
-                                </a>
-                                <a href="#" class="nav-link">
-                                    <i class="fa-solid fa-trash-can text-danger"></i>
-                                </a>
-                            </div>
-                        }
+                                }
+                            </a>
+                            <a href="#" class="nav-link ">
+                                <i class="fa fa-xmark text-danger"></i>
+                            </a>
+                        </div>
                     }
                     <a href="#" class="nav-link mt-2">
                         <i class="fa fa-plus me-2"></i>
@@ -193,3 +237,4 @@
     </div>
 </div>
 <!-- Details Product End -->
+
