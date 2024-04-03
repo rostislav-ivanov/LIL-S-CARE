@@ -28,7 +28,7 @@ namespace LilsCareApp.Infrastructure.Data.Models
         public required string Optional { get; set; }
 
         [Comment("Sections keeping descriptions of product")]
-        public IEnumerable<Section> Sections { get; set; } = [];
+        public List<Section> Sections { get; set; } = [];
 
         [Comment("Is the product show on online store")]
         public bool IsShow { get; set; }
@@ -40,16 +40,16 @@ namespace LilsCareApp.Infrastructure.Data.Models
         public List<Review>? Reviews { get; set; }
 
         [Comment("Navigation property to the product's Categories")]
-        public List<ProductCategory> ProductsCategories { get; set; } = new List<ProductCategory>();
+        public List<ProductCategory> ProductsCategories { get; set; } = [];
 
         [Comment("Navigation property to the Wishes Products")]
-        public List<WishUser> WishesUsers { get; set; } = new List<WishUser>();
+        public List<WishUser> WishesUsers { get; set; } = [];
 
         [Comment("Navigation property to the Sopping Bags Products")]
-        public List<BagUser> BagsUsers { get; set; } = new List<BagUser>();
+        public List<BagUser> BagsUsers { get; set; } = [];
 
         [Comment("Navigation Property to Orders")]
-        public List<ProductOrder> ProductsOrders { get; set; } = new List<ProductOrder>();
+        public List<ProductOrder> ProductsOrders { get; set; } = [];
     }
 }
 

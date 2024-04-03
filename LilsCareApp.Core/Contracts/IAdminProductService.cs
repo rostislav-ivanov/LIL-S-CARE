@@ -16,5 +16,6 @@ namespace LilsCareApp.Core.Contracts
         Task<IEnumerable<ProductDTO>> GetProductsOrderByPriceDescAsync();
         Task<IEnumerable<ProductDTO>> GetProductsOrderByQuantityAscAsync();
         Task<IEnumerable<ProductDTO>> GetProductsOrderByQuantityDescAsync();
+        Task RemoveProductAsync(int id);
     }
 }

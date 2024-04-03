@@ -46,7 +46,7 @@
                             <i class="fa fa-angle-up"></i>
                         </a>
                 </div>
-                <div class="col-2">
+                <div class="col-1">
                     <p class="mb-0"><strong>Цена</strong></p>
                     <a asp-area="Admin" asp-controller="Products" asp-action="OrderBy" asp-route-orderBy="4"
                        class="text-decoration-none text-black">
@@ -57,7 +57,7 @@
                         <i class="fa fa-angle-up"></i>
                     </a>
                 </div>
-                <div class="col-2">
+                <div class="col-1">
                     <p class="mb-0"><strong>Наличност</strong></p>
                     <a asp-area="Admin" asp-controller="Products" asp-action="OrderBy" asp-route-orderBy="6"
                        class="text-decoration-none text-black">
@@ -79,6 +79,12 @@
                         <i class="fa fa-angle-up"></i>
                     </a>
                 </div>
+                <div class="col-2">
+                    <a asp-area="Admin" asp-controller="Details" asp-action="Add" 
+                       class="nav-link text-primary mt-2">
+                        Добави продукт <i class="fa-regular fa-square-plus"></i>
+                    </a>
+                </div>
             </div>
             @foreach (var product in Model)
             {
@@ -96,17 +102,44 @@
                             @product.Name
                         </a>
                     </div>
-                    <div class="col-2">@product.Price</div>
-                    <div class="col-2">@product.Quantity</div>
+                    <div class="col-1">@product.Price</div>
+                    <div class="col-1">@product.Quantity</div>
                     <div class="col-1">
                         @if (product.IsShow)
                         {
-                            <i class="fa fa-check text-success"></i>
+                            <i class="fa-regular fa-eye"></i>
                         }
                         else
                         {
-                            <i class="fa fa-xmark text-danger"></i>
+                            <i class="fa-regular fa-eye-slash"></i>
                         }
+                    </div>
+                    <div class="col-2">
+                        <div class="row">
+                            <a asp-area="Admin" asp-controller="Details" asp-action="Index" asp-route-id="@product.Id"
+                               class="nav-link text-warning">
+                                Редактирай <i class="fa fa-edit"></i>
+                            </a>
+                            <a asp-area="Admin" asp-controller="Details" asp-action="Add" asp-route-id="@product.Id"
+                               class="nav-link text-primary mt-2">
+                                Вземи като шаблон <i class="fa fa-clone"></i>
+                            </a>
+                            @if (product.IsShow)
+                            {
+                                <a asp-area="Admin" asp-controller="Products" asp-action="Remove" asp-route-id="@product.Id"
+                                   class="nav-link text-danger mt-2">
+                                    Премахни от магазина <i class="fa fa-xmark"></i>
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-area="Admin" asp-controller="Products" asp-action="Remove" asp-route-id="@product.Id"
+                                   class="nav-link text-success mt-2">
+                                    Добави в магазина <i class="fa fa-check"></i>
+                                </a>
+                            }
+
+                        </div>
                     </div>
                 </div>
             }

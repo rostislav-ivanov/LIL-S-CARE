@@ -75,6 +75,98 @@ namespace LilsCareApp.Core.Services
                 .ToArrayAsync();
         }
 
+        public async Task<DetailsDTO> CreateProductAsync()
+        {
+            Product product = new Product()
+            {
+                Name = "",
+                Optional = "",
+            };
+
+            await _context.Products.AddAsync(product);
+
+            await _context.SaveChangesAsync();
+
+            DetailsDTO details = new DetailsDTO
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                Quantity = product.Quantity,
+                Optional = product.Optional,
+                Sections = [],
+                ProductsCategories = []
+            };
+
+            return details;
+        }
+
+        public async Task<DetailsDTO> CreateProductByTemplateAsync(int id)
+        {
+            var product = await _context.Products
+                .Where(p => p.Id == id)
+                .Select(p => new Product
+                {
+                    Name = "Нов продукт",
+                    Price = p.Price,
+                    Optional = p.Optional,
+                    IsShow = false,
+                    Sections = p.Sections
+                        .Select(s => new Section
+                        {
+                            Title = s.Title,
+                            Description = s.Description,
+                            SectionOrder = s.SectionOrder
+                        })
+                        .ToList(),
+                    ProductsCategories = p.ProductsCategories
+                        .Select(pc => new ProductCategory
+                        {
+                            CategoryId = pc.CategoryId,
+                        })
+                        .ToList()
+                })
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+            if (product == null)
+            {
+                return await CreateProductAsync();
+            }
+
+            await _context.Products.AddAsync(product);
+
+            await _context.SaveChangesAsync();
+
+            DetailsDTO details = new DetailsDTO
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                Quantity = product.Quantity,
+                Optional = product.Optional,
+                Sections = product.Sections
+                    .Select(s => new SectionDTO
+                    {
+                        Id = s.Id,
+                        Title = s.Title,
+                        Description = s.Description,
+                        SectionOrder = s.SectionOrder
+                    })
+                    .ToList(),
+                ProductsCategories = await _context.ProductsCategories
+                    .Where(pc => pc.ProductId == product.Id)
+                    .Select(pc => new CategoryDTO
+                    {
+                        Id = pc.CategoryId,
+                        Name = pc.Category.Name
+                    })
+                    .ToListAsync()
+            };
+
+            return details;
+        }
+
         public async Task MoveImageLeftAsync(int id, int imageOrder)
         {
             var image = await _context.ImageProducts

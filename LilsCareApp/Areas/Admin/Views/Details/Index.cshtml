@@ -71,175 +71,45 @@
             </div>
             <!-- Product Images End-->
             <!-- Product Description Start-->
-            <div class="col-lg border rounded mt-3 p-2">
-                <h4 class="text-center">Описание</h4>
-                <hr />
-                <div class="row">
-                    @foreach (var paragraph in Model.Product.GetSection(1))
-                    {
-                        if (paragraph != " ")
+            @for (int i = 0; i < Model.Product.Sections.Count; i++)
+            {
+                <div class="col-lg border rounded mt-3 p-2">
+                    <h4 class="text-center">@Model.Product.Sections[i].Title</h4>
+                    <hr />
+                    <div class="row">
+                        @foreach (var paragraph in Model.Product.GetSection(i+1))
                         {
-                            <span>@paragraph</span>
+                            if (paragraph != " ")
+                            {
+                                <span>@paragraph</span>
+                            }
+                            else
+                            {
+                                <p></p>
+                            }
                         }
-                        else
-                        {
-                            <p></p>  
-                        }
-                    }
-                </div>
-                <form asp-area="Admin" asp-controller="Details" asp-action="Description" method="post">
-                    <input asp-for="@Model.Product.Id" type="hidden" name="id" value="@Model.Product.Id" />
-                    <textarea asp-for="@Model.Product.Sections[0].Description" name="description" id="" rows="7" style="width: 100%">
-                    </textarea>
-                    <div class="d-flex">
-                        <button type="submit" class="nav-link">
-                            <i class="fa fa-xmark text-danger ms-2"></i>
-                        </button>
-                        <button type="submit" class="nav-link">
-                            <i class="fa fa-check text-success ms-2"></i>
-                        </button>
                     </div>
-                </form>
-            </div>
+                    <form asp-area="Admin" asp-controller="Details" asp-action="Description" method="post">
+                        <input asp-for="@Model.Product.Id" type="hidden" name="id" value="@Model.Product.Id" />
+                        <textarea asp-for="@Model.Product.Sections[i].Description" name="description" id="" rows="7" style="width: 100%">
+                        </textarea>
+                        <div class="d-flex">
+                            <button type="submit" class="nav-link">
+                                <i class="fa fa-xmark text-danger ms-2"></i>
+                            </button>
+                            <button type="submit" class="nav-link">
+                                <i class="fa fa-check text-success ms-2"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            }
             <!-- Product Description End-->
-            <!-- Product Ingredients Start-->
-            <div class="col-lg border rounded mt-3 p-2">
-                <h4 class="text-center">ЗА СЪСТАВКИТЕ</h4>
-                <hr />
-                <div class="row">
-                    @foreach (var paragraph in Model.Product.GetSection(2))
-                    {
-                        if (paragraph != " ")
-                        {
-                            <span>@paragraph</span>
-                        }
-                        else
-                        {
-                            <p></p>
-                        }
-                    }
-                </div>
-                <textarea name="" id="" rows="7" style="width: 100%"></textarea>
-                <div class="d-flex">
-                    <a href="#" class="nav-link">
-                        <i class="fa fa-repeat text-warning ms-2"></i>
-                    </a>
-                    <a href="#" class="nav-link">
-                        <i class="fa fa-xmark text-danger ms-2"></i>
-                    </a>
-                    <a href="#" class="nav-link">
-                        <i class="fa fa-check text-success ms-2"></i>
-                    </a>
-                </div>
-            </div>
-            <!-- Product Ingredients End-->
-            <!-- Product Purpose Start-->
-            <div class="col-lg border rounded mt-3 p-2">
-                <h4 class="text-center">УПОТРЕБА</h4>
-                <hr />
-                <div class="row">
-                    @foreach (var paragraph in Model.Product.GetSection(3))
-                    {
-                        if (paragraph != " ")
-                        {
-                            <span>@paragraph</span>
-                        }
-                        else
-                        {
-                            <p></p>
-                        }
-                    }
-                </div>
-                <textarea name="" id="" rows="7" style="width: 100%"></textarea>
-                <div class="d-flex">
-                    <a href="#" class="nav-link">
-                        <i class="fa fa-repeat text-warning ms-2"></i>
-                    </a>
-                    <a href="#" class="nav-link">
-                        <i class="fa fa-xmark text-danger ms-2"></i>
-                    </a>
-                    <a href="#" class="nav-link">
-                        <i class="fa fa-check text-success ms-2"></i>
-                    </a>
-                </div>
-            </div>
-            <!-- Product Purpose End-->
-            <!-- Product Shipping Conditions Start-->
-            <div class="col-lg border rounded mt-3 p-2">
-                <h4 class="text-center">ИЗПАЩАНЕ И ДОСТАВКА</h4>
-                <hr />
-                <div class="row">
-                    @foreach (var paragraph in Model.Product.GetSection(4))
-                    {
-                        if (paragraph != " ")
-                        {
-                            <span>@paragraph</span>
-                        }
-                        else
-                        {
-                            <p></p>
-                        }
-                    }
-                </div>
-                <textarea name="" id="" rows="7" style="width: 100%"></textarea>
-                <div class="d-flex">
-                    <a href="#" class="nav-link">
-                        <i class="fa fa-repeat text-warning ms-2"></i>
-                    </a>
-                    <a href="#" class="nav-link">
-                        <i class="fa fa-xmark text-danger ms-2"></i>
-                    </a>
-                    <a href="#" class="nav-link">
-                        <i class="fa fa-check text-success ms-2"></i>
-                    </a>
-                </div>
-            </div>
-            <!-- Product Shipping Conditions End-->
-            <!-- Product IngredientINCIs Start-->
-            <div class="col-lg border rounded mt-3 p-2">
-                <h4 class="text-center">СЪСТАВ, INCI</h4>
-                <hr />
-                <div class="row">
-                    @foreach (var paragraph in Model.Product.GetSection(5))
-                    {
-                        if (paragraph != " ")
-                        {
-                            <span>@paragraph</span>
-                        }
-                        else
-                        {
-                            <p></p>
-                        }
-                    }
-                </div>
-                <textarea name="" id="" rows="7" style="width: 100%"></textarea>
-                <div class="d-flex">
-                    <a href="#" class="nav-link">
-                        <i class="fa fa-repeat text-warning ms-2"></i>
-                    </a>
-                    <a href="#" class="nav-link">
-                        <i class="fa fa-xmark text-danger ms-2"></i>
-                    </a>
-                    <a href="#" class="nav-link">
-                        <i class="fa fa-check text-success ms-2"></i>
-                    </a>
-                </div>
-            </div>
-            <!-- Product IngredientINCIs End-->
         </div>
         <!-- Left Side End-->
         <!-- Right Side Start-->
         <div class="col-4">
             <div class="row">
-                <!-- Product Is Show Start-->
-                <div class="d-flex justify-content-between border rounded p-2">
-                    <p>
-                        Продукта е в продажба
-                        <a href=""><i class="fa fa-check text-success ms-2"></i></a>
-                        <a href=""><i class="fa fa-xmark text-danger ms-2"></i></a>
-                    </p>
-                </div>
-                <!-- Product Is Show End-->
                 <!-- Product Category Start-->
                 <div class="border rounded p-2 mt-3">
                     <div class="d-flex align-items-center">
