@@ -24,6 +24,8 @@ namespace LilsCareApp.Infrastructure.Data
 
         public DbSet<Review> Reviews { get; set; } = null!;
 
+        public DbSet<ProductOrder> ProductsOrders { get; set; } = null!;
+
         public DbSet<Order> Orders { get; set; } = null!;
 
         public DbSet<StatusOrder> StatusOrders { get; set; } = null!;

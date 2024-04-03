@@ -1,9 +1,16 @@
-﻿namespace LilsCareApp.Core.Models
+﻿using System.ComponentModel.DataAnnotations;
+using static LilsCareApp.Core.ErrorMessageConstants;
+using static LilsCareApp.Infrastructure.DataConstants.Product;
+
+namespace LilsCareApp.Core.Models
 {
     public class DetailsDTO
     {
         private const string separator = "\r\n";
         public int Id { get; set; }
+
+        [Required(ErrorMessage = Required)]
+        [StringLength(NameMaxLength, MinimumLength = NameMinLength, ErrorMessage = StringLength)]
         public string Name { get; set; } = string.Empty;
 
         public decimal Price { get; set; }
