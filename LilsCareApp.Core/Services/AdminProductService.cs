@@ -136,6 +136,20 @@ namespace LilsCareApp.Core.Services
 
             return products;
         }
+
+        public async Task RemoveProductAsync(int id)
+        {
+            var product = await _context.Products
+                .FirstOrDefaultAsync(p => p.Id == id);
+            if (product == null)
+            {
+                return;
+            }
+
+            product.IsShow = !product.IsShow;
+
+            await _context.SaveChangesAsync();
+        }
     }
 }
 

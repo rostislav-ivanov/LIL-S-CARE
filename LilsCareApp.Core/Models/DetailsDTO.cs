@@ -4,7 +4,7 @@
     {
         private const string separator = "\r\n";
         public int Id { get; set; }
-        public required string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         public decimal Price { get; set; }
 
@@ -12,7 +12,7 @@
 
         public int AvailableQuantity { get; set; }
 
-        public string? Optional { get; set; }
+        public string Optional { get; set; } = string.Empty;
 
         public List<SectionDTO> Sections { get; set; } = [];
 
@@ -35,5 +35,6 @@
                 .FirstOrDefault(s => s.SectionOrder == sectionOrder);
             return section != null ? section.Description.Split(new string[] { separator }, StringSplitOptions.RemoveEmptyEntries).ToList() : [];
         }
+
     }
 }

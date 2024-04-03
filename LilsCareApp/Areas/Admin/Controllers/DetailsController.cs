@@ -25,6 +25,39 @@ namespace LilsCareApp.Areas.Admin.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> Add(int id)
+        {
+            AdminDetailsDTO model = new AdminDetailsDTO()
+            {
+                Categories = await _adminDetailsService.GetCategoriesAsync()
+            };
+
+            if (id != 0)
+            {
+                model.Product = await _adminDetailsService.CreateProductByTemplateAsync(id);
+            }
+            else
+            {
+                model.Product = await _adminDetailsService.CreateProductAsync();
+            }
+
+            return View(nameof(Index), model);
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            if (id == 0)
+            {
+                return BadRequest();
+            }
+            AdminDetailsDTO model = new AdminDetailsDTO()
+            {
+                Product = await _adminDetailsService.GetProductByIdAsync(id),
+                Categories = await _adminDetailsService.GetCategoriesAsync()
+            };
+
+            return View(nameof(Index), model);
+        }
         public async Task<IActionResult> MoveImageLeft(int id, int image)
         {
             if (id != 0 && image != 0)
