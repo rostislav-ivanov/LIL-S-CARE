@@ -585,7 +585,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                 comment: "The image of the review");
 
             migrationBuilder.CreateTable(
-                name: "ProductOrder",
+                name: "ProductsOrders",
                 columns: table => new
                 {
                     ProductId = table.Column<int>(type: "int", nullable: false),
@@ -596,15 +596,15 @@ namespace LilsCareApp.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductOrder", x => new { x.ProductId, x.OrderId });
+                    table.PrimaryKey("PK_ProductsOrders", x => new { x.ProductId, x.OrderId });
                     table.ForeignKey(
-                        name: "FK_ProductOrder_Orders_OrderId",
+                        name: "FK_ProductsOrders_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductOrder_Products_ProductId",
+                        name: "FK_ProductsOrders_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
@@ -714,14 +714,14 @@ namespace LilsCareApp.Infrastructure.Migrations
                 column: "StatusOrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductOrder_OrderId",
-                table: "ProductOrder",
-                column: "OrderId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ProductsCategories_CategoryId",
                 table: "ProductsCategories",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductsOrders_OrderId",
+                table: "ProductsOrders",
+                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PromoCodes_AppUserId",
@@ -796,10 +796,10 @@ namespace LilsCareApp.Infrastructure.Migrations
                 name: "MessagesFromClients");
 
             migrationBuilder.DropTable(
-                name: "ProductOrder");
+                name: "ProductsCategories");
 
             migrationBuilder.DropTable(
-                name: "ProductsCategories");
+                name: "ProductsOrders");
 
             migrationBuilder.DropTable(
                 name: "Sections");
@@ -817,10 +817,10 @@ namespace LilsCareApp.Infrastructure.Migrations
                 name: "Reviews");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Products");
