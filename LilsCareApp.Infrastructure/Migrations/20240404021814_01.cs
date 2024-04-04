@@ -18,8 +18,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DefaultAddressDeliveryId", "Email", "EmailConfirmed", "FirstName", "ImagePath", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "45fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "64a0ade4-28e5-449d-94a2-cdb743d6636b", null, "admin@mail.com", true, "Admin", null, "Adminov", false, null, "ADMIN@MAIL.COM", "ADMIN@MAIL.COM", "AQAAAAIAAYagAAAAEFAc5TExRW5WlolqWSTQ0ppjP4mX3mJfm0okz0u+jHMSIkWMGbpZInNXx9NhKUl87g==", null, false, "a4076b35-f265-4589-83db-9a7de2f01059", false, "admin@mail.com" },
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "60a40ad3-cc7d-40c6-a5c9-6baacfdde8a4", null, "test@softuni.bg", true, "Test", null, "Testov", false, null, "TEST@SOFTUNI.BG", "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAEFhw60llp4BnOvJ6ONvGpzVHIMScd9pxVzEYtSzqdkFo08Iz6avghvOeMGs4j2VG4w==", null, false, "30cb04e6-38e2-4d9e-8a3d-d9dbf9717391", false, "test@softuni.bg" }
+                    { "45fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "a355381e-12f4-45c5-b065-0f8ef6793907", null, "admin@mail.com", true, "Admin", null, "Adminov", false, null, "ADMIN@MAIL.COM", "ADMIN@MAIL.COM", "AQAAAAIAAYagAAAAEOmrBrVncIHYStBiRbwkm9qa02j9YN1Cu9IA8IA7sepcRbdNDA67aM2jGSjPsxcEJA==", null, false, "4a9a5bad-1fb0-4481-98fd-be6f12040ca3", false, "admin@mail.com" },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "35812b1a-d05e-42e3-ac54-30d0908cae11", null, "test@softuni.bg", true, "Test", null, "Testov", false, null, "TEST@SOFTUNI.BG", "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAEAs0RmO8cBCDwpqjMpA3jsG59mC1TokGayh07F5cqQgESfwFu5K2ex/f2IMb5tI8ow==", null, false, "f7c523da-1297-44da-8893-95f7156f023f", false, "test@softuni.bg" }
                 });
 
             migrationBuilder.InsertData(
@@ -146,8 +146,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "Id", "AppUserId", "AppliedDate", "Code", "Discount", "ExpirationDate" },
                 values: new object[,]
                 {
-                    { 1, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, "-10 % за регистрация", 0.1m, new DateTime(2025, 4, 2, 15, 4, 21, 308, DateTimeKind.Utc).AddTicks(8598) },
-                    { 2, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, "-20 % отстъпка", 0.2m, new DateTime(2025, 4, 2, 15, 4, 21, 308, DateTimeKind.Utc).AddTicks(8607) }
+                    { 1, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, "-10 % за регистрация", 0.1m, new DateTime(2025, 4, 4, 2, 18, 12, 607, DateTimeKind.Utc).AddTicks(5879) },
+                    { 2, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, "-20 % отстъпка", 0.2m, new DateTime(2025, 4, 4, 2, 18, 12, 607, DateTimeKind.Utc).AddTicks(5888) }
                 });
 
             migrationBuilder.InsertData(
@@ -155,9 +155,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "AuthorId", "ProductId", "Comment", "CreatedOn", "Rating", "Title" },
                 values: new object[,]
                 {
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 2, "Great product, I love it!", new DateTime(2024, 4, 2, 18, 4, 21, 308, DateTimeKind.Local).AddTicks(7953), 4, "Great product" },
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 3, "Great product, I love it!", new DateTime(2024, 4, 2, 18, 4, 21, 308, DateTimeKind.Local).AddTicks(8014), 3, "Great product" },
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 4, "Great product, I love it!", new DateTime(2024, 4, 2, 18, 4, 21, 308, DateTimeKind.Local).AddTicks(8019), 3, "Great product" }
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 2, "Great product, I love it!", new DateTime(2024, 4, 4, 5, 18, 12, 607, DateTimeKind.Local).AddTicks(5281), 4, "Great product" },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 3, "Great product, I love it!", new DateTime(2024, 4, 4, 5, 18, 12, 607, DateTimeKind.Local).AddTicks(5351), 3, "Great product" },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 4, "Great product, I love it!", new DateTime(2024, 4, 4, 5, 18, 12, 607, DateTimeKind.Local).AddTicks(5356), 3, "Great product" }
                 });
 
             migrationBuilder.InsertData(
@@ -238,12 +238,12 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "Id", "AddressDeliveryId", "AppUserId", "CreatedOn", "DateShipping", "Discount", "NoteForDelivery", "OrderNumber", "PaymentMethodId", "PromoCodeId", "ShippingPrice", "StatusOrderId", "SubTotal", "Total", "TrackingNumber" },
                 values: new object[,]
                 {
-                    { 1, 1, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", new DateTime(2024, 4, 2, 15, 4, 20, 579, DateTimeKind.Utc).AddTicks(5010), new DateTime(2024, 4, 2, 15, 4, 20, 579, DateTimeKind.Utc).AddTicks(6262), 0m, null, null, 1, null, 0m, 1, 0m, 0m, "1234567890" },
-                    { 2, 2, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", new DateTime(2024, 4, 2, 15, 4, 20, 580, DateTimeKind.Utc).AddTicks(6633), new DateTime(2024, 4, 2, 15, 4, 20, 580, DateTimeKind.Utc).AddTicks(6635), 0m, null, null, 2, null, 0m, 2, 0m, 0m, "1234567890x" }
+                    { 1, 1, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", new DateTime(2024, 4, 4, 2, 18, 11, 790, DateTimeKind.Utc).AddTicks(9503), new DateTime(2024, 4, 4, 2, 18, 11, 791, DateTimeKind.Utc).AddTicks(772), 0m, null, null, 1, null, 0m, 1, 0m, 0m, "1234567890" },
+                    { 2, 2, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", new DateTime(2024, 4, 4, 2, 18, 11, 791, DateTimeKind.Utc).AddTicks(1990), new DateTime(2024, 4, 4, 2, 18, 11, 791, DateTimeKind.Utc).AddTicks(1992), 0m, null, null, 2, null, 0m, 2, 0m, 0m, "1234567890x" }
                 });
 
             migrationBuilder.InsertData(
-                table: "ProductOrder",
+                table: "ProductsOrders",
                 columns: new[] { "OrderId", "ProductId", "ImagePath", "Price", "Quantity" },
                 values: new object[,]
                 {
@@ -424,56 +424,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                 keyValue: 3);
 
             migrationBuilder.DeleteData(
-                table: "ProductOrder",
-                keyColumns: new[] { "OrderId", "ProductId" },
-                keyValues: new object[] { 1, 1 });
-
-            migrationBuilder.DeleteData(
-                table: "ProductOrder",
-                keyColumns: new[] { "OrderId", "ProductId" },
-                keyValues: new object[] { 2, 1 });
-
-            migrationBuilder.DeleteData(
-                table: "ProductOrder",
-                keyColumns: new[] { "OrderId", "ProductId" },
-                keyValues: new object[] { 1, 2 });
-
-            migrationBuilder.DeleteData(
-                table: "ProductOrder",
-                keyColumns: new[] { "OrderId", "ProductId" },
-                keyValues: new object[] { 1, 3 });
-
-            migrationBuilder.DeleteData(
-                table: "ProductOrder",
-                keyColumns: new[] { "OrderId", "ProductId" },
-                keyValues: new object[] { 2, 3 });
-
-            migrationBuilder.DeleteData(
-                table: "ProductOrder",
-                keyColumns: new[] { "OrderId", "ProductId" },
-                keyValues: new object[] { 1, 4 });
-
-            migrationBuilder.DeleteData(
-                table: "ProductOrder",
-                keyColumns: new[] { "OrderId", "ProductId" },
-                keyValues: new object[] { 2, 5 });
-
-            migrationBuilder.DeleteData(
-                table: "ProductOrder",
-                keyColumns: new[] { "OrderId", "ProductId" },
-                keyValues: new object[] { 1, 6 });
-
-            migrationBuilder.DeleteData(
-                table: "ProductOrder",
-                keyColumns: new[] { "OrderId", "ProductId" },
-                keyValues: new object[] { 2, 6 });
-
-            migrationBuilder.DeleteData(
-                table: "ProductOrder",
-                keyColumns: new[] { "OrderId", "ProductId" },
-                keyValues: new object[] { 1, 7 });
-
-            migrationBuilder.DeleteData(
                 table: "ProductsCategories",
                 keyColumns: new[] { "CategoryId", "ProductId" },
                 keyValues: new object[] { 1, 1 });
@@ -536,6 +486,56 @@ namespace LilsCareApp.Infrastructure.Migrations
             migrationBuilder.DeleteData(
                 table: "ProductsCategories",
                 keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 1, 7 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsOrders",
+                keyColumns: new[] { "OrderId", "ProductId" },
+                keyValues: new object[] { 1, 1 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsOrders",
+                keyColumns: new[] { "OrderId", "ProductId" },
+                keyValues: new object[] { 2, 1 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsOrders",
+                keyColumns: new[] { "OrderId", "ProductId" },
+                keyValues: new object[] { 1, 2 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsOrders",
+                keyColumns: new[] { "OrderId", "ProductId" },
+                keyValues: new object[] { 1, 3 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsOrders",
+                keyColumns: new[] { "OrderId", "ProductId" },
+                keyValues: new object[] { 2, 3 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsOrders",
+                keyColumns: new[] { "OrderId", "ProductId" },
+                keyValues: new object[] { 1, 4 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsOrders",
+                keyColumns: new[] { "OrderId", "ProductId" },
+                keyValues: new object[] { 2, 5 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsOrders",
+                keyColumns: new[] { "OrderId", "ProductId" },
+                keyValues: new object[] { 1, 6 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsOrders",
+                keyColumns: new[] { "OrderId", "ProductId" },
+                keyValues: new object[] { 2, 6 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsOrders",
+                keyColumns: new[] { "OrderId", "ProductId" },
                 keyValues: new object[] { 1, 7 });
 
             migrationBuilder.DeleteData(

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LilsCareApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240402150330_InitialMigration")]
+    [Migration("20240404021713_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -535,7 +535,7 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("ProductOrder", t =>
+                    b.ToTable("ProductsOrders", t =>
                         {
                             t.HasComment("Many to many relation between products and orders");
                         });
