@@ -11,6 +11,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
            new Order
             {
                 Id = 1,
+                OrderNumber = "123456",
                 CreatedOn = DateTime.UtcNow,
                 StatusOrderId = 1,
                 AddressDeliveryId = 1,
@@ -22,6 +23,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
           new Order
              {
                 Id = 2,
+                OrderNumber = "123456x",
                 CreatedOn = DateTime.UtcNow,
                 StatusOrderId = 2,
                 AddressDeliveryId = 2,
