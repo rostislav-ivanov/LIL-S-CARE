@@ -2,7 +2,7 @@
 using static LilsCareApp.Core.ErrorMessageConstants;
 using static LilsCareApp.Infrastructure.DataConstants.Review;
 
-namespace LilsCareApp.Core.Models
+namespace LilsCareApp.Core.Models.Details
 {
     public class AddReviewDTO
     {

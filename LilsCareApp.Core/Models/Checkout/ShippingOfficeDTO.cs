@@ -11,12 +11,12 @@ namespace LilsCareApp.Core.Models.Checkout
         public int ShippingProviderId { get; set; }
 
         [Comment("City for Delivery")]
-        [Required(ErrorMessage = Required)]
+        [Required(ErrorMessage = RequiredField)]
         [Display(Name = "град")]
         public string City { get; set; } = null!;
 
         [Comment("Office Address for Delivery")]
-        [Required(ErrorMessage = Required)]
+        [Required(ErrorMessage = RequiredField)]
         [Display(Name = "адрес на офиса")]
         public string OfficeAddress { get; set; } = null!;
 

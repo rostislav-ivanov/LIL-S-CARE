@@ -2,11 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using static LilsCareApp.Core.ErrorMessageConstants;
 
-namespace LilsCareApp.Core.Models
+namespace LilsCareApp.Core.Models.Home
 {
     public class SubscriberDTO
     {
-        [Required(ErrorMessage = Required)]
+        [Required(ErrorMessage = RequiredField)]
         [DisplayName("имейл")]
         [EmailAddress(ErrorMessage = InvalidEmailAddress)]
         public string EmailSubscriber { get; set; } = string.Empty;

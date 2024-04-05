@@ -24,16 +24,22 @@
                 <div class="form-check">
                     @foreach (var category in Model.Categories)
                     {
-                        <a asp-controller="Products" asp-action="Index" asp-route-id="@category.Id">
-                            <div class="nav-link mb-2">
-                                <input
-                                       class="form-check-input me-2"
-                                       type="radio"
-                                       name="category"
-                                       value="@category.Id"
-                                @(category.Id == ViewBag.CheckedId ? "checked" : "") />
-                                <label class="form-check-label" for="category">@category.Name</label>
-                            </div>
+                        <a asp-controller="Products"
+                           asp-action="GetByCategory"
+                           asp-route-categoryId="@category.Id"
+                           class="nav-link mb-2">
+                            @if (category.Id == ViewBag.CheckedId)
+                            {
+                                <div style="color:rgb(var(--app-btn-bg))">
+                                    <i class="fa-regular fa-square-check me-2"></i>
+                                    @category.Name
+                                </div>
+                            }
+                            else
+                            {
+                                <i class="fa-regular fa-square me-2"></i>
+                                @category.Name
+                            }
                         </a>
                     }
                 </div>

@@ -1,5 +1,5 @@
 ﻿using LilsCareApp.Core.Contracts;
-using LilsCareApp.Core.Models;
+using LilsCareApp.Core.Models.Checkout;
 using LilsCareApp.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;

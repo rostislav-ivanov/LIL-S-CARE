@@ -1,5 +1,4 @@
-﻿using LilsCareApp.Core.Models;
-using LilsCareApp.Core.Models.Checkout;
+﻿using LilsCareApp.Core.Models.Checkout;
 
 namespace LilsCareApp.Services
 {

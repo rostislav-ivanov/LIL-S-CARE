@@ -2,7 +2,7 @@
 {
     public static class ErrorMessageConstants
     {
-        public const string Required = "Моля, въведете {0}!";
+        public const string RequiredField = "Моля, въведете {0}!";
         public const string StringLength = "Полето {0} трябва да бъде най-малко {2} и най-много {1} символа дълго";
         public const string StringLengthMax = "Полето {0} трябва да бъде най-много {1} символа дълго";
         public const string DurationRange = "Полето {0} трябва да бъде между {1} и {2}";
@@ -19,5 +19,7 @@
         public const string UserNameError = "Потребителското име трябва да съдържа само латински букви и цифри";
         public const string UserNamePattern = @"^[a-zA-Z0-9]+$";
         public const string ConfirmPasswordError = "Паролата и паролата за потвърждение не съвпадат.";
+        public const string ProductPriceRange = "Цената трябва да бъде между {1} и {2}";
+        public const string QuantityRange = "Количеството трябва да бъде между {1} и {2}";
     }
 }

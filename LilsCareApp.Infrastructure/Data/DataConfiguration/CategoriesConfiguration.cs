@@ -6,13 +6,14 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
 {
     internal class CategoriesConfiguration : IEntityTypeConfiguration<Category>
     {
-        private readonly IEnumerable<Category> categories = new List<Category>
-        {
-            new Category { Id = 1, Name = "за тяло" },
-            new Category { Id = 2, Name = "за суха кожа" },
-            new Category { Id = 3, Name = "за мазна кожа" },
-            new Category { Id = 4, Name = "за лице" },
-        };
+        private readonly IEnumerable<Category> categories =
+        [
+            new () { Id = 1, Name = "всички" },
+            new () { Id = 2, Name = "за тяло" },
+            new () { Id = 3, Name = "за суха кожа" },
+            new () { Id = 4, Name = "за мазна кожа" },
+            new () { Id = 5, Name = "за лице" },
+        ];
 
         public void Configure(EntityTypeBuilder<Category> builder)
         {

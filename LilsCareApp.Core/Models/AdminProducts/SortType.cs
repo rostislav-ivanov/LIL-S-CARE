@@ -1,4 +1,4 @@
-﻿namespace LilsCareApp.Areas.Admin.Models
+﻿namespace LilsCareApp.Core.Models.AdminProducts
 {
     public enum SortType
     {

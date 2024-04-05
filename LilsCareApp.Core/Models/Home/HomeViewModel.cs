@@ -1,8 +1,7 @@
-﻿using LilsCareApp.Core.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 
-namespace LilsCareApp.Models
+namespace LilsCareApp.Core.Models.Home
 {
     public class HomeViewModel
     {

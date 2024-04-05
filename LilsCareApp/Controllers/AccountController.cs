@@ -1,6 +1,6 @@
 ﻿using LilsCareApp.Core.Contracts;
-using LilsCareApp.Core.Models;
 using LilsCareApp.Core.Models.Account;
+using LilsCareApp.Core.Models.Products;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Security.Claims;

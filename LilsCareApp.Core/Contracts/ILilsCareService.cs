@@ -1,4 +1,4 @@
-﻿using LilsCareApp.Core.Models;
+﻿using LilsCareApp.Core.Models.Home;
 
 namespace LilsCareApp.Core.Contracts
 {

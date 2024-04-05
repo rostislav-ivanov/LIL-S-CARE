@@ -37,13 +37,13 @@ namespace LilsCareApp.Core.Models.Account
 
 
         [Comment("First Name Recipient")]
-        [Required(ErrorMessage = Required)]
+        [Required(ErrorMessage = RequiredField)]
         [MaxLength(FirstNameMaxLength)]
         [Display(Name = "име")]
         public string FirstName { get; set; } = string.Empty;
 
         [Comment("Last Name Recipient")]
-        [Required(ErrorMessage = Required)]
+        [Required(ErrorMessage = RequiredField)]
         [MaxLength(LastNameMaxLength)]
         [Display(Name = "фамилия")]
         public string LastName { get; set; } = string.Empty;
@@ -51,7 +51,7 @@ namespace LilsCareApp.Core.Models.Account
 
         [Comment("Phone Number Recipient")]
         [MaxLength(PhoneNumberMaxLength)]
-        [Required(ErrorMessage = Required)]
+        [Required(ErrorMessage = RequiredField)]
         [RegularExpression(PhoneNumberPattern, ErrorMessage = InvalidPhoneNumber)]
         [Display(Name = "телефонен номер")]
         public string PhoneNumber { get; set; } = string.Empty;
