@@ -13,13 +13,21 @@ namespace LilsCareApp.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<bool>(
+                name: "IsPaid",
+                table: "Orders",
+                type: "bit",
+                nullable: false,
+                defaultValue: false,
+                comment: "Is Paid Order");
+
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DefaultAddressDeliveryId", "Email", "EmailConfirmed", "FirstName", "ImagePath", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "45fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "beab4ae3-b2ca-4af8-971d-b2575079c713", null, "admin@mail.com", true, "Admin", null, "Adminov", false, null, "ADMIN@MAIL.COM", "ADMIN@MAIL.COM", "AQAAAAIAAYagAAAAEHMOiYjjRh36KP4KbLPTb1OySYdhiH7KS7Uhd+cHLE/6ESLn/M9MNCn562Ru+hBz5w==", null, false, "67ee20c4-eaa7-42ed-b33d-141e16c7256a", false, "admin@mail.com" },
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "d8f68720-64e1-47e2-9270-66048772ddfe", null, "test@softuni.bg", true, "Test", null, "Testov", false, null, "TEST@SOFTUNI.BG", "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAEBTAFGe0/PH6w4TTTdoXPBmAFMHMW/zWE46ItCqgfI1X3Qs2qeQlsCuJEj3c+lRvCA==", null, false, "2e9ce848-505f-47be-bced-c12adaa3a020", false, "test@softuni.bg" }
+                    { "45fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "238aa3d5-a3ca-4d23-b1bb-5db2f06a005a", null, "admin@mail.com", true, "Admin", null, "Adminov", false, null, "ADMIN@MAIL.COM", "ADMIN@MAIL.COM", "AQAAAAIAAYagAAAAEBK2c2VhtG9daXoMMqyFQOZecH68RiFy5PK0FXxRY8/wS7tzBTmGBYhy5v8rwCMnAw==", null, false, "4f03eb8b-8752-4348-91c7-8c063b712bd8", false, "admin@mail.com" },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "fe9f8dc0-6460-4635-bf5f-70526cc19d1c", null, "test@softuni.bg", true, "Test", null, "Testov", false, null, "TEST@SOFTUNI.BG", "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAECZofHBBB0ltThbw1oeiOceEZRU6DE0X8+NEDQJSgQAtKqyx5nufTlcf02IzcCDMQg==", null, false, "92306d7f-d69a-4d8b-8bfa-dc2d2f071440", false, "test@softuni.bg" }
                 });
 
             migrationBuilder.InsertData(
@@ -72,10 +80,11 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Заявена" },
+                    { 1, "Неизпълнена" },
                     { 2, "Отменена" },
-                    { 3, "Изпратена" },
-                    { 4, "Получена" }
+                    { 3, "Изпълнена" },
+                    { 4, "Получена" },
+                    { 5, "Върната" }
                 });
 
             migrationBuilder.InsertData(
@@ -152,8 +161,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "Id", "AppUserId", "AppliedDate", "Code", "Discount", "ExpirationDate" },
                 values: new object[,]
                 {
-                    { 1, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, "-10 % за регистрация", 0.1m, new DateTime(2025, 4, 5, 5, 28, 41, 906, DateTimeKind.Utc).AddTicks(405) },
-                    { 2, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, "-20 % отстъпка", 0.2m, new DateTime(2025, 4, 5, 5, 28, 41, 906, DateTimeKind.Utc).AddTicks(416) }
+                    { 1, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, "-10 % за регистрация", 0.1m, new DateTime(2025, 4, 5, 16, 24, 36, 427, DateTimeKind.Utc).AddTicks(6133) },
+                    { 2, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, "-20 % отстъпка", 0.2m, new DateTime(2025, 4, 5, 16, 24, 36, 427, DateTimeKind.Utc).AddTicks(6144) }
                 });
 
             migrationBuilder.InsertData(
@@ -161,9 +170,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "AuthorId", "ProductId", "Comment", "CreatedOn", "Rating", "Title" },
                 values: new object[,]
                 {
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 2, "Great product, I love it!", new DateTime(2024, 4, 5, 8, 28, 41, 905, DateTimeKind.Local).AddTicks(8605), 4, "Great product" },
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 3, "Great product, I love it!", new DateTime(2024, 4, 5, 8, 28, 41, 905, DateTimeKind.Local).AddTicks(8665), 3, "Great product" },
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 4, "Great product, I love it!", new DateTime(2024, 4, 5, 8, 28, 41, 905, DateTimeKind.Local).AddTicks(8669), 3, "Great product" }
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 2, "Great product, I love it!", new DateTime(2024, 4, 5, 19, 24, 36, 427, DateTimeKind.Local).AddTicks(4948), 4, "Great product" },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 3, "Great product, I love it!", new DateTime(2024, 4, 5, 19, 24, 36, 427, DateTimeKind.Local).AddTicks(5109), 3, "Great product" },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 4, "Great product, I love it!", new DateTime(2024, 4, 5, 19, 24, 36, 427, DateTimeKind.Local).AddTicks(5116), 3, "Great product" }
                 });
 
             migrationBuilder.InsertData(
@@ -241,11 +250,11 @@ namespace LilsCareApp.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Orders",
-                columns: new[] { "Id", "AddressDeliveryId", "AppUserId", "CreatedOn", "DateShipping", "Discount", "NoteForDelivery", "OrderNumber", "PaymentMethodId", "PromoCodeId", "ShippingPrice", "StatusOrderId", "SubTotal", "Total", "TrackingNumber" },
+                columns: new[] { "Id", "AddressDeliveryId", "AppUserId", "CreatedOn", "DateShipping", "Discount", "IsPaid", "NoteForDelivery", "OrderNumber", "PaymentMethodId", "PromoCodeId", "ShippingPrice", "StatusOrderId", "SubTotal", "Total", "TrackingNumber" },
                 values: new object[,]
                 {
-                    { 1, 1, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", new DateTime(2024, 4, 5, 5, 28, 41, 140, DateTimeKind.Utc).AddTicks(5922), new DateTime(2024, 4, 5, 5, 28, 41, 140, DateTimeKind.Utc).AddTicks(7060), 0m, null, null, 1, null, 0m, 1, 0m, 0m, "1234567890" },
-                    { 2, 2, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", new DateTime(2024, 4, 5, 5, 28, 41, 140, DateTimeKind.Utc).AddTicks(8157), new DateTime(2024, 4, 5, 5, 28, 41, 140, DateTimeKind.Utc).AddTicks(8158), 0m, null, null, 2, null, 0m, 2, 0m, 0m, "1234567890x" }
+                    { 1, 1, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", new DateTime(2024, 4, 5, 16, 24, 35, 515, DateTimeKind.Utc).AddTicks(91), new DateTime(2024, 4, 5, 16, 24, 35, 515, DateTimeKind.Utc).AddTicks(1230), 0m, false, null, null, 1, null, 0m, 1, 0m, 0m, "1234567890" },
+                    { 2, 2, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", new DateTime(2024, 4, 5, 16, 24, 35, 516, DateTimeKind.Utc).AddTicks(2860), new DateTime(2024, 4, 5, 16, 24, 35, 516, DateTimeKind.Utc).AddTicks(2865), 0m, false, null, null, 2, null, 0m, 2, 0m, 0m, "1234567890x" }
                 });
 
             migrationBuilder.InsertData(
@@ -795,6 +804,11 @@ namespace LilsCareApp.Infrastructure.Migrations
                 keyValue: 4);
 
             migrationBuilder.DeleteData(
+                table: "StatusOrders",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
                 table: "WishesUsers",
                 keyColumns: new[] { "AppUserId", "ProductId" },
                 keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 1 });
@@ -933,6 +947,10 @@ namespace LilsCareApp.Infrastructure.Migrations
                 table: "ShippingProviders",
                 keyColumn: "Id",
                 keyValue: 1);
+
+            migrationBuilder.DropColumn(
+                name: "IsPaid",
+                table: "Orders");
         }
     }
 }

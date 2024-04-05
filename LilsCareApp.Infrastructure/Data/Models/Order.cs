@@ -53,8 +53,11 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [ForeignKey(nameof(PaymentMethodId))]
         public PaymentMethod PaymentMethod { get; set; } = null!;
 
+        [Comment("Is Paid Order")]
+        public bool IsPaid { get; set; }
+
         [Comment("Navigation Property to Products")]
-        public List<ProductOrder> ProductsOrders { get; set; } = new List<ProductOrder>();
+        public List<ProductOrder> ProductsOrders { get; set; } = [];
 
         [Comment("Note for Delivery")]
         public string? NoteForDelivery { get; set; }
