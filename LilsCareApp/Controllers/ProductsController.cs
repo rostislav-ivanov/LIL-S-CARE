@@ -1,5 +1,5 @@
 ﻿using LilsCareApp.Core.Contracts;
-using LilsCareApp.Core.Models;
+using LilsCareApp.Core.Models.Products;
 using LilsCareApp.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,21 +18,32 @@ namespace LilsCareApp.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> Index(int id = 0)
+        public async Task<IActionResult> Index()
         {
             string userId = User.GetUserId();
-            ProductsDTO products = new ProductsDTO
+            ProductsDTO products = new()
             {
-                Products = id == 0
-                    ? await _productService.GetAllAsync(userId)
-                    : await _productService.GetByCategoryAsync(id, userId),
+                Products = await _productService.GetAllAsync(userId),
                 Categories = await _productService.GetCategoriesAsync(),
             };
-            products.Categories.Add(new CategoryDTO { Id = 0, Name = "Всички" });
-
-            ViewBag.CheckedId = id;
 
             return View(products);
+        }
+
+
+        [AllowAnonymous]
+        public async Task<IActionResult> GetByCategory(int categoryId = 1)
+        {
+            string userId = User.GetUserId();
+            ProductsDTO products = new()
+            {
+                Products = await _productService.GetByCategoryAsync(categoryId, userId),
+                Categories = await _productService.GetCategoriesAsync(),
+            };
+
+            ViewBag.CheckedId = categoryId;
+
+            return View(nameof(Index), products);
         }
 
         public async Task<IActionResult> AddRemoveWish(int productId)

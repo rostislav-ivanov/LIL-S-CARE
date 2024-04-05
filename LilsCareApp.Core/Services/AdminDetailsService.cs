@@ -1,5 +1,7 @@
 ﻿using LilsCareApp.Core.Contracts;
-using LilsCareApp.Core.Models;
+using LilsCareApp.Core.Models.AdminProducts;
+using LilsCareApp.Core.Models.Details;
+using LilsCareApp.Core.Models.Products;
 using LilsCareApp.Infrastructure.Data;
 using LilsCareApp.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
@@ -18,15 +20,16 @@ namespace LilsCareApp.Core.Services
             _context = context;
         }
 
-        public async Task<DetailsDTO> GetProductByIdAsync(int id)
+        // Get product by id
+        public async Task<AdminDetailsDTO> GetProductByIdAsync(int id)
         {
             var details = await _context.Products
-             .Select(p => new DetailsDTO
+             .Select(p => new AdminDetailsDTO
              {
                  Id = p.Id,
                  Name = p.Name,
                  Price = p.Price,
-                 Quantity = p.Quantity,
+                 AvailableQuantity = p.Quantity,
                  Optional = p.Optional,
                  Sections = p.Sections
                         .Where(s => s.ProductId == p.Id)
@@ -55,7 +58,7 @@ namespace LilsCareApp.Core.Services
                      {
                          Id = pc.Category.Id,
                          Name = pc.Category.Name
-                     }).ToList()
+                     }).ToList(),
              })
              .AsNoTracking()
              .FirstOrDefaultAsync(p => p.Id == id);
@@ -63,6 +66,7 @@ namespace LilsCareApp.Core.Services
             return details;
         }
 
+        // Get all categories
         public async Task<IEnumerable<CategoryDTO>> GetCategoriesAsync()
         {
             return await _context.Categories
@@ -75,11 +79,12 @@ namespace LilsCareApp.Core.Services
                 .ToArrayAsync();
         }
 
-        public async Task<DetailsDTO> CreateProductAsync()
+        // Create new product
+        public async Task<AdminDetailsDTO> CreateProductAsync()
         {
             Product product = new Product()
             {
-                Name = "",
+                Name = "Нов продукт",
                 Optional = "",
             };
 
@@ -87,7 +92,7 @@ namespace LilsCareApp.Core.Services
 
             await _context.SaveChangesAsync();
 
-            DetailsDTO details = new DetailsDTO
+            AdminDetailsDTO details = new AdminDetailsDTO
             {
                 Id = product.Id,
                 Name = product.Name,
@@ -101,7 +106,8 @@ namespace LilsCareApp.Core.Services
             return details;
         }
 
-        public async Task<DetailsDTO> CreateProductByTemplateAsync(int id)
+        // Create product by template from existing product
+        public async Task<AdminDetailsDTO> CreateProductByTemplateAsync(int id)
         {
             var product = await _context.Products
                 .Where(p => p.Id == id)
@@ -141,6 +147,7 @@ namespace LilsCareApp.Core.Services
             return await GetProductByIdAsync(product.Id);
         }
 
+        // Edit product name
         public async Task EditNameAsync(int id, string name)
         {
             var product = await _context.Products
@@ -154,50 +161,32 @@ namespace LilsCareApp.Core.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task MoveImageLeftAsync(int id, int imageOrder)
+
+        // Add new product image path to database
+        public async Task AddProductImageAsync(int id, string filePath)
         {
-            var image = await _context.ImageProducts
-                .FirstOrDefaultAsync(im => im.ProductId == id && im.ImageOrder == imageOrder);
-            if (image == null)
+            if (id == 0 || string.IsNullOrWhiteSpace(filePath))
             {
                 return;
             }
 
-            var imageLeft = await _context.ImageProducts
-                .FirstOrDefaultAsync(im => im.ProductId == id && im.ImageOrder == imageOrder - 1);
-            if (imageLeft == null)
-            {
-                return;
-            }
+            int count = await _context.ImageProducts
+                .Where(ip => ip.ProductId == id)
+                .CountAsync();
 
-            image.ImageOrder--;
-            imageLeft.ImageOrder++;
+            var image = new ImageProduct
+            {
+                ProductId = id,
+                ImagePath = filePath,
+                ImageOrder = count + 1
+            };
+
+            await _context.ImageProducts.AddAsync(image);
 
             await _context.SaveChangesAsync();
         }
 
-        public async Task MoveImageRightAsync(int id, int imageOrder)
-        {
-            var image = await _context.ImageProducts
-                .FirstOrDefaultAsync(im => im.ProductId == id && im.ImageOrder == imageOrder);
-            if (image == null)
-            {
-                return;
-            }
-
-            var imageRight = await _context.ImageProducts
-                .FirstOrDefaultAsync(im => im.ProductId == id && im.ImageOrder == imageOrder + 1);
-            if (imageRight == null)
-            {
-                return;
-            }
-
-            image.ImageOrder++;
-            imageRight.ImageOrder--;
-
-            await _context.SaveChangesAsync();
-        }
-
+        // Remove product image path form database
         public async Task<string?> RemoveImageAsync(int id, int imageId)
         {
             var image = await _context.ImageProducts
@@ -229,30 +218,54 @@ namespace LilsCareApp.Core.Services
             return image.ImagePath;
         }
 
-        public async Task AddProductImageAsync(int id, string filePath)
+        // Move image one position to left
+        public async Task MoveImageLeftAsync(int id, int imageOrder)
         {
-            if (id == 0 || string.IsNullOrWhiteSpace(filePath))
+            var image = await _context.ImageProducts
+                .FirstOrDefaultAsync(im => im.ProductId == id && im.ImageOrder == imageOrder);
+            if (image == null)
             {
                 return;
             }
 
-            int count = await _context.ImageProducts
-                .Where(ip => ip.ProductId == id)
-                .CountAsync();
-
-            var image = new ImageProduct
+            var imageLeft = await _context.ImageProducts
+                .FirstOrDefaultAsync(im => im.ProductId == id && im.ImageOrder == imageOrder - 1);
+            if (imageLeft == null)
             {
-                ProductId = id,
-                ImagePath = filePath,
-                ImageOrder = count + 1
-            };
+                return;
+            }
 
-            await _context.ImageProducts.AddAsync(image);
+            image.ImageOrder--;
+            imageLeft.ImageOrder++;
+
+            await _context.SaveChangesAsync();
+        }
+
+        // Move image one position to right
+        public async Task MoveImageRightAsync(int id, int imageOrder)
+        {
+            var image = await _context.ImageProducts
+                .FirstOrDefaultAsync(im => im.ProductId == id && im.ImageOrder == imageOrder);
+            if (image == null)
+            {
+                return;
+            }
+
+            var imageRight = await _context.ImageProducts
+                .FirstOrDefaultAsync(im => im.ProductId == id && im.ImageOrder == imageOrder + 1);
+            if (imageRight == null)
+            {
+                return;
+            }
+
+            image.ImageOrder++;
+            imageRight.ImageOrder--;
 
             await _context.SaveChangesAsync();
         }
 
 
+        // Add new section to product
         public async Task AddSectionAsync(int id)
         {
             var product = await _context.Products
@@ -277,7 +290,7 @@ namespace LilsCareApp.Core.Services
             await _context.SaveChangesAsync();
         }
 
-
+        // Edit section title and description
         public async Task EditSectionAsync(int sectionId, string title, string description)
         {
             var section = await _context.Sections
@@ -293,6 +306,7 @@ namespace LilsCareApp.Core.Services
             await _context.SaveChangesAsync();
         }
 
+        // Delete section from product
         public async Task DeleteSectionAsync(int productId, int sectionId)
         {
             var section = await _context.Sections
@@ -320,6 +334,7 @@ namespace LilsCareApp.Core.Services
             await _context.SaveChangesAsync();
         }
 
+        // Move section one position down
         public async Task MoveSectionDownAsync(int id, int sectionOrder)
         {
             var section = await _context.Sections
@@ -344,6 +359,7 @@ namespace LilsCareApp.Core.Services
             await _context.SaveChangesAsync();
         }
 
+        // Move section one position up
         public async Task MoveSectionUpAsync(int id, int sectionOrder)
         {
             var section = await _context.Sections
@@ -368,6 +384,9 @@ namespace LilsCareApp.Core.Services
             await _context.SaveChangesAsync();
         }
 
+        // Add or remove category to product
+        // If category is not in product, add it
+        // If category is in product, remove it
         public async Task AddRemoveCategoryAsync(int id, int categoryId)
         {
             var productCategory = await _context.ProductsCategories
@@ -386,6 +405,91 @@ namespace LilsCareApp.Core.Services
                 _context.ProductsCategories.Remove(productCategory);
             }
 
+            await _context.SaveChangesAsync();
+        }
+
+        // Edit product price
+        public async Task EditPriceAsync(int id, decimal price)
+        {
+            var product = await _context.Products
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (product == null)
+            {
+                return;
+            }
+
+            product.Price = price;
+            await _context.SaveChangesAsync();
+        }
+
+        // Add quantity to product
+        public async Task AddQuantityAsync(int id, int quantity)
+        {
+            var product = await _context.Products
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (product == null)
+            {
+                return;
+            }
+
+            product.Quantity += quantity;
+            await _context.SaveChangesAsync();
+        }
+
+        // Edit optional field of product
+        public async Task EditOptionalAsync(int id, string optional)
+        {
+            var product = _context.Products
+                 .FirstOrDefault(p => p.Id == id);
+
+            if (product == null)
+            {
+                return;
+            }
+
+            product.Optional = optional;
+            await _context.SaveChangesAsync();
+        }
+
+        // Add new category to database
+        public async Task AddNewCategoryAsync(string newCategory)
+        {
+            var categories = await _context.Categories
+                .Where(c => c.Name == newCategory)
+                .FirstOrDefaultAsync();
+            if (categories != null)
+            {
+                return;
+            }
+
+            await _context.Categories.AddAsync(new Category
+            {
+                Name = newCategory
+            });
+
+            await _context.SaveChangesAsync();
+        }
+
+        // Delete category from database
+        // If category is in product, do not delete it
+        public async Task DeleteCategoryAsync(int id, int categoryId)
+        {
+            if (await _context.ProductsCategories.AnyAsync(pc => pc.CategoryId == categoryId))
+            {
+                return;
+            }
+
+            var category = _context.Categories
+                .FirstOrDefault(pc => pc.Id == categoryId);
+
+            if (category == null)
+            {
+                return;
+            }
+
+            _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
         }
     }

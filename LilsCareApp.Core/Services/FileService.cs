@@ -5,6 +5,8 @@ namespace LilsCareApp.Core.Services
 {
     public class FileService : IFileService
     {
+
+        // Delete a file from the server at wwwroot/files
         public void DeleteFile(string filePath)
         {
             var fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + filePath);
@@ -28,6 +30,8 @@ namespace LilsCareApp.Core.Services
             }
         }
 
+        // Save a file to the server at wwwroot/files
+        // Return the file path
         public async Task<string?> SaveFile(IFormFile files)
         {
             // Generate a unique filename using the current date and time

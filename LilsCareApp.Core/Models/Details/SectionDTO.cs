@@ -2,19 +2,19 @@
 using static LilsCareApp.Core.ErrorMessageConstants;
 using static LilsCareApp.Infrastructure.DataConstants.Section;
 
-namespace LilsCareApp.Core.Models
+namespace LilsCareApp.Core.Models.Details
 {
     public class SectionDTO
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = Required)]
+        [Required(ErrorMessage = RequiredField)]
         [StringLength(TitleMaxLength, MinimumLength = TitleMinLength, ErrorMessage = StringLength)]
-        public required string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = Required)]
+        [Required(ErrorMessage = RequiredField)]
         [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength, ErrorMessage = StringLength)]
-        public required string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         public int SectionOrder { get; set; }
     }

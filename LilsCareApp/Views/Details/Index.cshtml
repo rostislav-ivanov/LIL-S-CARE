@@ -198,7 +198,7 @@
                     <div id="collapse@(i)" class="collapse" data-bs-parent="#accordion">
                         <div class="mt-4">
                             <div class="row">
-                                @foreach (var paragraph in Model.GetSection(i+1))
+                                @foreach (var paragraph in Model.GetSection(i + 1))
                                 {
                                     if (paragraph != " ")
                                     {
@@ -214,6 +214,9 @@
                     </div>
                 </li>
             }
+        </ul>
+    </div>
+</div>
 <!-- Product Description End -->
 <!-- Product Reviews Start -->
 @if (Model.Reviews.Count == 0)
@@ -336,16 +339,12 @@ else
         </div>
     </div>
     <!-- Product Show All Reviews End -->
-    <!-- Similar Products Start -->
-    <vc:carousel-products-component user-id="@ViewBag.UserId"></vc:carousel-products-component>
-    <!-- Similar Products End -->
 }
-    
-
 <!-- Product Reviews End -->
 <!-- Similar Products Start -->
-<div id="carousel-products"></div>
+<vc:carousel-products-component user-id="@ViewBag.UserId"></vc:carousel-products-component>
 <!-- Similar Products End -->
+
 @section Scripts {
     <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="~/js/carousel-products.js"></script>

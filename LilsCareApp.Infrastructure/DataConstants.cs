@@ -31,6 +31,9 @@
             public const int NameMaxLength = 100;
             public const string PriceMinValue = "0.00";
             public const string PriceMaxValue = "1000.00";
+            public const string QuantityMinValue = "-1000";
+            public const string QuantityMaxValue = "1000";
+            public const int OptionalMinLength = 3;
             public const int OptionalMaxLength = 200;
         }
 

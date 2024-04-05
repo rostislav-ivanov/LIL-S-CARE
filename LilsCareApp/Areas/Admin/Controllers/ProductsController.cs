@@ -1,6 +1,6 @@
-﻿using LilsCareApp.Areas.Admin.Models;
-using LilsCareApp.Core.Contracts;
-using LilsCareApp.Core.Models;
+﻿using LilsCareApp.Core.Contracts;
+using LilsCareApp.Core.Models.AdminProducts;
+using LilsCareApp.Core.Models.Products;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LilsCareApp.Areas.Admin.Controllers

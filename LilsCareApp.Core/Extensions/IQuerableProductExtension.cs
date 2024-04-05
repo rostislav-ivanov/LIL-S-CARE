@@ -1,4 +1,4 @@
-﻿using LilsCareApp.Core.Models;
+﻿using LilsCareApp.Core.Models.Products;
 using LilsCareApp.Infrastructure.Data.Models;
 
 namespace LilsCareApp.Core.Extensions

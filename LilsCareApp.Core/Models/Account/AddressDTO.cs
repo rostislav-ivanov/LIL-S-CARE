@@ -20,7 +20,7 @@ namespace LilsCareApp.Core.Models.Account
         public string FirstName { get; set; } = string.Empty;
 
         [Comment("Last Name Recipient")]
-        [Required(ErrorMessage = Required)]
+        [Required(ErrorMessage = RequiredField)]
         [MaxLength(LastNameMaxLength)]
         [Display(Name = "LastName", ResourceType = typeof(SharedResource))]
         public string LastName { get; set; } = string.Empty;
@@ -28,32 +28,32 @@ namespace LilsCareApp.Core.Models.Account
 
         [Comment("Phone Number Recipient")]
         [MaxLength(PhoneNumberMaxLength)]
-        [Required(ErrorMessage = Required)]
+        [Required(ErrorMessage = RequiredField)]
         [RegularExpression(PhoneNumberPattern, ErrorMessage = InvalidPhoneNumber)]
         [Display(Name = "PhoneNumber", ResourceType = typeof(SharedResource))]
         public string PhoneNumber { get; set; } = string.Empty;
 
 
         [Comment("Country")]
-        [Required(ErrorMessage = Required)]
+        [Required(ErrorMessage = RequiredField)]
         [MaxLength(CountryMaxLength)]
         [Display(Name = "Country", ResourceType = typeof(SharedResource))]
         public string Country { get; set; } = string.Empty;
 
         [Comment("Post Code")]
-        [Required(ErrorMessage = Required)]
+        [Required(ErrorMessage = RequiredField)]
         [MaxLength(PostCodeMaxLength)]
         [Display(Name = "PostCode", ResourceType = typeof(SharedResource))]
         public string PostCode { get; set; } = string.Empty;
 
         [Comment("Town")]
-        [Required(ErrorMessage = Required)]
+        [Required(ErrorMessage = RequiredField)]
         [MaxLength(TownMaxLength)]
         [Display(Name = "Town", ResourceType = typeof(SharedResource))]
         public string Town { get; set; } = string.Empty;
 
         [Comment("Address")]
-        [Required(ErrorMessage = Required)]
+        [Required(ErrorMessage = RequiredField)]
         [MaxLength(AddressMaxLength)]
         [Display(Name = "Address", ResourceType = typeof(SharedResource))]
         public string Address { get; set; } = string.Empty;

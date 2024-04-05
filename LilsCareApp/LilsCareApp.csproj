@@ -30,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="wwwroot\files\accounts\" />
     <Folder Include="wwwroot\files\reviews\" />
   </ItemGroup>

@@ -1,4 +1,4 @@
-﻿namespace LilsCareApp.Core.Models
+﻿namespace LilsCareApp.Core.Models.Products
 {
     public class ProductDTO
     {

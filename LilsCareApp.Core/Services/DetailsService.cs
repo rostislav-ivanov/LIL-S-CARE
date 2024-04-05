@@ -1,5 +1,6 @@
 ﻿using LilsCareApp.Core.Contracts;
-using LilsCareApp.Core.Models;
+using LilsCareApp.Core.Models.Details;
+using LilsCareApp.Core.Models.Products;
 using LilsCareApp.Infrastructure.Data;
 using LilsCareApp.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
