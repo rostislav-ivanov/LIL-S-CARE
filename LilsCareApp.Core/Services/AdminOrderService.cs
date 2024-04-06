@@ -1,5 +1,4 @@
 ﻿using LilsCareApp.Core.Contracts;
-using LilsCareApp.Core.Extensions;
 using LilsCareApp.Core.Models.AdminOrders;
 using LilsCareApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -15,123 +14,84 @@ namespace LilsCareApp.Core.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<AdminOrderDTO>> GetOrdersAsync()
+        public async Task<AdminOrdersDTO> GetOrdersQueryAsync(
+            OrderSortType orderSortType,
+            string? status,
+            bool? payment,
+            string? search,
+            int currentPage,
+            int ordersPerPage)
         {
-            var orders = await _context
-                .Orders
-                .ProjectToAdminOrderDTO()
+            var ordersFiltered = _context.Orders
+                .Where(o => string.IsNullOrEmpty(status) || o.StatusOrder.Name == status)
+                .Where(o => payment == null || o.IsPaid == payment)
+                .Where(o => string.IsNullOrEmpty(search) || o.OrderNumber.Contains(search) || o.AddressDelivery.FirstName.Contains(search) || o.AddressDelivery.LastName.Contains(search))
+                .Select(o => new AdminOrderDTO
+                {
+                    Id = o.Id,
+                    OrderNumber = o.OrderNumber,
+                    Date = o.CreatedOn,
+                    Customer = o.AddressDelivery.FirstName + " " + o.AddressDelivery.LastName,
+                    Payment = o.IsPaid ? "Платена" : "Неплатена",
+                    StatusOrder = o.StatusOrder.Name,
+                    Total = o.Total
+                });
+            ;
+
+            var ordersSorted = orderSortType switch
+            {
+                OrderSortType.OrderAsc => ordersFiltered.OrderBy(o => o.OrderNumber),
+                OrderSortType.OrderDesc => ordersFiltered.OrderByDescending(o => o.OrderNumber),
+                OrderSortType.DateAsc => ordersFiltered.OrderBy(o => o.Date),
+                OrderSortType.DateDesc => ordersFiltered.OrderByDescending(o => o.Date),
+                OrderSortType.CustomerAsc => ordersFiltered.OrderBy(o => o.Customer),
+                OrderSortType.CustomerDesc => ordersFiltered.OrderByDescending(o => o.Customer),
+                OrderSortType.PaymentAsc => ordersFiltered.OrderBy(o => o.Payment),
+                OrderSortType.PaymentDesc => ordersFiltered.OrderByDescending(o => o.Payment),
+                OrderSortType.StatusOrderAsc => ordersFiltered.OrderBy(o => o.StatusOrder),
+                OrderSortType.StatusOrderDesc => ordersFiltered.OrderByDescending(o => o.StatusOrder),
+                OrderSortType.TotalAsc => ordersFiltered.OrderBy(o => o.Total),
+                OrderSortType.TotalDesc => ordersFiltered.OrderByDescending(o => o.Total),
+                _ => ordersFiltered
+            };
+
+            var totalOrdersCount = await ordersSorted.CountAsync();
+            var orders = await ordersSorted
+                .Skip((currentPage - 1) * ordersPerPage)
+                .Take(ordersPerPage)
                 .AsNoTracking()
                 .ToListAsync();
 
-            return orders;
+            return new AdminOrdersDTO
+            {
+                Orders = orders,
+                StatusesOrder = await GetStatusesOrderAsync(),
+                TotalOrdersCount = totalOrdersCount,
+                OrdersPerPage = ordersPerPage,
+                CurrentPage = currentPage,
+                Status = status,
+                Payment = payment,
+                OrderSortType = orderSortType,
+                Search = search
+            };
+
         }
 
-        public async Task<IEnumerable<AdminOrderDTO>> GetOrdersOrderByOrderAscAsync()
+        public async Task<IEnumerable<StatusOrderDTO>> GetStatusesOrderAsync()
         {
-            return await _context.Orders
-                .OrderBy(o => o.OrderNumber)
-                .ProjectToAdminOrderDTO()
-                .AsNoTracking()
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<AdminOrderDTO>> GetOrdersOrderByOrderDescAsync()
-        {
-            return await _context.Orders
-                .OrderByDescending(o => o.OrderNumber)
-                .ProjectToAdminOrderDTO()
-                .AsNoTracking()
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<AdminOrderDTO>> GetOrdersOrderByDateAscAsync()
-        {
-            return await _context.Orders
-                .OrderBy(o => o.CreatedOn)
-                .ProjectToAdminOrderDTO()
-                .AsNoTracking()
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<AdminOrderDTO>> GetOrdersOrderByDateDescAsync()
-        {
-            return await _context.Orders
-                .OrderByDescending(o => o.CreatedOn)
-                .ProjectToAdminOrderDTO()
-                .AsNoTracking()
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<AdminOrderDTO>> GetOrdersOrderByCustomerAscAsync()
-        {
-            return await _context.Orders
-                .OrderBy(o => o.AddressDelivery.FirstName)
-                .ProjectToAdminOrderDTO()
-                .AsNoTracking()
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<AdminOrderDTO>> GetOrdersOrderByCustomerDescAsync()
-        {
-            return await _context.Orders
-                .OrderByDescending(o => o.AddressDelivery.FirstName)
-                .ProjectToAdminOrderDTO()
-                .AsNoTracking()
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<AdminOrderDTO>> GetOrdersOrderByPaymentAscAsync()
-        {
-            return await _context.Orders
-                .OrderBy(o => o.IsPaid)
-                .ProjectToAdminOrderDTO()
-                .AsNoTracking()
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<AdminOrderDTO>> GetOrdersOrderByPaymentDescAsync()
-        {
-            return await _context.Orders
-                .OrderByDescending(o => o.IsPaid)
-                .ProjectToAdminOrderDTO()
+            return await _context.StatusOrders
+                .Select(so => new StatusOrderDTO
+                {
+                    Id = so.Id,
+                    Status = so.Name
+                })
                 .AsNoTracking()
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<AdminOrderDTO>> GetOrdersOrderByStatusOrderAscAsync()
-        {
-            return await _context.Orders
-                .OrderBy(o => o.StatusOrder.Name)
-                .ProjectToAdminOrderDTO()
-                .AsNoTracking()
-                .ToListAsync();
-        }
 
-        public async Task<IEnumerable<AdminOrderDTO>> GetOrdersOrderByStatusOrderDescAsync()
-        {
-            return await _context.Orders
-                .OrderByDescending(o => o.StatusOrder.Name)
-                .ProjectToAdminOrderDTO()
-                .AsNoTracking()
-                .ToListAsync();
-        }
 
-        public async Task<IEnumerable<AdminOrderDTO>> GetOrdersOrderByTotalAscAsync()
-        {
-            return await _context.Orders
-                .OrderBy(o => o.Total)
-                .ProjectToAdminOrderDTO()
-                .AsNoTracking()
-                .ToListAsync();
-        }
 
-        public async Task<IEnumerable<AdminOrderDTO>> GetOrdersOrderByTotalDescAsync()
-        {
-            return await _context.Orders
-                .OrderByDescending(o => o.Total)
-                .ProjectToAdminOrderDTO()
-                .AsNoTracking()
-                .ToListAsync();
-        }
+
     }
 }

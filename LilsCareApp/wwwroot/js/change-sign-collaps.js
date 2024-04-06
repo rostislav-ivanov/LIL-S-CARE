@@ -1,4 +1,4 @@
-﻿// Change plus/minus sign on click for collapsible elements Ingredients and Nutritional Information
+﻿// Change plus/minus sign on click for collapsible elements 
 const toggleSigns = document.querySelectorAll(".toggle-sign");
 
 for (let i = 0; i < toggleSigns.length; i++) {
@@ -11,4 +11,3 @@ for (let i = 0; i < toggleSigns.length; i++) {
         }
     });
 }
-

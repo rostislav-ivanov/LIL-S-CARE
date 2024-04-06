@@ -74,6 +74,7 @@
         public static class Order
         {
             public const int TrackingNumberMaxLength = 100;
+            public const int OrderPerPages = 10;
         }
 
         public static class PaymentMethod
