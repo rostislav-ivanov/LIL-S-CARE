@@ -1,11 +1,4 @@
-﻿using LilsCareApp.Core.Models.Account;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LilsCareApp.Core.Models.AdminOrders
+﻿namespace LilsCareApp.Core.Models.AdminOrders
 {
     public class AdminOrderDTO
     {

@@ -19,7 +19,7 @@ namespace LilsCareApp.Components
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            IEnumerable<ProductsInBagDTO> productsInBag = new List<ProductsInBagDTO>();
+            IEnumerable<ProductsInBagDTO> productsInBag = [];
 
             string? userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId != null)
