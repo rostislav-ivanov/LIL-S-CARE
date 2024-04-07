@@ -24,7 +24,7 @@ namespace LilsCareApp.Core.Services
                     Id = p.Id,
                     Name = p.Name,
                     Price = p.Price,
-                    ImageUrl = p.Images.FirstOrDefault(im => im.ImageOrder == 1).ImagePath ?? "https://via.placeholder.com/150",
+                    ImageUrl = p.Images.OrderBy(im => im.ImageOrder).FirstOrDefault().ImagePath ?? "https://via.placeholder.com/150",
                     Quantity = p.Quantity,
                     Categories = p.ProductsCategories.Select(pc => new CategoryDTO
                     {

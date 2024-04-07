@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProductDTO>
+﻿@model AdminProductsDTO
 @{
     ViewData["Title"] = "ADMIN Products";
 }
@@ -13,7 +13,7 @@
         <h5 class="my-4">Продукти</h5>
         <p>Преглед на всички продукти и избор на продукт за редактиране</p>
         <hr />
-                @if (Model.Count() == 0)
+                @if (Model.Products.Count() == 0)
         {
         <div class="text-center mt-5">
         <h5>Нямате продукти</h5>
@@ -26,81 +26,160 @@
                 <div class="col-2"><strong>Снимка</strong></div>
                 <div class="col-1">
                     <p class="mb-0"><strong>Номер</strong></p>
-                    <a asp-area="Admin" asp-controller="Products" asp-action="OrderBy" asp-route-orderBy="0"
-                       class="text-decoration-none text-black">
+                       <a asp-area="Admin" 
+                       asp-controller="Products" 
+                       asp-action="Index"
+                       asp-route-productSortType="@(ProductSortType.IdAsc)"
+                       asp-route-search="@Model.Search"
+                       asp-route-currentPage="@Model.CurrentPage"
+                        class="text-decoration-none text-primary">
                         <i class="fa fa-angle-down"></i>
                     </a>
-                    <a asp-area="Admin" asp-controller="Products" asp-action="OrderBy" asp-route-orderBy="1"
-                       class="text-decoration-none text-black">
+                    <a asp-area="Admin"
+                       asp-controller="Products"
+                       asp-action="Index"
+                       asp-route-productSortType="@(ProductSortType.IdDesc)"
+                       asp-route-search="@Model.Search"
+                       asp-route-currentPage="@Model.CurrentPage"
+                       class="text-decoration-none text-primary">
                         <i class="fa fa-angle-up"></i>
                     </a>
                 </div>
                 <div class="col-4">
                     <p class="mb-0"><strong>Продукт</strong></p>
-                        <a asp-area="Admin" asp-controller="Products" asp-action="OrderBy" asp-route-orderBy="2"
-                         class="text-decoration-none text-black">
+                    <a asp-area="Admin"
+                       asp-controller="Products"
+                       asp-action="Index"
+                       asp-route-productSortType="@(ProductSortType.NameAsc)"
+                       asp-route-search="@Model.Search"
+                       asp-route-currentPage="@Model.CurrentPage"
+                       class="text-decoration-none text-primary">
                             <i class="fa fa-angle-down"></i>
                         </a>
-                        <a asp-area="Admin" asp-controller="Products" asp-action="OrderBy" asp-route-orderBy="3"
-                       class="text-decoration-none text-black">
+                    <a asp-area="Admin"
+                       asp-controller="Products"
+                       asp-action="Index"
+                       asp-route-productSortType="@(ProductSortType.NameDesc)"
+                       asp-route-search="@Model.Search"
+                       asp-route-currentPage="@Model.CurrentPage"
+                       class="text-decoration-none text-primary">
                             <i class="fa fa-angle-up"></i>
                         </a>
                 </div>
                 <div class="col-1">
                     <p class="mb-0"><strong>Цена</strong></p>
-                    <a asp-area="Admin" asp-controller="Products" asp-action="OrderBy" asp-route-orderBy="4"
-                       class="text-decoration-none text-black">
+                    <a asp-area="Admin"
+                       asp-controller="Products"
+                       asp-action="Index"
+                       asp-route-productSortType="@(ProductSortType.PriceDesc)"
+                       asp-route-search="@Model.Search"
+                       asp-route-currentPage="@Model.CurrentPage"
+                       class="text-decoration-none text-primary">
                         <i class="fa fa-angle-down"></i>
                     </a>
-                    <a asp-area="Admin" asp-controller="Products" asp-action="OrderBy" asp-route-orderBy="5"
-                       class="text-decoration-none text-black">
+                    <a asp-area="Admin"
+                       asp-controller="Products"
+                       asp-action="Index"
+                       asp-route-productSortType="@(ProductSortType.PriceDesc)"
+                       asp-route-search="@Model.Search"
+                       asp-route-currentPage="@Model.CurrentPage"
+                       class="text-decoration-none text-primary">
                         <i class="fa fa-angle-up"></i>
                     </a>
                 </div>
                 <div class="col-1">
                     <p class="mb-0"><strong>Наличност</strong></p>
-                    <a asp-area="Admin" asp-controller="Products" asp-action="OrderBy" asp-route-orderBy="6"
-                       class="text-decoration-none text-black">
+                    <a asp-area="Admin"
+                       asp-controller="Products"
+                       asp-action="Index"
+                       asp-route-productSortType="@(ProductSortType.QuantityAsc)"
+                       asp-route-search="@Model.Search"
+                       asp-route-currentPage="@Model.CurrentPage"
+                       class="text-decoration-none text-primary">
                         <i class="fa fa-angle-down"></i>
                     </a>
-                    <a asp-area="Admin" asp-controller="Products" asp-action="OrderBy" asp-route-orderBy="7"
-                       class="text-decoration-none text-black">
+                    <a asp-area="Admin"
+                       asp-controller="Products"
+                       asp-action="Index"
+                       asp-route-productSortType="@(ProductSortType.QuantityDesc)"
+                       asp-route-search="@Model.Search"
+                       asp-route-currentPage="@Model.CurrentPage"
+                       class="text-decoration-none text-primary">
                         <i class="fa fa-angle-up"></i>
                     </a>
                 </div>
                 <div class="col-1">
                     <p class="mb-0"><strong>Статус</strong></p>
-                    <a asp-area="Admin" asp-controller="Products" asp-action="OrderBy" asp-route-orderBy="8"
-                       class="text-decoration-none text-black">
+                    <a asp-area="Admin"
+                       asp-controller="Products"
+                       asp-action="Index"
+                       asp-route-productSortType="@(ProductSortType.IsShowAsc)"
+                       asp-route-search="@Model.Search"
+                       asp-route-currentPage="@Model.CurrentPage"
+                       class="text-decoration-none text-primary">
                         <i class="fa fa-angle-down"></i>
                     </a>
-                    <a asp-area="Admin" asp-controller="Products" asp-action="OrderBy" asp-route-orderBy="9"
-                       class="text-decoration-none text-black">
+                    <a asp-area="Admin"
+                       asp-controller="Products"
+                       asp-action="Index"
+                       asp-route-productSortType="@(ProductSortType.IsShowDesc)"
+                       asp-route-search="@Model.Search"
+                       asp-route-currentPage="@Model.CurrentPage"
+                       class="text-decoration-none text-primary">
                         <i class="fa fa-angle-up"></i>
                     </a>
                 </div>
                 <div class="col-2">
+                    <!-- Pagination Start -->
+                    @{
+                        var previousPage = Model.CurrentPage - 1;
+                        if (previousPage < 1)
+                        {
+                            previousPage = 1;
+                        }
+
+                        var maxPage = Math.Ceiling((double)Model.TotalProductsCount /
+                        Model.ProductsPerPage);
+
+                        var shouldButtonBeDisabled = Model.CurrentPage == maxPage ||
+                        !Model.Products.Any();
+                    }
+
+                    <div class="d-flex justify-content-center">
+                        <a lass="nav-link text-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+                           asp-area="Admin"
+                           asp-controller="Products"
+                           asp-action="Index"
+                           asp-route-orderSortType="@Model.ProductSortType"
+                           asp-route-search="@Model.Search"
+                           asp-route-currentPage="@previousPage"><i class="fa-solid fa-arrow-left-long" style="font-size: 24px;"></i></a>
+
+                        <a class="nav-link text-primary @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
+                           asp-area="Admin"
+                           asp-controller="Products"
+                           asp-action="Index"
+                           asp-route-orderSortType="@Model.ProductSortType"
+                           asp-route-search="@Model.Search"
+                           asp-route-currentPage="@(Model.CurrentPage + 1)"><i class="fa-solid fa-arrow-right-long ms-3" style="font-size: 24px;"></i></a>
+                    </div>
+                    <!-- Pagination End -->
                     <a asp-area="Admin" asp-controller="Details" asp-action="Add" 
                        class="nav-link text-primary">
                         Добави продукт <i class="fa-regular fa-square-plus"></i>
                     </a>
                 </div>
             </div>
-            @foreach (var product in Model)
+            @foreach (var product in Model.Products)
             {
                 <div class="row m-3" style=@(product.IsShow ? "" : "opacity:0.7")>
                     <hr />
                     <div class="col-2">
-                        <a asp-area="Admin" asp-controller="Details" asp-action="Index" asp-route-id="@product.Id" class="nav-link">
-                            <img src="@product.ImageUrl"
+                            <img src="@product.ImagePath"
                                  style="max-width: 100%; height: 100px; object-fit: cover;" />
-                        </a>
                     </div>
                     <div class="col-1">#@product.Id</div>
                     <div class="col-4">
-                        <a asp-area="Admin" asp-controller="Details" asp-action="Index" asp-route-id="@product.Id" class="nav-link">
                             @product.Name
-                        </a>
                     </div>
                     <div class="col-1">@product.Price</div>
                     <div class="col-1">@product.Quantity</div>

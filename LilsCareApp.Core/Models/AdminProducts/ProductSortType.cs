@@ -1,6 +1,6 @@
 ﻿namespace LilsCareApp.Core.Models.AdminProducts
 {
-    public enum SortType
+    public enum ProductSortType
     {
         IdAsc,
         IdDesc,

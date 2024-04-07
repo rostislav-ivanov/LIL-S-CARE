@@ -19,7 +19,7 @@ namespace LilsCareApp.Areas.Admin.Controllers
             bool? payment,
             string? search,
             int currentPage = 1,
-            int ordersPerPage = OrderPerPages)
+            int ordersPerPage = OrdersPerPages)
         {
             var orders = await _adminOrderService.GetOrdersQueryAsync(orderSortType, status, payment, search, currentPage, ordersPerPage);
 

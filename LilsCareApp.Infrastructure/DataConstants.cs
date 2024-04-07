@@ -35,6 +35,7 @@
             public const string QuantityMaxValue = "1000";
             public const int OptionalMinLength = 3;
             public const int OptionalMaxLength = 200;
+            public const int ProductsPerPages = 3;
         }
 
         public static class Category
@@ -74,7 +75,7 @@
         public static class Order
         {
             public const int TrackingNumberMaxLength = 100;
-            public const int OrderPerPages = 10;
+            public const int OrdersPerPages = 10;
         }
 
         public static class PaymentMethod
