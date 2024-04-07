@@ -329,7 +329,7 @@
                        asp-route-status="@Model.Status"
                        asp-route-payment="@Model.Payment"
                        asp-route-search="@Model.Search"
-                       asp-route-currentPage="@previousPage"><i class="fa-solid fa-arrow-left"></i></a>
+                       asp-route-currentPage="@previousPage"><i class="fa-solid fa-arrow-left-long" style="font-size: 24px;"></i></a>
 
                     <a class="nav-link text-primary @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
                        asp-area="Admin"
@@ -339,7 +339,7 @@
                        asp-route-status="@Model.Status"
                        asp-route-payment="@Model.Payment"
                        asp-route-search="@Model.Search"
-                       asp-route-currentPage="@(Model.CurrentPage + 1)"><i class="fa-solid fa-arrow-right"></i></a>
+                       asp-route-currentPage="@(Model.CurrentPage + 1)"><i class="fa-solid fa-arrow-right-long ms-3" style="font-size: 24px;"></i></a>
                 </div>
                 <!-- Pagination End -->
                 <a data-bs-toggle="offcanvas"
