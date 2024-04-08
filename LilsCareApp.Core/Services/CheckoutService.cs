@@ -56,6 +56,7 @@ namespace LilsCareApp.Core.Services
         // Save order to database and return unique order number.
         // Add new address delivery to database if not existing.
         // Remove products from user's bag.
+        //remove ordered quantity from products store
         // Set the applied date to promo code if is applied.
         // Set new default address delivery to user.
         // Return unique order number to user.
@@ -144,7 +145,15 @@ namespace LilsCareApp.Core.Services
                 .Where(bu => bu.AppUserId == userId)
                 .ToListAsync();
 
-            _context.RemoveRange(bagUsers);
+            //remove ordered quantity from products store
+            foreach (var bagUser in bagUsers)
+            {
+                var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == bagUser.ProductId);
+                if (product != null)
+                {
+                    product.Quantity -= bagUser.Quantity;
+                }
+            }
 
             // set the applied date to promo code if is applied
             PromoCode promoCode = await _context.PromoCodes.FirstOrDefaultAsync(pc => pc.Id == order.PromoCodeId);

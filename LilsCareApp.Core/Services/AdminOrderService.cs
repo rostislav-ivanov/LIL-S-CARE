@@ -1,4 +1,6 @@
 ﻿using LilsCareApp.Core.Contracts;
+using LilsCareApp.Core.Models.Account;
+using LilsCareApp.Core.Models.AdminOrderDetails;
 using LilsCareApp.Core.Models.AdminOrders;
 using LilsCareApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -89,9 +91,75 @@ namespace LilsCareApp.Core.Services
                 .ToListAsync();
         }
 
+        public async Task<AdminOrderDetailsDTO> GetOrderDetailsAsync(int id)
+        {
+            var order = await _context.Orders
+                .Where(o => o.Id == id)
+                .Select(o => new AdminOrderDetailsDTO
+                {
+                    Id = o.Id,
+                    OrderNumber = o.OrderNumber,
+                    CreatedOn = o.CreatedOn,
+                    StatusOrder = new StatusOrderDTO
+                    {
+                        Id = o.StatusOrder.Id,
+                        Status = o.StatusOrder.Name
+                    },
+                    AddressDelivery = new DeliveryAddressDTO
+                    {
+                        AddressId = o.AddressDelivery.Id,
+                        FirstName = o.AddressDelivery.FirstName,
+                        LastName = o.AddressDelivery.LastName,
+                        Country = o.AddressDelivery.Country,
+                        PostCode = o.AddressDelivery.PostCode,
+                        Town = o.AddressDelivery.Town,
+                        Address = o.AddressDelivery.Address,
+                        District = o.AddressDelivery.District,
+                        Email = o.AddressDelivery.Email,
+                        PhoneNumber = o.AddressDelivery.PhoneNumber,
+                        ShippingProvider = o.AddressDelivery.ShippingOffice.ShippingProvider.Name,
+                        OfficeCity = o.AddressDelivery.ShippingOffice.City,
+                        OfficeAddress = o.AddressDelivery.ShippingOffice.OfficeAddress,
+                        IsOffice = o.AddressDelivery.IsShippingToOffice
+                    },
+                    AppUserId = o.AppUserId,
+                    DateShipping = o.DateShipping,
+                    TrackingNumber = o.TrackingNumber,
+                    PaymentMethod = o.PaymentMethod.Type,
+                    IsPaid = o.IsPaid,
+                    ProductsOrders = o.ProductsOrders
+                        .Select(po => new ProductsOrdersDTO
+                        {
+                            Id = po.Product.Id,
+                            Name = po.Product.Name,
+                            Quantity = po.Quantity,
+                            Price = po.Price,
+                            ImageUrl = po.ImagePath,
+                            Optional = po.Product.Optional
+                        })
+                        .ToList(),
+                    ShippingPrice = o.ShippingPrice,
+                    Discount = o.Discount
+                })
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
 
+            return order;
+        }
 
+        public async Task AddTrackingCodeAsync(int id, string trackingNumber)
+        {
+            var order = await _context.Orders
+                .Where(o => o.Id == id)
+                .FirstOrDefaultAsync();
 
+            if (order == null)
+            {
+                return;
+            }
 
+            order.TrackingNumber = trackingNumber;
+            await _context.SaveChangesAsync();
+        }
     }
 }

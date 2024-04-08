@@ -4,12 +4,6 @@ using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var supportedCultures = new[]
-{
-    new CultureInfo("en-US"),
-    new CultureInfo("bg-BG")
-};
-
 
 builder.Services.AddAppDbContext(builder.Configuration);
 builder.Services.AddAppIdentity();
@@ -26,11 +20,13 @@ app.SeedAdmin();
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseMigrationsEndPoint();
 }
 else
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Home/Error/500");
+    app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
     app.UseHsts();
 }
 
@@ -43,6 +39,11 @@ app.UseAuthorization();
 
 app.UseRequestLocalization(options =>
 {
+    var supportedCultures = new[]
+    {
+        new CultureInfo("en-US"),
+        new CultureInfo("bg-BG")
+    };
     options.DefaultRequestCulture = new RequestCulture("en-US");
     options.SupportedCultures = supportedCultures;
     options.SupportedUICultures = supportedCultures;

@@ -256,6 +256,7 @@ namespace LilsCareApp.Controllers
         // Save order to database and return unique order number.
         // Add new address delivery to database if not existing.
         // Remove products from user's bag.
+        //remove ordered quantity from products store
         // Set the applied date to promo code if is applied.
         // Set new default address delivery to user.
         // Return unique order number to user.
