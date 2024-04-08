@@ -1,0 +1,352 @@
+﻿@model DetailsDTO
+@{
+    ViewData["Title"] = "Details";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/details.css" />
+    <link rel="stylesheet" href="~/lib/owlcarousel/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" href="~/css/carousel-products.css" />
+}
+
+<!-- Single Product Start -->
+<div class="d-flex justify-content-end mt-4">
+    <div class="col-5">
+        <!-- Carousel Details Start-->
+        <div id="carousel-details" class="carousel slide carousel-fade">
+            <!-- The slideshow/carousel -->
+            <div class="carousel-inner">
+                @foreach (var image in Model.Images)
+                {
+                    if (image.IsVideo)
+                    {
+                        <div class="carousel-item @(image == Model.Images[0] ? "active" : "")">
+                            <video controls
+                                   width="440"
+                                   height="500"
+                                   style="width: 100%; object-fit: cover">
+                                    <source src="@image.ImagePath" type="video/mp4" />
+                            </video>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="carousel-item @(image == Model.Images[0] ? "active" : "")">
+                            <img src="@image.ImagePath"
+                                 width="440"
+                                 height="500"
+                                 style="width: 100%; object-fit: cover"
+                                 alt="" />
+                        </div>
+                    }
+                }
+            </div>
+
+            <!-- Custom indicators -->
+            <div class="carousel-indicators d-flex justify-content-center mt-2">
+                @foreach (var image in Model.Images)
+                {
+                    if (image.IsVideo)
+                    {
+                        <video 
+                            data-bs-target="#carousel-details" 
+                            data-bs-slide-to="@(Model.Images.IndexOf(image))">
+                            <source src="@image.ImagePath"
+                                    type="video/mp4"
+                                    class="@(image == Model.Images[0] ? "active" : "")" />
+                        </video>
+                    }
+                    else
+                    {
+                        <img src="@image.ImagePath"
+                             data-bs-target="#carousel-details"
+                             data-bs-slide-to="@(Model.Images.IndexOf(image))"
+                             class="@(image == Model.Images[0] ? "active" : "")" />
+                    }
+                }
+
+            </div>
+
+            <!-- Left and right controls/icons -->
+            <button class="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#carousel-details"
+                    data-bs-slide="prev"
+                    style="top: auto; bottom: 50%; transform: translateY(50%)">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next"
+                    type="button"
+                    data-bs-target="#carousel-details"
+                    data-bs-slide="next"
+                    style="top: auto; bottom: 50%; transform: translateY(50%)">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+        <!-- Carousel Details End-->
+    </div>
+    <div class="col-6 px-5">
+        <h1 class="h3 mb-3">@Model.Name</h1>
+        @if(Model.Rating > 0)
+        {
+            <div class="fs-5">
+                <span style="color: gold">
+                    @for (var i = 1; i <= 5; i++)
+                    {
+                        if (i <= Model.Rating)
+                        {
+                            <i class="fa-solid fa-star ms-2"></i>
+                        }
+                        else
+                        {
+                            <i class="fa-regular fa-star"></i>
+                        }
+                    }
+                </span>
+                <span class="ms-2">@Model.Rating.ToString("0.0") | @Model.Reviews.Count() отзива</span>
+            </div>
+        }
+        
+        <div class="container px-0 py-4">
+            <p class="fs-5">Цена: @Model.Price лв</p>
+        </div>
+        <div class="container px-0 py-4">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <p class="fs-5">@Model.Optional</p>
+                </div>
+
+            </div>
+        </div>
+
+
+        <form asp-controller="Details" asp-action="AddToCart" asp-route-productId="@Model.Id" method="post">
+            <div class="container px-0 py-4">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <span class="fs-5">Количество :</span>
+                    </div>
+                    <div class="col p-0">
+                        <div class="quantity-input">
+                            <input name="quantity" type="number" class="form-control fs-5 w-auto"
+                                   value="1" min="1" max="999" display: flex; align-items:
+                                   center; />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container px-0 py-4">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <button type="submit" class="btn">
+                             <i class="fa fa-shopping-bag me-2"></i> Добави
+                        </button>
+                    </div>
+                    <div class="col p-0 mx-5">
+                        @if (User.Identity?.IsAuthenticated ?? false)
+                        {
+                            <a asp-controller="Details" asp-action="AddRemoveWish" asp-route-productId="@Model.Id"
+                               class="nav-link fs-3"
+                               style="color: rgb(var(--app-btn-bg))">
+                                @if (Model.IsWish)
+                                {
+                                    <i class="fa fa-heart"></i>
+                                }
+                                else
+                                {
+                                    <i class="far fa-heart"></i>
+                                }
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Single Product End -->
+<!-- Product Description Start -->
+<div class="d-flex justify-content-end">
+    <div class="col-5">
+        <div class="row">
+            @foreach (var paragraph in Model.GetSection(1))
+            {
+                if (paragraph != " ")
+                {
+                    <span>@paragraph</span>
+                }
+                else
+                {
+                    <p></p>
+                }
+            }
+        </div>
+    </div>
+    <div class="col-6 px-5">
+        <ul id="accordion" class="list-group list-group-flush">
+            @for (int i = 1; i < Model.Sections.Count(); i++)
+            {
+                <li class="list-group-item">
+                    <a class="nav-link toggle-sign fs-6"
+                       data-bs-toggle="collapse"
+                       href="#collapse@(i)">
+                        <div class="d-flex justify-content-between">
+                            <div>@Model.Sections[i].Title</div>
+                            <span>+</span>
+                        </div>
+                    </a>
+                    <div id="collapse@(i)" class="collapse" data-bs-parent="#accordion">
+                        <div class="mt-4">
+                            <div class="row">
+                                @foreach (var paragraph in Model.GetSection(i + 1))
+                                {
+                                    if (paragraph != " ")
+                                    {
+                                        <span>@paragraph</span>
+                                    }
+                                    else
+                                    {
+                                        <p></p>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+<!-- Product Description End -->
+<!-- Product Reviews Start -->
+@if (Model.Reviews.Count == 0)
+{
+    <div id="leave-comment" class="text-center">
+        <p class="fs-5">Все още няма отзиви</p>
+        <p>Споделете вашите мисли. Бъдете първият, който ще остави отзив.</p>
+        <a type="submit" asp-controller="Details" asp-action="AddReview" asp-route-productId="@Model.Id" class="btn btn-sm">Отзив</a>
+    </div>
+  
+}
+else
+{
+    <!-- Product Show All Reviews Start -->
+    <div class="container-fluid product py-5 w-75">
+        <div class="d-flex justify-content-between align-items-center mb-5">
+            <div class="fs-5">
+                <span  style="color: gold">
+                    @for (var i = 1; i <= 5; i++)
+                    {
+                        if (i <= Model.Rating)
+                        {
+                            <i class="fa-solid fa-star ms-2"></i>
+                        }
+                        else
+                        {
+                            <i class="fa-regular fa-star"></i>
+                        }
+                    }
+                </span>
+                <span class="ms-2">@Model.Rating.ToString("0.0") | @Model.Reviews.Count() отзива</span>
+            </div>
+            @if(User.Identity?.IsAuthenticated ?? false)
+            {
+                @if(Model.Reviews.Any(r => r.AuthorName == User.Identity.Name))
+                {
+                    <a type="submit" asp-controller="Details" asp-action="AddReview" asp-route-productId="@Model.Id" class="btn btn-lg">
+                        <i class="fa fa-check me-2"></i>Даден е отзив. Вижте вашия отзив
+                    </a>
+                }
+                else
+                {
+                    <a type="submit" asp-controller="Details" asp-action="AddReview" asp-route-productId="@Model.Id" class="btn btn-lg">Отзив</a>
+                }
+            }
+            else
+            {
+                <span>За да дадете отзив, моля за
+                    <a type="submit" asp-controller="Details" asp-action="AddReview" asp-route-productId="@Model.Id" 
+                        style="color: rgb(var(--app-btn-bg))">вход</a>
+                </span>
+            }
+        </div>
+        <p class="ms-2 fs-5">@Model.Reviews.Count() отзива</p>
+        <div class="col-lg">
+            <div class="row g-3 justify-content-start">
+                @foreach (var review in Model.Reviews)
+                {
+                    <div class="col-6">
+                        <div class="rounded-3 position-relative product-item border p-3 fs-7">
+                            <div class="d-flex justify-content-between">
+                            <div style="color: gold">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    if (i <= review.Rating)
+                                    {
+                                        <i class="fa-solid fa-star ms-1"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa-regular fa-star ms-1"></i>
+                                    }
+                                }
+                            </div>
+                                    <p>@review.CreatedOn.ToString("dd/MM/yyyy")</p>
+                                    </div>
+                            <div class="d-flex justify-content-start">
+                                @if (@review.AuthorImage != null)
+                                {
+                                    <img src="@review.AuthorImage" height="60" width="60" />
+                                }
+                                <div class="ms-2">
+                                    <p class="mb-0">@review.AuthorName </p>
+                                    <p class="mb-0" style="font-size:12px">@review.AuthorEmail</p>
+                                </div>
+                            </div>
+
+                            <h5 class="mt-3">@review.Title</h5>
+                            <p>@review.Comment</p>
+                            <div class="d-flex justify-content-start mt-2 align-items-center">
+                                @foreach (var image in review.Images)
+                                {
+                                    @if(image.ImagePath != string.Empty && !image.IsVideo)
+                                    {
+                                        <span class="pe-2">
+                                            <img src="@image.ImagePath"
+                                                 width="100px"
+                                                 height="100px"
+                                                 style="object-fit: cover"
+                                                 alt="" />
+                                        </span>
+                                    }
+                                    else if (image.ImagePath != string.Empty && image.IsVideo)
+                                    {
+                                        <span>
+                                            <video controls
+                                                   width="100px"
+                                                   height="100px"
+                                                   style="width: 100%; object-fit: cover">
+                                                <source src="@image.ImagePath" type="video/mp4" />
+                                            </video>
+                                        </span>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <!-- Product Show All Reviews End -->
+}
+<!-- Product Reviews End -->
+<!-- Similar Products Start -->
+<vc:carousel-products-component user-id="@ViewBag.UserId"></vc:carousel-products-component>
+<!-- Similar Products End -->
+
+@section Scripts {
+    <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="~/js/carousel-products.js"></script>
+    <script src="~/js/details.js"></script>
+}

@@ -1,0 +1,81 @@
+﻿@model MyAddressDTO
+@{
+    ViewData["Title"] = "Редактиране акунт";
+}
+
+<div class="d-flex justify-content-center">
+    <!-- Menu My Account Start-->
+    <partial name="_AccountMenuPartial" model="@Model" />
+    <!-- Menu My Account  End -->
+    <!-- Edit Account Start -->
+    <div class="border rounded p-3" style="margin: 50px 100px 20px 20px">
+        <form asp-controller="Account" asp-action="UpdateMyAccount" enctype="multipart/form-data" method="post">
+            <!-- User Name Start -->
+            <div class="my-2">
+                <label asp-for="@Model.UserName" class="form-label small">Потребителското име</label>
+                <input asp-for="@Model.UserName"
+                       type="text"
+                       class="form-control"
+                       style="opacity:0.9"
+                       value="@Model.UserName - не може да бъде променяно"
+                       readonly />
+            </div>
+            <!-- User Name End -->
+            <!-- First Name Start -->
+            <div class="my-2">
+                <label asp-for="@Model.FirstName" class="form-label small">Собствено име</label>
+                <input asp-for="@Model.FirstName"
+                       type="text"
+                       class="form-control" />
+            </div>
+            <!-- First Name End -->
+            <!-- Last Name Start -->
+            <div class="my-2">
+                <label asp-for="@Model.LastName" class="form-label small">Фамилия</label>
+                <input asp-for="@Model.LastName"
+                       type="text"
+                       class="form-control" />
+            </div>
+            <!-- Last Name End -->
+            <!-- Phone Number Start -->
+            <div class="my-2">
+                <label asp-for="@Model.PhoneNumber" class="form-label small">Телефон</label>
+                <input asp-for="@Model.PhoneNumber"
+                       type="tel"
+                       class="form-control" />
+            </div>
+            <!-- Phone Number End -->
+            <!-- Email Login Start -->
+            <div class="my-2">
+                <label asp-for="@Model.Email" class="form-label small">Имейл</label>
+                <input asp-for="@Model.Email"
+                       type="email"
+                       class="form-control" />
+            </div>
+            <!-- Email Login End -->
+            <!-- Image Upload Start -->
+            <div class="mt-2 mb-4">
+                <label for id="file-upload-1" class="form-label small">Качи снимка</label>
+                <input for id="file-upload-1"
+                       type="file"
+                       class="form-control"
+                       name="attachment"
+                       accept="image/*" />
+            </div>
+            <!-- Image Upload End -->
+            <div class="d-flex justify-content-end">
+                <!-- Cancel Start -->
+                <a asp-controller="Account" asp-action="MyAccount" class="btn btn-sm btn-inverce">Отказ</a>
+                <!-- Cancel End -->
+                <!-- Save Changes Start -->
+                <button type="submit" class="btn btn-sm ms-3">Запази</button>
+                <!-- Save Changes End -->
+            </div>
+        </form>
+    </div>
+    <!-- Edit Account Еnd -->
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

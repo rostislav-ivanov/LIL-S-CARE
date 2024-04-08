@@ -1,0 +1,278 @@
+﻿@model AdminDetailsDTO
+@{
+    ViewData["Title"] = "ADMIN Products";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" />
+}
+
+<partial name="_MenuAdminPartial" />
+<!-- Details Product Start -->
+<div class="content">
+    <div class="row">
+        <!-- Left Side Start-->
+        <div class="col-8">
+            <!-- Product Name Start-->
+            <div class="col-lg border rounded p-2 mt-3">
+                <h3 class="text-center">@Model.Name</h3>
+                <form asp-area="Admin" asp-controller="Details" asp-action="EditName" method="post">
+                    <input asp-for="@Model.Id" type="hidden" name="id" value="@Model.Id" />
+                    <div class="d-flex align-items-center mt-2">
+                        <label asp-for="@Model.Name" class="form-label-add-edit mx-2" style="white-space: nowrap;">Име на продукта:</label>
+                        <input asp-for="@Model.Name" type="text" class="form-control" value="@Model.Name" />
+                        <button type="submit" class="nav-link text-warning ms-3"><i class="fa-solid fa-arrows-rotate"></i></button>
+                    </div>
+                    <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                </form>
+            </div>
+            <!-- Product Name End-->
+            <!-- Product Images Start-->
+            <div class="col-lg border rounded p-2 mt-3">
+                <h4 class="text-center">Снимки</h4>
+                <hr />
+                <div class="row">
+                    @foreach (var image in Model.Images)
+                    {
+                        <div class="col-md-6 col-lg-4 col-xl-4">
+                            <img src="@image.ImagePath"
+                                 width="180"
+                                 height="180"
+                                 style="object-fit: cover"
+                                 class="border rounded m-2" />
+                            <div class="d-flex">
+                                <a asp-area="Admin" 
+                                    asp-controller="Details" 
+                                    asp-action="MoveImageLeft" 
+                                    asp-route-id="@Model.Id"
+                                    asp-route-image="@image.ImageOrder"
+                                    class="nav-link">
+                                    <i class="fa fa-arrow-left text-primary ms-2"></i>
+                                </a>
+                                <a asp-area="Admin"
+                                   asp-controller="Details"
+                                   asp-action="MoveImageRight"
+                                   asp-route-id="@Model.Id"
+                                   asp-route-image="@image.ImageOrder"
+                                   class="nav-link">
+                                    <i class="fa fa-arrow-right text-primary ms-2"></i>
+                                </a>
+                                <a asp-area="Admin"
+                                   asp-controller="Details"
+                                   asp-action="RemoveImage"
+                                   asp-route-id="@Model.Id"
+                                   asp-route-imageId="@image.Id"
+                                   class="nav-link">
+                                    <i class="fa fa-xmark text-danger ms-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <form asp-area="Admin" asp-controller="Details" asp-action="AddProductImage" enctype="multipart/form-data" method="post">
+                    <input asp-for="@Model.Id" type="hidden" name="id" value="@Model.Id" />
+                    <div class="d-flex justify-content-between m-3">
+                        <input for
+                               id="file-upload-1"
+                               type="file"
+                               class="form-control"
+                               name="attachment"
+                               accept="image/*" />
+                        <button type="submit" class="nav-link text-warning ms-3"><i class="fa-solid fa-arrows-rotate"></i></button>
+                    </div>
+                </form>
+            </div>
+            <!-- Product Images End-->
+            <!-- Product Sections Start-->
+            @for (int i = 0; i < Model.Sections.Count; i++)
+            {
+                <div class="col-lg border rounded mt-3 p-2">
+                    <h4 class="text-center">@Model.Sections[i].Title</h4>
+                    <form asp-area="Admin" asp-controller="Details" asp-action="EditSection" method="post">
+                        <input asp-for="@Model.Id" type="hidden" name="id" value="@Model.Id" />
+                        <input asp-for="@Model.Sections[i].Id" type="hidden" name="sectionId" value="@Model.Sections[i].Id" />
+                        <div class="d-flex align-items-center mt-2">
+                            <label asp-for="@Model.Sections[i].Title" class="form-label-add-edit mx-2" style="white-space: nowrap;">
+                                Име на секция @Model.Sections[i].SectionOrder:
+                            </label>
+                            <input asp-for="@Model.SectionTitle" type="text" class="form-control" value="@Model.Sections[i].Title" />
+                        </div>
+                        <span asp-validation-for="@Model.SectionTitle" class="text-danger"></span>
+                        <hr />
+                        <div class="row">
+                            @foreach (var paragraph in Model.GetSection(i + 1))
+                            {
+                                if (paragraph != " ")
+                                {
+                                    <span>@paragraph</span>
+                                }
+                                else
+                                {
+                                    <p></p>
+                                }
+                            }
+                        </div>
+                        <textarea asp-for="@Model.SectionDescription" rows="7" style="width: 100%">
+                            @Model.SectionDescription
+                        </textarea>
+                        <span asp-validation-for="@Model.SectionDescription" class="text-danger"></span>
+                        <div class="d-flex">
+                            <a asp-area="Admin"
+                               asp-controller="Details"
+                               asp-action="DeleteSection"
+                               asp-route-id="@Model.Id"
+                               asp-route-sectionId="@Model.Sections[i].Id"
+                               class="nav-link">
+                                <i class="fa fa-xmark text-danger ms-2"></i>
+                            </a>
+                            <button type="submit" class="nav-link">
+                                <button type="submit" class="nav-link text-warning ms-3"><i class="fa-solid fa-arrows-rotate"></i></button>
+                            </button>
+                            <a asp-area="Admin"
+                               asp-controller="Details"
+                               asp-action="MoveSectionUp"
+                               asp-route-id="@Model.Id"
+                               asp-route-sectionOrder="@Model.Sections[i].SectionOrder"
+                               class="nav-link">
+                                <i class="fa fa-arrow-up text-primary ms-2"></i>
+                            </a>
+                            <a asp-area="Admin"
+                               asp-controller="Details"
+                               asp-action="MoveSectionDown"
+                               asp-route-id="@Model.Id"
+                               asp-route-sectionOrder="@Model.Sections[i].SectionOrder"
+                               class="nav-link">
+                                <i class="fa fa-arrow-down text-primary ms-2"></i>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            }
+            <div class="col-lg border rounded mt-3 p-2 text-center">
+                <a asp-area="Admin" asp-controller="Details" asp-action="AddSection" asp-route-id="@Model.Id"
+                class="btn btn-sm bg-success text-center">Добави нова секция</a>
+            </div>
+            <!-- Product Sections End-->
+        </div>
+        <!-- Left Side End-->
+        <!-- Right Side Start-->
+        <div class="col-4">
+            <div class="row">
+                <!-- Product Category Start-->
+                <div class="border rounded p-2 mt-3">
+                    <div class="d-flex align-items-center">
+                        <span class="me-2">
+                            <strong>Категории:</strong>
+                            <ul>
+                                @foreach(var category in Model.ProductsCategories)
+                                {
+                                    <li><strong>@category.Name</strong></li>
+                                }
+                            </ul>
+                        </span>
+                    </div>
+                    <hr/>
+                    @foreach (var category in Model.Categories)
+                    {
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a asp-area="Admin"
+                               asp-controller="Details"
+                               asp-action="AddRemoveCategory"
+                               asp-route-id="@Model.Id"
+                               asp-route-categoryId="@category.Id"
+                               class="nav-link">
+                                @if (Model.GetProductCategoriesId().Contains(category.Id))
+                                {
+                                    <div class="text-success">
+                                        <i class="fa-regular fa-square-check me-2"></i>
+                                        @category.Name
+                                    </div>
+                                }
+                                else
+                                {
+                                    <i class="fa-regular fa-square me-2"></i>
+                                    @category.Name
+                                }
+                            </a>
+                            <a asp-area="Admin" 
+                                asp-controller="Details" 
+                                asp-action="DeleteCategory"
+                                asp-route-id="@Model.Id"
+                                asp-route-categoryId="@category.Id"
+                                class="nav-link ">
+                                <i class="fa fa-xmark text-danger"></i>
+                            </a>
+                        </div>
+                    }
+                    <!-- Add New Category Start-->
+                    <hr/>
+                    <form asp-area="Admin" asp-controller="Details" asp-action="AddNewCategory" method="post">
+                        <input asp-for="@Model.Id" type="hidden" name="id" value="@Model.Id" />
+                        <div class="d-flex align-items-center mt-2">
+                            <span class="me-2" style="white-space: nowrap;">Добави категория:</span>
+                            <input asp-for="@Model.NewCategory" type="text" class="form-control" />
+                            <button type="submit" class="nav-link text-warning ms-3"><i class="fa-solid fa-arrows-rotate"></i></button>
+                        </div>
+                        <span asp-validation-for="@Model.NewCategory" class="text-danger"></span>
+                    </form>
+                    <!-- Add New Category End-->
+                </div>
+                <!-- Product Category End-->
+                <!-- Product Price Start-->
+                <form asp-area="Admin" asp-controller="Details" asp-action="EditPrice" method="post">
+                    <input asp-for="@Model.Id" type="hidden" name="id" value="@Model.Id" />
+                    <div class="border rounded p-2 mt-3">
+                        <p><strong>Цена: @Model.Price лв.</strong></p>
+                        <div class="d-flex align-items-center">
+                            <span class="me-2">Цена:</span>
+                            <input asp-for="@Model.Price" class="form-control" />
+                            <button type="submit" class="nav-link text-warning ms-3"><i class="fa-solid fa-arrows-rotate"></i></button>
+                        </div>
+                        <span asp-validation-for="@Model.Price" class="text-danger"></span>
+                    </div>
+                </form>
+                <!-- Product Price End-->
+                <!-- Product Quantity Start-->
+                <form asp-area="Admin" asp-controller="Details" asp-action="AddQuantity" method="post">
+                    <input asp-for="@Model.Id" type="hidden" name="id" value="@Model.Id" />
+                    <div class="border rounded p-2 mt-3">
+                        <p><strong>Наличност: @Model.AvailableQuantity бр.</strong></p>
+                        <div class="d-flex align-items-center">
+                            <span class="me-2">Добави:</span>
+                            <input asp-for="@Model.Quantity" class="form-control" />
+                            <button type="submit" class="nav-link text-warning ms-3"><i class="fa-solid fa-arrows-rotate"></i></button>
+                        </div>
+                        <span asp-validation-for="@Model.Quantity" class="text-danger"></span>
+                    </div>
+                </form>
+                <!-- Product Quantity End-->
+                <!-- Product Option Start-->
+                <form asp-area="Admin" asp-controller="Details" asp-action="EditOptional" method="post">
+                    <input asp-for="@Model.Id" type="hidden" name="id" value="@Model.Id" />
+                    <div class="border rounded p-2 mt-3">
+                        <div class="d-flex align-items-center">
+                            <p class="me-2">
+                                <strong>@Model.Optional</strong>
+                            </p>
+                        </div>
+                        <div class="d-flex align-items-center mt-2">
+                            <span class="me-2">Описание:</span>
+                            <input asp-for="@Model.Optional" type="text" class="form-control" />
+                            <button type="submit" class="nav-link text-warning ms-3"><i class="fa-solid fa-arrows-rotate"></i></button>
+                        </div>
+                        <span asp-validation-for="@Model.Optional" class="text-danger"></span>
+                    </div>
+                </form>
+                <!-- Product Option End-->
+            </div>
+        </div>
+        <!-- Right Side End-->
+    </div>
+</div>
+<!-- Details Product End -->
+
+<!-- Validation form fields on client -->
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

@@ -1,0 +1,109 @@
+﻿@model AddReviewDTO
+@{
+}
+<form asp-controller="Details" asp-action="AddReview" method="post" enctype="multipart/form-data"
+      id="comment-product">
+    <input asp-for="@Model.ProductId" value="@Model.ProductId" hidden />
+    <input asp-for="@Model.ProductName" value="@Model.ProductName" hidden />
+    <input asp-for="@Model.ProductImage" value="@Model.ProductImage" hidden />
+    <input asp-for="@Model.AuthorId" value="@Model.AuthorId" hidden />
+    <input asp-for="@Model.AuthorName" value="@Model.AuthorName" hidden />
+    <input asp-for="@Model.Email" value="@Model.Email" hidden />
+    <div class="container p-5 my-3 border rounded text-left w-75">
+        <div class="d-flex align-items-center mb-4">
+            <img src="@Model.ProductImage"
+                 height="70"
+                 width="70"
+                 style="object-fit: cover"
+                 alt="" />
+            <p class="ms-5">@Model.ProductName</p>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label class="form-label small">Име* (това се появява публично)</label>
+                <input type="text"
+                       class="form-control"
+                       aria-required="true"
+                       value="@Model.AuthorName" 
+                       disabled />
+            </div>
+            <div class="col">
+                <label class="form-label small">Имейл* (това се появява публично)</label>
+                <input type="email"
+                       class="form-control"
+                       aria-required="true"
+                       value="@Model.Email" 
+                       disabled />
+            </div>
+        </div>
+        <label asp-for="@Model.Stars" class="form-label small">Оцени*</label>
+        <div class="row mb-3">
+            <div asp-for="" id="star-rating" class="d-flex fs-3" style="color: gold">
+                @for (int i = 0; i < 5; i++)
+                {
+                    <input asp-for="@Model.Stars[i]" type="checkbox" hidden />
+                    <label asp-for="@Model.Stars[i]">
+                        @if (@Model.Stars[i])
+                        {
+                            <i class="fa-solid fa-star"></i>
+                        }
+                        else
+                        {
+                            <i class="fa-regular fa-star"></i>
+                        }
+                    </label>
+                }
+            </div>
+            <span asp-validation-for="@Model.Rating" class="text-danger fs-6 small"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="@Model.Title" class="form-label small">Заглавие</label>
+            <input asp-for="@Model.Title"
+                   type="text"
+                   value="@Model.Title"
+                   class="form-control"
+                   aria-required="true" />
+            <span asp-validation-for="@Model.Title" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="@Model.Comment" class="form-label small">Напиши своя отзив тук ...</label>
+            <textarea asp-for="@Model.Comment"
+                      class="form-control"
+                      aria-required="true"
+                      rows="5">@Model.Comment</textarea>
+            <span asp-validation-for="@Model.Comment" class="text-danger"></span>
+        </div>
+
+        <div class="row mb-3">
+            @for (int i = 0; i < 3; i++)
+            {
+                <input for id="file-upload-@(i+1)"
+                       type="file"
+                       class="form-control"
+                       name="attachment"
+                       accept="image/*, .mp4"
+                       style="display: none" />
+                <label for="file-upload-@(i+1)"
+                       class="btn btn-image d-flex justify-content-center align-items-center m-3">
+                    @if (Model.Images[i].ImagePath != string.Empty && !Model.Images[i].IsVideo)
+                    {
+                        <img src="@Model.Images[i].ImagePath" width="120" height="120" style="object-fit: cover" />
+                    }
+                    else
+                    {
+                        <span>+</span>
+                    }
+
+                </label>
+            }
+        </div>
+        <div class="d-flex justify-content-end">
+            <a asp-controller="Details" asp-action="Index" asp-route-id="@Model.ProductId" id="cancel-comment" class="btn btn-lg btn-inverce">Отказ</a>
+            <button type="submit" class="btn btn-lg ms-3">Публикуване</button>
+        </div>
+    </div>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/addReview.js"></script>
+}

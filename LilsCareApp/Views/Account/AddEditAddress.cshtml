@@ -1,0 +1,41 @@
+﻿@model DeliveryAddressesDTO
+@{
+    ViewData["Title"] = "Адреси";
+}
+
+<div class="d-flex justify-content-center">
+    <!-- Menu My Account Start-->
+    <partial name="_AccountMenuPartial" />
+    <!-- Menu My Account  End -->
+    <!-- New Address to Delivery Start -->
+    <div class="border rounded p-2 w-50" style="margin: 50px 100px 20px 20px">
+
+        <!-- Delivery Type Start -->
+        <h5>Метод за доставка</h5>
+        <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown">
+            @(Model.DeliveryType() ?? " Няма избран доставчик...")
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+                <a asp-controller="Account" asp-action="SelectDeliveryType" asp-route-isShippingToOffice="false" class="dropdown-item">
+                    @Model.AddressDeliveryType
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Account" asp-action="SelectDeliveryType" asp-route-isShippingToOffice="true" class="dropdown-item">
+                    @Model.OfficeDeliveryType
+                </a>
+            </li>
+        </ul>
+        <hr/>
+        <!-- Delivery Type End -->
+
+        @if (Model.DeliveryType() == Model.OfficeDeliveryType)
+        {
+            <partial name="_DeliveryToOfficePartial" model="@Model.Office"/>
+        }
+        else if (Model.DeliveryType() == Model.AddressDeliveryType)
+        {
+            <partial name="_DeliveryToAddressPartial" model="@Model.Address" />
+        }
+</div>

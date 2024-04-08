@@ -1,0 +1,95 @@
+﻿@model OfficeDTO
+
+<!-- New Delivery Office Start Start -->
+<form asp-action="AddOfficeDelivery" method="post">
+    <div class="d-flex justify-content-between align-items-center">
+        <!-- Select Shipping Provider Start -->
+        <div class="col-4">
+            <h5>Куриер</h5>
+            <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown">
+                @(Model.Provider() ?? "Куриер...")
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    @foreach (var provider in Model.ShippingProviders)
+                    {
+                        <a asp-action="SelectShippingProvider" asp-route-shippingProviderId="@provider.Id" class="dropdown-item">
+                            @provider.Name
+                        </a>
+                    }
+                </li>
+            </ul>
+        </div>
+        <!-- Select Shipping Provider End -->
+        <!-- Select Shipping City Start -->
+        <div class="col-4">
+            <h5>Населено място</h5>
+            <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown">
+                @(Model.CityName ?? "Населено място...")
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    @foreach (var city in Model.ShippingProviderCities)
+                    {
+                        <a asp-action="SelectShippingCity" asp-route-city="@city" class="dropdown-item">
+                            @city
+                        </a>
+                    }
+                </li>
+            </ul>
+        </div>
+        <!-- Select Shipping City End -->
+        <!-- Select Shipping Office Start -->
+        <div class="col-4">
+            <h5>Офис на куриер</h5>
+            <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown">
+                @(Model.OfficeAddress() ?? "Офис на куриер...")
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    @foreach (var office in Model.ShippingOffices)
+                    {
+                        <a asp-action="SelectShippingOffice" asp-route-officeId="@office.Id" class="dropdown-item">
+                            @office.OfficeAddress
+                        </a>
+                    }
+                </li>
+            </ul>
+        </div>
+        <!-- Select Office City End -->
+    </div>
+    <hr />
+    <!-- Input Recipient Data Start-->
+    @if (Model.IsSelectedOffice())
+    {
+        <div class="row my-2">
+            <div class="col-6">
+                <label asp-for="@Model.FirstName" class="form-label small">Име*</label>
+                <input asp-for="@Model.FirstName"
+                       type="text"
+                       class="form-control" />
+                <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+            </div>
+            <div class="col-6">
+                <label asp-for="@Model.LastName" class="form-label small">Фамилия*</label>
+                <input asp-for="@Model.LastName"
+                       type="text"
+                       class="form-control" />
+                <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="my-2">
+            <label asp-for="@Model.PhoneNumber" class="form-label small">Телефонен номер*</label>
+            <input asp-for="@Model.PhoneNumber"
+                   class="form-control" />
+            <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="d-flex justify-content-end">
+            <!-- Save Changes Start -->
+            <button type="submit" class="btn btn-sm ms-3">Запази</button>
+            <!-- Save Changes End -->
+        </div>
+    }
+    <!-- Input Recipient Data Start-->
+</form>
+<!-- New Delivery Office Start End -->

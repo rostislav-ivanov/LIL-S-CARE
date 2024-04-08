@@ -1,0 +1,84 @@
+/*** Carousel Products Start ***/
+.vesitable .vesitable-item {
+  height: 100%;
+  transition: 0.5s;
+}
+
+.vesitable .vesitable-item:hover {
+  box-shadow: 0 0 55px rgba(0, 0, 0, 0.4);
+}
+
+.vesitable .vesitable-item .vesitable-img {
+  overflow: hidden;
+  transition: 0.5s;
+  border-radius: 10px 10px 0 0;
+}
+
+.vesitable .vesitable-item .vesitable-img img {
+  height: 350px;
+  object-fit: cover;
+  object-position: 0% 50%;
+  transition: 0.5s;
+}
+
+.vesitable .vesitable-item .vesitable-img img:hover {
+  transform: scale(1.2);
+}
+
+.vesitable .owl-stage {
+  margin: 50px 0;
+  position: relative;
+}
+
+.vesitable .owl-prev {
+  position: absolute;
+  top: -8px;
+  right: 50px;
+  color: rgb(var(--app-btn-bg));
+  transition: 0.5s;
+}
+
+.vesitable .owl-nav .owl-prev:hover {
+  opacity: 0.6;
+}
+
+.vesitable .owl-nav .owl-next {
+  position: absolute;
+  top: -8px;
+  right: 100px;
+  color: rgb(var(--app-btn-bg));
+  transition: 0.5s;
+}
+
+.vesitable .owl-nav .owl-next:hover {
+  opacity: 0.6;
+}
+/*** Carousel Products End ***/
+
+/* Define a hover state for the labels */
+#star-rating label:hover {
+  opacity: 0.6; /* Adjust opacity on hover */
+  cursor: pointer;
+}
+
+#carousel-details .carousel-indicators {
+  position: relative;
+}
+
+/* Define custom styles for the indicator images */
+#carousel-details .carousel-indicators img,
+#carousel-details .carousel-indicators video {
+  width: 50px;
+  height: 50px;
+  margin: 0 5px;
+  cursor: pointer;
+  opacity: 1; /* Adjust as needed */
+  border: 2px solid var(--bs-body-bg);
+}
+
+/* Style for the active indicator */
+#carousel-details .carousel-indicators img.active,
+#carousel-details .carousel-indicators video.active {
+  opacity: 1; /* Adjust as needed */
+  border: 2px solid rgb(var(--color_41)); /* Border style for active indicator */
+}

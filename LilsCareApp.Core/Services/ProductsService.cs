@@ -1,0 +1,215 @@
+﻿using LilsCareApp.Core.Contracts;
+using LilsCareApp.Core.Models.Checkout;
+using LilsCareApp.Core.Models.Products;
+using LilsCareApp.Infrastructure.Data;
+using LilsCareApp.Infrastructure.Data.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace LilsCareApp.Core.Services
+{
+    public class ProductsService : IProductsService
+    {
+        private readonly ApplicationDbContext _context;
+
+        public ProductsService(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        async public Task<IEnumerable<ProductDTO>> GetAllAsync(string userId)
+        {
+            var products = await _context.Products
+                .Select(p => new ProductDTO
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    ImageUrl = p.Images.OrderBy(im => im.ImageOrder).FirstOrDefault().ImagePath ?? "https://via.placeholder.com/150",
+                    Quantity = p.Quantity,
+                    Categories = p.ProductsCategories.Select(pc => new CategoryDTO
+                    {
+                        Id = pc.Category.Id,
+                        Name = pc.Category.Name
+                    }).ToList(),
+                    IsWish = p.WishesUsers.Any(wu => wu.AppUserId == userId),
+                    IsShow = p.IsShow
+                })
+                .AsNoTracking()
+                .ToArrayAsync();
+
+            return products;
+        }
+
+        public async Task<IEnumerable<ProductDTO>> GetByCategoryAsync(int id, string userId)
+        {
+            var products = await _context.Products
+                .Where(p => p.ProductsCategories.Any(pc => pc.CategoryId == id))
+                .Select(p => new ProductDTO
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    ImageUrl = p.Images.FirstOrDefault(im => im.ImageOrder == 1).ImagePath ?? "https://via.placeholder.com/150",
+                    Quantity = p.Quantity,
+                    Categories = p.ProductsCategories.Select(pc => new CategoryDTO
+                    {
+                        Id = pc.Category.Id,
+                        Name = pc.Category.Name
+                    }).ToList(),
+                    IsWish = p.WishesUsers.Any(wu => wu.AppUserId == userId && wu.ProductId == p.Id)
+                })
+                .AsNoTracking()
+                .ToArrayAsync();
+
+            return products;
+        }
+
+        public async Task<IList<CategoryDTO>> GetCategoriesAsync()
+        {
+            var categories = await _context.Categories
+                .Select(c => new CategoryDTO
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                })
+                .AsNoTracking()
+                .ToListAsync();
+
+            return categories;
+        }
+
+        public async Task AddRemoveWishAsync(int id, string userId)
+        {
+            var wishUser = new WishUser
+            {
+                ProductId = id,
+                AppUserId = userId
+            };
+
+            if (await _context.WishesUsers.ContainsAsync(wishUser) == false)
+            {
+                await _context.WishesUsers.AddAsync(wishUser);
+            }
+            else
+            {
+                _context.WishesUsers.Remove(wishUser);
+            }
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<ProductsInBagDTO>> GetProductsInBagAsync(string userId)
+        {
+            var productsInBag = await _context.BagsUsers
+                .Where(bu => bu.AppUserId == userId)
+                .Select(bu => new ProductsInBagDTO
+                {
+                    Id = bu.Product.Id,
+                    Name = bu.Product.Name,
+                    Optional = bu.Product.Optional,
+                    Price = bu.Product.Price,
+                    ImageUrl = bu.Product.Images.FirstOrDefault(im => im.ImageOrder == 1).ImagePath,
+                    Quantity = bu.Quantity
+                })
+                .AsNoTracking()
+                .ToArrayAsync();
+
+            return productsInBag;
+        }
+
+        public async Task AddToCartAsync(int productId, string userId, int quantity)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            if (product is null || userId is null)
+            {
+                return;
+            }
+
+            var bagUser = await _context.BagsUsers
+                .FirstOrDefaultAsync(bu => bu.ProductId == productId && bu.AppUserId == userId);
+            if (bagUser == null)
+            {
+                bagUser = new BagUser
+                {
+                    ProductId = productId,
+                    AppUserId = userId,
+                    Quantity = quantity
+                };
+                await _context.BagsUsers.AddAsync(bagUser);
+            }
+            else if (bagUser.Quantity + quantity >= 1) // quantity must be at least 1
+            {
+                bagUser.Quantity += quantity;
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteProductFromCartAsync(int productId, string userId)
+        {
+            var bagUser = _context.BagsUsers.FirstOrDefault(bu => bu.ProductId == productId && bu.AppUserId == userId);
+            if (bagUser is null)
+            {
+                return;
+            }
+
+            _context.BagsUsers.Remove(bagUser);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> GetCountInBagAsync(string userId)
+        {
+            int count = await _context.BagsUsers
+                .Where(bu => bu.AppUserId == userId)
+                .AsNoTracking()
+                .SumAsync(bu => bu.Quantity);
+            return count;
+        }
+
+        public async Task<IEnumerable<ProductDTO>> GetMyWishesAsync(string userId)
+        {
+            var products = await _context.Products
+                .Where(p => p.WishesUsers.Any(wu => wu.AppUserId == userId))
+                .Select(p => new ProductDTO
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    ImageUrl = p.Images.FirstOrDefault(im => im.ImageOrder == 1).ImagePath ?? "https://via.placeholder.com/150",
+                    Quantity = p.Quantity,
+                    Categories = p.ProductsCategories.Select(pc => new CategoryDTO
+                    {
+                        Id = pc.Category.Id,
+                        Name = pc.Category.Name
+                    }).ToList(),
+                    IsWish = p.WishesUsers.Any(wu => wu.AppUserId == userId)
+                })
+                .AsNoTracking()
+                .ToArrayAsync();
+
+            return products;
+        }
+
+        // Migrate products in bag from guest to user
+        public async Task MigrateProductsInBagAsync(string userId, IEnumerable<ProductsInBagDTO> guestBag)
+        {
+            var productsInBag = await _context.BagsUsers
+                .Where(bu => bu.AppUserId == userId)
+                .AsNoTracking()
+                .ToArrayAsync();
+
+            _context.BagsUsers.RemoveRange(productsInBag);
+
+            IEnumerable<BagUser> bagUsers = guestBag.Select(bag => new BagUser
+            {
+                ProductId = bag.Id,
+                AppUserId = userId,
+                Quantity = bag.Quantity
+            });
+
+            await _context.BagsUsers.AddRangeAsync(bagUsers);
+
+            await _context.SaveChangesAsync();
+        }
+
+    }
+}

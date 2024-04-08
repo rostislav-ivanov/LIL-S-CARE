@@ -3,48 +3,62 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - LilsCareApp</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/LilsCareApp.styles.css" asp-append-version="true" />
+    <title>LIL'S CARE | @ViewData["Title"] </title>
+    <link rel="icon"
+          sizes="192x192"
+          href="https://static.wixstatic.com/media/a6694c_487da19846414b3696763876d1233bd9%7Emv2.jpg"
+          type="image/jpeg" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" asp-append-version="true" />
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="~/lib/fontawesome/css/all.css" asp-append-version="true" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/css/site.css" />
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">LilsCareApp</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    @if (User.IsAdmin())
+    {
+        @RenderBody()
+    }
+    else
+    {
+        <header>
+            <vc:header-component></vc:header-component>
+        </header>
+        <main role="main">
+            <vc:shopping-bag-component></vc:shopping-bag-component>
             @RenderBody()
         </main>
-    </div>
+        <footer class="border-top footer text-muted">
+            <vc:footer-component></vc:footer-component>
+        </footer>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - LilsCareApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+        <!-- Back to Top -->
+        <a href="#" class="btn rounded-circle back-to-top">
+            <i class="fa fa-arrow-up"></i>
+        </a>
+
+
+
+        <!-- Redirecting to a specific element on a page after form submission -->
+        <span id="scrollToElementId" style="display:none">@TempData["scrollToElementId"]</span>
+        <script>
+            // Check if there's a query parameter for scrolling
+            const scrollToElementId = document.getElementById("scrollToElementId").textContent;
+            var element = document.getElementById(scrollToElementId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'instant' });
+            }
+        </script>
+    }
 </body>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/fontawesome/js/all.js"></script>
+    <script src="~/js/site.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </html>
