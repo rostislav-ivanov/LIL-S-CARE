@@ -1,4 +1,5 @@
 ﻿using LilsCareApp.Core.Contracts;
+using LilsCareApp.Core.Extensions;
 using LilsCareApp.Core.Models.Checkout;
 using LilsCareApp.Core.Models.Products;
 using LilsCareApp.Infrastructure.Data;
@@ -16,52 +17,28 @@ namespace LilsCareApp.Core.Services
             _context = context;
         }
 
-        async public Task<IEnumerable<ProductDTO>> GetAllAsync(string userId)
+        public async Task<ProductsDTO> GetProductsQueryAsync(string userId, string? category, int currentPage, int productsPerPage)
         {
-            var products = await _context.Products
-                .Select(p => new ProductDTO
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
-                    ImageUrl = p.Images.OrderBy(im => im.ImageOrder).FirstOrDefault().ImagePath ?? "https://via.placeholder.com/150",
-                    Quantity = p.Quantity,
-                    Categories = p.ProductsCategories.Select(pc => new CategoryDTO
-                    {
-                        Id = pc.Category.Id,
-                        Name = pc.Category.Name
-                    }).ToList(),
-                    IsWish = p.WishesUsers.Any(wu => wu.AppUserId == userId),
-                    IsShow = p.IsShow
-                })
+            var productsFiltered = _context.Products
+                .Where(p => string.IsNullOrEmpty(category) || p.ProductsCategories.Any(pc => pc.Category.Name == category))
+                .ProjectToProductDTO(userId);
+
+            var totalProductsCount = await productsFiltered.CountAsync();
+            var products = await productsFiltered
+                .Skip((currentPage - 1) * productsPerPage)
+                .Take(productsPerPage)
                 .AsNoTracking()
-                .ToArrayAsync();
+                .ToListAsync();
 
-            return products;
-        }
-
-        public async Task<IEnumerable<ProductDTO>> GetByCategoryAsync(int id, string userId)
-        {
-            var products = await _context.Products
-                .Where(p => p.ProductsCategories.Any(pc => pc.CategoryId == id))
-                .Select(p => new ProductDTO
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
-                    ImageUrl = p.Images.FirstOrDefault(im => im.ImageOrder == 1).ImagePath ?? "https://via.placeholder.com/150",
-                    Quantity = p.Quantity,
-                    Categories = p.ProductsCategories.Select(pc => new CategoryDTO
-                    {
-                        Id = pc.Category.Id,
-                        Name = pc.Category.Name
-                    }).ToList(),
-                    IsWish = p.WishesUsers.Any(wu => wu.AppUserId == userId && wu.ProductId == p.Id)
-                })
-                .AsNoTracking()
-                .ToArrayAsync();
-
-            return products;
+            return new ProductsDTO
+            {
+                Products = products,
+                Categories = await GetCategoriesAsync(),
+                TotalProductsCount = totalProductsCount,
+                ProductsPerPage = productsPerPage,
+                CurrentPage = currentPage,
+                Category = category
+            };
         }
 
         public async Task<IList<CategoryDTO>> GetCategoriesAsync()
@@ -176,11 +153,6 @@ namespace LilsCareApp.Core.Services
                     Price = p.Price,
                     ImageUrl = p.Images.FirstOrDefault(im => im.ImageOrder == 1).ImagePath ?? "https://via.placeholder.com/150",
                     Quantity = p.Quantity,
-                    Categories = p.ProductsCategories.Select(pc => new CategoryDTO
-                    {
-                        Id = pc.Category.Id,
-                        Name = pc.Category.Name
-                    }).ToList(),
                     IsWish = p.WishesUsers.Any(wu => wu.AppUserId == userId)
                 })
                 .AsNoTracking()
@@ -211,5 +183,12 @@ namespace LilsCareApp.Core.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<ProductDTO>> GetAllAsync(string userId)
+        {
+            return await _context.Products
+                .ProjectToProductDTO(userId)
+                .AsNoTracking()
+                .ToArrayAsync();
+        }
     }
 }

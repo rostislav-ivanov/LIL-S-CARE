@@ -4,6 +4,7 @@ using LilsCareApp.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using static LilsCareApp.Infrastructure.DataConstants.Product;
 
 namespace LilsCareApp.Controllers
 {
@@ -18,32 +19,13 @@ namespace LilsCareApp.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? category, int currentPage = 1, int productsPerPage = ProductsPerPages)
         {
             string userId = User.GetUserId();
-            ProductsDTO products = new()
-            {
-                Products = await _productService.GetAllAsync(userId),
-                Categories = await _productService.GetCategoriesAsync(),
-            };
+
+            ProductsDTO products = await _productService.GetProductsQueryAsync(userId, category, currentPage, productsPerPage);
 
             return View(products);
-        }
-
-
-        [AllowAnonymous]
-        public async Task<IActionResult> GetByCategory(int categoryId = 1)
-        {
-            string userId = User.GetUserId();
-            ProductsDTO products = new()
-            {
-                Products = await _productService.GetByCategoryAsync(categoryId, userId),
-                Categories = await _productService.GetCategoriesAsync(),
-            };
-
-            ViewBag.CheckedId = categoryId;
-
-            return View(nameof(Index), products);
         }
 
         public async Task<IActionResult> AddRemoveWish(int productId)

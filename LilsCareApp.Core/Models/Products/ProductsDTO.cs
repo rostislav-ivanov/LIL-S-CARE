@@ -5,5 +5,14 @@
         public IEnumerable<ProductDTO> Products { get; set; } = [];
 
         public IList<CategoryDTO> Categories { get; set; } = [];
+
+        public int TotalProductsCount { get; set; }
+
+        public int ProductsPerPage { get; set; }
+
+        public int CurrentPage { get; set; }
+
+        public string? Category { get; set; }
+
     }
 }
