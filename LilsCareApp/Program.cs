@@ -48,7 +48,6 @@ app.UseRequestLocalization(options =>
     options.SupportedUICultures = supportedCultures;
 });
 
-//app.UseMvc();
 
 // Enable session middleware
 app.UseSession();
