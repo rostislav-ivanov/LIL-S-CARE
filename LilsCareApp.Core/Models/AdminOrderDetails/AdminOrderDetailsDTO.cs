@@ -13,7 +13,9 @@ namespace LilsCareApp.Core.Models.AdminOrderDetails
 
         public DateTime CreatedOn { get; set; }
 
-        public StatusOrderDTO StatusOrder { get; set; } = null!;
+        public int StatusOrderId { get; set; }
+
+        public IEnumerable<StatusOrderDTO> StatusesOrder { get; set; } = [];
 
         public DeliveryAddressDTO AddressDelivery { get; set; } = null!;
 
@@ -31,7 +33,9 @@ namespace LilsCareApp.Core.Models.AdminOrderDetails
 
         public bool IsPaid { get; set; }
 
-        public List<ProductsOrdersDTO> ProductsOrders { get; set; } = [];
+        public IEnumerable<ProductsOrdersDTO> ProductsOrders { get; set; } = [];
+
+        public IEnumerable<ProductsNamesDTO> Products { get; set; } = [];
 
         public decimal ShippingPrice { get; set; }
 

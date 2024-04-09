@@ -77,6 +77,8 @@
             public const int TrackingNumberMaxLength = 30;
             public const string TrackingNumberPattern = @"^[A-Za-z0-9]{5,}$";
             public const int OrdersPerPages = 10;
+            public const string Paid = "Платена";
+            public const string Unpaid = "Неплатена";
         }
 
         public static class PaymentMethod

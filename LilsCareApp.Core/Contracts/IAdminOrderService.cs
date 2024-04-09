@@ -1,5 +1,4 @@
-﻿using LilsCareApp.Core.Models.AdminOrderDetails;
-using LilsCareApp.Core.Models.AdminOrders;
+﻿using LilsCareApp.Core.Models.AdminOrders;
 
 namespace LilsCareApp.Core.Contracts
 {
@@ -12,10 +11,8 @@ namespace LilsCareApp.Core.Contracts
             string? search,
             int currentPage,
             int ordersPerPage);
-
         Task<IEnumerable<StatusOrderDTO>> GetStatusesOrderAsync();
 
-        Task<AdminOrderDetailsDTO> GetOrderDetailsAsync(int id);
-        Task AddTrackingCodeAsync(int id, string trackingNumber);
+
     }
 }

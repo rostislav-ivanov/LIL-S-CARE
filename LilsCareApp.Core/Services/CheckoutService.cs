@@ -145,6 +145,8 @@ namespace LilsCareApp.Core.Services
                 .Where(bu => bu.AppUserId == userId)
                 .ToListAsync();
 
+            _context.BagsUsers.RemoveRange(bagUsers);
+
             //remove ordered quantity from products store
             foreach (var bagUser in bagUsers)
             {
