@@ -89,5 +89,17 @@ namespace LilsCareApp.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index), new { id });
         }
+
+        public async Task<IActionResult> AddQuantityToProduct(int id, int productId, int quantity)
+        {
+            if (id == 0 || productId == 0 || quantity == 0)
+            {
+                return BadRequest();
+            }
+
+            await _adminOrderDetailsService.AddQuantityToProductAsync(id, productId, quantity);
+
+            return RedirectToAction(nameof(Index), new { id });
+        }
     }
 }

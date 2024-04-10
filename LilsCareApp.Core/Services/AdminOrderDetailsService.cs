@@ -166,6 +166,11 @@ namespace LilsCareApp.Core.Services
                 });
             }
 
+            // Decrease quantity in store
+            product.Quantity--;
+
+
+
             await _context.SaveChangesAsync();
         }
 
@@ -180,7 +185,46 @@ namespace LilsCareApp.Core.Services
                 return;
             }
 
+            // Increase quantity in store
+            var product = await _context.Products
+                .Where(p => p.Id == productId)
+                .FirstOrDefaultAsync();
+            if (product != null)
+            {
+                product.Quantity += productOrder.Quantity;
+            }
+
             _context.ProductsOrders.Remove(productOrder);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddQuantityToProductAsync(int id, int productId, int quantity)
+        {
+            var productOrder = await _context.ProductsOrders
+                .Where(po => po.ProductId == productId && po.OrderId == id)
+                .FirstOrDefaultAsync();
+
+            if (productOrder == null)
+            {
+                return;
+            }
+
+            productOrder.Quantity += quantity;
+
+            if (productOrder.Quantity <= 0)
+            {
+                _context.ProductsOrders.Remove(productOrder);
+            }
+
+            // Change quantity in store
+            var product = await _context.Products
+                .Where(p => p.Id == productId)
+                .FirstOrDefaultAsync();
+            if (product != null)
+            {
+                product.Quantity -= quantity;
+            }
+
             await _context.SaveChangesAsync();
         }
     }
