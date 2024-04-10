@@ -8,6 +8,35 @@
 
 <div class="container-fluid product py-5">
     <h1 class="mb-4 text-center">ПРОДУКТИ</h1>
+    <!-- Pagination Start -->
+    @{
+        var maxPage = Math.Ceiling((double)Model.TotalProductsCount /
+        Model.ProductsPerPage);
+
+        var shouldButtonBeDisabled = Model.CurrentPage == maxPage ||
+        !Model.Products.Any();
+    }
+    <div class="d-flex justify-content-end mb-5">
+
+        <a class="nav-link @(Model.CurrentPage == 1 ? "disabled" : "")"
+           style="color:rgb(var(--app-btn-bg))"
+           asp-controller="Products"
+           asp-action="Index"
+           asp-route-category="@Model.Category"
+           asp-route-currentPage="@(Model.CurrentPage - 1)">
+            <i class="fa-solid fa-arrow-left-long" style="font-size: 24px;"></i>
+        </a>
+
+        <a class="nav-link @(shouldButtonBeDisabled ? "disabled" : "")"
+           style="color:rgb(var(--app-btn-bg))"
+           asp-controller="Products"
+           asp-action="Index"
+           asp-route-category="@Model.Category"
+           asp-route-currentPage="@(Model.CurrentPage + 1)">
+            <i class="fa-solid fa-arrow-right-long mx-3" style="font-size: 24px;"></i>
+        </a>
+    </div>
+    <!-- Pagination End -->
     <div class="row">
         <!-- Filter Categories Start-->
         <div class="col-lg-2 fs-5">
@@ -25,10 +54,11 @@
                     @foreach (var category in Model.Categories)
                     {
                         <a asp-controller="Products"
-                           asp-action="GetByCategory"
-                           asp-route-categoryId="@category.Id"
+                           asp-action="Index"
+                           asp-route-category="@category.Name"
+                           asp-route-currentPage=1
                            class="nav-link mb-2">
-                            @if (category.Id == ViewBag.CheckedId)
+                            @if (category.Name == Model.Category)
                             {
                                 <div style="color:rgb(var(--app-btn-bg))">
                                     <i class="fa-regular fa-square-check me-2"></i>
@@ -60,8 +90,8 @@
                             <div class="rounded-4 position-relative product-item border">
                                 <div class="product-img">
                                     <img src="@product.ImageUrl"
-                                    class="img-fluid w-100"
-                                    alt="" />
+                                         class="img-fluid w-100"
+                                         alt="" />
                                 </div>
                                 <div class="px-3 py-2">
                                     <h6>@product.Name</h6>
@@ -70,7 +100,7 @@
                                         @if (product.Quantity > 0)
                                         {
                                             <a asp-controller="Products" asp-action="AddToCart" asp-route-productId="@product.Id" class="btn">
-                                                    <i class="fa fa-shopping-bag me-2"></i> Добави
+                                                <i class="fa fa-shopping-bag me-2"></i> Добави
                                             </a>
                                         }
                                         else
@@ -80,7 +110,7 @@
                                             </a>
                                         }
 
-                                        @if (User.Identity?.IsAuthenticated?? false)
+                                        @if (User.Identity?.IsAuthenticated ?? false)
                                         {
                                             <a asp-controller="Products" asp-action="AddRemoveWish" asp-route-productId="@product.Id"
                                                class="float-end nav-link fs-3"
@@ -102,25 +132,11 @@
                     </div>
                     <!-- Products End-->
                 }
-
-                <!-- Pagination Start-->
-@*                 <div class="col-12">
-                    <div class="pagination d-flex justify-content-center mt-5">
-                        <a href="#" class="btn btn-inverce m-1">&laquo;</a>
-                        <a href="#" class="btn active m-1">1</a>
-                        <a href="#" class="btn btn-inverce m-1">2</a>
-                        <a href="#" class="btn btn-inverce m-1">3</a>
-                        <a href="#" class="btn btn-inverce m-1">4</a>
-                        <a href="#" class="btn btn-inverce m-1">5</a>
-                        <a href="#" class="btn btn-inverce m-1">6</a>
-                        <a href="#" class="btn btn-inverce m-1">&raquo;</a>
-                    </div>
-                </div> *@
-                <!-- Pagination End-->
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- Back to Top -->
 <a href="#" class="btn rounded-circle back-to-top">

@@ -1,11 +1,338 @@
-﻿@{
+﻿@model AdminOrderDetailsDTO
+@{
     ViewData["Title"] = "ADMIN ORDER DETAILS";
 }
 @section Styles {
     <link rel="stylesheet" href="~/css/admin.css" />
+    <link rel="stylesheet" href="~/css/checkout.css" />
 }
 
-<partial name="_MenuAdminPartial" />
-<div class="content">
-    <h1>order details</h1>
+<!-- Tracking Number Offcanvas Start -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="tracking-number" aria-labelledby="offcanvasLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasLabel">Въведете тракинг номер</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form asp-area="Admin" asp-controller="OrderDetails" asp-action="AddTrackingCode" method="post">
+            <input asp-for="@Model.Id" hidden value="@Model.Id" />
+            <label asp-for="@Model.TrackingNumber" class="form-label-add-edit">Тракинг номер</label>
+            <input asp-for="@Model.TrackingNumber" class="form-control" aria-required="true" />
+            <span asp-validation-for="@Model.TrackingNumber" class="text-danger"></span>
+            <button class="btn btn-sm bg-success" type="submit" hidden>Запази</button>
+        </form>
+    </div>
 </div>
+<!-- Tracking Number Offcanvas End -->
+<!-- Status Order Offcanvas Start -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="status-order" aria-labelledby="offcanvasLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasLabel">Изберете статус на поръчката</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+
+        @foreach (var status in Model.StatusesOrder)
+        {
+            <a asp-area="Admin"
+               asp-controller="OrderDetails"
+               asp-action="ChangeStatus"
+               asp-route-id="@Model.Id"
+               asp-route-statusId="@status.Id"
+               class="nav-link mb-2">
+                @if (status.Id == Model.StatusOrderId)
+                {
+                    <div style="color:rgb(var(--app-btn-bg))">
+                        <i class="fa-regular fa-square-check me-2"></i>
+                        @status.Status
+                    </div>
+                }
+                else
+                {
+                    <i class="fa-regular fa-square me-2"></i>
+                    @status.Status
+                }
+            </a>
+        }
+    </div>
+</div>
+<!-- Status Order Offcanvas End -->
+<!-- Payment Order Offcanvas Start -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="payment-order" aria-labelledby="offcanvasLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasLabel">Изберете статус на поръчката</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <a asp-area="Admin"
+           asp-controller="OrderDetails"
+           asp-action="ChangePayment"
+           asp-route-id="@Model.Id"
+           asp-route-isPaid="true"
+           class="nav-link mb-2">
+            @if (Model.IsPaid)
+            {
+                <div style="color:rgb(var(--app-btn-bg))">
+                    <i class="fa-regular fa-square-check me-2"></i>
+                    @Paid
+                </div>
+            }
+            else
+            {
+                <i class="fa-regular fa-square me-2"></i>
+                @Paid
+            }
+        </a>
+        <a asp-area="Admin"
+           asp-controller="OrderDetails"
+           asp-action="ChangePayment"
+           asp-route-id="@Model.Id"
+           asp-route-isPaid="false"
+           class="nav-link mb-2">
+            @if (!Model.IsPaid)
+            {
+                <div style="color:rgb(var(--app-btn-bg))">
+                    <i class="fa-regular fa-square-check me-2"></i>
+                    @Unpaid
+                </div>
+            }
+            else
+            {
+                <i class="fa-regular fa-square me-2"></i>
+                @Unpaid
+            }
+        </a>
+
+    </div>
+</div>
+<!-- Payment Order Offcanvas End -->
+<!-- Add Product To Order Offcanvas Start -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="add-product-to-order" aria-labelledby="offcanvasLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasLabel">Добавете продукт в поръчката</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        @foreach (var product in Model.Products)
+        {
+            <a asp-area="Admin"
+               asp-controller="OrderDetails"
+               asp-action="AddProductToOrder"
+               asp-route-id="@Model.Id"
+               asp-route-productId="@product.Id"
+               class="nav-link mb-2">
+                @product.Id @product.Name
+            </a>
+        }
+    </div>
+</div>
+<!-- Add Product To Order Offcanvas End -->
+
+<div class="content">
+    <div class="container p-3">
+
+        <div class="row g-5 p-3">
+            <!-- Client's data and Delivery address Start -->
+            <div class="col-lg-6">
+                <div class="w-100">
+                    <h4>Поръчка: #@Model.OrderNumber</h4>
+                    <hr />
+                    <!-- Tracking Number Start -->
+                    <div class="row">
+                        <div class="d-flex justify-content-between">
+
+                            @if (string.IsNullOrEmpty(Model.TrackingNumber))
+                            {
+                                <h5>Няма тракинг код:</h5>
+                            }
+                            else
+                            {
+                                <h5>Тракинг код: @Model.TrackingNumber</h5>
+                            }
+                            <a data-bs-toggle="offcanvas"
+                               href="#tracking-number"
+                               role="button"
+                               aria-controls="offcanvas"
+                               class="nav-link text-warning">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <hr />
+                    <!-- Tracking Number End -->
+                    <!-- Status Order Start -->
+                    <div class="row">
+                        <div class="d-flex justify-content-between">
+                            <h5>Статус на поръчката: @Model.StatusesOrder.FirstOrDefault(so => so.Id == Model.StatusOrderId)?.Status</h5>
+                            <a data-bs-toggle="offcanvas"
+                               href="#status-order"
+                               role="button"
+                               aria-controls="offcanvas"
+                               class="nav-link text-warning">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <hr />
+                    <!-- Status Order End -->
+                    <!-- Payment Order Start -->
+                    <div class="row">
+                        <div class="d-flex justify-content-between">
+                            <h5>Плащане: @(Model.IsPaid ? Paid : Unpaid)</h5>
+                            <a data-bs-toggle="offcanvas"
+                               href="#payment-order"
+                               role="button"
+                               aria-controls="offcanvas"
+                               class="nav-link text-warning">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <hr />
+                    <!-- Payment Order End -->
+                    @if (Model.AddressDelivery.IsOffice)
+                    {
+                        <!-- Office Start -->
+                        <div class="row">
+                            <h5>Доставка до куриерски офис</h5>
+                            <span>Куриер: @Model.AddressDelivery.ShippingProvider</span>
+                            <span>Офис: @Model.AddressDelivery.OfficeCity, @Model.AddressDelivery.OfficeAddress</span>
+                            <span>Получател: @Model.AddressDelivery.FirstName @Model.AddressDelivery.LastName</span>
+                            <span>Телефон: @Model.AddressDelivery.PhoneNumber</span>
+                        </div>
+                        <hr />
+                        <!-- Office Start -->
+                    }
+                    else
+                    {
+                        <!-- Address Start -->
+                        <div class="row">
+                            <h5>Доставка до адрес</h5>
+                            <span>Адрес:</span>
+                            <span class="ms-5">@Model.AddressDelivery.Country, @Model.AddressDelivery.District</span>
+                            <span class="ms-5">@Model.AddressDelivery.PostCode, @Model.AddressDelivery.Town</span>
+                            <span class="ms-5">@Model.AddressDelivery.Address</span>
+                            <span>Получател:</span>
+                            <span class="ms-5">@Model.AddressDelivery.FirstName @Model.AddressDelivery.LastName</span>
+                            <span class="ms-5">@Model.AddressDelivery.PhoneNumber</span>
+                            <span class="ms-5">@Model.AddressDelivery.Email</span>
+                        </div>
+                        <hr />
+                        <!-- Address End -->
+                    }
+                </div>
+            </div>
+            <!-- Client's data and Delivery address End -->
+            <!-- Order Summary Start -->
+            <div class="col-lg-6">
+                <div class="container mt-4 px-4 pb-2 rounded"
+                     style="background-color: rgb(var(--app-bg-secondary))">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="py-4 m-0">Резюме на поръчката (@Model.ProductsOrders.Sum(p => p.Quantity))</h5>
+                        <a data-bs-toggle="offcanvas"
+                           href="#add-product-to-order"
+                           role="button"
+                           aria-controls="offcanvas"
+                           class="nav-link text-primary">
+                            <i class="fa-solid fa-cart-plus"></i>
+                        </a>
+                    </div>
+
+                    <hr class="mt-0" />
+                    <!-- Product Start -->
+                    @foreach (var product in Model.ProductsOrders)
+                    {
+                        <div class="row mb-5">
+                            <div class="col-5">
+                                <div class="product-img">
+                                    <img src="@product.ImageUrl" class="img-fluid w-100"
+                                         alt="" />
+                                </div>
+                            </div>
+                            <div class="col-7">
+                                <div>
+                                    <p>@product.Name</p>
+                                    <p>@product.Optional</p>
+                                    <p>Цена: @product.Price лв.</p>
+
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <a asp-area="Admin"
+                                   asp-controller="OrderDetails"
+                                   asp-action="RemoveProductFromOrder"
+                                   asp-route-id="@Model.Id"
+                                   asp-route-productId="@product.Id"
+                                   class="nav-link">
+                                    <i class="fas fa-trash-alt me-2"></i>Извади от количка
+                                </a>
+                                <div class="d-flex justify-content-start align-items-center my-2">
+                                    <form asp-controller="Checkout" asp-action="AddToCart" asp-route-productId="@product.Id"
+                                          method="post">
+                                        <input type="hidden" name="quantity" value="-1" />
+                                        <button type="submit"
+                                                class="btn btn-inverce my-2"
+                                                style="background-color: rgb(var(--app-bg-secondary)); border:none">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </form>
+                                    <span class="mx-2"> @product.Quantity</span>
+                                    <form asp-controller="Checkout" asp-action="AddToCart" asp-route-productId="@product.Id"
+                                          method="post">
+                                        <input type="hidden" name="quantity" value="1" />
+                                        <button type="submit"
+                                                class="btn btn-inverce my-2"
+                                                style="background-color: rgb(var(--app-bg-secondary)); border:none">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <p class="mb-0">
+                                    <span><strong>@(product.Quantity * product.Price) лв.</strong></span>
+                                </p>
+                            </div>
+                        </div>
+                    }
+                    <!-- Product End -->
+                    <!-- Promo Code Start -->
+                    <div class="d-flex justify-content-between mb-3">
+                        <strong>- @Model.Discount.ToString("f2") лв.</strong>
+                    </div>
+
+                    <!-- Promo Code End -->
+                    <hr />
+                    <!-- Subtotal Start -->
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Междинна сума</span>
+                        <span class="mb-0">
+                            <strong>@Model.SubTotal().ToString("f2") лв.</strong>
+                        </span>
+                    </div>
+                    <!-- Subtotal End -->
+                    <!-- Delivery Start -->
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Доставка</span>
+                        <span class="mb-0">
+                            @Model.ShippingPrice
+                        </span>
+                    </div>
+                    <!-- Delivery End -->
+                    <hr />
+                    <!-- Total Price Start -->
+                    <div class="d-flex justify-content-between my-3 fs-4">
+                        <span>Общо :</span>
+                        <span>@Model.Total().ToString("f2") лв.</span>
+                    </div>
+                    <!-- Total Price End -->
+                </div>
+            </div>
+            <!-- Order Summary End -->
+        </div>
+    </div>
+
+
+</div>
+@section Scripts {
+    <!-- Validation form fields on client -->
+    <partial name="_ValidationScriptsPartial" />
+}

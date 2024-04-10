@@ -1,4 +1,4 @@
-namespace LilsCareApp.Models
+namespace LilsCareApp.Core.Models
 {
     public class ErrorViewModel
     {

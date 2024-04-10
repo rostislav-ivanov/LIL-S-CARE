@@ -20,34 +20,8 @@
     @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
-    <header>
-        <vc:header-component></vc:header-component>
-    </header>
-    <main role="main">
-        <vc:shopping-bag-component></vc:shopping-bag-component>
-        @RenderBody()
-    </main>
-    <footer class="border-top footer text-muted">
-        <vc:footer-component></vc:footer-component>
-    </footer>
-
-    <!-- Back to Top -->
-    <a href="#" class="btn rounded-circle back-to-top">
-        <i class="fa fa-arrow-up"></i>
-    </a>
-
-
-
-    <!-- Redirecting to a specific element on a page after form submission -->
-    <span id="scrollToElementId" style="display:none">@TempData["scrollToElementId"]</span>
-    <script>
-        // Check if there's a query parameter for scrolling
-        const scrollToElementId = document.getElementById("scrollToElementId").textContent;
-        var element = document.getElementById(scrollToElementId);
-        if (element) {
-            element.scrollIntoView({ behavior: 'instant' });
-        }
-    </script>
+    <partial name="_MenuAdminPartial" />
+    @RenderBody()
 </body>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>

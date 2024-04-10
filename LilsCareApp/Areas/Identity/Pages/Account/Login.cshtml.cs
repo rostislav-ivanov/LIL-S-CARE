@@ -3,8 +3,8 @@
 #nullable disable
 
 using LilsCareApp.Core.Contracts;
+using LilsCareApp.Core.Services;
 using LilsCareApp.Infrastructure.Data.Models;
-using LilsCareApp.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

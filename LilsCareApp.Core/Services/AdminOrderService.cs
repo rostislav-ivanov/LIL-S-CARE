@@ -89,9 +89,5 @@ namespace LilsCareApp.Core.Services
                 .ToListAsync();
         }
 
-
-
-
-
     }
 }

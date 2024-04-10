@@ -11,6 +11,7 @@
         public const string EmailPatternNotRequired = @"^$|^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
         public const string EmailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
         public const string InvalidPhoneNumber = "Невалиден телефонен номер.";
+        public const string InvalidField = "Невалиден {0}.";
         public const string PhoneNumberPatternNotRequired = @"^$|^(\+|0)\d{8,}$";
         public const string PhoneNumberPattern = @"^(\+|0)\d{8,}$";
         public const string RatingRange = "Моля, дайте вашата оценка!";

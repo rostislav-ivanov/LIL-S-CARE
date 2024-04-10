@@ -31,7 +31,7 @@ namespace LilsCareApp.Core.Services
                     Quantity = p.Quantity,
                     IsShow = p.IsShow,
                 });
-            ;
+
 
             var productsSorted = productSortType switch
             {
@@ -48,8 +48,8 @@ namespace LilsCareApp.Core.Services
                 _ => productsFiltered
             };
 
-            var totalOrdersCount = await productsSorted.CountAsync();
-            var orders = await productsSorted
+            var totalProductsCount = await productsSorted.CountAsync();
+            var products = await productsSorted
                 .Skip((currentPage - 1) * productsPerPage)
                 .Take(productsPerPage)
                 .AsNoTracking()
@@ -57,8 +57,8 @@ namespace LilsCareApp.Core.Services
 
             return new AdminProductsDTO
             {
-                Products = orders,
-                TotalProductsCount = totalOrdersCount,
+                Products = products,
+                TotalProductsCount = totalProductsCount,
                 ProductsPerPage = productsPerPage,
                 CurrentPage = currentPage,
                 ProductSortType = productSortType,

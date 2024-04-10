@@ -1,9 +1,9 @@
-﻿using LilsCareApp.Core.Contracts;
+﻿using LilsCareApp.Core.Configurations;
+using LilsCareApp.Core.Contracts;
 using LilsCareApp.Core.Resources;
 using LilsCareApp.Core.Services;
 using LilsCareApp.Infrastructure.Data;
 using LilsCareApp.Infrastructure.Data.Models;
-using LilsCareApp.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -35,6 +35,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IAdminProductService, AdminProductService>();
             services.AddScoped<IAdminDetailsService, AdminDetailsService>();
             services.AddScoped<IAdminOrderService, AdminOrderService>();
+            services.AddScoped<IAdminOrderDetailsService, AdminOrderDetailsService>();
             services.AddScoped<IGuestService, GuestService>();
             services.AddScoped<IFileService, FileService>();
             services.AddTransient<IEmailSender, EmailSender>();
