@@ -169,6 +169,19 @@ namespace LilsCareApp.Core.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task RemoveProductFromOrderAsync(int id, int productId)
+        {
+            var productOrder = await _context.ProductsOrders
+                .Where(po => po.ProductId == productId && po.OrderId == id)
+                .FirstOrDefaultAsync();
 
+            if (productOrder == null)
+            {
+                return;
+            }
+
+            _context.ProductsOrders.Remove(productOrder);
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LilsCareApp.Core.Contracts;
+using LilsCareApp.Core.Models.AdminOrderDetails;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LilsCareApp.Areas.Admin.Controllers
 {
@@ -67,11 +69,23 @@ namespace LilsCareApp.Areas.Admin.Controllers
         public async Task<IActionResult> AddProductToOrder(int id, int productId)
         {
             if (id == 0 || productId == 0)
-        {
+            {
                 return BadRequest();
             }
 
             await _adminOrderDetailsService.AddProductToOrderAsync(id, productId);
+
+            return RedirectToAction(nameof(Index), new { id });
+        }
+
+        public async Task<IActionResult> RemoveProductFromOrder(int id, int productId)
+        {
+            if (id == 0 || productId == 0)
+            {
+                return BadRequest();
+            }
+
+            await _adminOrderDetailsService.RemoveProductFromOrderAsync(id, productId);
 
             return RedirectToAction(nameof(Index), new { id });
         }

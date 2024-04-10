@@ -121,7 +121,7 @@
                asp-route-id="@Model.Id"
                asp-route-productId="@product.Id"
                class="nav-link mb-2">
-               @product.Id @product.Name
+                @product.Id @product.Name
             </a>
         }
     </div>
@@ -178,7 +178,7 @@
                     <!-- Payment Order Start -->
                     <div class="row">
                         <div class="d-flex justify-content-between">
-                            <h5>Плащане: @(Model.IsPaid ? Paid : Unpaid )</h5>
+                            <h5>Плащане: @(Model.IsPaid ? Paid : Unpaid)</h5>
                             <a data-bs-toggle="offcanvas"
                                href="#payment-order"
                                role="button"
@@ -190,10 +190,9 @@
                     </div>
                     <hr />
                     <!-- Payment Order End -->
- 
-                        @if (Model.AddressDelivery.IsOffice)
-                        {
-                            <!-- Office Start -->
+                    @if (Model.AddressDelivery.IsOffice)
+                    {
+                        <!-- Office Start -->
                         <div class="row">
                             <h5>Доставка до куриерски офис</h5>
                             <span>Куриер: @Model.AddressDelivery.ShippingProvider</span>
@@ -202,11 +201,11 @@
                             <span>Телефон: @Model.AddressDelivery.PhoneNumber</span>
                         </div>
                         <hr />
-                            <!-- Office Start -->
-                        }
-                        else 
-                        {
-                            <!-- Address Start -->
+                        <!-- Office Start -->
+                    }
+                    else
+                    {
+                        <!-- Address Start -->
                         <div class="row">
                             <h5>Доставка до адрес</h5>
                             <span>Адрес:</span>
@@ -219,8 +218,8 @@
                             <span class="ms-5">@Model.AddressDelivery.Email</span>
                         </div>
                         <hr />
-                            <!-- Address End -->
-                        }
+                        <!-- Address End -->
+                    }
                 </div>
             </div>
             <!-- Client's data and Delivery address End -->
@@ -246,10 +245,8 @@
                         <div class="row mb-5">
                             <div class="col-5">
                                 <div class="product-img">
-                                    <a asp-controller="Details" asp-action="Index" asp-route-id="@product.Id">
-                                        <img src="@product.ImageUrl" class="img-fluid w-100"
-                                             alt="" />
-                                    </a>
+                                    <img src="@product.ImageUrl" class="img-fluid w-100"
+                                         alt="" />
                                 </div>
                             </div>
                             <div class="col-7">
@@ -261,7 +258,12 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between align-items-center mt-3">
-                                <a asp-controller="Checkout" asp-action="DeleteProductFromCart" asp-route-id="@product.Id" class="nav-link">
+                                <a asp-area="Admin"
+                                   asp-controller="OrderDetails"
+                                   asp-action="RemoveProductFromOrder"
+                                   asp-route-id="@Model.Id"
+                                   asp-route-productId="@product.Id"
+                                   class="nav-link">
                                     <i class="fas fa-trash-alt me-2"></i>Извади от количка
                                 </a>
                                 <div class="d-flex justify-content-start align-items-center my-2">

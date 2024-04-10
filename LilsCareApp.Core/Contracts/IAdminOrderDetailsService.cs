@@ -10,5 +10,6 @@ namespace LilsCareApp.Core.Contracts
         Task ChangePaymentAsync(int id, bool? isPaid);
         Task AddProductToOrderAsync(int id, int productId);
         Task<IEnumerable<ProductsNamesDTO>> GetProductsNameAsync();
+        Task RemoveProductFromOrderAsync(int id, int productId);
     }
 }
