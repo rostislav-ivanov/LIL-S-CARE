@@ -1,11 +1,12 @@
 ﻿using LilsCareApp.Core.Models.Checkout;
+using LilsCareApp.Core.Models.GuestUser;
 using LilsCareApp.Infrastructure.Data;
 using LilsCareApp.Infrastructure.Data.Models;
-using LilsCareApp.Models.GuestUser;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
-namespace LilsCareApp.Services
+namespace LilsCareApp.Core.Services
 {
     public class GuestService : IGuestService
     {

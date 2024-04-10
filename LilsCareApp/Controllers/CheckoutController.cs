@@ -1,7 +1,7 @@
 ﻿using LilsCareApp.Core.Contracts;
 using LilsCareApp.Core.Models.Account;
 using LilsCareApp.Core.Models.Checkout;
-using LilsCareApp.Services;
+using LilsCareApp.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;

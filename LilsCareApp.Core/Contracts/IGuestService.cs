@@ -1,6 +1,6 @@
 ﻿using LilsCareApp.Core.Models.Checkout;
 
-namespace LilsCareApp.Services
+namespace LilsCareApp.Core.Services
 {
     public interface IGuestService
     {

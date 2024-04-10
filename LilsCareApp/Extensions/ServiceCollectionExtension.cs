@@ -4,7 +4,6 @@ using LilsCareApp.Core.Resources;
 using LilsCareApp.Core.Services;
 using LilsCareApp.Infrastructure.Data;
 using LilsCareApp.Infrastructure.Data.Models;
-using LilsCareApp.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc.Razor;
