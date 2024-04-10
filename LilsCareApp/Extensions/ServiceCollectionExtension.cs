@@ -1,4 +1,5 @@
-﻿using LilsCareApp.Core.Contracts;
+﻿using LilsCareApp.Core.Configurations;
+using LilsCareApp.Core.Contracts;
 using LilsCareApp.Core.Resources;
 using LilsCareApp.Core.Services;
 using LilsCareApp.Infrastructure.Data;

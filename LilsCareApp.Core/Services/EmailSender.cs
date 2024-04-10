@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using LilsCareApp.Core.Configurations;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using static LilsCareApp.Infrastructure.DataConstants.AdminConstants;
 
-namespace LilsCareApp.Services
+namespace LilsCareApp.Core.Services
 {
     public class EmailSender : IEmailSender
     {

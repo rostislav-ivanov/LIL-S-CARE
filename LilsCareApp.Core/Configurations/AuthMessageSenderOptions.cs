@@ -1,4 +1,4 @@
-﻿namespace LilsCareApp.Services
+﻿namespace LilsCareApp.Core.Configurations
 {
     public class AuthMessageSenderOptions
     {
