@@ -195,7 +195,7 @@ namespace LilsCareApp.Tests.UnitTest
                     Price = 4.00m,
                     ImageUrl = "/files/products/product-02-image-01.webp",
                     Quantity = 20,
-                    IsWish = false,
+                    IsWish = true,
                 },
                 new ()
                 {
@@ -204,7 +204,7 @@ namespace LilsCareApp.Tests.UnitTest
                     Price = 12.00m,
                     ImageUrl = "/files/products/product-03-image-01.webp",
                     Quantity = 30,
-                    IsWish = true,
+                    IsWish = false,
                 },
                 new ()
                 {
@@ -259,11 +259,11 @@ namespace LilsCareApp.Tests.UnitTest
         public async Task AddRemoveWishAsync_WorkCorrectlyFromFalseToTrue()
         {
             // Arrange
-            WishUser expected = new() { ProductId = 2, AppUserId = userId };
+            WishUser expected = new() { ProductId = 3, AppUserId = userId };
 
             // Act
-            await _productsService.AddRemoveWishAsync(2, userId);
-            var result = _mockDbContext.WishesUsers.FirstOrDefault(wu => wu.ProductId == 2 && wu.AppUserId == userId);
+            await _productsService.AddRemoveWishAsync(3, userId);
+            var result = _mockDbContext.WishesUsers.FirstOrDefault(wu => wu.ProductId == 3 && wu.AppUserId == userId);
 
             // Assert
             Assert.AreEqual(result.ProductId, expected.ProductId);
@@ -498,11 +498,11 @@ namespace LilsCareApp.Tests.UnitTest
                 },
                 new ()
                 {
-                    Id = 3,
-                    Name = "ХИДРАТИРАЩ КРЕМ С ШИПКА И НИАЦИНАМИД",
-                    Price = 12.00m,
-                    ImageUrl = "/files/products/product-03-image-01.webp",
-                    Quantity = 30,
+                    Id = 2,
+                    Name = "БАЛСАМ ЗА УСТНИ С ЖОЖОБА, КАКАО И ПЧЕЛЕН ВОСЪК",
+                    Price = 4.00m,
+                    ImageUrl = "/files/products/product-02-image-01.webp",
+                    Quantity = 20,
                     IsWish = true,
                 },
                 new ()

@@ -1,5 +1,6 @@
 ﻿using LilsCareApp.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Identity;
+using System.Globalization;
 using static LilsCareApp.Infrastructure.DataConstants.AdminConstants;
 
 namespace LilsCareApp.Tests.SeedDb
@@ -51,6 +52,7 @@ namespace LilsCareApp.Tests.SeedDb
                 EmailConfirmed = true,
                 FirstName = "Test",
                 LastName = "Testov",
+                ImagePath = "/files/users/test-testov.jpg"
             },
             new AppUser
             {
@@ -524,17 +526,8 @@ namespace LilsCareApp.Tests.SeedDb
                 Rating = 4,
                 Title = "Great product",
                 Comment = "Great product, I love it!",
-                CreatedOn = DateTime.Now,
+                CreatedOn = DateTime.ParseExact("28/10/2023", "dd/MM/yyyy", CultureInfo.InvariantCulture),
                 ProductId = 2,
-                AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-            },
-            new Review
-            {
-                Rating = 3,
-                Title = "Great product",
-                Comment = "Great product, I love it!",
-                CreatedOn = DateTime.Now,
-                ProductId = 3,
                 AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
             },
             new Review
@@ -930,7 +923,7 @@ namespace LilsCareApp.Tests.SeedDb
                 },
                 new WishUser
                 {
-                    ProductId = 3,
+                    ProductId = 2,
                     AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef"
                 },
                 new WishUser

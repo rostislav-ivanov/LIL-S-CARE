@@ -39,6 +39,7 @@ namespace LilsCareApp.Tests.UnitTest
             _mockDbContext.ShippingOffices.AddRange(SeedData.ShippingOffice);
             _mockDbContext.PromoCodes.AddRange(SeedData.PromoCodes);
             _mockDbContext.Sections.AddRange(SeedData.Sections);
+            _mockDbContext.Reviews.AddRange(SeedData.Reviews);
 
 
             _mockDbContext.SaveChanges();
@@ -57,6 +58,14 @@ namespace LilsCareApp.Tests.UnitTest
             var newSeedData = new SeedData();
             _mockDbContext.WishesUsers.RemoveRange(_mockDbContext.WishesUsers.ToList());
             _mockDbContext.WishesUsers.AddRange(newSeedData.WishesUsers);
+            _mockDbContext.SaveChanges();
+        }
+
+        public void ResetReviews()
+        {
+            var newSeedData = new SeedData();
+            _mockDbContext.Reviews.RemoveRange(_mockDbContext.Reviews.ToList());
+            _mockDbContext.Reviews.AddRange(newSeedData.Reviews);
             _mockDbContext.SaveChanges();
         }
 
