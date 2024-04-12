@@ -9,9 +9,9 @@ namespace LilsCareApp.Controllers
     public class IngredientsController : BaseController
     {
         private readonly ILogger<IngredientsController> _logger;
-        private readonly ILilsCareService _service;
+        private readonly IHomeService _service;
 
-        public IngredientsController(ILogger<IngredientsController> logger, ILilsCareService service)
+        public IngredientsController(ILogger<IngredientsController> logger, IHomeService service)
         {
             _logger = logger;
             _service = service;

@@ -5,11 +5,11 @@ using LilsCareApp.Infrastructure.Data.Models;
 
 namespace LilsCareApp.Core.Services
 {
-    public class LilsCareService : ILilsCareService
+    public class HomeService : IHomeService
     {
         private readonly ApplicationDbContext _context;
 
-        public LilsCareService(ApplicationDbContext context)
+        public HomeService(ApplicationDbContext context)
         {
             _context = context;
         }

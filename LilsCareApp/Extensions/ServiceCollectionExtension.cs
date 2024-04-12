@@ -27,7 +27,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddOptions<AuthMessageSenderOptions>()
                     .Bind(configuration.GetSection("AuthMessageSenderOptions"));
 
-            services.AddScoped<ILilsCareService, LilsCareService>();
+            services.AddScoped<IHomeService, HomeService>();
             services.AddScoped<IProductsService, ProductsService>();
             services.AddScoped<IDetailsService, DetailsService>();
             services.AddScoped<ICheckoutService, CheckoutService>();
