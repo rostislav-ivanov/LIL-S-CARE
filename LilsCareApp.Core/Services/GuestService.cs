@@ -1,28 +1,27 @@
-﻿using LilsCareApp.Core.Models.Checkout;
+﻿using LilsCareApp.Core.Contracts;
+using LilsCareApp.Core.Models.Checkout;
 using LilsCareApp.Core.Models.GuestUser;
 using LilsCareApp.Infrastructure.Data;
 using LilsCareApp.Infrastructure.Data.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 
 namespace LilsCareApp.Core.Services
 {
     public class GuestService : IGuestService
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IGuestSessionManager _sessionManager;
         private readonly ApplicationDbContext _context;
 
-        public GuestService(IHttpContextAccessor httpContextAccessor, ApplicationDbContext context)
+        public GuestService(IGuestSessionManager sessionManager, ApplicationDbContext context)
         {
-            _httpContextAccessor = httpContextAccessor;
+            _sessionManager = sessionManager;
             _context = context;
         }
 
         // AddToCart method is used to add a product to the guest's bag.
         public void AddToCart(int productId, int quantity)
         {
-            GuestSession? session = GetSession();
+            GuestSession? session = _sessionManager.GetSession();
             if (session == null)
             {
                 return;
@@ -42,13 +41,13 @@ namespace LilsCareApp.Core.Services
                 bag.Quantity += quantity;
             }
 
-            SetSession(session);
+            _sessionManager.SetSession(session);
         }
 
         // DeleteProductFromCart method is used to delete a product from the guest's bag.
         public void DeleteProductFromCart(int id)
         {
-            GuestSession? session = GetSession();
+            GuestSession? session = _sessionManager.GetSession();
 
             if (session == null)
             {
@@ -57,14 +56,14 @@ namespace LilsCareApp.Core.Services
 
             session.GuestBags.RemoveAll(b => b.ProductId == id);
 
-            SetSession(session);
+            _sessionManager.SetSession(session);
         }
 
 
         // GetCountInBag method is used to get the total number of products in the guest's bag.
         public int GetCountInBag()
         {
-            GuestSession? session = GetSession();
+            GuestSession? session = _sessionManager.GetSession();
 
             return session?.GuestBags.Sum(gb => gb.Quantity) ?? 0;
         }
@@ -73,7 +72,7 @@ namespace LilsCareApp.Core.Services
         // GetProductsInBagAsync method is used to get the products in the guest's bag.
         public async Task<IEnumerable<ProductsInBagDTO>> GetProductsInBagAsync()
         {
-            GuestSession? session = GetSession();
+            GuestSession? session = _sessionManager.GetSession();
 
             if (session == null)
             {
@@ -111,11 +110,11 @@ namespace LilsCareApp.Core.Services
         // ClearBag method is used to remove all products form the guest's bag.
         public void ClearBag()
         {
-            GuestSession? session = GetSession();
+            GuestSession? session = _sessionManager.GetSession();
 
             session?.GuestBags.Clear();
 
-            SetSession(session);
+            _sessionManager.SetSession(session);
         }
 
 
@@ -221,26 +220,14 @@ namespace LilsCareApp.Core.Services
             return order.OrderNumber;
         }
 
-        // Get data from session about guest user.
-        private GuestSession? GetSession()
+        public GuestSession GetSession()
         {
-            if (_httpContextAccessor.HttpContext?.Session.GetString("GuestSession") == null)
-            {
-                _httpContextAccessor.HttpContext?.Session.SetString("GuestSession", JsonConvert.SerializeObject(new GuestSession()));
-            }
-
-            return JsonConvert.DeserializeObject<GuestSession>(_httpContextAccessor.HttpContext.Session.GetString("GuestSession"));
+            return _sessionManager.GetSession();
         }
 
-        // Set data to session about guest user.
-        private void SetSession(GuestSession? session)
+        public void SetSession(GuestSession session)
         {
-            if (session == null)
-            {
-                session = new GuestSession();
-            }
-
-            _httpContextAccessor.HttpContext?.Session.SetString("GuestSession", JsonConvert.SerializeObject(session));
+            _sessionManager.SetSession(session);
         }
     }
 }

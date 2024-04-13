@@ -36,6 +36,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IAdminDetailsService, AdminDetailsService>();
             services.AddScoped<IAdminOrderService, AdminOrderService>();
             services.AddScoped<IAdminOrderDetailsService, AdminOrderDetailsService>();
+            services.AddScoped<IGuestSessionManager, GuestSessionManager>();
             services.AddScoped<IGuestService, GuestService>();
             services.AddScoped<IFileService, FileService>();
             services.AddTransient<IEmailSender, EmailSender>();
