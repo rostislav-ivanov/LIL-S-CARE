@@ -52,7 +52,8 @@ namespace LilsCareApp.Tests.SeedDb
                 EmailConfirmed = true,
                 FirstName = "Test",
                 LastName = "Testov",
-                ImagePath = "/files/users/test-testov.jpg"
+                ImagePath = "/files/users/test-testov.jpg",
+                DefaultAddressDeliveryId = 1
             },
             new AppUser
             {

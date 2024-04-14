@@ -69,6 +69,22 @@ namespace LilsCareApp.Tests.UnitTest
             _mockDbContext.SaveChanges();
         }
 
+        public void ResetPromoCodes()
+        {
+            var newSeedData = new SeedData();
+            _mockDbContext.PromoCodes.RemoveRange(_mockDbContext.PromoCodes.ToList());
+            _mockDbContext.PromoCodes.AddRange(newSeedData.PromoCodes);
+            _mockDbContext.SaveChanges();
+        }
+
+        public void ResetOrders()
+        {
+            var newSeedData = new SeedData();
+            _mockDbContext.Orders.RemoveRange(_mockDbContext.Orders.ToList());
+            _mockDbContext.Orders.AddRange(newSeedData.Orders);
+            _mockDbContext.SaveChanges();
+        }
+
         [OneTimeTearDown]
         public void TearDownBase()
         {
