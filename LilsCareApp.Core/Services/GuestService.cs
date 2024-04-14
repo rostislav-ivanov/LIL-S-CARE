@@ -150,7 +150,8 @@ namespace LilsCareApp.Core.Services
                     Quantity = product.Quantity,
                     Price = product.Price,
                     ImagePath = await _context.ImageProducts
-                        .Where(ip => ip.Id == product.Id)
+                        .Where(ip => ip.ProductId == product.Id)
+                        .OrderBy(ip => ip.ImageOrder)
                         .Select(ip => ip.ImagePath)
                         .AsNoTracking()
                         .FirstOrDefaultAsync()
@@ -223,11 +224,6 @@ namespace LilsCareApp.Core.Services
         public GuestSession GetSession()
         {
             return _sessionManager.GetSession();
-        }
-
-        public void SetSession(GuestSession session)
-        {
-            _sessionManager.SetSession(session);
         }
     }
 }
