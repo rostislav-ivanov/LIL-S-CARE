@@ -35,7 +35,6 @@ namespace LilsCareApp.Tests.SeedDb
                 Country = "Bulgaria",
                 AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef"
             },
-
         };
 
 
@@ -317,25 +316,31 @@ namespace LilsCareApp.Tests.SeedDb
             {
                 Id = 1,
                 OrderNumber = "123456",
-                CreatedOn = DateTime.UtcNow,
+                CreatedOn = DateTime.ParseExact("28/10/2023", "dd/MM/yyyy", CultureInfo.InvariantCulture),
                 StatusOrderId = 1,
                 AddressDeliveryId = 1,
                 AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                DateShipping = DateTime.UtcNow,
+                DateShipping = DateTime.ParseExact("29/10/2023", "dd/MM/yyyy", CultureInfo.InvariantCulture),
                 TrackingNumber = "1234567890",
                 PaymentMethodId = 1,
+                ShippingPrice = 5.00m,
+                SubTotal = 30.50m,
+                Discount = 10.00m,
+                Total = 20.50m,
             },
           new Order
              {
                 Id = 2,
                 OrderNumber = "123456x",
-                CreatedOn = DateTime.UtcNow,
+                CreatedOn = DateTime.ParseExact("25/10/2023", "dd/MM/yyyy", CultureInfo.InvariantCulture),
                 StatusOrderId = 2,
                 AddressDeliveryId = 2,
                 AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                DateShipping = DateTime.UtcNow,
-                TrackingNumber = "1234567890x",
                 PaymentMethodId = 2,
+                ShippingPrice = 5.00m,
+                SubTotal = 22.50m,
+                Discount = 0.00m,
+                Total = 27.5m,
              },
         };
 
@@ -424,7 +429,7 @@ namespace LilsCareApp.Tests.SeedDb
                 new Product
                 {
                     Id = 6,
-                    Name = "ДВУФАЗНА МИЦЕЛАРНА ВОДА ЗЕЛЕН ЧАЙ И ЖОЖОБА",
+                    Name = "СЕРУМ МАСЛО С ШИПКА, ЖОЖОБА, АРГАН И ЯГОДОВИ СЕМКИ",
                     Price = 10.00m,
                     Optional = "Тегло:  20 мл.",
                     Quantity = 20,
@@ -449,52 +454,26 @@ namespace LilsCareApp.Tests.SeedDb
             {
                 ProductId = 1,
                 OrderId = 1,
-            },
-            new ()
-            {
-                ProductId = 1,
-                OrderId = 2,
+                Quantity = 2,
+                ImagePath = "/files/products/product-01-image-01.webp",
+                Price = 5.50m,
             },
             new ()
             {
                 ProductId = 2,
                 OrderId = 1,
+                Quantity = 3,
+                ImagePath = "/files/products/product-02-image-01.webp",
+                Price = 6.50m,
             },
             new ()
             {
-                ProductId = 3,
-                OrderId = 1,
-            },
-            new ()
-            {
-                ProductId = 3,
+                ProductId = 2,
                 OrderId = 2,
+                Quantity = 3,
+                ImagePath = "/files/products/product-02-image-01.webp",
+                Price = 7.50m,
             },
-            new ()
-            {
-                ProductId = 4,
-                OrderId = 1,
-            },
-            new ()
-            {
-                ProductId = 5,
-                OrderId = 2,
-            },
-            new ()
-            {
-                ProductId = 6,
-                OrderId = 1,
-            },
-            new ()
-            {
-                ProductId = 6,
-                OrderId = 2,
-            },
-            new ()
-            {
-                ProductId = 7,
-                OrderId = 1,
-            }
         ];
 
 

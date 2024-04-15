@@ -56,7 +56,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 new Product
                 {
                     Id = 6,
-                    Name = "ДВУФАЗНА МИЦЕЛАРНА ВОДА ЗЕЛЕН ЧАЙ И ЖОЖОБА",
+                    Name = "СЕРУМ МАСЛО С ШИПКА, ЖОЖОБА, АРГАН И ЯГОДОВИ СЕМКИ",
                     Price = 10.00m,
                     Optional = "Тегло:  20 мл.",
                     Quantity = 20,

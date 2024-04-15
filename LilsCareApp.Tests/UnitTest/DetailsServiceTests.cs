@@ -7,7 +7,7 @@ using System.Globalization;
 namespace LilsCareApp.Tests.UnitTest
 {
     [TestFixture]
-    public class DetailsServiceTest : UnitTestsBase
+    public class DetailsServiceTests : UnitTestsBase
     {
         private IDetailsService _detailsService;
 

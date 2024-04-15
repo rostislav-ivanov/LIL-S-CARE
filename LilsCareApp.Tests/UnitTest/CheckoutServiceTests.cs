@@ -5,7 +5,7 @@ using LilsCareApp.Infrastructure.Data.Models;
 
 namespace LilsCareApp.Tests.UnitTest
 {
-    public class CheckoutServiceTest : UnitTestsBase
+    public class CheckoutServiceTests : UnitTestsBase
     {
         private string userId;
         private CheckoutService _checkoutService;
