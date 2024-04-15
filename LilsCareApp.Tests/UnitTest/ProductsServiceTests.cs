@@ -227,7 +227,7 @@ namespace LilsCareApp.Tests.UnitTest
                 new ProductDTO
                 {
                     Id = 6,
-                    Name = "ДВУФАЗНА МИЦЕЛАРНА ВОДА ЗЕЛЕН ЧАЙ И ЖОЖОБА",
+                    Name = "СЕРУМ МАСЛО С ШИПКА, ЖОЖОБА, АРГАН И ЯГОДОВИ СЕМКИ",
                     Price = 10.00m,
                     ImageUrl = "/files/products/product-06-image-01.webp",
                     Quantity = 20,
