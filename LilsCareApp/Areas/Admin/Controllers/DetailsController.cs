@@ -348,7 +348,7 @@ namespace LilsCareApp.Areas.Admin.Controllers
                 return BadRequest();
             }
 
-            await _adminDetailsService.DeleteCategoryAsync(id, categoryId);
+            await _adminDetailsService.DeleteCategoryAsync(categoryId);
 
             return RedirectToAction(nameof(Index), new { id });
         }

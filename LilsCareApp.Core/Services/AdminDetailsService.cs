@@ -474,7 +474,7 @@ namespace LilsCareApp.Core.Services
 
         // Delete category from database
         // If category is in product, do not delete it
-        public async Task DeleteCategoryAsync(int id, int categoryId)
+        public async Task DeleteCategoryAsync(int categoryId)
         {
             if (await _context.ProductsCategories.AnyAsync(pc => pc.CategoryId == categoryId))
             {
