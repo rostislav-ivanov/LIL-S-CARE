@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LilsCareApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240404021713_InitialMigration")]
+    [Migration("20240416174312_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -371,6 +371,10 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasColumnType("decimal(18,2)")
                         .HasComment("Absolute Discount value");
 
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit")
+                        .HasComment("Is Paid Order");
+
                     b.Property<string>("NoteForDelivery")
                         .HasColumnType("nvarchar(max)")
                         .HasComment("Note for Delivery");
@@ -404,8 +408,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasComment("Total");
 
                     b.Property<string>("TrackingNumber")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
                         .HasComment("Tracking Number of Order");
 
                     b.HasKey("Id");

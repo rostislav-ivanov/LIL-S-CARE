@@ -25,11 +25,6 @@ namespace LilsCareApp.Core.Services
                 return null;
             }
 
-            if (await _context.Users.FindAsync(appUserId) == null)
-            {
-                return null;
-            }
-
             var details = await _context.Products
                 .Select(p => new DetailsDTO
                 {

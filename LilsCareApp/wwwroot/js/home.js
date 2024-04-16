@@ -1,6 +1,6 @@
 const isFideEffect = true; // set true for fade effect, set false for slide effect
 const caroselTimeTransition = 150; // 1000 = 1s - set this line if you use slide effect
-const caroselInterval = 7000; // 1000 = 1s - set carousel interval
+const caroselInterval = 2500; // 1000 = 1s - set carousel interval
 
 // Init Bootstrap Carousel
 const carouselSlide = document.querySelector("#demo");

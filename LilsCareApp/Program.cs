@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAppDbContext(builder.Configuration);
 builder.Services.AddAppIdentity();
 builder.Services.AddAppLocalization();
-builder.Services.AddAppAuthentication();
+builder.Services.AddAppAuthentication(builder.Configuration);
 
 
 builder.Services.AddControllersWithViews();

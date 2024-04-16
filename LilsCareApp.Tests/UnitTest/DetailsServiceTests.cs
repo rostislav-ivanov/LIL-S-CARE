@@ -187,16 +187,6 @@ namespace LilsCareApp.Tests.UnitTest
         }
 
         [Test]
-        public async Task GetDetailsByIdAsync_WithInvalidUserId_ShouldReturnNull()
-        {
-            // Act
-            var result = await _detailsService.GetDetailsByIdAsync(2, "invalidUserId");
-
-            // Assert
-            Assert.Null(result);
-        }
-
-        [Test]
         public async Task GetReviewAsync_ShouldWorkCorrectly()
         {
             // Arrange

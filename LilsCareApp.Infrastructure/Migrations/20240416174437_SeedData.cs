@@ -8,26 +8,18 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LilsCareApp.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class _01 : Migration
+    public partial class SeedData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
-                name: "IsPaid",
-                table: "Orders",
-                type: "bit",
-                nullable: false,
-                defaultValue: false,
-                comment: "Is Paid Order");
-
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DefaultAddressDeliveryId", "Email", "EmailConfirmed", "FirstName", "ImagePath", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "45fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "238aa3d5-a3ca-4d23-b1bb-5db2f06a005a", null, "admin@mail.com", true, "Admin", null, "Adminov", false, null, "ADMIN@MAIL.COM", "ADMIN@MAIL.COM", "AQAAAAIAAYagAAAAEBK2c2VhtG9daXoMMqyFQOZecH68RiFy5PK0FXxRY8/wS7tzBTmGBYhy5v8rwCMnAw==", null, false, "4f03eb8b-8752-4348-91c7-8c063b712bd8", false, "admin@mail.com" },
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "fe9f8dc0-6460-4635-bf5f-70526cc19d1c", null, "test@softuni.bg", true, "Test", null, "Testov", false, null, "TEST@SOFTUNI.BG", "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAECZofHBBB0ltThbw1oeiOceEZRU6DE0X8+NEDQJSgQAtKqyx5nufTlcf02IzcCDMQg==", null, false, "92306d7f-d69a-4d8b-8bfa-dc2d2f071440", false, "test@softuni.bg" }
+                    { "45fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "475e879e-5ef2-43ac-9dbe-097a024d2e0a", null, "admin@mail.com", true, "Admin", null, "Adminov", false, null, "ADMIN@MAIL.COM", "ADMIN@MAIL.COM", "AQAAAAIAAYagAAAAEEnsDfA3oK7wGhMzYU5sw8oSI0E6/Yo5Aip2C5VQDRXh7wWKvAOJlidNnHYB1306aQ==", null, false, "3cd61d81-dec4-4275-92c0-910f57b03d77", false, "admin@mail.com" },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "42fa6574-c753-4af1-b6ca-b3f2f168efcc", null, "test@softuni.bg", true, "Test", null, "Testov", false, null, "TEST@SOFTUNI.BG", "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAENeOV9+4klsC4/k7H1UUW0uZOIcwnE/4410rsaC/Iqn0UGW61BdbyKb6xTp5QlMABw==", null, false, "acf14a3e-424c-4a38-b226-56b370caf0da", false, "test@softuni.bg" }
                 });
 
             migrationBuilder.InsertData(
@@ -62,7 +54,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                     { 3, true, "ХИДРАТИРАЩ КРЕМ С ШИПКА И НИАЦИНАМИД", "Тегло:  50 г.", 12.00m, 30 },
                     { 4, true, "ДВУФАЗНА МИЦЕЛАРНА ВОДА ЗЕЛЕН ЧАЙ И ЖОЖОБА", "Тегло:  100 мл.", 10.00m, 0 },
                     { 5, true, "НАТУРАЛЕН КРЕМ ДЕЗОДОРАНТ", "Тегло:  50 г.", 8.50m, 10 },
-                    { 6, true, "ДВУФАЗНА МИЦЕЛАРНА ВОДА ЗЕЛЕН ЧАЙ И ЖОЖОБА", "Тегло:  20 мл.", 10.00m, 20 },
+                    { 6, true, "СЕРУМ МАСЛО С ШИПКА, ЖОЖОБА, АРГАН И ЯГОДОВИ СЕМКИ", "Тегло:  20 мл.", 10.00m, 20 },
                     { 7, true, "", "", 10.00m, 0 }
                 });
 
@@ -161,8 +153,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "Id", "AppUserId", "AppliedDate", "Code", "Discount", "ExpirationDate" },
                 values: new object[,]
                 {
-                    { 1, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, "-10 % за регистрация", 0.1m, new DateTime(2025, 4, 5, 16, 24, 36, 427, DateTimeKind.Utc).AddTicks(6133) },
-                    { 2, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, "-20 % отстъпка", 0.2m, new DateTime(2025, 4, 5, 16, 24, 36, 427, DateTimeKind.Utc).AddTicks(6144) }
+                    { 1, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, "-10 % за регистрация", 0.1m, new DateTime(2025, 4, 16, 17, 44, 34, 518, DateTimeKind.Utc).AddTicks(7104) },
+                    { 2, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, "-20 % отстъпка", 0.2m, new DateTime(2025, 4, 16, 17, 44, 34, 518, DateTimeKind.Utc).AddTicks(7123) }
                 });
 
             migrationBuilder.InsertData(
@@ -170,9 +162,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "AuthorId", "ProductId", "Comment", "CreatedOn", "Rating", "Title" },
                 values: new object[,]
                 {
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 2, "Great product, I love it!", new DateTime(2024, 4, 5, 19, 24, 36, 427, DateTimeKind.Local).AddTicks(4948), 4, "Great product" },
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 3, "Great product, I love it!", new DateTime(2024, 4, 5, 19, 24, 36, 427, DateTimeKind.Local).AddTicks(5109), 3, "Great product" },
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 4, "Great product, I love it!", new DateTime(2024, 4, 5, 19, 24, 36, 427, DateTimeKind.Local).AddTicks(5116), 3, "Great product" }
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 2, "Great product, I love it!", new DateTime(2024, 4, 16, 20, 44, 34, 518, DateTimeKind.Local).AddTicks(5793), 4, "Great product" },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 3, "Great product, I love it!", new DateTime(2024, 4, 16, 20, 44, 34, 518, DateTimeKind.Local).AddTicks(5867), 3, "Great product" },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 4, "Great product, I love it!", new DateTime(2024, 4, 16, 20, 44, 34, 518, DateTimeKind.Local).AddTicks(5873), 3, "Great product" }
                 });
 
             migrationBuilder.InsertData(
@@ -253,8 +245,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "Id", "AddressDeliveryId", "AppUserId", "CreatedOn", "DateShipping", "Discount", "IsPaid", "NoteForDelivery", "OrderNumber", "PaymentMethodId", "PromoCodeId", "ShippingPrice", "StatusOrderId", "SubTotal", "Total", "TrackingNumber" },
                 values: new object[,]
                 {
-                    { 1, 1, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", new DateTime(2024, 4, 5, 16, 24, 35, 515, DateTimeKind.Utc).AddTicks(91), new DateTime(2024, 4, 5, 16, 24, 35, 515, DateTimeKind.Utc).AddTicks(1230), 0m, false, null, null, 1, null, 0m, 1, 0m, 0m, "1234567890" },
-                    { 2, 2, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", new DateTime(2024, 4, 5, 16, 24, 35, 516, DateTimeKind.Utc).AddTicks(2860), new DateTime(2024, 4, 5, 16, 24, 35, 516, DateTimeKind.Utc).AddTicks(2865), 0m, false, null, null, 2, null, 0m, 2, 0m, 0m, "1234567890x" }
+                    { 1, 1, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", new DateTime(2024, 4, 16, 17, 44, 33, 731, DateTimeKind.Utc).AddTicks(2934), new DateTime(2024, 4, 16, 17, 44, 33, 731, DateTimeKind.Utc).AddTicks(4104), 0m, false, null, "123456", 1, null, 0m, 1, 0m, 0m, "1234567890" },
+                    { 2, 2, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", new DateTime(2024, 4, 16, 17, 44, 33, 731, DateTimeKind.Utc).AddTicks(5302), new DateTime(2024, 4, 16, 17, 44, 33, 731, DateTimeKind.Utc).AddTicks(5303), 0m, false, null, "123456x", 2, null, 0m, 2, 0m, 0m, "1234567890x" }
                 });
 
             migrationBuilder.InsertData(
@@ -947,10 +939,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                 table: "ShippingProviders",
                 keyColumn: "Id",
                 keyValue: 1);
-
-            migrationBuilder.DropColumn(
-                name: "IsPaid",
-                table: "Orders");
         }
     }
 }
