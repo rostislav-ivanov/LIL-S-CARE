@@ -127,6 +127,23 @@
     </div>
 </div>
 <!-- Add Product To Order Offcanvas End -->
+<!-- Discount Offcanvas Start -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="discount" aria-labelledby="offcanvasLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasLabel">Въведете отстъпка</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form asp-area="Admin" asp-controller="OrderDetails" asp-action="EditDiscount" method="post">
+            <input asp-for="@Model.Id" hidden value="@Model.Id" />
+            <label asp-for="@Model.Discount" class="form-label-add-edit">Отстъпка</label>
+            <input asp-for="@Model.Discount" class="form-control" aria-required="true" />
+            <span asp-validation-for="@Model.Discount" class="text-danger"></span>
+            <button class="btn btn-sm bg-success" type="submit" hidden>Запази</button>
+        </form>
+    </div>
+</div>
+<!-- Discount Offcanvas End -->
 
 <div class="content">
     <div class="container p-3">
@@ -296,9 +313,18 @@
                     <!-- Product End -->
                     <!-- Promo Code Start -->
                     <div class="d-flex justify-content-between mb-3">
-                        <strong>- @Model.Discount.ToString("f2") лв.</strong>
+                        <span>Промо код / Отстъпка:</span>
+                        <div class="d-flex justify-content-between">
+                            <strong>@Model.Discount.ToString("f2") лв.</strong>
+                            <a data-bs-toggle="offcanvas"
+                               href="#discount"
+                               role="button"
+                               aria-controls="offcanvas"
+                               class="nav-link text-warning">
+                                <i class="fa fa-edit ms-2"></i>
+                            </a>
+                        </div>
                     </div>
-
                     <!-- Promo Code End -->
                     <hr />
                     <!-- Subtotal Start -->
