@@ -57,6 +57,16 @@ namespace LilsCareApp.Core.Services
 
         public async Task AddRemoveWishAsync(int id, string userId)
         {
+            if (await _context.Products.FirstOrDefaultAsync(p => p.Id == id) == null)
+            {
+                return;
+            }
+
+            if (await _context.Users.FirstOrDefaultAsync(u => u.Id == userId) == null)
+            {
+                return;
+            }
+
             var wishUser = new WishUser
             {
                 ProductId = id,
@@ -96,7 +106,8 @@ namespace LilsCareApp.Core.Services
         public async Task AddToCartAsync(int productId, string userId, int quantity)
         {
             var product = await _context.Products.FindAsync(productId);
-            if (product is null || userId is null)
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (product is null || user is null || quantity == 0)
             {
                 return;
             }
@@ -166,7 +177,6 @@ namespace LilsCareApp.Core.Services
         {
             var productsInBag = await _context.BagsUsers
                 .Where(bu => bu.AppUserId == userId)
-                .AsNoTracking()
                 .ToArrayAsync();
 
             _context.BagsUsers.RemoveRange(productsInBag);

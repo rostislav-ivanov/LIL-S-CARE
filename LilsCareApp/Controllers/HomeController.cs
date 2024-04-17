@@ -10,13 +10,13 @@ namespace LilsCareApp.Controllers
     public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ILilsCareService _service;
+        private readonly IHomeService _service;
         private readonly IProductsService _productService;
         private readonly IGuestService _guestService;
 
         public HomeController(
             ILogger<HomeController> logger,
-            ILilsCareService service,
+            IHomeService service,
             IProductsService productService,
             IGuestService guestService)
         {

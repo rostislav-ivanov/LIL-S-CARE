@@ -6,12 +6,9 @@ namespace LilsCareApp.Core.Contracts
     public interface IAccountService
     {
         Task<MyAddressDTO?> GetMyAccountAsync(string userId);
-        Task<dynamic> GetUserImagePathAsync(string userId);
+        Task<string> GetUserImagePathAsync(string userId);
         Task UpdateMyAccountAsync(string userId, MyAddressDTO myAccount);
-
         Task<IEnumerable<MyOrderDTO>> GetMyOrdersAsync(string userId);
-
-
         Task<IEnumerable<DeliveryAddressDTO>> GetMyAddressesAsync(string userId);
         Task RemoveAddressFromAppUserAsync(int addressId);
         Task SetDefaultAddressAsync(string userId, int addressId);

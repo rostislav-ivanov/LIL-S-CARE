@@ -64,7 +64,7 @@ namespace LilsCareApp.Core.Services
 
 
         // Get the user image path
-        public async Task<dynamic> GetUserImagePathAsync(string userId)
+        public async Task<string> GetUserImagePathAsync(string userId)
         {
             var user = await _context.Users.FirstOrDefaultAsync(au => au.Id == userId);
             if (user == null)
@@ -217,7 +217,8 @@ namespace LilsCareApp.Core.Services
                     Id = so.Id,
                     City = so.City,
                     OfficeAddress = so.OfficeAddress,
-                    Price = so.Price
+                    Price = so.Price,
+                    ShippingDuration = so.ShippingDuration
                 })
                 .AsNoTracking()
                 .ToListAsync();

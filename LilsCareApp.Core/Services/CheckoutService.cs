@@ -91,7 +91,7 @@ namespace LilsCareApp.Core.Services
                     Quantity = product.Quantity,
                     Price = product.Price,
                     ImagePath = await _context.ImageProducts
-                        .Where(ip => ip.Id == product.Id)
+                        .Where(ip => ip.ProductId == product.Id)
                         .Select(ip => ip.ImagePath)
                         .AsNoTracking()
                         .FirstOrDefaultAsync()

@@ -27,7 +27,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddOptions<AuthMessageSenderOptions>()
                     .Bind(configuration.GetSection("AuthMessageSenderOptions"));
 
-            services.AddScoped<ILilsCareService, LilsCareService>();
+            services.AddScoped<IHomeService, HomeService>();
             services.AddScoped<IProductsService, ProductsService>();
             services.AddScoped<IDetailsService, DetailsService>();
             services.AddScoped<ICheckoutService, CheckoutService>();
@@ -36,6 +36,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IAdminDetailsService, AdminDetailsService>();
             services.AddScoped<IAdminOrderService, AdminOrderService>();
             services.AddScoped<IAdminOrderDetailsService, AdminOrderDetailsService>();
+            services.AddScoped<IGuestSessionManager, GuestSessionManager>();
             services.AddScoped<IGuestService, GuestService>();
             services.AddScoped<IFileService, FileService>();
             services.AddTransient<IEmailSender, EmailSender>();
@@ -89,7 +90,7 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
-        public static IServiceCollection AddAppAuthentication(this IServiceCollection services)
+        public static IServiceCollection AddAppAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAuthentication()
                 .AddFacebook(options =>
@@ -99,8 +100,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 })
                 .AddGoogle(options =>
                 {
-                    options.ClientId = "658708255927516";
-                    options.ClientSecret = "795acf9f3041cb193e8305bc94dcd6d9";
+                    options.ClientId = configuration.GetSection("GoogleAuth:ClientId").Value;
+                    options.ClientSecret = configuration.GetSection("GoogleAuth:ClientSecret").Value;
                 });
 
             return services;

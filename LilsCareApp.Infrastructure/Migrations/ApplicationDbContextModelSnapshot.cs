@@ -227,7 +227,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fe9f8dc0-6460-4635-bf5f-70526cc19d1c",
+                            ConcurrencyStamp = "42fa6574-c753-4af1-b6ca-b3f2f168efcc",
                             Email = "test@softuni.bg",
                             EmailConfirmed = true,
                             FirstName = "Test",
@@ -235,9 +235,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "TEST@SOFTUNI.BG",
                             NormalizedUserName = "TEST@SOFTUNI.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAECZofHBBB0ltThbw1oeiOceEZRU6DE0X8+NEDQJSgQAtKqyx5nufTlcf02IzcCDMQg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENeOV9+4klsC4/k7H1UUW0uZOIcwnE/4410rsaC/Iqn0UGW61BdbyKb6xTp5QlMABw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "92306d7f-d69a-4d8b-8bfa-dc2d2f071440",
+                            SecurityStamp = "acf14a3e-424c-4a38-b226-56b370caf0da",
                             TwoFactorEnabled = false,
                             UserName = "test@softuni.bg"
                         },
@@ -245,7 +245,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = "45fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "238aa3d5-a3ca-4d23-b1bb-5db2f06a005a",
+                            ConcurrencyStamp = "475e879e-5ef2-43ac-9dbe-097a024d2e0a",
                             Email = "admin@mail.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -253,9 +253,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBK2c2VhtG9daXoMMqyFQOZecH68RiFy5PK0FXxRY8/wS7tzBTmGBYhy5v8rwCMnAw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEnsDfA3oK7wGhMzYU5sw8oSI0E6/Yo5Aip2C5VQDRXh7wWKvAOJlidNnHYB1306aQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4f03eb8b-8752-4348-91c7-8c063b712bd8",
+                            SecurityStamp = "3cd61d81-dec4-4275-92c0-910f57b03d77",
                             TwoFactorEnabled = false,
                             UserName = "admin@mail.com"
                         });
@@ -713,8 +713,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasComment("Total");
 
                     b.Property<string>("TrackingNumber")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
                         .HasComment("Tracking Number of Order");
 
                     b.HasKey("Id");
@@ -742,10 +742,11 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Id = 1,
                             AddressDeliveryId = 1,
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                            CreatedOn = new DateTime(2024, 4, 5, 16, 24, 35, 515, DateTimeKind.Utc).AddTicks(91),
-                            DateShipping = new DateTime(2024, 4, 5, 16, 24, 35, 515, DateTimeKind.Utc).AddTicks(1230),
+                            CreatedOn = new DateTime(2024, 4, 16, 17, 44, 33, 731, DateTimeKind.Utc).AddTicks(2934),
+                            DateShipping = new DateTime(2024, 4, 16, 17, 44, 33, 731, DateTimeKind.Utc).AddTicks(4104),
                             Discount = 0m,
                             IsPaid = false,
+                            OrderNumber = "123456",
                             PaymentMethodId = 1,
                             ShippingPrice = 0m,
                             StatusOrderId = 1,
@@ -758,10 +759,11 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Id = 2,
                             AddressDeliveryId = 2,
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                            CreatedOn = new DateTime(2024, 4, 5, 16, 24, 35, 516, DateTimeKind.Utc).AddTicks(2860),
-                            DateShipping = new DateTime(2024, 4, 5, 16, 24, 35, 516, DateTimeKind.Utc).AddTicks(2865),
+                            CreatedOn = new DateTime(2024, 4, 16, 17, 44, 33, 731, DateTimeKind.Utc).AddTicks(5302),
+                            DateShipping = new DateTime(2024, 4, 16, 17, 44, 33, 731, DateTimeKind.Utc).AddTicks(5303),
                             Discount = 0m,
                             IsPaid = false,
+                            OrderNumber = "123456x",
                             PaymentMethodId = 2,
                             ShippingPrice = 0m,
                             StatusOrderId = 2,
@@ -900,7 +902,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 6,
                             IsShow = true,
-                            Name = "ДВУФАЗНА МИЦЕЛАРНА ВОДА ЗЕЛЕН ЧАЙ И ЖОЖОБА",
+                            Name = "СЕРУМ МАСЛО С ШИПКА, ЖОЖОБА, АРГАН И ЯГОДОВИ СЕМКИ",
                             Optional = "Тегло:  20 мл.",
                             Price = 10.00m,
                             Quantity = 20
@@ -1186,7 +1188,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Code = "-10 % за регистрация",
                             Discount = 0.1m,
-                            ExpirationDate = new DateTime(2025, 4, 5, 16, 24, 36, 427, DateTimeKind.Utc).AddTicks(6133)
+                            ExpirationDate = new DateTime(2025, 4, 16, 17, 44, 34, 518, DateTimeKind.Utc).AddTicks(7104)
                         },
                         new
                         {
@@ -1194,7 +1196,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Code = "-20 % отстъпка",
                             Discount = 0.2m,
-                            ExpirationDate = new DateTime(2025, 4, 5, 16, 24, 36, 427, DateTimeKind.Utc).AddTicks(6144)
+                            ExpirationDate = new DateTime(2025, 4, 16, 17, 44, 34, 518, DateTimeKind.Utc).AddTicks(7123)
                         });
                 });
 
@@ -1241,7 +1243,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 2,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 4, 5, 19, 24, 36, 427, DateTimeKind.Local).AddTicks(4948),
+                            CreatedOn = new DateTime(2024, 4, 16, 20, 44, 34, 518, DateTimeKind.Local).AddTicks(5793),
                             Rating = 4,
                             Title = "Great product"
                         },
@@ -1250,7 +1252,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 3,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 4, 5, 19, 24, 36, 427, DateTimeKind.Local).AddTicks(5109),
+                            CreatedOn = new DateTime(2024, 4, 16, 20, 44, 34, 518, DateTimeKind.Local).AddTicks(5867),
                             Rating = 3,
                             Title = "Great product"
                         },
@@ -1259,7 +1261,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 4,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 4, 5, 19, 24, 36, 427, DateTimeKind.Local).AddTicks(5116),
+                            CreatedOn = new DateTime(2024, 4, 16, 20, 44, 34, 518, DateTimeKind.Local).AddTicks(5873),
                             Rating = 3,
                             Title = "Great product"
                         });

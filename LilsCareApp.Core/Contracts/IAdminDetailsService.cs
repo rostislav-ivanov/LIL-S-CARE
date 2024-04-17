@@ -12,7 +12,7 @@ namespace LilsCareApp.Core.Contracts
         Task AddSectionAsync(int id);
         Task<AdminDetailsDTO> CreateProductAsync();
         Task<AdminDetailsDTO> CreateProductByTemplateAsync(int id);
-        Task DeleteCategoryAsync(int id, int categoryId);
+        Task DeleteCategoryAsync(int categoryId);
         Task DeleteSectionAsync(int productId, int sectionId);
         Task EditNameAsync(int id, string name);
         Task EditOptionalAsync(int id, string optional);

@@ -85,7 +85,7 @@
                        style="display: none" />
                 <label for="file-upload-@(i+1)"
                        class="btn btn-image d-flex justify-content-center align-items-center m-3">
-                    @if (Model.Images[i].ImagePath != string.Empty && !Model.Images[i].IsVideo)
+                    @if (Model.Images.Length > i && Model.Images[i].ImagePath != string.Empty && !Model.Images[i].IsVideo)
                     {
                         <img src="@Model.Images[i].ImagePath" width="120" height="120" style="object-fit: cover" />
                     }

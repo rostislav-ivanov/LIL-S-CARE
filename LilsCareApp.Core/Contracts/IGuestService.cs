@@ -1,4 +1,5 @@
 ﻿using LilsCareApp.Core.Models.Checkout;
+using LilsCareApp.Core.Models.GuestUser;
 
 namespace LilsCareApp.Core.Services
 {
@@ -10,5 +11,6 @@ namespace LilsCareApp.Core.Services
         int GetCountInBag();
         Task<IEnumerable<ProductsInBagDTO>> GetProductsInBagAsync();
         Task<string> CheckoutSaveAsync(OrderDTO order);
+        GuestSession GetSession();
     }
 }

@@ -52,31 +52,8 @@
     </a>
     <!-- Brand Logo End -->
     <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <!-- Search Bar Start -->
-            <li class="nav-item">
-                <a class="nav-link py-2 px-0 px-lg-2"
-                   href="#"
-                   target="_blank"
-                   rel="noopener">
-                    <input type="search"
-                           style="border: 0; border-bottom: solid 1px"
-                           placeholder="Search..." />
-                    <svg width="20"
-                         height="20"
-                         class="DocSearch-Search-Icon"
-                         viewBox="0 0 20 20">
-                        <path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z"
-                              stroke="currentColor"
-                              fill="none"
-                              fill-rule="evenodd"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"></path>
-                    </svg>
-                </a>
-            </li>
-            <!-- Search Bar End -->
+    <nav class="navbar navbar-expand-lg" >
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-left:200px">
             @if (User.Identity?.IsAuthenticated ?? false)
             {
             <!-- User Account Start -->

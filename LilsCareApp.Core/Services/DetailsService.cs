@@ -20,6 +20,10 @@ namespace LilsCareApp.Core.Services
 
         public async Task<DetailsDTO> GetDetailsByIdAsync(int productId, string appUserId)
         {
+            if (await _context.Products.FindAsync(productId) == null)
+            {
+                return null;
+            }
 
             var details = await _context.Products
                 .Select(p => new DetailsDTO
@@ -85,6 +89,7 @@ namespace LilsCareApp.Core.Services
 
             return details;
         }
+
 
         public async Task<AddReviewDTO?> GetReviewAsync(int productId, string userId)
         {

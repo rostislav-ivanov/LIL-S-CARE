@@ -267,25 +267,25 @@
                                     <i class="fas fa-trash-alt me-2"></i>Извади от количка
                                 </a>
                                 <div class="d-flex justify-content-start align-items-center my-2">
-                                    <form asp-controller="Checkout" asp-action="AddToCart" asp-route-productId="@product.Id"
-                                          method="post">
-                                        <input type="hidden" name="quantity" value="-1" />
-                                        <button type="submit"
-                                                class="btn btn-inverce my-2"
-                                                style="background-color: rgb(var(--app-bg-secondary)); border:none">
-                                            <i class="fa fa-minus"></i>
-                                        </button>
-                                    </form>
+                                    <a asp-area="Admin"
+                                       asp-controller="OrderDetails"
+                                       asp-action="AddQuantityToProduct"
+                                       asp-route-id="@Model.Id"
+                                       asp-route-productId="@product.Id"
+                                       asp-route-quantity="-1"
+                                       class="nav-link">
+                                        <i class="fa fa-minus"></i>
+                                    </a>
                                     <span class="mx-2"> @product.Quantity</span>
-                                    <form asp-controller="Checkout" asp-action="AddToCart" asp-route-productId="@product.Id"
-                                          method="post">
-                                        <input type="hidden" name="quantity" value="1" />
-                                        <button type="submit"
-                                                class="btn btn-inverce my-2"
-                                                style="background-color: rgb(var(--app-bg-secondary)); border:none">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </form>
+                                    <a asp-area="Admin"
+                                       asp-controller="OrderDetails"
+                                       asp-action="AddQuantityToProduct"
+                                       asp-route-id="@Model.Id"
+                                       asp-route-productId="@product.Id"
+                                       asp-route-quantity="1"
+                                       class="nav-link">
+                                        <i class="fa fa-minus"></i>
+                                    </a>
                                 </div>
                                 <p class="mb-0">
                                     <span><strong>@(product.Quantity * product.Price) лв.</strong></span>

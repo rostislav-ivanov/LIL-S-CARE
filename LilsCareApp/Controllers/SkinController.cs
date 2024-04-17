@@ -9,9 +9,9 @@ namespace LilsCareApp.Controllers
     public class SkinController : BaseController
     {
         private readonly ILogger<SkinController> _logger;
-        private readonly ILilsCareService _service;
+        private readonly IHomeService _service;
 
-        public SkinController(ILogger<SkinController> logger, ILilsCareService service)
+        public SkinController(ILogger<SkinController> logger, IHomeService service)
         {
             _logger = logger;
             _service = service;
