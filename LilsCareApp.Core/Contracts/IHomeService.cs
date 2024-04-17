@@ -6,6 +6,7 @@ namespace LilsCareApp.Core.Contracts
     {
         Task AddToSubscribersAsync(SubscriberDTO subscriber);
         Task MessageFromClientAsync(ContactUsDTO message);
-
+        Task AddPromoCodeForFirstRegistrationAsync(string userId);
+        Task EmailConfirmationAsync(string userId);
     }
 }

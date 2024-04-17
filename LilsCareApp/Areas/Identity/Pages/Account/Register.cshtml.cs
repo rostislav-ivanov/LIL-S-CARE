@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
+using LilsCareApp.Core.Contracts;
 using LilsCareApp.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -24,13 +25,15 @@ namespace LilsCareApp.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<AppUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IHomeService _homeService;
 
         public RegisterModel(
             UserManager<AppUser> userManager,
             IUserStore<AppUser> userStore,
             SignInManager<AppUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IHomeService homeService)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -38,6 +41,7 @@ namespace LilsCareApp.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _homeService = homeService;
         }
 
         /// <summary>
@@ -120,6 +124,10 @@ namespace LilsCareApp.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
+
+                    // Add promo code for first registration
+                    await _homeService.AddPromoCodeForFirstRegistrationAsync(userId);
+
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
@@ -128,8 +136,8 @@ namespace LilsCareApp.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    await _emailSender.SendEmailAsync(Input.Email, "Потвърдете вашия имейл за регистрация в LilsCare",
+                        $"Моля, потвърдете акаунта си като кликнете <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>тук</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

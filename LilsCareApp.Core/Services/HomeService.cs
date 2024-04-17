@@ -2,6 +2,7 @@
 using LilsCareApp.Core.Models.Home;
 using LilsCareApp.Infrastructure.Data;
 using LilsCareApp.Infrastructure.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace LilsCareApp.Core.Services
 {
@@ -51,6 +52,39 @@ namespace LilsCareApp.Core.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task AddPromoCodeForFirstRegistrationAsync(string userId)
+        {
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+            {
+                return;
+            }
 
+            var promoCode = new PromoCode
+            {
+                Code = "-10 % за регистрация",
+                Discount = 0.1m,
+                ExpirationDate = DateTime.UtcNow.AddMonths(12),
+                AppUserId = userId,
+            };
+
+            await _context.PromoCodes.AddAsync(promoCode);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task EmailConfirmationAsync(string userId)
+        {
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user == null)
+            {
+                return;
+            }
+
+            user.EmailConfirmed = true;
+            await _context.SaveChangesAsync();
+        }
     }
 }
