@@ -95,8 +95,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddAuthentication()
                 .AddFacebook(options =>
                 {
-                    options.AppId = "658708255927516";
-                    options.AppSecret = "795acf9f3041cb193e8305bc94dcd6d9";
+                    options.AppId = configuration.GetSection("FacebookAuth:AppId").Value;
+                    options.AppSecret = configuration.GetSection("FacebookAuth:AppSecret").Value;
                 })
                 .AddGoogle(options =>
                 {
