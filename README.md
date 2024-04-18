@@ -36,8 +36,8 @@ Text text text
 
 
 ## Test accounts:
-- Member: test@softuni.bg : softuni
-- Admin: admin@mail.com : softuni-admin
+- Member - UserName: test@softuni.bg, Password: softuni
+- Admin - UserName: admin@mail.com, Password: softuni-admin
 
 Additionally in appsettings.json set: connection string to MSSQL server, Google authentication, Facebook authentication, SendGrid keys and email.
 ```
