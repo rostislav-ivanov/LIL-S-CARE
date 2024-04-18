@@ -67,7 +67,7 @@ Utilising the database the website provides informative and functional webpages 
 	- [x] navigate through shopping experience, informative pages, place order and check-out
 	- [x] shop / browse / filter products
 	- [x] have a cart: open a mini cart panel or load full cart page
-	- [x] Check-out / place order: proceed by filling in the required fields
+	- [x] check-out / place order: proceed by filling in the required fields
 	- [x] see reviews 
 	- [x] log in or sign up to become a member via creating an account or externally with Google or Facebook.
 	- [x] after registration receive a discount code
