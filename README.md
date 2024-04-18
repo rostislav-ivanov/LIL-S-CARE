@@ -1,11 +1,11 @@
 # LilsCareApp
-Title:
-Online store LIL’S CARE
+Online store
 
 ## Description:
-The aim of this project was to create a brand’s online store. It is made to be effective for both modest product line оr wider range of items. The website is functional and user friendly. It supports different features for guests, members and admins:
+The aim of the project was to create a brand’s online store. It is made to be effective for both modest product line оr wider range of items. The website is functional and user friendly. It supports different features for guests, members and admins.
 
-Some key features: place orders, manage account and account details, edit and manage orders and manage products, inventory tracking, personal discounts, order history.
+### Some key features:
+place orders, manage account and account details, edit and manage orders and manage products, inventory tracking, personal discounts, order history.
 
 ## Table of contents:
 
