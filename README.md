@@ -10,12 +10,12 @@ Some key features: place orders, manage account and account details, edit and ma
 ## Table of contents:
 
 - [How it works:](https://github.com/RostislavIv/LIL-S-CARE/tree/master?tab=readme-ov-file#how-it-works)
-- [Built with:](https://github.com/RostislavIv/LIL-S-CARE/edit/master/README.md#built-with)
-- [Test accounts and app settings:](https://github.com/RostislavIv/LIL-S-CARE/edit/master/README.md#test-accounts)
+- [Built with:](https://github.com/RostislavIv/LIL-S-CARE/tree/master?tab=readme-ov-file#built-with)
+- [Test accounts and app settings:](https://github.com/RostislavIv/LIL-S-CARE/tree/master?tab=readme-ov-file#test-accounts)
 	- Member
 	- Admin
 	- App settings
-- [What it does:](https://github.com/RostislavIv/LIL-S-CARE/edit/master/README.md#what-it-does)
+- [What it does:](https://github.com/RostislavIv/LIL-S-CARE/tree/master?tab=readme-ov-file#what-it-does)
 	- [Guest visitors features]
 	- [Members features]
 	- [Admin features]
