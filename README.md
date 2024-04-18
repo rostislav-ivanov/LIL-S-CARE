@@ -62,62 +62,62 @@ Additionally: in appsettings.json set your connection string to MSSQL server, Go
 ## What it does:
 Utilising the database the website provides informative and functional webpages for browsing products and navigating through user friendly shopping.The website can be used as a guest visitor, member or admin.
 
-### Guest visitors can:
-- [x] navigate through shopping experience, informative pages, place order and check-out
-- [x] shop / browse / filter products
-- [x] have a cart: open a mini cart panel or load full cart page
-- [x] Check-out / place order: proceed by filling in the required fields
-- [x] see reviews 
-- [x] add favourite products and see others favourites
-- [x] log in or sign up to become a member via creating an account or externally with Google or Facebook.
-- [x] after registration receive a discount code
+- ### Guest visitors can:
+	- [x] navigate through shopping experience, informative pages, place order and check-out
+	- [x] shop / browse / filter products
+	- [x] have a cart: open a mini cart panel or load full cart page
+	- [x] Check-out / place order: proceed by filling in the required fields
+	- [x] see reviews 
+	- [x] add favourite products and see others favourites
+	- [x] log in or sign up to become a member via creating an account or externally with Google or Facebook.
+	- [x] after registration receive a discount code
 
-### Logged members can also:
-- [x] add / edit one review per product and attach photos to it.
-- [x] have auto filled default details at check-out
-- [x] manage their account details:
-- [x] add / remove / edit / choose default own addresses and contact details
-- [x] preview their own order history in a collapsable list. Even if some product details in the shop have changed (e.g. price, name or photo) members continue to see the products in their history as they were when the order was placed.
-- [x] add / remove / preview favourite products
+- ### Logged members can also:
+	- [x] add / edit one review per product and attach photos to it.
+	- [x] have auto filled default details at check-out
+	- [x] manage their account details:
+	- [x] add / remove / edit / choose default own addresses and contact details
+	- [x] preview their own order history in a collapsable list. Even if some product details in the shop have changed (e.g. price, name or photo) members continue to see the products in their history as they were when the order was placed.
+	- [x] add / remove / preview favourite products
 
-### Admins can manage and edit:
-- ### Products:
-	- [x] filter / sort / order product list
-	- [x] add / delete / hide product cards
-	- [x] all product cards details: Name, descriptions, categories, price, etc.
-	- [x] track / edit inventory
-	- [x] add / rearrange photos
-	- [x] rearrange collapsable sections
-	- [x] duplicate existinf / create a new product template with similar description and/or collapsable sections
+- ### Admins can manage and edit:
+	- ### Products:
+		- [x] filter / sort / order product list
+		- [x] add / delete / hide product cards
+		- [x] all product cards details: Name, descriptions, categories, price, etc.
+		- [x] track / edit inventory
+		- [x] add / rearrange photos
+		- [x] rearrange collapsable sections
+		- [x] duplicate existinf / create a new product template with similar description and/or collapsable sections
 
-- ### Orders:
-	- [x] view / sort / filter orders list
-	- [x] change statuses of orders: fulfilled / unfulfilled / cancelled and paid / unpaid
-	- [x] add / remove products in placed orders
-	- [x] edit quantity of products in placed orders
-	- [x] add discount to placed orders
+	- ### Orders:
+		- [x] view / sort / filter orders list
+		- [x] change statuses of orders: fulfilled / unfulfilled / cancelled and paid / unpaid
+		- [x] add / remove products in placed orders
+		- [x] edit quantity of products in placed orders
+		- [x] add discount to placed orders
 
-### Pages with features:
+- ### Pages with features:
 
-- ### Cart and checkout:
-	- cart users can add / remove products and adjust the quantity of each
-	- show price of each item and Sub Total
-	- free delivery if the order value is greater than a certain number
-	- saves cart even after log in / sign up
-	- autofill address
-	- delivery methods: address and couriers options
-	- notes: customers can write a note to their order
-	- add / remove discount codes / coupons to order
-	- choose from account saved discounts / coupons
+	- ### Cart and checkout:
+		- [x] cart users can add / remove products and adjust the quantity of each
+		- [x] show price of each item and Sub Total
+		- [x] free delivery if the order value is greater than a certain number
+		- [x] saves cart even after log in / sign up
+		- [x] autofill address
+		- [x] delivery methods: address and couriers options
+		- [x] notes: customers can write a note to their order
+		- [x] add / remove discount codes / coupons to order
+		- [x] choose from account saved discounts / coupons
 
-- ### Shop page:
-	- filter product cards by categories
-	- pagination
+	- ### Shop page:
+		- [x] filter product cards by categories
+		- [x] pagination
 
-- ### Product page:
-	- choose quantity
-	- read descriptions in collapsable sections
-	- show products rating and reviews (write a review once logged in)
+	- ### Product page:
+		- [x] choose quantity
+		- [x] read descriptions in collapsable sections
+		- [x] show products rating and reviews (write a review once logged in)
 
 
 
