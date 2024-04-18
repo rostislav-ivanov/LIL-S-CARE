@@ -16,10 +16,10 @@ Some key features: place orders, manage account and account details, edit and ma
 	- Admin
 	- App settings
 - [What it does:](https://github.com/RostislavIv/LIL-S-CARE/tree/master?tab=readme-ov-file#what-it-does)
-	- [Guest visitors features]
-	- [Members features]
-	- [Admin features]
-	- [Pages with features]
+	- Guest visitors features
+	- Members features
+	- Admin features
+	- Pages with features
 
 ## How it works:
 
@@ -40,7 +40,7 @@ Text text text
 - Admin: admin@mail.com : softuni-admin
 
 Additionally: in appsettings.json set your connection string to MSSQL server, Google authentication, Facebook authentication and SendGrid keys.
-
+```
 {
   "ConnectionStrings": {
     "DefaultConnection": "YourDefaultConnection"
@@ -57,12 +57,12 @@ Additionally: in appsettings.json set your connection string to MSSQL server, Go
     "AppSecret": "YourAppSecret"
   }
 }
-
+```
 
 ## What it does:
 Utilising the database the website provides informative and functional webpages for browsing products and navigating through user friendly shopping.The website can be used as a guest visitor, member or admin.
 
-## Guest visitors can:
+### Guest visitors can:
 - [x] navigate through shopping experience, informative pages, place order and check-out
 - [x] shop / browse / filter products
 - [x] have a cart: open a mini cart panel or load full cart page
@@ -72,7 +72,7 @@ Utilising the database the website provides informative and functional webpages 
 - [x] log in or sign up to become a member via creating an account or externally with Google or Facebook.
 - [x] after registration receive a discount code
 
-## Logged members can also:
+### Logged members can also:
 - [x] add / edit one review per product and attach photos to it.
 - [x] have auto filled default details at check-out
 - [x] manage their account details:
@@ -80,7 +80,7 @@ Utilising the database the website provides informative and functional webpages 
 - [x] preview their own order history in a collapsable list. Even if some product details in the shop have changed (e.g. price, name or photo) members continue to see the products in their history as they were when the order was placed.
 - [x] add / remove / preview favourite products
 
-## Admins can manage and edit:
+### Admins can manage and edit:
 - ### Products:
 	- [x] filter / sort / order product list
 	- [x] add / delete / hide product cards
@@ -97,17 +97,17 @@ Utilising the database the website provides informative and functional webpages 
 	- [x] edit quantity of products in placed orders
 	- [x] add discount to placed orders
 
-## Pages with features:
+### Pages with features:
 
 - ### Cart and checkout:
-	- cart users can add / remove products and adjust the quantity of each.
+	- cart users can add / remove products and adjust the quantity of each
 	- show price of each item and Sub Total
 	- free delivery if the order value is greater than a certain number
 	- saves cart even after log in / sign up
 	- autofill address
 	- delivery methods: address and couriers options
 	- notes: customers can write a note to their order
-	- add / remove discount codes / coupons to order.
+	- add / remove discount codes / coupons to order
 	- choose from account saved discounts / coupons
 
 - ### Shop page:
