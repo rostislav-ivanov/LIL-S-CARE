@@ -9,19 +9,17 @@ Some key features: place orders, manage account and account details, edit and ma
 
 ## Table of contents:
 
-- [How it works:]()
-- Built with:
-- Test accounts and app settings:
+- [How it works:](https://github.com/RostislavIv/LIL-S-CARE/tree/master?tab=readme-ov-file#how-it-works)
+- [Built with:](https://github.com/RostislavIv/LIL-S-CARE/edit/master/README.md#built-with)
+- [Test accounts and app settings:](https://github.com/RostislavIv/LIL-S-CARE/edit/master/README.md#test-accounts)
 	- Member
 	- Admin
 	- App settings
-- What it does: 
-- Guest visitors features
-- Members features
-- Admin features
-- Pages with features
-
-
+- [What it does:](https://github.com/RostislavIv/LIL-S-CARE/edit/master/README.md#what-it-does)
+	- [Guest visitors features]
+	- [Members features]
+	- [Admin features]
+	- [Pages with features]
 
 ## How it works:
 
@@ -70,8 +68,9 @@ Utilising the database the website provides informative and functional webpages 
 - [x] have a cart: open a mini cart panel or load full cart page
 - [x] Check-out / place order: proceed by filling in the required fields
 - [x] see reviews 
-- [x] see add to favourite
+- [x] add favourite products and see others favourites
 - [x] log in or sign up to become a member via creating an account or externally with Google or Facebook.
+- [x] after registration receive a discount code
 
 ## Logged members can also:
 - [x] add / edit one review per product and attach photos to it.
