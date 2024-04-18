@@ -9,7 +9,7 @@ Some key features: place orders, manage account and account details, edit and ma
 
 ## Table of contents:
 
-- How it works:
+- [How it works:]()
 - Built with:
 - Test accounts and app settings:
 	- Member
