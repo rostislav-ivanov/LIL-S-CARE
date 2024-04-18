@@ -124,18 +124,9 @@ show products rating and reviews (write a review once logged in)
 
 
 
-
-
-
-
-
-
-
-
-
-
 Database Diagram LilsCareDb
 
+![image](https://github.com/RostislavIv/LIL-S-CARE/assets/122882308/536b7a34-51d1-43d0-be23-94e387236e1c)
 
 
 
