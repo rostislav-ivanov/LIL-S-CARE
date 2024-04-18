@@ -88,7 +88,7 @@ Utilising the database the website provides informative and functional webpages 
 		- [x] track / edit inventory
 		- [x] add / rearrange photos
 		- [x] rearrange collapsable sections
-		- [x] duplicate existinf / create a new product template with similar description and/or collapsable sections
+		- [x] duplicate existing / create a new product template with similar description and/or collapsable sections
 
 	- ### Orders:
 		- [x] view / sort / filter orders list
