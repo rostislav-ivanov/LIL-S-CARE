@@ -227,5 +227,20 @@ namespace LilsCareApp.Core.Services
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task EditDiscountAsync(int id, decimal discount)
+        {
+            var order = await _context.Orders
+                .Where(o => o.Id == id)
+                .FirstOrDefaultAsync();
+
+            if (order == null)
+            {
+                return;
+            }
+
+            order.Discount = discount;
+            await _context.SaveChangesAsync();
+        }
     }
 }

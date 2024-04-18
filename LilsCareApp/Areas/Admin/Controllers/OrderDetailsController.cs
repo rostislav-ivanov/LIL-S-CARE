@@ -101,5 +101,23 @@ namespace LilsCareApp.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index), new { id });
         }
+
+        [HttpPost]
+        public async Task<IActionResult> EditDiscount(int id, decimal discount)
+        {
+            if (id == 0)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction(nameof(Index), new { id });
+            }
+
+            await _adminOrderDetailsService.EditDiscountAsync(id, discount);
+
+            return RedirectToAction(nameof(Index), new { id });
+        }
     }
 }

@@ -79,6 +79,7 @@ namespace LilsCareApp.Core.Services
         {
             return await _context.Orders
                 .Where(o => o.AppUserId == userId)
+                .OrderByDescending(o => o.CreatedOn)
                 .Select(o => new MyOrderDTO
                 {
                     Id = o.Id,

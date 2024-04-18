@@ -3,6 +3,7 @@ using LilsCareApp.Core.Models.AdminOrders;
 using System.ComponentModel.DataAnnotations;
 using static LilsCareApp.Core.ErrorMessageConstants;
 using static LilsCareApp.Infrastructure.DataConstants.Order;
+using static LilsCareApp.Infrastructure.DataConstants.Product;
 
 namespace LilsCareApp.Core.Models.AdminOrderDetails
 {
@@ -39,6 +40,8 @@ namespace LilsCareApp.Core.Models.AdminOrderDetails
 
         public decimal ShippingPrice { get; set; }
 
+        [Range(type: typeof(decimal), minimum: PriceMinValue, maximum: PriceMaxValue, ConvertValueInInvariantCulture = true, ErrorMessage = InvalidField)]
+        [Display(Name = "отстъпка")]
         public decimal Discount { get; set; }
 
         public decimal SubTotal() => ProductsOrders.Sum(p => p.Quantity * p.Price) - Discount;

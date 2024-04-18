@@ -8,7 +8,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
     {
         private readonly IEnumerable<PaymentMethod> paymentMethods = new List<PaymentMethod>
         {
-            new PaymentMethod { Id = 1, Type = "Наложен платеж" },
+            new PaymentMethod { Id = 1, Type = "Плащане при доставка" },
             new PaymentMethod { Id = 2, Type = "С карта" },
             new PaymentMethod { Id = 3, Type = "Банков превод" }
         };

@@ -12,5 +12,6 @@ namespace LilsCareApp.Core.Contracts
         Task<IEnumerable<ProductsNamesDTO>> GetProductsNameAsync();
         Task RemoveProductFromOrderAsync(int id, int productId);
         Task AddQuantityToProductAsync(int id, int productId, int quantity);
+        Task EditDiscountAsync(int id, decimal discount);
     }
 }
