@@ -69,7 +69,6 @@ Utilising the database the website provides informative and functional webpages 
 	- [x] have a cart: open a mini cart panel or load full cart page
 	- [x] Check-out / place order: proceed by filling in the required fields
 	- [x] see reviews 
-	- [x] add favourite products and see others favourites
 	- [x] log in or sign up to become a member via creating an account or externally with Google or Facebook.
 	- [x] after registration receive a discount code
 
