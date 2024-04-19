@@ -40,7 +40,7 @@ namespace LilsCareApp.Core.Services
             string emailAdministrator = _configuration["EmailAdministrator"]!;
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress(emailAdministrator, "Lil's Care"),
+                From = new EmailAddress(emailAdministrator, "Lil's Care handmade"),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message
