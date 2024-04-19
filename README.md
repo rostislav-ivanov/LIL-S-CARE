@@ -39,7 +39,7 @@ Text text text
 - Member - UserName: test@softuni.bg, Password: softuni
 - Admin - UserName: admin@mail.com, Password: softuni-admin
 
-Additionally in appsettings.json set: connection string to MSSQL server, Google authentication, Facebook authentication, SendGrid keys and email.
+Before running the application, ensure you have the necessary configurations in the appsettings.json file. Replace every occurrence of "Your" with the actual value: connection string to MSSQL server, Google authentication, Facebook authentication, SendGrid keys and email.
 ```
 {
   "ConnectionStrings": {
