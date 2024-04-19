@@ -21,10 +21,6 @@ place orders, manage account and account details, edit and manage orders and man
 	- Admin features
 	- Pages with features
 
-## How it works:
-
-Text text text
-
 ## Built with:
 - Microsoft.AspNetCore 8.0
 - Microsoft.EntityFrameworkCore 8.0
@@ -35,7 +31,6 @@ Text text text
 - Microsoft SQL Server Express
 - Fontawesome
 - Bootstrap 5.0
-
 
 ## Test accounts and application settings:
 - Member - UserName: test@softuni.bg, Password: softuni
@@ -75,12 +70,13 @@ Utilising the database the website provides informative and functional webpages 
 	- [x] after registration receive a discount code
 
 - ### Logged members can also:
-	- [x] add / edit one review per product and attach photos to it.
+	- [x] add / edit one review per product and attach photos to it
 	- [x] have auto filled default details at check-out
 	- [x] manage their account details:
-	- [x] add / remove / edit / choose default own addresses and contact details
-	- [x] preview their own order history in a collapsable list. Even if some product details in the shop have changed (e.g. price, name or photo) members continue to see the products in their history as they were when the order was placed.
-	- [x] add / remove / preview favourite products
+ 		- [x] edit account details
+		- [x] add / remove / edit / choose default own addresses and contact details
+		- [x] preview their own order history in a collapsable list. Even if some product details in the shop have changed (e.g. price, name or photo) members continue to see the products in their history as they were when the order was placed.
+		- [x] add / remove / preview favourite products
 
 - ### Admins can manage and edit:
 	- ### Products:
@@ -111,12 +107,13 @@ Utilising the database the website provides informative and functional webpages 
 		- [x] notes: customers can write a note to their order
 		- [x] add / remove discount codes / coupons to order
 		- [x] choose from account saved discounts / coupons
+  		- [x] send automatic order conirmaion email wih order summary
 
-	- ### Shop page:
+	- ### Products page:
 		- [x] filter product cards by categories
 		- [x] pagination
 
-	- ### Product page:
+	- ### Product details page:
 		- [x] choose quantity
 		- [x] read descriptions in collapsable sections
 		- [x] show products rating and reviews (write a review once logged in)
