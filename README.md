@@ -28,9 +28,11 @@ Text text text
 ## Built with:
 - Microsoft.AspNetCore 8.0
 - Microsoft.EntityFrameworkCore 8.0
-- SendGrid 9.29
-- Microsoft SQL Server Express
+- SendGrid
+- NUnit
+- Moq
 - MVC Areas with Multiple Layouts
+- Microsoft SQL Server Express
 - Fontawesome
 - Bootstrap 5.0
 
