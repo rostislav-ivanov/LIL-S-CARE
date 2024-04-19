@@ -3,6 +3,7 @@
 #nullable disable
 
 using LilsCareApp.Core.Contracts;
+using LilsCareApp.Core.Services;
 using LilsCareApp.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -24,6 +25,8 @@ namespace LilsCareApp.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
         private readonly IHomeService _homeService;
+        private readonly IProductsService _productService;
+        private readonly IGuestService _guestService;
 
         public ExternalLoginModel(
             SignInManager<AppUser> signInManager,
@@ -31,7 +34,9 @@ namespace LilsCareApp.Areas.Identity.Pages.Account
             IUserStore<AppUser> userStore,
             ILogger<ExternalLoginModel> logger,
             IEmailSender emailSender,
-            IHomeService homeService)
+            IHomeService homeService,
+            IProductsService productService,
+            IGuestService guestService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -40,6 +45,8 @@ namespace LilsCareApp.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _homeService = homeService;
+            _productService = productService;
+            _guestService = guestService;
         }
 
         /// <summary>
@@ -165,6 +172,14 @@ namespace LilsCareApp.Areas.Identity.Pages.Account
 
                         // Add promo code for first registration
                         await _homeService.AddPromoCodeForFirstRegistrationAsync(userId);
+
+                        // Migrate products in bag from guest to user when user logs in.
+                        var guestProduct = await _guestService.GetProductsInBagAsync();
+                        if (guestProduct.Count() > 0)
+                        {
+                            await _productService.MigrateProductsInBagAsync(userId, guestProduct);
+                            _guestService.ClearBag();
+                        }
 
                         // Set to user email confirmation to true
                         await _homeService.EmailConfirmationAsync(userId);

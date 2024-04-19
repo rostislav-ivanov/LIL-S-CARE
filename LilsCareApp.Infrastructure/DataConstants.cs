@@ -7,7 +7,6 @@
             public const string AreaName = "Admin";
             public const string AdminRoleName = "Admin";
             public const string AdminEmail = "admin@mail.com";
-            public const string EmailAdministrator = "lils.care.handmade@gmail.com";
         }
         public static class AppConstants
         {

@@ -1,22 +1,25 @@
 ﻿using LilsCareApp.Core.Configurations;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using static LilsCareApp.Infrastructure.DataConstants.AdminConstants;
 
 namespace LilsCareApp.Core.Services
 {
     public class EmailSender : IEmailSender
     {
         private readonly ILogger _logger;
+        private readonly IConfiguration _configuration;
 
         public EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor,
-                           ILogger<EmailSender> logger)
+                           ILogger<EmailSender> logger,
+                           IConfiguration configuration)
         {
             Options = optionsAccessor.Value;
             _logger = logger;
+            _configuration = configuration;
         }
 
         public AuthMessageSenderOptions Options { get; }
@@ -34,9 +37,10 @@ namespace LilsCareApp.Core.Services
         public async Task Execute(string apiKey, string subject, string message, string toEmail)
         {
             var client = new SendGridClient(apiKey);
+            string emailAdministrator = _configuration["EmailAdministrator"]!;
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress(EmailAdministrator, "Password Recovery"),
+                From = new EmailAddress(emailAdministrator, "Lil's Care handmade"),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message
