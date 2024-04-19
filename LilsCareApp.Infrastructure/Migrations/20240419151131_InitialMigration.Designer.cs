@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LilsCareApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240418100656_InitialMigration")]
+    [Migration("20240419151131_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
