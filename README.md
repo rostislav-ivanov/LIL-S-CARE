@@ -35,7 +35,7 @@ Text text text
 - Bootstrap 5.0
 
 
-## Test accounts:
+## Test accounts and application settings:
 - Member - UserName: test@softuni.bg, Password: softuni
 - Admin - UserName: admin@mail.com, Password: softuni-admin
 
