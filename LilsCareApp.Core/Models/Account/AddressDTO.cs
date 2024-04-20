@@ -20,7 +20,7 @@ namespace LilsCareApp.Core.Models.Account
         public string FirstName { get; set; } = string.Empty;
 
         [Comment("Last Name Recipient")]
-        [Required(ErrorMessage = RequiredField)]
+        [Required(ErrorMessageResourceName = "ResourceRequired", ErrorMessageResourceType = typeof(SharedResource))]
         [MaxLength(LastNameMaxLength)]
         [Display(Name = "LastName", ResourceType = typeof(SharedResource))]
         public string LastName { get; set; } = string.Empty;
@@ -28,32 +28,35 @@ namespace LilsCareApp.Core.Models.Account
 
         [Comment("Phone Number Recipient")]
         [MaxLength(PhoneNumberMaxLength)]
-        [Required(ErrorMessage = RequiredField)]
-        [RegularExpression(PhoneNumberPattern, ErrorMessage = InvalidPhoneNumber)]
+        [Required(ErrorMessageResourceName = "ResourceRequired", ErrorMessageResourceType = typeof(SharedResource))]
+        [RegularExpression(
+            PhoneNumberPattern,
+            ErrorMessageResourceName = "InvalidPhoneNumber",
+            ErrorMessageResourceType = typeof(SharedResource))]
         [Display(Name = "PhoneNumber", ResourceType = typeof(SharedResource))]
         public string PhoneNumber { get; set; } = string.Empty;
 
 
         [Comment("Country")]
-        [Required(ErrorMessage = RequiredField)]
+        [Required(ErrorMessageResourceName = "ResourceRequired", ErrorMessageResourceType = typeof(SharedResource))]
         [MaxLength(CountryMaxLength)]
         [Display(Name = "Country", ResourceType = typeof(SharedResource))]
         public string Country { get; set; } = string.Empty;
 
         [Comment("Post Code")]
-        [Required(ErrorMessage = RequiredField)]
+        [Required(ErrorMessageResourceName = "ResourceRequired", ErrorMessageResourceType = typeof(SharedResource))]
         [MaxLength(PostCodeMaxLength)]
         [Display(Name = "PostCode", ResourceType = typeof(SharedResource))]
         public string PostCode { get; set; } = string.Empty;
 
         [Comment("Town")]
-        [Required(ErrorMessage = RequiredField)]
+        [Required(ErrorMessageResourceName = "ResourceRequired", ErrorMessageResourceType = typeof(SharedResource))]
         [MaxLength(TownMaxLength)]
         [Display(Name = "Town", ResourceType = typeof(SharedResource))]
         public string Town { get; set; } = string.Empty;
 
         [Comment("Address")]
-        [Required(ErrorMessage = RequiredField)]
+        [Required(ErrorMessageResourceName = "ResourceRequired", ErrorMessageResourceType = typeof(SharedResource))]
         [MaxLength(AddressMaxLength)]
         [Display(Name = "Address", ResourceType = typeof(SharedResource))]
         public string Address { get; set; } = string.Empty;

@@ -1,6 +1,7 @@
-﻿@model DeliveryAddressesDTO
+﻿@inject IViewLocalizer Localizer
+@model DeliveryAddressesDTO
 @{
-    ViewData["Title"] = "Адреси";
+    ViewData["Title"] = @Localizer["Addresses"];
 }
 
 <div class="d-flex justify-content-center">
@@ -11,19 +12,33 @@
     <div class="border rounded p-2 w-50" style="margin: 50px 100px 20px 20px">
 
         <!-- Delivery Type Start -->
-        <h5>Метод за доставка</h5>
+        <h5>@Localizer["Delivery method"]</h5>
         <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown">
-            @(Model.DeliveryType() ?? " Няма избран доставчик...")
+            @if(Model.DeliveryType() == null)
+            {
+                @Localizer["No supplier selected..."]
+            }
+            else 
+            {
+                if(@Model.DeliveryType() == Model.OfficeDeliveryType)
+                {
+                    @Localizer["Delivery to courier office"]
+                }
+                else if (Model.DeliveryType() == Model.AddressDeliveryType)
+                {
+                    @Localizer["Delivery to customer address"]
+                }
+            }
         </a>
         <ul class="dropdown-menu">
             <li>
                 <a asp-controller="Account" asp-action="SelectDeliveryType" asp-route-isShippingToOffice="false" class="dropdown-item">
-                    @Model.AddressDeliveryType
+                    @Localizer["Delivery to customer address"]
                 </a>
             </li>
             <li>
                 <a asp-controller="Account" asp-action="SelectDeliveryType" asp-route-isShippingToOffice="true" class="dropdown-item">
-                    @Model.OfficeDeliveryType
+                    @Localizer["Delivery to courier office"]
                 </a>
             </li>
         </ul>

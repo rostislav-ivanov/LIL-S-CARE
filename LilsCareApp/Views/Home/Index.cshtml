@@ -1,5 +1,6 @@
 ﻿@model HomeViewModel
 @using System.Security.Claims;
+@inject IViewLocalizer Localizer
 @{
     ViewData["Title"] = "Home";
 }
@@ -34,7 +35,7 @@
             <div class="carousel-item active">
                 <!-- class="carousel-item active" -->
                 <img src="~/files/home/carousel/image-01.webp"
-                     alt="Натурална грижа за кожата ръчно изработена български съставки и някои с био произход. Еко опаковки, нежни формули, без алкохол. Натурален екстракт от шипка или невен е крем, лосион за лице и тяло."
+                     alt=""
                      width="1411"
                      height="228"
                      style="
@@ -46,10 +47,9 @@
                      fetchpriority="high" />
 
                 <div class="carousel-caption">
-                    <h2 class="h2">ОПАКОВКИТЕ НИ</h2>
+                    <h2 class="h2">@Localizer["OUR PACKAGING"]</h2>
                     <p class="fs-5">
-                        АЛУМИНИЕВИ И СТЪКЛЕНИ. А КАРТОНЕНИТЕ КУТИЙКИ И ПЪЛНЕЖА СА 100%
-                        РЕЦИКЛИРАН ПРОДУКТ ОТ БЪЛГАРИЯ
+                        @Localizer["ALUMINUM AND GLASS. AND THE CARDBOARD BOXES AND THE FILLING ARE 100% RECYCLED PRODUCT FROM BULGARIA"]
                     </p>
                 </div>
             </div>
@@ -67,11 +67,11 @@
                      fetchpriority="high" />
                 <div class="carousel-caption">
                     <p class="fs-5">
-                        <span style="font-size: 21px">100% НАТУРАЛНА ГРИЖА ЗА КОЖАТА</span>
+                        <span style="font-size: 21px">@Localizer["100% NATURAL SKIN CARE"]</span>
                     </p>
                     <h2 class="h2">
-                        РЪЧНО ИЗРАБОТЕНА<br />
-                        С ЛЮБО
+                        @Localizer["HANDMADE"]<br />
+                        @Localizer["WITH LOVE"]
                     </h2>
                 </div>
             </div>
@@ -88,11 +88,10 @@
               "
                      fetchpriority="high" />
                 <div class="carousel-caption">
-                    <h2 class="h2">НЕЖНИ ФОРМУЛИ</h2>
+                    <h2 class="h2">@Localizer["GENTLE FORMULAS"]</h2>
 
                     <p class="fs-5">
-                        СЪСТАВКИ ОТ БЪЛГАРИЯ И С БИО ПРОЗХОД. БЕЗ АЛКОХОЛ. СЪЗДАДЕНИ ДА
-                        ПОДХРАНВАТ, ХИДРАТИРАТ И ЗАЩИТАВАТ
+                        @Localizer["INGREDIENTS FROM BULGARIA AND BIO ORIGIN. ALCOHOL-FREE. CREATED YES NOURISH, HYDRATE AND PROTECT"]
                     </p>
                 </div>
             </div>
@@ -122,17 +121,15 @@
     <div class="d-flex justify-content-center p-0">
         <div style="width: 40%">
             <img src="~/files/home/section/image-section-01.webp"
-                 alt="Натурална грижа за кожата ръчно изработена български съставки и някои с био произход. Еко опаковки, нежни формули, без алкохол. Натурален дезодорант с аромат на сладък портокал и евкалипт от етерични масла и витамин Е. Био съставки."
+                 alt=""
                  style="width: 100%; height: 228px; object-fit: cover" />
         </div>
         <div class="ps-5 pt-2" style="width: 60%">
             <p class="fs-5">
-                LIL'S CARE e ръчно изработена натурална грижа за кожата. Домашно
-                приготвена с български съставки и такива с био произход. С нежни
-                формули и със старание за меко усещане.
+                @Localizer["LIL'S CARE is handmade natural skin care. Homemade with Bulgarian and organic ingredients. With gentle formulas and with care for a soft feel."]
             </p>
             <p></p>
-            <a class="btn" style="float: left" asp-controller="Products">РАЗГЛЕДАЙ</a>
+            <a class="btn" style="float: left" asp-controller="Products">@Localizer["TAKE A LOOK"]</a>
         </div>
     </div>
 </section>
@@ -143,37 +140,24 @@
          style="background-color: rgb(var(--app-bg-secondary))">
     <div class="container w-75 fs-5 text-center p-5">
         <p>
-            Постоянно обновявам и подобрявам продуктите. За това не е изненада,
-            ако вече не са налични същите или имат нов, малко по-различен етикет и
-            състав.
+            @Localizer["Section1Description"]
         </p>
-        <h1 class="h1 p-5">ЛЮБИМИТЕ НИ</h1>
+        <h1 class="h1 p-5">@Localizer["OUR FAVORITES"]</h1>
     </div>
     <!-- Articles 1 Start -->
     <article id="article-1">
         <div class="d-flex justify-content-center">
             <div class="px-5" style="width: 40%; text-align: right">
-                <h2 class="h2 mb-0">СЕРУМ МАСЛО С ШИПКА И ЖОЖОБА</h2>
+                <h2 class="h2 mb-0">@Localizer["SERUM OIL WITH ROSE BORN AND JOJOBA"]</h2>
 
                 <p class="fs-5 mb-0">
-                    Има приятно действие и
-                    <strong> релаксиращ </strong>
-                    аромат.
+                    @Localizer["It has a pleasant action and a relaxing aroma."]
                 </p>
                 <p class="fs-5 mb-0">
-                    С българско био масло от
-                    <strong> шипка </strong>
-                    , био масла от ягодови семки, арган и жожоба. Съдържа естествени
-                    серамиди и има антиоксидантен ефект с
-                    <strong> витамин Е </strong>
-                    , който се бори със свобдните радикали и увреждането на кожата от
-                    околната среда. Серума е некомедогенен и идеално "заключва"
-                    хидратацията и
-                    <strong> защитава кожата </strong>
-                    .
+                    @Localizer["With Bulgarian organic rosehip oil"]
                 </p>
                 <p></p>
-                <a class="btn btn-primary" style="float: right" asp-controller="Products" asp-action="Details" asp-route-id="01">ВИЖ ТУК</a>
+                <a class="btn btn-primary" style="float: right" asp-controller="Products" asp-action="Details" asp-route-id="01">@Localizer["SEE HERE"]</a>
             </div>
             <div style="width: 40%">
                 <a asp-controller="Products" asp-action="Details" asp-route-id="01">
@@ -204,24 +188,10 @@
                 </a>
             </div>
             <div style="width: 40%">
-                <h2 class="h2 mb-0">ХИДРАТИРАЩ ЛОСИОН С НЕВЕН</h2>
+                <h2 class="h2 mb-0">@Localizer["MOISTURIZING LOTION WITH CALENDULUS"]</h2>
 
                 <p class="fs-5 mb-0">
-                    Лосионът е подходящ за всеки тип кожа, включително и
-                    <strong> чувствителна </strong>
-                    . Деликатен, попива бързо и не оставя мазни следи. Има
-                    <strong> успокояващо </strong>
-                    действие благодарение на комбинацията от съставки като
-                    <strong> екстракт от невен </strong>
-                    ,
-                    <strong> масло от кайсиви ядки </strong>
-                    и
-                    <strong> витамин Е </strong>
-                    . Други важни съставки са
-                    <strong> хиалуроновата </strong>
-                    киселина, която помага за худратацията и
-                    <strong> ниацинамид </strong>
-                    (витамин B3), които има антиоксиднтно и балнсиращо действие.
+                    @Localizer["The lotion is suitable for all skin types"]
                 </p>
 
                 <p></p>
@@ -261,7 +231,7 @@
 <section id="about-us">
     <h1 class="h1 text-center mb-0 pb-3"
         style="background-color: rgb(var(--app-bg-secondary))">
-        ЗА НАС
+        @Localizer["FOR US"]
     </h1>
     <article>
         <div class="d-flex justify-content-center p-0">
@@ -271,14 +241,10 @@
                      style="width: 100%; object-fit: cover" />
             </div>
             <div class="ps-5 pt-2" style="width: 60%">
-                <h1 class="h1 mb-0">И ЗА ПРИРOДАТА</h1>
+                <h1 class="h1 mb-0">@Localizer["AND FOR NATURE"]</h1>
 
                 <p class="fs-5 mb-0">
-                    Ръчно изработена 100% натурална грижа за кожата със съставки от
-                    България и някои с био произход. Използваме еко съобразени
-                    опаковки като стъклени бутилки и алуминиеви кутийки. А картонените
-                    кутийки за изпращане и хартияния пълнеж са изцяло рециклирани
-                    продукти от България.
+                    @Localizer["Handmade 100% natural skin care with ingredients from"]
                 </p>
             </div>
         </div>
@@ -294,7 +260,7 @@
                 text-align: right;
                 padding: 25px;
               ">
-                    И ЗА КОЖАТА
+                    @Localizer["AND FOR THE SKIN"]
                 </h2>
                 <p class="font_7"
                    style="
@@ -303,11 +269,7 @@
                 text-align: right;
                 padding: 25px;
               ">
-                    Меко и приятно усещане. Семпли, нежни и ефективни формули, които
-                    хидратират, подрхранват и защитават. Не съдържат изсушаващ
-                    алкохол, изкуствени оцветители, избелващи или други потенциално
-                    агресивни съставки. Кожата е нашата бариера от външната среда и за
-                    това е важно и ние да я пазим и да се грижим за нея.
+                    @Localizer["Soft and pleasant feeling"]
                 </p>
                 <svg id="Decoration"
                      xmlns="http://www.w3.org/2000/svg"
@@ -338,41 +300,39 @@
                  style="width: 100%" />
         </div>
         <div style="width: 65%; padding: 0 0 0 25px">
-            <h2 class="h1">ФОКУС ВЪРХУ ТЕБ</h2>
+            <h2 class="h1">@Localizer["FOCUS ON YOU"]</h2>
             <p class="fs-6 mb-0">
-                Твоето изживяване винаги ще е първия ни приоритет - да доставим
-                висококачествен продукт подходящ за теб.
+                @Localizer["Your experience will always be our first priority - to deliver"]
             </p>
             <p class="fs-6 mb-0">
-                Попитай ни за продуктите, персонални предложения или споделете
-                мнение.
+                @Localizer["Ask us about the products, personal suggestions or share an opinion."]
             </p>
             <form asp-controller="Home" asp-action="MessageFromClient" method="post" class="d-flex justify-content-center">
                 <div style="width: 60%">
                     <div>
                         <input asp-for="FirstName" type="name"
                                class="form-control"
-                               placeholder="Име*"
+                               placeholder="@Localizer["First Name"]*"
                                name="FirstName" />
                     </div>
                     <span asp-validation-for="@Model.FirstName" class="text-danger" style="font-size: 12px"></span>
                     <div class="px-0 my-3">
                         <input asp-for="LastName" type="name"
                                class="form-control"
-                               placeholder="Фамилия"
+                               placeholder="@Localizer["Last Name"]"
                                name="LastName" />
                     </div>
                     <div>
                         <input asp-for="EmailForResponse" type="email"
                                class="form-control"
-                               placeholder="Емайл*"
+                               placeholder="@Localizer["Email"]*"
                                name="EmailForResponse" />
                     </div>
                     <span asp-validation-for="@Model.EmailForResponse" class="text-danger" style="; font-size: 12px"></span>
                     <button type="submit"
                             class="btn btn-primary mt-3"
                             style="width: 100%">
-                        Изпрати
+                        @Localizer["Send"]
                     </button>
                     <div class="form-check" style="font-size: 14px">
                         <label class="form-check-label">
@@ -380,11 +340,11 @@
                                    class="form-check-input"
                                    name="PrivacyPolicyCheckBoxForMessage"
                                    data-val="true"
-                                   data-val-mustbetrue="Потвърдете съгласието с политиката за поверителност." />
-                            Съгласенсен съм с&nbsp;
+                                   data-val-mustbetrue="@Localizer["Confirm agreement with the privacy policy."]" />
+                            @Localizer["I agree"] с&nbsp;
                             <a asp-controller="TermsConditions" style="color: rgb(var(--app-btn-bg))"
                                target="_blank">
-                                условията
+                                @Localizer["the conditions"]
                             </a>
                         </label>
                     </div>
@@ -394,11 +354,11 @@
                     <textarea asp-for="Message" class="form-control"
                               rows="9"
                               name="Message"
-                              placeholder="Напишете съобщение..."></textarea>
+                              placeholder="@Localizer["Write a message..."]"></textarea>
                     <span asp-validation-for="@Model.Message" class="text-danger" style="font-size: 12px"></span>
                     <label for="comment"
                            style="font-size: 14px">
-                        Изпращаме имейл 1 до 2 пъти месечно.
+                        @Localizer["We send an email 1 to 2 times a month."]
                     </label>
                 </div>
             </form> 

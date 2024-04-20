@@ -1,16 +1,18 @@
-﻿@model SubscriberDTO
+﻿@inject IViewLocalizer Localizer
+
+@model SubscriberDTO
 @{
 }
 <section id="add-to-subscribers" class="container w-50 text-center">
-    <h3 class="h3">За най-новите изкушения</h3>
+    <h3 class="h3">@Localizer["For the latest delights"]</h3>
  
         <div class="input-group">
         <input asp-for="EmailSubscriber" type="email"
                    class="form-control"
                    id="email"
-                   placeholder="Имейл..."
+               placeholder="@Localizer["Email..."]"
                name="EmailSubscriber" />
-            <button type="submit" class="btn btn-lg">Запиши ме!</button>
+        <button type="submit" class="btn btn-lg">@Localizer["Sign me up!"]</button>
         </div>
     <span asp-validation-for="@Model.EmailSubscriber" class="text-danger" style="font-size: 12px"></span>
         <div class="form-check">
@@ -19,15 +21,15 @@
                    name="PrivacyPolicyCheckBox"
                    class="form-check-input"
                    data-val="true"
-                   data-val-mustbetrue="Потвърдете съгласието с политиката за поверителност." />
+                   data-val-mustbetrue="@Localizer["Confirm agreement with the privacy policy."]" />
                 <div class="d-flex justify-content-between">
                     <small>
-                        Съгласен съм
+                    @Localizer["I agree"]
                     <a asp-controller="TermsConditions"
                            target="_blank"
-                           style="color: rgb(var(--app-btn-bg))">условията</a>
+                       style="color: rgb(var(--app-btn-bg))">@Localizer["the conditions"]</a>
                     </small>
-                    <small style="margin-left: 120px">Изпращаме имейл до 1 път месечно.</small>
+                <small style="margin-left: 120px">@Localizer["We send an email up to 1 time per month."]</small>
                 </div>
             </label>
         </div>
