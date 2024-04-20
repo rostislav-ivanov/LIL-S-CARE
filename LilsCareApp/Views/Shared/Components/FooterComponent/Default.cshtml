@@ -1,4 +1,6 @@
-﻿@{
+﻿@inject IViewLocalizer Localizer
+
+@{
 }
 <div class="d-flex justify-content-center"
      style="background-color: rgb(var(--app-bg-secondary))">
@@ -14,8 +16,8 @@
             </g>
         </svg>
         <span style="font: var(--font_6); font-size: 18px; text-align: center">
-            <p>РАСТИТЕЛНИ И</p>
-            <p>БИО СЪСТАВКИ</p>
+            <p>@Localizer["VEGETABLE AND"]</p>
+            <p>@Localizer["BIO INGREDIENTS"]</p>
         </span>
     </div>
     <div style="width: 30%">
@@ -38,8 +40,8 @@
             </g>
         </svg>
         <span style="font: var(--font_6); font-size: 18px; text-align: center">
-            <p>НЕЖНИ ФОРМУЛИ</p>
-            <p>БЕЗ АЛКОХОЛ</p>
+            <p>@Localizer["GENTLE FORMULAS"]</p>
+            <p>@Localizer["ALCOHOL-FREE"]</p>
         </span>
     </div>
     <div style="width: 35%">
@@ -73,8 +75,8 @@
             </g>
         </svg>
         <span style="font-size: 18px; text-align: center">
-            <p>ДОМАШНО</p>
-            <p>ПРИГОТВЕНИ</p>
+            <p>@Localizer["HOMEMADE"]</p>
+            <p>@Localizer["READY"]</p>
         </span>
     </div>
 </div>
@@ -104,25 +106,25 @@
               letter-spacing: 0.1em;
             ">
             <li class="nav-item">
-                <a class="nav-link" asp-controller="Products">ПРОДУКТИ</a>
+                <a class="nav-link" asp-controller="Products">@Localizer["PRODUCTS"]</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/#about-us">ЗА НАС</a>
+                <a class="nav-link" href="/#about-us">@Localizer["ABOUT US"]</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" asp-controller="Ingredients">СЪСТАВКИТЕ</a>
+                <a class="nav-link" asp-controller="Ingredients">@Localizer["THE INGREDIENTS"]</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" asp-controller="Skin"> ЗА КОЖАТА </a>
+                <a class="nav-link" asp-controller="Skin">@Localizer["FOR THE SKIN"]</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" target="_blank" asp-controller="TermsConditions">
-                    ПОЛИТИКА ЗА ПОВЕРИТЕЛНОСТ
+                    @Localizer["PRIVACY POLICY"]
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" target="_blank" asp-controller="ShippingReturns">
-                    УСЛОВИЯ, ДОСТАВКА И ВРЪЩАНЕ
+                    @Localizer["TERMS, DELIVERY AND RETURNS"]
                 </a>
             </li>
         </ul>
@@ -130,7 +132,7 @@
     <div style="width: 35%">
         <p style="font: var(--font_5); font-size: 22px">
             <a class="nav-link" href="https://www.lilscare.com" target="_self">
-                ЗА ВРЪЗКА
+                @Localizer["CONTACTS"]
             </a>
         </p>
         <p style="font-size: 17px">

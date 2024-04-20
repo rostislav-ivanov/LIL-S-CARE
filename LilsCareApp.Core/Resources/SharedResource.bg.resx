@@ -132,6 +132,9 @@
   <data name="InvalidEmailAddress" xml:space="preserve">
     <value>Невалиден имейл адрес.</value>
   </data>
+  <data name="InvalidPhoneNumber" xml:space="preserve">
+    <value>Невалиден телефонен номер</value>
+  </data>
   <data name="LastName" xml:space="preserve">
     <value>фамилия</value>
   </data>

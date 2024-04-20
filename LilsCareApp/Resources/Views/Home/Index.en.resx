@@ -117,37 +117,119 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Address" xml:space="preserve">
-    <value>address</value>
+  <data name="100% NATURAL SKIN CARE" xml:space="preserve">
+    <value>100% NATURAL SKIN CARE</value>
   </data>
-  <data name="Country" xml:space="preserve">
-    <value>country</value>
+  <data name="ALUMINUM AND GLASS. AND THE CARDBOARD BOXES AND THE FILLING ARE 100%&#xD;&#xA;RECYCLED PRODUCT FROM BULGARIA" xml:space="preserve">
+    <value>ALUMINUM AND GLASS. AND THE CARDBOARD BOXES AND THE FILLING ARE 100%
+RECYCLED PRODUCT FROM BULGARIA</value>
+  </data>
+  <data name="AND FOR NATURE" xml:space="preserve">
+    <value>AND FOR NATURE</value>
+  </data>
+  <data name="AND FOR THE SKIN" xml:space="preserve">
+    <value>AND FOR THE SKIN</value>
+  </data>
+  <data name="Ask us about the products, personal suggestions or share an opinion." xml:space="preserve">
+    <value>Ask us about the products, personal suggestions or share an opinion.</value>
+  </data>
+  <data name="Confirm agreement with the privacy policy." xml:space="preserve">
+    <value>Confirm agreement with the privacy policy.</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>email</value>
+    <value>Email</value>
   </data>
-  <data name="FirstName" xml:space="preserve">
-    <value>first name</value>
+  <data name="First Name" xml:space="preserve">
+    <value>First Name</value>
   </data>
-  <data name="InvalidEmailAddress" xml:space="preserve">
-    <value>Invalid email address</value>
+  <data name="FOCUS ON YOU" xml:space="preserve">
+    <value>FOCUS ON YOU</value>
   </data>
-  <data name="InvalidPhoneNumber" xml:space="preserve">
-    <value>Invalid Phone Number</value>
+  <data name="FOR US" xml:space="preserve">
+    <value>FOR US</value>
   </data>
-  <data name="LastName" xml:space="preserve">
-    <value>last name</value>
+  <data name="GENTLE FORMULAS" xml:space="preserve">
+    <value>GENTLE FORMULAS</value>
   </data>
-  <data name="PhoneNumber" xml:space="preserve">
-    <value>phone number</value>
+  <data name="HANDMADE" xml:space="preserve">
+    <value>HANDMADE</value>
   </data>
-  <data name="PostCode" xml:space="preserve">
-    <value>post code</value>
+  <data name="Handmade 100% natural skin care with ingredients from" xml:space="preserve">
+    <value>Handmade 100% natural skin care with ingredients from
+Bulgaria and some with organic origin. We use eco-friendly
+packaging such as glass bottles and aluminum cans. And the cardboard ones
+shipping boxes and paper filling are completely recycled
+products from Bulgaria.</value>
   </data>
-  <data name="ResourceRequired" xml:space="preserve">
-    <value>The field {0} is required.</value>
+  <data name="I agree" xml:space="preserve">
+    <value>I agree</value>
   </data>
-  <data name="Town" xml:space="preserve">
-    <value>town</value>
+  <data name="INGREDIENTS FROM BULGARIA AND BIO ORIGIN. ALCOHOL-FREE. CREATED YES NOURISH, HYDRATE AND PROTECT" xml:space="preserve">
+    <value>INGREDIENTS FROM BULGARIA AND BIO ORIGIN. ALCOHOL-FREE. CREATED YES
+                         NOURISH, HYDRATE AND PROTECT</value>
+  </data>
+  <data name="It has a pleasant action and a relaxing aroma." xml:space="preserve">
+    <value>It has a pleasant action and a relaxing aroma.</value>
+  </data>
+  <data name="Last Name" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="LIL'S CARE is handmade natural skin care. Homemade with Bulgarian and organic ingredients. With gentle formulas and with care for a soft feel." xml:space="preserve">
+    <value>LIL'S CARE is handmade natural skin care. Homemade with Bulgarian and organic ingredients. With gentle formulas and with care for a soft feel.</value>
+  </data>
+  <data name="MOISTURIZING LOTION WITH CALENDULUS" xml:space="preserve">
+    <value>MOISTURIZING LOTION WITH CALENDULUS</value>
+  </data>
+  <data name="OUR FAVORITES" xml:space="preserve">
+    <value>OUR FAVORITES</value>
+  </data>
+  <data name="OUR PACKAGING" xml:space="preserve">
+    <value>OUR PACKAGING</value>
+  </data>
+  <data name="Section1Description" xml:space="preserve">
+    <value>I am constantly updating and improving products. It's no surprise that
+if the same ones are no longer available or have a new, slightly different label and
+composition.</value>
+  </data>
+  <data name="SEE HERE" xml:space="preserve">
+    <value>SEE HERE</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="SERUM OIL WITH ROSE BORN AND JOJOBA" xml:space="preserve">
+    <value>SERUM OIL WITH ROSE BORN AND JOJOBA</value>
+  </data>
+  <data name="Soft and pleasant feeling" xml:space="preserve">
+    <value>Soft and pleasant feeling. Simple, gentle and effective formulas that
+hydrate, nourish and protect. They do not contain a drying agent
+alcohol, artificial colors, bleaches or other potential
+aggressive ingredients. The skin is our barrier from the external environment and for
+it is important that we also keep her and take care of her</value>
+  </data>
+  <data name="TAKE A LOOK" xml:space="preserve">
+    <value>TAKE A LOOK</value>
+  </data>
+  <data name="the conditions" xml:space="preserve">
+    <value>the conditions</value>
+  </data>
+  <data name="The lotion is suitable for all skin types" xml:space="preserve">
+    <value>The lotion is suitable for all skin types, including sensitive skin. Delicate, absorbs quickly and leaves no greasy residue. It has a soothing effect thanks to the combination of ingredients such as calendula extract, apricot kernel oil and vitamin E. Other important ingredients are hyaluronic acid, which helps with hydration, and niacinamide (vitamin B3), which has an antioxidant and balancing effect.</value>
+  </data>
+  <data name="We send an email 1 to 2 times a month." xml:space="preserve">
+    <value>We send an email 1 to 2 times a month.</value>
+  </data>
+  <data name="With Bulgarian organic rosehip oil" xml:space="preserve">
+    <value>With Bulgarian organic rosehip oil, organic strawberry seed oils, argan and jojoba. It contains natural ceramides and has an antioxidant effect with vitamin E, which fights free radicals and environmental skin damage. The serum is non-comedogenic and perfectly "locks" hydration and protects the skin.</value>
+  </data>
+  <data name="WITH LOVE" xml:space="preserve">
+    <value>WITH LOVE</value>
+  </data>
+  <data name="Write a message..." xml:space="preserve">
+    <value>Write a message...</value>
+  </data>
+  <data name="Your experience will always be our first priority - to deliver" xml:space="preserve">
+    <value>Your experience will always be our first priority - to deliver
+high quality product suitable for you.</value>
   </data>
 </root>

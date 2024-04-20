@@ -117,37 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Address" xml:space="preserve">
-    <value>address</value>
+  <data name="Addresses" xml:space="preserve">
+    <value>Адреси</value>
   </data>
-  <data name="Country" xml:space="preserve">
-    <value>country</value>
+  <data name="Delivery method" xml:space="preserve">
+    <value>Метод за доставка</value>
   </data>
-  <data name="Email" xml:space="preserve">
-    <value>email</value>
+  <data name="Delivery to courier office" xml:space="preserve">
+    <value>Доставка до офис на куриер</value>
   </data>
-  <data name="FirstName" xml:space="preserve">
-    <value>first name</value>
+  <data name="Delivery to customer address" xml:space="preserve">
+    <value>Доставка до адрес на клиент</value>
   </data>
-  <data name="InvalidEmailAddress" xml:space="preserve">
-    <value>Invalid email address</value>
-  </data>
-  <data name="InvalidPhoneNumber" xml:space="preserve">
-    <value>Invalid Phone Number</value>
-  </data>
-  <data name="LastName" xml:space="preserve">
-    <value>last name</value>
-  </data>
-  <data name="PhoneNumber" xml:space="preserve">
-    <value>phone number</value>
-  </data>
-  <data name="PostCode" xml:space="preserve">
-    <value>post code</value>
-  </data>
-  <data name="ResourceRequired" xml:space="preserve">
-    <value>The field {0} is required.</value>
-  </data>
-  <data name="Town" xml:space="preserve">
-    <value>town</value>
+  <data name="No supplier selected..." xml:space="preserve">
+    <value>Няма избран доставчик...</value>
   </data>
 </root>

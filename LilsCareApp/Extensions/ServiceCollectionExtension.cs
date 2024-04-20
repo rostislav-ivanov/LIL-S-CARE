@@ -1,12 +1,10 @@
 ﻿using LilsCareApp.Core.Configurations;
 using LilsCareApp.Core.Contracts;
-using LilsCareApp.Core.Resources;
 using LilsCareApp.Core.Services;
 using LilsCareApp.Infrastructure.Data;
 using LilsCareApp.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -74,21 +72,21 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
-        public static IServiceCollection AddAppLocalization(this IServiceCollection services)
-        {
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
+        //public static IServiceCollection AddAppLocalization(this IServiceCollection services)
+        //{
+        //    services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-            services.AddControllersWithViews()
-                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-                .AddDataAnnotationsLocalization(options =>
-                {
-                    options.DataAnnotationLocalizerProvider = (type, factory) =>
-                        factory.Create(typeof(SharedResource));
-                });
-            services.AddMvc();
+        //    services.AddControllersWithViews()
+        //        .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+        //        .AddDataAnnotationsLocalization(options =>
+        //        {
+        //            options.DataAnnotationLocalizerProvider = (type, factory) =>
+        //                factory.Create(typeof(SharedResource));
+        //        });
+        //    services.AddMvc();
 
-            return services;
-        }
+        //    return services;
+        //}
 
         public static IServiceCollection AddAppAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
