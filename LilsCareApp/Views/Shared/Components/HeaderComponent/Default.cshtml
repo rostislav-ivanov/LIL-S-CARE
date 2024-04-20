@@ -24,16 +24,36 @@
             <div class="container-fluid">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Index">НАЧАЛО</a>
+                        <a class="nav-link @(ViewData["Title"] == "Home" ? "active" : "")"
+                           asp-area=""
+                           asp-controller="Home"
+                           asp-action="Index">
+                            НАЧАЛО
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Products" asp-action="Index">ПРОДУКТИ</a>
+                        <a class="nav-link @(ViewData["Title"] == "Products" ? "active" : "")"
+                           asp-area=""
+                           asp-controller="Products"
+                           asp-action="Index">
+                            ПРОДУКТИ
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Ingredients" asp-action="Index">СЪСТАВКИ</a>
+                        <a class="nav-link @(ViewData["Title"] == "Ingredients" ? "active" : "")"
+                           asp-area=""
+                           asp-controller="Ingredients"
+                           asp-action="Index">
+                            СЪСТАВКИ
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Skin" asp-action="Index">ЗА КОЖАТА</a>
+                        <a class="nav-link @(ViewData["Title"] == "Skin" ? "active" : "")"
+                           asp-area=""
+                           asp-controller="Skin"
+                           asp-action="Index">
+                            ЗА КОЖАТА
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -52,11 +72,11 @@
     </a>
     <!-- Brand Logo End -->
     <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg" >
+    <nav class="navbar navbar-expand-lg">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-left:200px">
             @if (User.Identity?.IsAuthenticated ?? false)
             {
-            <!-- User Account Start -->
+                <!-- User Account Start -->
                 <li class="nav-item dropdown">
                     <a href="#"
                        class="nav-link dropdown-toggle"
@@ -76,16 +96,16 @@
                         <a class="dropdown-item" asp-controller="Account" asp-action="MyWishes">Желани продукти</a>
                         <a class="dropdown-item" asp-controller="Account" asp-action="MyAccount">Моят акаунт</a>
                         <hr class="dropdown-divider" />
-                        <form  asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                             <button class="dropdown-item" type="submit">Изход</button>
                         </form>
                     </div>
                 </li>
-            <!-- User Account End -->
+                <!-- User Account End -->
             }
             else
             {
-            <!-- Unlogin User Start-->
+                <!-- Unlogin User Start-->
                 <li class="nav-item">
                     <a class="nav-link py-2 px-0 px-lg-2"
                        asp-area="Identity" asp-page="/Account/Login">
@@ -93,7 +113,7 @@
                         <span style="margin-left: 10px">Вход</span>
                     </a>
                 </li>
-            <!-- Unlogin User End -->
+                <!-- Unlogin User End -->
             }
 
 
