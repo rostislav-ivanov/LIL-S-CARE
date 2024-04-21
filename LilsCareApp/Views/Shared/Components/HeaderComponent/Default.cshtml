@@ -1,24 +1,5 @@
-﻿@using Microsoft.AspNetCore.Localization
-@using Microsoft.Extensions.Options
-@inject IOptions<RequestLocalizationOptions> _requestLocalizationOptions
+﻿@model HeaderComponentViewModel
 @inject IViewLocalizer Localizer
-
-@{
-    Dictionary<string, string> cultures = new Dictionary<string, string>();
-
-    if (_requestLocalizationOptions?.Value?.DefaultRequestCulture != null)
-    {
-        cultures = _requestLocalizationOptions.Value.SupportedUICultures
-            .ToDictionary(c => c.Name, c => c.DisplayName);
-    }
-
-    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
-    if (!string.IsNullOrEmpty(Context.Request.QueryString.Value))
-    {
-        // Append the query string parameters to the redirect URL
-        returnUrl += Context.Request.QueryString.Value;
-    }
-}
 
 <!-- Top Bar Start -->
 <div class="text-center"
@@ -101,9 +82,9 @@
                     <a href="#"
                        class="nav-link dropdown-toggle"
                        data-bs-toggle="dropdown">
-                        @if (ViewBag.UserImagePath != null)
+                        @if (Model.UserImagePath != null)
                         {
-                            <img src="@ViewBag.UserImagePath" alt="User Image" class="rounded-circle" style="width: 30px; height: 30px" />
+                            <img src="@Model.UserImagePath" alt="User Image" class="rounded-circle" style="width: 30px; height: 30px" />
                         }
                         else
                         {
@@ -160,7 +141,7 @@
                     </svg>
                     <span class="position-absolute d-flex px-1"
                           style="top: -5px; left: 23px; font-size: 16px">
-                        @ViewBag.Count
+                        @Model.CountInBag
                     </span>
                 </a>
             </li>
@@ -174,15 +155,15 @@
                    aria-expanded="false">
                     <i class="fa-solid fa-language fs-1"></i>
                 </a>
-                <div class="dropdown-menu m-0 rounded-0">
-                    @foreach (var culture in cultures.Keys)
+                <div class="dropdown-menu m-0 rounded-0 dropdown-menu-end">
+                    @foreach (var culture in Model.Cultures.Keys)
                     {
                         <a class="dropdown-item"
                            asp-controller="Home"
                            asp-action="SetLanguage"
                            asp-route-culture="@culture"
-                           asp-route-returnUrl="@returnUrl">
-                            @cultures[culture]
+                           asp-route-returnUrl="@Model.ReturnUrl">
+                           @culture - @Model.Cultures[culture]
                         </a>
                     }
                 </div>
