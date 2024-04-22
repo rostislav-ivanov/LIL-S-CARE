@@ -37,8 +37,8 @@ namespace LilsCareApp.Core.Services
                         .Select(s => new SectionDTO
                         {
                             Id = s.Id,
-                            Title = s.Title,
-                            Description = s.Description,
+                            Title = s.Title.TitleBG,
+                            Description = s.Description.DescriptionBG,
                             SectionOrder = s.SectionOrder
                         })
                         .ToList(),
@@ -293,10 +293,28 @@ namespace LilsCareApp.Core.Services
             }
 
             int count = product.Sections.Count;
+
+            SectionTitle sectionTitle = new SectionTitle
+            {
+                TitleBG = "Нов раздел",
+                TitleEN = "New section",
+                TitleRO = "Secțiune nouă"
+            };
+
+            SectionDescription sectionDescription = new SectionDescription
+            {
+                DescriptionBG = "",
+                DescriptionEN = "",
+                DescriptionRO = ""
+            };
+
+            await _context.SectionTitles.AddAsync(sectionTitle);
+            await _context.SectionDescriptions.AddAsync(sectionDescription);
+
             Section section = new Section
             {
-                Title = "",
-                Description = "",
+                Title = sectionTitle,
+                Description = sectionDescription,
                 SectionOrder = count + 1,
                 ProductId = id
             };
@@ -316,8 +334,8 @@ namespace LilsCareApp.Core.Services
                 return;
             }
 
-            section.Title = title;
-            section.Description = description;
+            section.Title.TitleBG = title;
+            section.Description.DescriptionBG = description;
             await _context.SaveChangesAsync();
         }
 

@@ -56,8 +56,18 @@ namespace LilsCareApp.Core.Services
                         .Select(s => new SectionDTO
                         {
                             Id = s.Id,
-                            Title = s.Title,
-                            Description = s.Description,
+                            Title = new Dictionary<string, string>
+                            {
+                                { Bulgarian, s.Title.TitleBG },
+                                { Romanian, s.Title.TitleRO },
+                                { English, s.Title.TitleEN }
+                            }[language],
+                            Description = new Dictionary<string, string>
+                            {
+                                { Bulgarian, s.Description.DescriptionBG },
+                                { Romanian, s.Description.DescriptionRO },
+                                { English, s.Description.DescriptionEN }
+                            }[language],
                             SectionOrder = s.SectionOrder
                         })
                         .ToList(),
