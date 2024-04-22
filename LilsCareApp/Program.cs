@@ -9,7 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAppDbContext(builder.Configuration);
 builder.Services.AddAppIdentity();
-//builder.Services.AddAppLocalization();
 builder.Services.AddAppAuthentication(builder.Configuration);
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.Services.Configure<RequestLocalizationOptions>(options =>
@@ -25,7 +24,6 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.RequestCultureProviders = new List<IRequestCultureProvider>
     {
         new CookieRequestCultureProvider(),
-        //new QueryStringRequestCultureProvider(),
     };
 });
 
