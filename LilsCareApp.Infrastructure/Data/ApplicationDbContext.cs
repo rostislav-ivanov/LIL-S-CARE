@@ -14,6 +14,8 @@ namespace LilsCareApp.Infrastructure.Data
 
         public DbSet<Product> Products { get; set; } = null!;
 
+        public DbSet<ProductName> ProductNames { get; set; } = null!;
+
         public DbSet<Category> Categories { get; set; } = null!;
 
         public DbSet<ProductCategory> ProductsCategories { get; set; } = null!;
@@ -72,6 +74,7 @@ namespace LilsCareApp.Infrastructure.Data
 
             builder.ApplyConfiguration(new AppUserConfiguration());
             builder.ApplyConfiguration(new ProductsConfiguration());
+            builder.ApplyConfiguration(new ProductNamesConfiguration());
             builder.ApplyConfiguration(new CategoriesConfiguration());
             builder.ApplyConfiguration(new ProductsCategoriesConfiguration());
             builder.ApplyConfiguration(new SectionsConfiguration());

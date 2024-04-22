@@ -12,9 +12,12 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Key]
         public int Id { get; set; }
 
-        [Comment("The product's name")]
+        [Comment("The product's nameId")]
         [MaxLength(NameMaxLength)]
-        public required string Name { get; set; }
+        public int NameId { get; set; }
+
+        [ForeignKey(nameof(NameId))]
+        public ProductName Name { get; set; } = null!;
 
         [Comment("The product's price")]
         [Column(TypeName = "decimal(18,2)")]

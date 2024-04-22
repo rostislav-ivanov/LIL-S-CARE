@@ -2,9 +2,11 @@
 
 namespace LilsCareApp.Core.Contracts
 {
-    public interface IGuestSessionManager
+    public interface IHttpContextManager
     {
         GuestSession? GetSession();
         void SetSession(GuestSession? session);
+
+        string GetLanguage();
     }
 }

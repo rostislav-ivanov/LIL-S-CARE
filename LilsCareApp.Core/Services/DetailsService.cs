@@ -5,17 +5,21 @@ using LilsCareApp.Infrastructure.Data;
 using LilsCareApp.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
+using static LilsCareApp.Infrastructure.DataConstants.Language;
 
 namespace LilsCareApp.Core.Services
 {
     public class DetailsService : IDetailsService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHttpContextManager _httpContextManager;
+
         private const string patternVideo = @"\.mp(4)?$";
 
-        public DetailsService(ApplicationDbContext context)
+        public DetailsService(ApplicationDbContext context, IHttpContextManager httpContextManager)
         {
             _context = context;
+            _httpContextManager = httpContextManager;
         }
 
         public async Task<DetailsDTO> GetDetailsByIdAsync(int productId, string appUserId)
@@ -25,11 +29,18 @@ namespace LilsCareApp.Core.Services
                 return null;
             }
 
+            var language = _httpContextManager.GetLanguage();
+
             var details = await _context.Products
                 .Select(p => new DetailsDTO
                 {
                     Id = p.Id,
-                    Name = p.Name,
+                    Name = new Dictionary<string, string>
+                    {
+                        { Bulgarian, p.Name.NameBG },
+                        { Romanian, p.Name.NameRO },
+                        { English, p.Name.NameEN }
+                    }[language],
                     Price = p.Price,
                     Quantity = 1,
                     AvailableQuantity = p.Quantity,
@@ -103,12 +114,19 @@ namespace LilsCareApp.Core.Services
                 return null;
             }
 
+            var language = _httpContextManager.GetLanguage();
+
             AddReviewDTO? review = await _context.Reviews
                 .Where(r => r.ProductId == productId && r.AuthorId == userId)
                 .Select(r => new AddReviewDTO
                 {
                     ProductId = r.ProductId,
-                    ProductName = r.Product.Name,
+                    ProductName = new Dictionary<string, string>
+                    {
+                        { Bulgarian, r.Product.Name.NameBG },
+                        { Romanian, r.Product.Name.NameRO },
+                        { English, r.Product.Name.NameEN }
+                    }[language],
                     ProductImage = r.Product.Images.FirstOrDefault(im => im.ImageOrder == 1).ImagePath,
                     AuthorId = r.AuthorId,
                     AuthorName = r.Author.UserName ?? string.Empty,
@@ -136,7 +154,12 @@ namespace LilsCareApp.Core.Services
                     .Select(p => new AddReviewDTO
                     {
                         ProductId = p.Id,
-                        ProductName = p.Name,
+                        ProductName = new Dictionary<string, string>
+                        {
+                            { Bulgarian, p.Name.NameBG },
+                            { Romanian, p.Name.NameRO },
+                            { English, p.Name.NameEN }
+                        }[language],
                         ProductImage = p.Images.FirstOrDefault().ImagePath,
                         AuthorId = userId,
                         AuthorName = _context.Users.Find(userId).UserName ?? string.Empty,

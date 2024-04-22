@@ -3,16 +3,19 @@ using LilsCareApp.Core.Models.Checkout;
 using LilsCareApp.Infrastructure.Data;
 using LilsCareApp.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using static LilsCareApp.Infrastructure.DataConstants.Language;
 
 namespace LilsCareApp.Core.Services
 {
     public class CheckoutService : ICheckoutService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHttpContextManager _httpContextManager;
 
-        public CheckoutService(ApplicationDbContext context)
+        public CheckoutService(ApplicationDbContext context, IHttpContextManager httpContextManager)
         {
             _context = context;
+            _httpContextManager = httpContextManager;
         }
 
 
@@ -185,6 +188,8 @@ namespace LilsCareApp.Core.Services
         // get order summary by order number
         public async Task<OrderSummaryDTO> OrderSummaryAsync(string orderSNumber)
         {
+            var language = _httpContextManager.GetLanguage();
+
             OrderSummaryDTO? orderSummary = await _context.Orders
                 .Where(o => o.OrderNumber == orderSNumber)
                 .Select(o => new OrderSummaryDTO()
@@ -209,7 +214,13 @@ namespace LilsCareApp.Core.Services
                         .Select(po => new ProductOrderDTO()
                         {
                             Id = po.Product.Id,
-                            Name = po.Product.Name,
+                            //Name = po.Product.Name,
+                            Name = new Dictionary<string, string>
+                            {
+                                { Bulgarian, po.Product.Name.NameBG },
+                                { Romanian, po.Product.Name.NameRO },
+                                { English, po.Product.Name.NameEN }
+                            }[language],
                             ImagePath = po.ImagePath,
                             Quantity = po.Quantity,
                             Price = po.Price,

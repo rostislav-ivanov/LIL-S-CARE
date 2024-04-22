@@ -27,7 +27,7 @@ namespace LilsCareApp.Core.Services
              .Select(p => new AdminDetailsDTO
              {
                  Id = p.Id,
-                 Name = p.Name,
+                 Name = p.Name.NameBG,
                  Price = p.Price,
                  AvailableQuantity = p.Quantity,
                  Optional = p.Optional,
@@ -84,7 +84,12 @@ namespace LilsCareApp.Core.Services
         {
             Product product = new Product()
             {
-                Name = "Нов продукт",
+                Name = new ProductName
+                {
+                    NameBG = "Нов продукт",
+                    NameEN = "New product",
+                    NameRO = "Produs nou"
+                },
                 Optional = "",
             };
 
@@ -95,7 +100,7 @@ namespace LilsCareApp.Core.Services
             AdminDetailsDTO details = new AdminDetailsDTO
             {
                 Id = product.Id,
-                Name = product.Name,
+                Name = product.Name.NameBG,
                 Price = product.Price,
                 Quantity = product.Quantity,
                 Optional = product.Optional,
@@ -113,7 +118,12 @@ namespace LilsCareApp.Core.Services
                 .Where(p => p.Id == id)
                 .Select(p => new Product
                 {
-                    Name = "Нов продукт",
+                    Name = new ProductName
+                    {
+                        NameBG = "Нов продукт",
+                        NameEN = "New product",
+                        NameRO = "Produs nou"
+                    },
                     Price = p.Price,
                     Optional = p.Optional,
                     IsShow = false,
@@ -157,7 +167,7 @@ namespace LilsCareApp.Core.Services
                 return;
             }
 
-            product.Name = name;
+            product.Name.NameBG = name;
             await _context.SaveChangesAsync();
         }
 

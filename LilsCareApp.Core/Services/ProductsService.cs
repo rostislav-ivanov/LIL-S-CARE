@@ -5,23 +5,28 @@ using LilsCareApp.Core.Models.Products;
 using LilsCareApp.Infrastructure.Data;
 using LilsCareApp.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using static LilsCareApp.Infrastructure.DataConstants.Language;
 
 namespace LilsCareApp.Core.Services
 {
     public class ProductsService : IProductsService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHttpContextManager _httpContextManager;
 
-        public ProductsService(ApplicationDbContext context)
+        public ProductsService(ApplicationDbContext context, IHttpContextManager httpContextManager)
         {
             _context = context;
+            _httpContextManager = httpContextManager;
         }
 
         public async Task<ProductsDTO> GetProductsQueryAsync(string userId, string? category, int currentPage, int productsPerPage)
         {
+            var language = _httpContextManager.GetLanguage();
+
             var productsFiltered = _context.Products
                 .Where(p => string.IsNullOrEmpty(category) || p.ProductsCategories.Any(pc => pc.Category.Name == category))
-                .ProjectToProductDTO(userId);
+                .ProjectToProductDTO(userId, language);
 
             var totalProductsCount = await productsFiltered.CountAsync();
             var products = await productsFiltered
@@ -86,12 +91,19 @@ namespace LilsCareApp.Core.Services
 
         public async Task<IEnumerable<ProductsInBagDTO>> GetProductsInBagAsync(string userId)
         {
+            var language = _httpContextManager.GetLanguage();
+
             var productsInBag = await _context.BagsUsers
                 .Where(bu => bu.AppUserId == userId)
                 .Select(bu => new ProductsInBagDTO
                 {
                     Id = bu.Product.Id,
-                    Name = bu.Product.Name,
+                    Name = new Dictionary<string, string>
+                    {
+                        { Bulgarian, bu.Product.Name.NameBG },
+                        { Romanian, bu.Product.Name.NameRO },
+                        { English, bu.Product.Name.NameEN }
+                    }[language],
                     Optional = bu.Product.Optional,
                     Price = bu.Product.Price,
                     ImageUrl = bu.Product.Images.FirstOrDefault(im => im.ImageOrder == 1).ImagePath,
@@ -155,12 +167,19 @@ namespace LilsCareApp.Core.Services
 
         public async Task<IEnumerable<ProductDTO>> GetMyWishesAsync(string userId)
         {
+            var language = _httpContextManager.GetLanguage();
+
             var products = await _context.Products
                 .Where(p => p.WishesUsers.Any(wu => wu.AppUserId == userId))
                 .Select(p => new ProductDTO
                 {
                     Id = p.Id,
-                    Name = p.Name,
+                    Name = new Dictionary<string, string>
+                    {
+                        { Bulgarian, p.Name.NameBG },
+                        { Romanian, p.Name.NameRO },
+                        { English, p.Name.NameEN }
+                    }[language],
                     Price = p.Price,
                     ImageUrl = p.Images.FirstOrDefault(im => im.ImageOrder == 1).ImagePath ?? "https://via.placeholder.com/150",
                     Quantity = p.Quantity,
@@ -195,8 +214,10 @@ namespace LilsCareApp.Core.Services
 
         public async Task<IEnumerable<ProductDTO>> GetAllAsync(string userId)
         {
+            var language = _httpContextManager.GetLanguage();
+
             return await _context.Products
-                .ProjectToProductDTO(userId)
+                .ProjectToProductDTO(userId, language)
                 .AsNoTracking()
                 .ToArrayAsync();
         }

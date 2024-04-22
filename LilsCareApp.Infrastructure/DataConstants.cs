@@ -107,6 +107,14 @@
             public const int DescriptionMinLength = 3;
             public const int DescriptionMaxLength = 1500;
         }
+
+        public static class Language
+        {
+            public const string English = "en";
+            public const string Bulgarian = "bg";
+            public const string Romanian = "ro";
+            public const string Default = "en";
+        }
     }
 }
 

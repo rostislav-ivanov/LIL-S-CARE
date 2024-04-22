@@ -4,24 +4,25 @@ using LilsCareApp.Core.Models.GuestUser;
 using LilsCareApp.Infrastructure.Data;
 using LilsCareApp.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using static LilsCareApp.Infrastructure.DataConstants.Language;
 
 namespace LilsCareApp.Core.Services
 {
     public class GuestService : IGuestService
     {
-        private readonly IGuestSessionManager _sessionManager;
+        private readonly IHttpContextManager _httpContextManager;
         private readonly ApplicationDbContext _context;
 
-        public GuestService(IGuestSessionManager sessionManager, ApplicationDbContext context)
+        public GuestService(IHttpContextManager httpContextManager, ApplicationDbContext context)
         {
-            _sessionManager = sessionManager;
+            _httpContextManager = httpContextManager;
             _context = context;
         }
 
         // AddToCart method is used to add a product to the guest's bag.
         public void AddToCart(int productId, int quantity)
         {
-            GuestSession? session = _sessionManager.GetSession();
+            GuestSession? session = _httpContextManager.GetSession();
             if (session == null)
             {
                 return;
@@ -41,13 +42,13 @@ namespace LilsCareApp.Core.Services
                 bag.Quantity += quantity;
             }
 
-            _sessionManager.SetSession(session);
+            _httpContextManager.SetSession(session);
         }
 
         // DeleteProductFromCart method is used to delete a product from the guest's bag.
         public void DeleteProductFromCart(int id)
         {
-            GuestSession? session = _sessionManager.GetSession();
+            GuestSession? session = _httpContextManager.GetSession();
 
             if (session == null)
             {
@@ -56,14 +57,14 @@ namespace LilsCareApp.Core.Services
 
             session.GuestBags.RemoveAll(b => b.ProductId == id);
 
-            _sessionManager.SetSession(session);
+            _httpContextManager.SetSession(session);
         }
 
 
         // GetCountInBag method is used to get the total number of products in the guest's bag.
         public int GetCountInBag()
         {
-            GuestSession? session = _sessionManager.GetSession();
+            GuestSession? session = _httpContextManager.GetSession();
 
             return session?.GuestBags.Sum(gb => gb.Quantity) ?? 0;
         }
@@ -72,7 +73,7 @@ namespace LilsCareApp.Core.Services
         // GetProductsInBagAsync method is used to get the products in the guest's bag.
         public async Task<IEnumerable<ProductsInBagDTO>> GetProductsInBagAsync()
         {
-            GuestSession? session = _sessionManager.GetSession();
+            GuestSession? session = _httpContextManager.GetSession();
 
             if (session == null)
             {
@@ -80,6 +81,7 @@ namespace LilsCareApp.Core.Services
             }
 
             List<ProductsInBagDTO> productsInBagDTOs = new List<ProductsInBagDTO>();
+            var language = _httpContextManager.GetLanguage();
 
             foreach (var guestProduct in session.GuestBags)
             {
@@ -88,7 +90,12 @@ namespace LilsCareApp.Core.Services
                     .Select(p => new ProductsInBagDTO
                     {
                         Id = p.Id,
-                        Name = p.Name,
+                        Name = new Dictionary<string, string>
+                        {
+                            { Bulgarian, p.Name.NameBG },
+                            { Romanian, p.Name.NameRO },
+                            { English, p.Name.NameEN }
+                        }[language],
                         Optional = p.Optional,
                         Price = p.Price,
                         ImageUrl = p.Images!.FirstOrDefault()!.ImagePath,
@@ -110,11 +117,11 @@ namespace LilsCareApp.Core.Services
         // ClearBag method is used to remove all products form the guest's bag.
         public void ClearBag()
         {
-            GuestSession? session = _sessionManager.GetSession();
+            GuestSession? session = _httpContextManager.GetSession();
 
             session?.GuestBags.Clear();
 
-            _sessionManager.SetSession(session);
+            _httpContextManager.SetSession(session);
         }
 
 
@@ -223,7 +230,7 @@ namespace LilsCareApp.Core.Services
 
         public GuestSession GetSession()
         {
-            return _sessionManager.GetSession();
+            return _httpContextManager.GetSession();
         }
     }
 }

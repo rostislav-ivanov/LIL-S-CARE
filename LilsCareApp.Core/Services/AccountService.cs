@@ -4,16 +4,19 @@ using LilsCareApp.Core.Models.Checkout;
 using LilsCareApp.Infrastructure.Data;
 using LilsCareApp.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using static LilsCareApp.Infrastructure.DataConstants.Language;
 
 namespace LilsCareApp.Core.Services
 {
     public class AccountService : IAccountService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHttpContextManager _httpContextManager;
 
-        public AccountService(ApplicationDbContext context)
+        public AccountService(ApplicationDbContext context, IHttpContextManager httpContextManager)
         {
             _context = context;
+            _httpContextManager = httpContextManager;
         }
 
         // Get the user account details
@@ -77,6 +80,8 @@ namespace LilsCareApp.Core.Services
         // Get all orders of the user
         public async Task<IEnumerable<MyOrderDTO>> GetMyOrdersAsync(string userId)
         {
+            var language = _httpContextManager.GetLanguage();
+
             return await _context.Orders
                 .Where(o => o.AppUserId == userId)
                 .OrderByDescending(o => o.CreatedOn)
@@ -91,7 +96,12 @@ namespace LilsCareApp.Core.Services
                         .Select(op => new MyProductOrderDTO
                         {
                             ProductId = op.ProductId,
-                            ProductName = op.Product.Name,
+                            ProductName = new Dictionary<string, string>
+                            {
+                                { Bulgarian, op.Product.Name.NameBG },
+                                { Romanian, op.Product.Name.NameRO },
+                                { English, op.Product.Name.NameEN }
+                            }[language],
                             ImagePath = op.ImagePath,
                             Quantity = op.Quantity,
                             Price = op.Price,

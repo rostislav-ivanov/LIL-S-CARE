@@ -52,7 +52,7 @@ namespace LilsCareApp.Core.Services
                         .Select(po => new ProductsOrdersDTO
                         {
                             Id = po.Product.Id,
-                            Name = po.Product.Name,
+                            Name = po.Product.Name.NameBG,
                             Quantity = po.Quantity,
                             Price = po.Price,
                             ImageUrl = po.ImagePath,
@@ -74,7 +74,7 @@ namespace LilsCareApp.Core.Services
                 .Select(p => new ProductsNamesDTO
                 {
                     Id = p.Id,
-                    Name = p.Name
+                    Name = p.Name.NameBG
                 })
                 .AsNoTracking()
                 .ToListAsync();

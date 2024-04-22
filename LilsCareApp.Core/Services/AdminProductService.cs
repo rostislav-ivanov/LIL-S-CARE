@@ -21,12 +21,12 @@ namespace LilsCareApp.Core.Services
             int productsPerPage)
         {
             var productsFiltered = _context.Products
-                .Where(p => string.IsNullOrEmpty(search) || p.Id.ToString() == search || p.Name.ToUpper().Contains(search.ToUpper()))
+                .Where(p => string.IsNullOrEmpty(search) || p.Id.ToString() == search || p.Name.NameBG.ToUpper().Contains(search.ToUpper()))
                 .Select(p => new AdminProductDTO
                 {
                     Id = p.Id,
                     ImagePath = p.Images.OrderBy(im => im.ImageOrder).FirstOrDefault().ImagePath,
-                    Name = p.Name,
+                    Name = p.Name.NameBG,
                     Price = p.Price,
                     Quantity = p.Quantity,
                     IsShow = p.IsShow,
