@@ -56,7 +56,7 @@ namespace LilsCareApp.Core.Services
                             Quantity = po.Quantity,
                             Price = po.Price,
                             ImageUrl = po.ImagePath,
-                            Optional = po.Product.Optional
+                            Optional = po.Product.Optional.OptionalBG,
                         })
                         .ToList(),
                     ShippingPrice = o.ShippingPrice,

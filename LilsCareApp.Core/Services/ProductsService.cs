@@ -104,7 +104,12 @@ namespace LilsCareApp.Core.Services
                         { Romanian, bu.Product.Name.NameRO },
                         { English, bu.Product.Name.NameEN }
                     }[language],
-                    Optional = bu.Product.Optional,
+                    Optional = new Dictionary<string, string>
+                    {
+                        { English, bu.Product.Optional.OptionalEN },
+                        { Bulgarian, bu.Product.Optional.OptionalBG },
+                        { Romanian,bu.Product.Optional.OptionalRO },
+                    }[language],
                     Price = bu.Product.Price,
                     ImageUrl = bu.Product.Images.FirstOrDefault(im => im.ImageOrder == 1).ImagePath,
                     Quantity = bu.Quantity

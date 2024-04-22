@@ -73,8 +73,9 @@ namespace LilsCareApp.Infrastructure.Data
 
 
             builder.ApplyConfiguration(new AppUserConfiguration());
-            builder.ApplyConfiguration(new ProductsConfiguration());
             builder.ApplyConfiguration(new ProductNamesConfiguration());
+            builder.ApplyConfiguration(new ProductOptionalConfiguration());
+            builder.ApplyConfiguration(new ProductsConfiguration());
             builder.ApplyConfiguration(new CategoriesConfiguration());
             builder.ApplyConfiguration(new ProductsCategoriesConfiguration());
             builder.ApplyConfiguration(new SectionsConfiguration());

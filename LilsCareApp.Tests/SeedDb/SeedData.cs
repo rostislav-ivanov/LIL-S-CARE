@@ -379,66 +379,108 @@ namespace LilsCareApp.Tests.SeedDb
 
 
 
-        public IEnumerable<Product> Products = new List<Product>
-        {
-                new Product
+        public IEnumerable<Product> Products =
+        [
+                new ()
                 {
                     Id = 1,
+                    NameId = 1,
                     Price = 5.50m,
                     Quantity = 10,
-                    Optional = "Тегло:  25 г.",
+                    Optional = new ProductOptional//"Тегло:  25 г.",
+                    {
+                        OptionalEN = "Weight:  25 g.",
+                        OptionalBG = "Тегло:  25 г.",
+                        OptionalRO = "Greutate:  25 g.",
+                    },
                     IsShow = true,
                 },
-                new Product
+                new ()
                 {
                     Id = 2,
+                    NameId = 2,
                     Price = 4.00m,
-                    Optional = "Тегло:  5 г.",
+                    Optional = new ProductOptional //"Тегло:  5 г.",
+                    {
+                        OptionalEN = "Weight:  5 g.",
+                        OptionalBG = "Тегло:  5 г.",
+                        OptionalRO = "Greutate:  5 g.",
+                    },
                     Quantity = 20,
                     IsShow = true,
                 },
-                new Product
+                new ()
                 {
                     Id = 3,
+                    NameId = 3,
                     Price = 12.00m,
-                    Optional = "Тегло:  50 г.",
+                    Optional = new ProductOptional //"Тегло:  50 г.",
+                    {
+                        OptionalEN = "Weight:  50 g.",
+                        OptionalBG = "Тегло:  50 г.",
+                        OptionalRO = "Greutate:  50 g.",
+                    },
                     Quantity = 30,
                     IsShow = true,
                 },
-                new Product
+                new ()
                 {
                     Id = 4,
+                    NameId = 4,
                     Price = 10.00m,
-                    Optional = "Тегло:  100 мл.",
+                    Optional = new ProductOptional //"Тегло:  100 мл.",
+                    {
+                        OptionalEN = "Weight:  100 ml.",
+                        OptionalBG = "Тегло:  100 мл.",
+                        OptionalRO = "Greutate:  100 ml.",
+                    },
                     Quantity = 0,
                     IsShow = true,
                 },
-                new Product
+                new ()
                 {
                     Id = 5,
+                    NameId = 5,
                     Price = 8.50m,
-                   Optional = "Тегло:  50 г.",
+                    Optional = new ProductOptional //"Тегло:  50 г.",
+                    {
+                        OptionalEN = "Weight:  50 g.",
+                        OptionalBG = "Тегло:  50 г.",
+                        OptionalRO = "Greutate:  50 g.",
+                    },
                     Quantity = 10,
                     IsShow = true,
                 },
-                new Product
+                new ()
                 {
                     Id = 6,
+                    NameId = 6,
                     Price = 10.00m,
-                    Optional = "Тегло:  20 мл.",
+                    Optional = new ProductOptional //"Тегло:  20 мл.",
+                    {
+                        OptionalEN = "Weight:  20 ml.",
+                        OptionalBG = "Тегло:  20 мл.",
+                        OptionalRO = "Greutate:  20 ml.",
+                    },
                     Quantity = 20,
                     IsShow = true,
                 },
-                new Product
+                new ()
                 {
                     Id = 7,
+                    NameId = 7,
                     Price = 10.00m,
-                    Optional = "",
+                    Optional = new ProductOptional //"",
+                    {
+                        OptionalEN = "",
+                        OptionalBG = "",
+                        OptionalRO = "",
+                    },
                     Quantity = 0,
-                    IsShow = false,
+                    IsShow = true,
                 },
 
-        };
+        ];
 
 
         public IEnumerable<ProductOrder> ProductsOrders =

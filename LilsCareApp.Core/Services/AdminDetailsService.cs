@@ -30,7 +30,7 @@ namespace LilsCareApp.Core.Services
                  Name = p.Name.NameBG,
                  Price = p.Price,
                  AvailableQuantity = p.Quantity,
-                 Optional = p.Optional,
+                 Optional = p.Optional.OptionalBG,
                  Sections = p.Sections
                         .Where(s => s.ProductId == p.Id)
                         .OrderBy(s => s.SectionOrder)
@@ -90,7 +90,12 @@ namespace LilsCareApp.Core.Services
                     NameEN = "New product",
                     NameRO = "Produs nou"
                 },
-                Optional = "",
+                Optional = new ProductOptional
+                {
+                    OptionalEN = "",
+                    OptionalBG = "",
+                    OptionalRO = "",
+                },
             };
 
             await _context.Products.AddAsync(product);
@@ -103,7 +108,7 @@ namespace LilsCareApp.Core.Services
                 Name = product.Name.NameBG,
                 Price = product.Price,
                 Quantity = product.Quantity,
-                Optional = product.Optional,
+                Optional = product.Optional.OptionalBG,
                 Sections = [],
                 ProductsCategories = []
             };
@@ -459,7 +464,7 @@ namespace LilsCareApp.Core.Services
                 return;
             }
 
-            product.Optional = optional;
+            product.Optional.OptionalBG = optional;
             await _context.SaveChangesAsync();
         }
 

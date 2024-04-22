@@ -44,7 +44,12 @@ namespace LilsCareApp.Core.Services
                     Price = p.Price,
                     Quantity = 1,
                     AvailableQuantity = p.Quantity,
-                    Optional = p.Optional,
+                    Optional = new Dictionary<string, string>
+                        {
+                            { English, p.Optional.OptionalEN },
+                            { Bulgarian, p.Optional.OptionalBG },
+                            { Romanian, p.Optional.OptionalRO },
+                        }[language],
                     Sections = p.Sections
                         .Where(s => s.ProductId == p.Id)
                         .OrderBy(s => s.SectionOrder)

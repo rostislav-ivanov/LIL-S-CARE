@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace LilsCareApp.Infrastructure.Data.DataConfiguration
 {
-    public class ProductNamesConfiguration : IEntityTypeConfiguration<ProductName>
+    internal class ProductNamesConfiguration : IEntityTypeConfiguration<ProductName>
     {
         private readonly IEnumerable<ProductName> productNames =
         [
