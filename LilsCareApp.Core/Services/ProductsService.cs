@@ -136,6 +136,11 @@ namespace LilsCareApp.Core.Services
                 .AsNoTracking()
                 .ToArrayAsync();
 
+            foreach (var product in productsInBag)
+            {
+                product.Price = Math.Round(product.Price, 2);
+            }
+
             return productsInBag;
         }
 

@@ -117,6 +117,7 @@ namespace LilsCareApp.Core.Services
 
                 if (product != null)
                 {
+                    product.Price = Math.Round(product.Price, 2);
                     productsInBagDTOs.Add(product);
                 }
             }
