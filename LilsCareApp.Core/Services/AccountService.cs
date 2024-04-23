@@ -90,7 +90,12 @@ namespace LilsCareApp.Core.Services
                     Id = o.Id,
                     CreatedOn = o.CreatedOn,
                     OrderNumber = o.OrderNumber,
-                    StatusOrder = o.StatusOrder.Name,
+                    StatusOrder = new Dictionary<string, string>
+                    {
+                        { Bulgarian, o.StatusOrder.Name.NameBG },
+                        { Romanian, o.StatusOrder.Name.NameRO },
+                        { English, o.StatusOrder.Name.NameEN }
+                    }[language],
                     Total = o.Total,
                     Products = o.ProductsOrders
                         .Select(op => new MyProductOrderDTO

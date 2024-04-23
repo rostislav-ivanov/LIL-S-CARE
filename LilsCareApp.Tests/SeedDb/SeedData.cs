@@ -103,14 +103,52 @@ namespace LilsCareApp.Tests.SeedDb
 
             };
 
+        public IEnumerable<CategoryName> CategoryNames =
+        [
+            new ()
+            {
+                Id = 1,
+                NameEN = "all",
+                NameBG = "всички",
+                NameRO = "toate"
+            },
+            new ()
+            {
+                Id = 2,
+                NameEN = "body",
+                NameBG = "за тяло",
+                NameRO = "pentru corp"
+            },
+            new ()
+            {
+                Id = 3,
+                NameEN = "dry skin",
+                NameBG = "за суха кожа",
+                NameRO = "pentru piele uscata"
+            },
+            new ()
+            {
+                Id = 4,
+                NameEN = "oily skin",
+                NameBG = "за мазна кожа",
+                NameRO = "pentru piele grasa"
+            },
+            new ()
+            {
+                Id = 5,
+                NameEN = "face",
+                NameBG = "за лице",
+                NameRO = "pentru fata"
+            },
+        ];
 
         public IEnumerable<Category> Categories =
         [
-            new () { Id = 1, Name = "всички" },
-            new () { Id = 2, Name = "за тяло" },
-            new () { Id = 3, Name = "за суха кожа" },
-            new () { Id = 4, Name = "за мазна кожа" },
-            new () { Id = 5, Name = "за лице" },
+            new () { Id = 1, NameId = 1 },
+            new () { Id = 2, NameId = 2 },
+            new () { Id = 3, NameId = 3 },
+            new () { Id = 4, NameId = 4 },
+            new () { Id = 5, NameId = 5 },
         ];
 
 
@@ -344,14 +382,49 @@ namespace LilsCareApp.Tests.SeedDb
              },
         };
 
+        public IEnumerable<PaymentType> PaymentTypes =
+        [
+            new ()
+                    {
+                        Id = 1,
+                        NameEN = "Cash on delivery",
+                        NameBG = "Плащане при доставка",
+                        NameRO = "Plata la livrare",
+                    },
+                    new ()
+                    {
+                        Id = 2,
+                        NameEN = "With card",
+                        NameBG = "С карта",
+                        NameRO = "Cu cardul",
+                    },
+                    new ()
+                    {
+                        Id = 3,
+                        NameEN = "Bank transfer",
+                        NameBG = "Банков превод",
+                        NameRO = "Transfer bancar",
+                    }
+        ];
 
-
-        public IEnumerable<PaymentMethod> PaymentMethods = new List<PaymentMethod>
-        {
-            new PaymentMethod { Id = 1, Type = "Наложен платеж" },
-            new PaymentMethod { Id = 2, Type = "С карта" },
-            new PaymentMethod { Id = 3, Type = "Банков превод" }
-        };
+        public IEnumerable<PaymentMethod> PaymentMethods =
+        [
+            new()
+            {
+                Id = 1,
+                TypeId = 1,
+            },
+            new()
+            {
+                Id = 2,
+                TypeId = 2,
+            },
+            new()
+            {
+                Id = 3,
+                TypeId = 3,
+            },
+        ];
 
 
         public IEnumerable<ProductCategory> ProductsCategories =
@@ -511,6 +584,23 @@ namespace LilsCareApp.Tests.SeedDb
             },
         ];
 
+        public readonly IEnumerable<PromoCodeName> PromoCodeNames =
+        [
+            new ()
+            {
+                Id = 1,
+                NameEN = "-10 % for registration",
+                NameBG = "-10 % за регистрация",
+                NameRO = "-10 % pentru inregistrare"
+            },
+            new ()
+            {
+                Id = 2,
+                NameEN = "-20 % discount",
+                NameBG = "-20 % отстъпка",
+                NameRO = "-20 % reducere"
+            },
+        ];
 
 
         public IEnumerable<PromoCode> PromoCodes = new List<PromoCode>
@@ -518,7 +608,7 @@ namespace LilsCareApp.Tests.SeedDb
             new PromoCode
             {
                 Id = 1,
-                Code = "-10 % за регистрация",
+                CodeId = 1,
                 Discount = 0.1m,
                 ExpirationDate = DateTime.UtcNow.AddMonths(12),
                 AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef"
@@ -526,7 +616,7 @@ namespace LilsCareApp.Tests.SeedDb
             new PromoCode
             {
                 Id = 2,
-                Code = "-20 % отстъпка",
+                CodeId = 2,
                 Discount = 0.2m,
                 ExpirationDate = DateTime.UtcNow.AddMonths(12),
                 AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef"
@@ -957,14 +1047,52 @@ namespace LilsCareApp.Tests.SeedDb
             },
         };
 
+        public IEnumerable<StatusOrderName> StatusOrderNames =
+        [
+            new ()
+            {
+                Id = 1,
+                NameEN = "Unfulfilled",
+                NameBG = "Неизпълнена",
+                NameRO = "Neîndeplinită",
+            },
+            new ()
+            {
+                Id = 2,
+                NameEN = "Canceled",
+                NameBG = "Отменена",
+                NameRO = "Anulat",
+            },
+            new ()
+            {
+                Id = 3,
+                NameEN = "Fulfilled",
+                NameBG = "Изпълнена",
+                NameRO = "Îndeplinit",
+            },
+            new ()
+            {
+                Id = 4,
+                NameEN = "Received",
+                NameBG = "Получена",
+                NameRO = "Primit",
+            },
+            new ()
+            {
+                Id = 5,
+                NameEN = "Returned",
+                NameBG = "Върната",
+                NameRO = "Returnat",
+            },
+        ];
 
         public IEnumerable<StatusOrder> StatusOrders =
         [
-            new () { Id = 1, Name = "Неизпълнена" },
-            new () { Id = 2, Name = "Отменена" },
-            new () { Id = 3, Name = "Изпълнена" },
-            new () { Id = 4, Name = "Получена" },
-            new () { Id = 5, Name = "Върната" },
+            new () { Id = 1, NameId = 1 },
+            new () { Id = 2, NameId = 2 },
+            new () { Id = 3, NameId = 3 },
+            new () { Id = 4, NameId = 4 },
+            new () { Id = 5, NameId = 5 },
         ];
 
         public IEnumerable<WishUser> WishesUsers = new List<WishUser>

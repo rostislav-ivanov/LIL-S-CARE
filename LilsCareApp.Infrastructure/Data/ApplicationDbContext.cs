@@ -24,6 +24,8 @@ namespace LilsCareApp.Infrastructure.Data
 
         public DbSet<Category> Categories { get; set; } = null!;
 
+        public DbSet<CategoryName> CategoryNames { get; set; } = null!;
+
         public DbSet<ProductCategory> ProductsCategories { get; set; } = null!;
 
         public DbSet<ImageProduct> ImageProducts { get; set; } = null!;
@@ -36,9 +38,13 @@ namespace LilsCareApp.Infrastructure.Data
 
         public DbSet<Order> Orders { get; set; } = null!;
 
+        public DbSet<StatusOrderName> StatusOrderNames { get; set; } = null!;
+
         public DbSet<StatusOrder> StatusOrders { get; set; } = null!;
 
         public DbSet<ShippingProvider> ShippingProviders { get; set; } = null!;
+
+        public DbSet<PaymentType> PaymentTypes { get; set; } = null!;
 
         public DbSet<PaymentMethod> PaymentMethods { get; set; } = null!;
 
@@ -53,6 +59,8 @@ namespace LilsCareApp.Infrastructure.Data
         public DbSet<MessageFromClient> MessagesFromClients { get; set; } = null!;
 
         public DbSet<ShippingOffice> ShippingOffices { get; set; } = null!;
+
+        public DbSet<PromoCodeName> PromoCodeNames { get; set; } = null!;
 
         public DbSet<PromoCode> PromoCodes { get; set; } = null!;
 
@@ -83,21 +91,25 @@ namespace LilsCareApp.Infrastructure.Data
             builder.ApplyConfiguration(new ProductOptionalConfiguration());
             builder.ApplyConfiguration(new SectionTitleConfiguration());
             builder.ApplyConfiguration(new SectionDescriptionConfiguration());
-            builder.ApplyConfiguration(new ProductsConfiguration());
             builder.ApplyConfiguration(new CategoriesConfiguration());
+            builder.ApplyConfiguration(new CategoryNamesConfiguration());
+            builder.ApplyConfiguration(new ProductsConfiguration());
             builder.ApplyConfiguration(new ProductsCategoriesConfiguration());
             builder.ApplyConfiguration(new SectionsConfiguration());
             builder.ApplyConfiguration(new WishesUsersConfiguration());
             builder.ApplyConfiguration(new BagsUsersConfiguration());
             builder.ApplyConfiguration(new ShippingOfficeConfiguration());
+            builder.ApplyConfiguration(new StatusOrdersNameConfiguration());
             builder.ApplyConfiguration(new StatusOrdersConfiguration());
             builder.ApplyConfiguration(new ShippingProvidersConfiguration());
+            builder.ApplyConfiguration(new PaymentTypesConfiguration());
             builder.ApplyConfiguration(new PaymentMethodsConfiguration());
             builder.ApplyConfiguration(new AddressDeliveriesConfiguration());
             builder.ApplyConfiguration(new OrdersConfiguration());
             builder.ApplyConfiguration(new ProductsOrdersConfiguration());
             builder.ApplyConfiguration(new ReviewsConfiguration());
             builder.ApplyConfiguration(new ImageProductsConfiguration());
+            builder.ApplyConfiguration(new PromoCodeNameConfiguration());
             builder.ApplyConfiguration(new PromoCodeConfiguration());
 
             base.OnModelCreating(builder);

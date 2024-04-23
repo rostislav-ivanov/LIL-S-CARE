@@ -20,12 +20,12 @@ namespace LilsCareApp.Core.Services
             _httpContextManager = httpContextManager;
         }
 
-        public async Task<ProductsDTO> GetProductsQueryAsync(string userId, string? category, int currentPage, int productsPerPage)
+        public async Task<ProductsDTO> GetProductsQueryAsync(string userId, int? categoryId, int currentPage, int productsPerPage)
         {
             var language = _httpContextManager.GetLanguage();
 
             var productsFiltered = _context.Products
-                .Where(p => string.IsNullOrEmpty(category) || p.ProductsCategories.Any(pc => pc.Category.Name == category))
+                .Where(p => categoryId == null || p.ProductsCategories.Any(pc => pc.Category.Id == categoryId))
                 .ProjectToProductDTO(userId, language);
 
             var totalProductsCount = await productsFiltered.CountAsync();
@@ -42,17 +42,24 @@ namespace LilsCareApp.Core.Services
                 TotalProductsCount = totalProductsCount,
                 ProductsPerPage = productsPerPage,
                 CurrentPage = currentPage,
-                Category = category
+                CategoryId = categoryId
             };
         }
 
         public async Task<IList<CategoryDTO>> GetCategoriesAsync()
         {
+            var language = _httpContextManager.GetLanguage();
+
             var categories = await _context.Categories
                 .Select(c => new CategoryDTO
                 {
                     Id = c.Id,
-                    Name = c.Name,
+                    Name = new Dictionary<string, string>
+                    {
+                        { Bulgarian, c.Name.NameBG },
+                        { Romanian, c.Name.NameRO },
+                        { English, c.Name.NameEN }
+                    }[language],
                 })
                 .AsNoTracking()
                 .ToListAsync();

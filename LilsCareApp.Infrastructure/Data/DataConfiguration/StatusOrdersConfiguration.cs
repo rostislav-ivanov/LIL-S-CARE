@@ -8,11 +8,11 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
     {
         private readonly IEnumerable<StatusOrder> statusOrders =
         [
-            new () { Id = 1, Name = "Неизпълнена" },
-            new () { Id = 2, Name = "Отменена" },
-            new () { Id = 3, Name = "Изпълнена" },
-            new () { Id = 4, Name = "Получена" },
-            new () { Id = 5, Name = "Върната" },
+            new () { Id = 1, NameId = 1 },
+            new () { Id = 2, NameId = 2 },
+            new () { Id = 3, NameId = 3 },
+            new () { Id = 4, NameId = 4 },
+            new () { Id = 5, NameId = 5 },
         ];
 
         public void Configure(EntityTypeBuilder<StatusOrder> builder)

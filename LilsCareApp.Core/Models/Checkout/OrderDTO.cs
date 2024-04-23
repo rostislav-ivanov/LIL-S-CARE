@@ -21,7 +21,7 @@ namespace LilsCareApp.Core.Models.Checkout
         public bool IsValidOrder { get; set; }
 
         // Get the payment method type
-        public string? PaymentMethod() => PaymentMethods.FirstOrDefault(p => p.Id == PaymentMethodId)?.Type;
+        public string? PaymentMethod() => PaymentMethods.FirstOrDefault(p => p.Id == PaymentMethodId)?.Type.NameBG;
 
         // Calculate the discount of the order
         public decimal Discount() => ProductsInBag.Sum(p => p.Quantity * p.Price) * PromoCodes.FirstOrDefault(p => p.Id == PromoCodeId)?.Discount ?? 0;

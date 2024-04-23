@@ -6,6 +6,7 @@ using LilsCareApp.Infrastructure.Data;
 using LilsCareApp.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
+using static LilsCareApp.Infrastructure.DataConstants.Language;
 
 namespace LilsCareApp.Core.Services
 {
@@ -14,15 +15,19 @@ namespace LilsCareApp.Core.Services
 
         private readonly ApplicationDbContext _context;
         private const string patternVideo = @"\.mp(4)?$";
+        private readonly IHttpContextManager _httpContextManager;
 
-        public AdminDetailsService(ApplicationDbContext context)
+        public AdminDetailsService(ApplicationDbContext context, IHttpContextManager httpContextManager)
         {
             _context = context;
+            _httpContextManager = httpContextManager;
         }
 
         // Get product by id
         public async Task<AdminDetailsDTO> GetProductByIdAsync(int id)
         {
+            var language = _httpContextManager.GetLanguage();
+
             var details = await _context.Products
              .Select(p => new AdminDetailsDTO
              {
@@ -57,7 +62,12 @@ namespace LilsCareApp.Core.Services
                      .Select(pc => new CategoryDTO
                      {
                          Id = pc.Category.Id,
-                         Name = pc.Category.Name
+                         Name = new Dictionary<string, string>
+                            {
+                                { Bulgarian, pc.Category.Name.NameBG },
+                                { Romanian, pc.Category.Name.NameRO },
+                                { English, pc.Category.Name.NameEN }
+                            }[language],
                      }).ToList(),
              })
              .AsNoTracking()
@@ -69,11 +79,18 @@ namespace LilsCareApp.Core.Services
         // Get all categories
         public async Task<IEnumerable<CategoryDTO>> GetCategoriesAsync()
         {
+            var language = _httpContextManager.GetLanguage();
+
             return await _context.Categories
                 .Select(c => new CategoryDTO
                 {
                     Id = c.Id,
-                    Name = c.Name
+                    Name = new Dictionary<string, string>
+                    {
+                        { Bulgarian, c.Name.NameBG },
+                        { Romanian, c.Name.NameRO },
+                        { English, c.Name.NameEN }
+                    }[language],
                 })
                 .AsNoTracking()
                 .ToArrayAsync();
@@ -489,18 +506,18 @@ namespace LilsCareApp.Core.Services
         // Add new category to database
         public async Task AddNewCategoryAsync(string newCategory)
         {
-            var categories = await _context.Categories
-                .Where(c => c.Name == newCategory)
-                .FirstOrDefaultAsync();
-            if (categories != null)
-            {
-                return;
-            }
+            //var categories = await _context.Categories
+            //    .Where(c => c.Name.NameBG == newCategory)
+            //    .FirstOrDefaultAsync();
+            //if (categories != null)
+            //{
+            //    return;
+            //}
 
-            await _context.Categories.AddAsync(new Category
-            {
-                Name = newCategory
-            });
+            //await _context.Categories.AddAsync(new Category
+            //{
+            //    Name = newCategory
+            //});
 
             await _context.SaveChangesAsync();
         }

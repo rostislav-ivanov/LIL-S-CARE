@@ -46,7 +46,7 @@ namespace LilsCareApp.Core.Services
                     AppUserId = o.AppUserId,
                     DateShipping = o.DateShipping,
                     TrackingNumber = o.TrackingNumber,
-                    PaymentMethod = o.PaymentMethod.Type,
+                    PaymentMethod = o.PaymentMethod.Type.NameBG,
                     IsPaid = o.IsPaid,
                     ProductsOrders = o.ProductsOrders
                         .Select(po => new ProductsOrdersDTO

@@ -19,11 +19,11 @@ namespace LilsCareApp.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> Index(string? category, int currentPage = 1, int productsPerPage = ProductsPerPages)
+        public async Task<IActionResult> Index(int? categoryId, int currentPage = 1, int productsPerPage = ProductsPerPages)
         {
             string userId = User.GetUserId();
 
-            ProductsDTO products = await _productService.GetProductsQueryAsync(userId, category, currentPage, productsPerPage);
+            ProductsDTO products = await _productService.GetProductsQueryAsync(userId, categoryId, currentPage, productsPerPage);
 
             return View(products);
         }

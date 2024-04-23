@@ -63,7 +63,7 @@ namespace LilsCareApp.Core.Services
 
             var promoCode = new PromoCode
             {
-                Code = "-10 % за регистрация",
+                CodeId = 1,
                 Discount = 0.1m,
                 ExpirationDate = DateTime.UtcNow.AddMonths(12),
                 AppUserId = userId,

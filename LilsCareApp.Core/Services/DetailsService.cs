@@ -106,7 +106,12 @@ namespace LilsCareApp.Core.Services
                         .Select(pc => new CategoryDTO
                         {
                             Id = pc.Category.Id,
-                            Name = pc.Category.Name
+                            Name = new Dictionary<string, string>
+                            {
+                                { Bulgarian, pc.Category.Name.NameBG },
+                                { Romanian, pc.Category.Name.NameRO },
+                                { English, pc.Category.Name.NameEN }
+                            }[language],
                         }).ToList(),
                     IsWish = p.WishesUsers.Any(w => w.ProductId == p.Id && w.AppUserId == appUserId)
                 })

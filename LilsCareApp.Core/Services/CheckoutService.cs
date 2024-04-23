@@ -39,6 +39,8 @@ namespace LilsCareApp.Core.Services
         // get all promo codes for user witch are not expired and not already applied
         public async Task<IEnumerable<PromoCodeDTO>> GetPromoCodesAsync(string userId)
         {
+            var language = _httpContextManager.GetLanguage();
+
             return await _context.PromoCodes
                 .Where(pc => pc.AppUserId == userId
                     && pc.ExpirationDate >= DateTime.UtcNow
@@ -46,7 +48,12 @@ namespace LilsCareApp.Core.Services
                 .Select(pc => new PromoCodeDTO()
                 {
                     Id = pc.Id,
-                    Code = pc.Code,
+                    Code = new Dictionary<string, string>
+                    {
+                        { Bulgarian, pc.Code.NameBG },
+                        { Romanian, pc.Code.NameRO },
+                        { English, pc.Code.NameEN }
+                    }[language],
                     Discount = pc.Discount,
                     ExpirationDate = pc.ExpirationDate
                 })
@@ -208,13 +215,17 @@ namespace LilsCareApp.Core.Services
                     ShippingProviderName = o.AddressDelivery.ShippingOffice.ShippingProvider.Name,
                     ShippingOfficeCity = o.AddressDelivery.ShippingOffice.City,
                     ShippingOfficeAddress = o.AddressDelivery.ShippingOffice.OfficeAddress,
-                    PaymentMethod = o.PaymentMethod.Type,
+                    PaymentMethod = new Dictionary<string, string>
+                    {
+                        { Bulgarian, o.PaymentMethod.Type.NameBG },
+                        { Romanian, o.PaymentMethod.Type.NameRO },
+                        { English, o.PaymentMethod.Type.NameEN }
+                    }[language],
                     NoteForDelivery = o.NoteForDelivery,
                     Products = o.ProductsOrders
                         .Select(po => new ProductOrderDTO()
                         {
                             Id = po.Product.Id,
-                            //Name = po.Product.Name,
                             Name = new Dictionary<string, string>
                             {
                                 { Bulgarian, po.Product.Name.NameBG },
@@ -225,7 +236,12 @@ namespace LilsCareApp.Core.Services
                             Quantity = po.Quantity,
                             Price = po.Price,
                         }),
-                    PromoCode = o.PromoCode.Code,
+                    PromoCode = new Dictionary<string, string>
+                    {
+                        { Bulgarian, o.PromoCode.Code.NameBG },
+                        { Romanian, o.PromoCode.Code.NameRO },
+                        { English, o.PromoCode.Code.NameEN }
+                    }[language],
                     Discount = o.Discount,
                     SubTotal = o.SubTotal,
                     ShippingPrice = o.ShippingPrice,

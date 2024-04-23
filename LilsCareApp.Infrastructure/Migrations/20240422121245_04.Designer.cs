@@ -4,6 +4,7 @@ using LilsCareApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LilsCareApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240422121245_04")]
+    partial class _04
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -227,7 +230,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f77de1c2-8fab-47fc-8c33-a74110715e39",
+                            ConcurrencyStamp = "1063ce9f-4443-4a52-a3e3-901a848192f2",
                             Email = "test@softuni.bg",
                             EmailConfirmed = true,
                             FirstName = "Test",
@@ -235,9 +238,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "TEST@SOFTUNI.BG",
                             NormalizedUserName = "TEST@SOFTUNI.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAENVZeAcidZVjRg4Tv9wb5a6agAjJhN7Wp+url7n6P6WEvLkz3ktVdVqt/A92F3STwA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEK6UkmKX1bmfCaUZeteKUNu7e08q7i3MiL03avJmrj5HhdYP0741s7dvvBKjIgQtWg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "531f1674-3867-46ba-aad0-49530b887a2f",
+                            SecurityStamp = "56298213-c7c0-4b7e-aded-5beef8cbb1b7",
                             TwoFactorEnabled = false,
                             UserName = "test@softuni.bg"
                         },
@@ -245,7 +248,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = "45fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "65edfe19-e3cb-4b0c-8be3-c8174388402d",
+                            ConcurrencyStamp = "3e06c1a9-3e7b-4639-a0c0-88c38d0b326a",
                             Email = "admin@mail.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -253,9 +256,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENm66+QQQzybKRcPLppw4BotQUrp6vVavUv9b85mb0Xr61A1FrfGPFJt71jIivT1Kg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMSijOIjzLj8gBWrhzJyNFspdmXK8T18UWqk9uTgmbywfLXQbcIVOjExA4Ivv8OvmA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bfd6b824-8089-40ae-85e2-77e33112cf0e",
+                            SecurityStamp = "99608813-eee8-492b-9006-0558a1e7e96f",
                             TwoFactorEnabled = false,
                             UserName = "admin@mail.com"
                         });
@@ -810,8 +813,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Id = 1,
                             AddressDeliveryId = 1,
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                            CreatedOn = new DateTime(2024, 4, 22, 16, 23, 39, 241, DateTimeKind.Utc).AddTicks(1542),
-                            DateShipping = new DateTime(2024, 4, 22, 16, 23, 39, 241, DateTimeKind.Utc).AddTicks(2859),
+                            CreatedOn = new DateTime(2024, 4, 22, 12, 12, 42, 297, DateTimeKind.Utc).AddTicks(7729),
+                            DateShipping = new DateTime(2024, 4, 22, 12, 12, 42, 297, DateTimeKind.Utc).AddTicks(9203),
                             Discount = 0m,
                             IsPaid = false,
                             OrderNumber = "123456",
@@ -827,8 +830,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Id = 2,
                             AddressDeliveryId = 2,
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                            CreatedOn = new DateTime(2024, 4, 22, 16, 23, 39, 241, DateTimeKind.Utc).AddTicks(9781),
-                            DateShipping = new DateTime(2024, 4, 22, 16, 23, 39, 241, DateTimeKind.Utc).AddTicks(9782),
+                            CreatedOn = new DateTime(2024, 4, 22, 12, 12, 42, 298, DateTimeKind.Utc).AddTicks(7095),
+                            DateShipping = new DateTime(2024, 4, 22, 12, 12, 42, 298, DateTimeKind.Utc).AddTicks(7097),
                             Discount = 0m,
                             IsPaid = false,
                             OrderNumber = "123456x",
@@ -850,13 +853,12 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("TypeId")
-                        .HasColumnType("int")
-                        .HasComment("Payment method type Id");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("Payment method type");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TypeId");
 
                     b.ToTable("PaymentMethods", t =>
                         {
@@ -867,72 +869,17 @@ namespace LilsCareApp.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            TypeId = 1
+                            Type = "Плащане при доставка"
                         },
                         new
                         {
                             Id = 2,
-                            TypeId = 2
+                            Type = "С карта"
                         },
                         new
                         {
                             Id = 3,
-                            TypeId = 3
-                        });
-                });
-
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.PaymentType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasComment("Payment type id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("NameBG")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasComment("The payment type in Bulgarian");
-
-                    b.Property<string>("NameEN")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasComment("The payment type in English");
-
-                    b.Property<string>("NameRO")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasComment("The payment type in Romanian");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PaymentTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            NameBG = "Плащане при доставка",
-                            NameEN = "Cash on delivery",
-                            NameRO = "Plata la livrare"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            NameBG = "С карта",
-                            NameEN = "With card",
-                            NameRO = "Cu cardul"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            NameBG = "Банков превод",
-                            NameEN = "Bank transfer",
-                            NameRO = "Transfer bancar"
+                            Type = "Банков превод"
                         });
                 });
 
@@ -1399,9 +1346,10 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Property<DateTime?>("AppliedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CodeId")
-                        .HasColumnType("int")
-                        .HasComment("Promo Code Id");
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("Promo Code");
 
                     b.Property<decimal>("Discount")
                         .HasColumnType("decimal(18,2)")
@@ -1415,8 +1363,6 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.HasIndex("CodeId");
-
                     b.ToTable("PromoCodes", t =>
                         {
                             t.HasComment("Promo Code for one User");
@@ -1427,65 +1373,17 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 1,
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                            CodeId = 1,
+                            Code = "-10 % за регистрация",
                             Discount = 0.1m,
-                            ExpirationDate = new DateTime(2025, 4, 22, 16, 23, 40, 424, DateTimeKind.Utc).AddTicks(3313)
+                            ExpirationDate = new DateTime(2025, 4, 22, 12, 12, 43, 335, DateTimeKind.Utc).AddTicks(8543)
                         },
                         new
                         {
                             Id = 2,
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                            CodeId = 2,
+                            Code = "-20 % отстъпка",
                             Discount = 0.2m,
-                            ExpirationDate = new DateTime(2025, 4, 22, 16, 23, 40, 424, DateTimeKind.Utc).AddTicks(3348)
-                        });
-                });
-
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.PromoCodeName", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasComment("Promo code name id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("NameBG")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasComment("The promo code name in Bulgarian");
-
-                    b.Property<string>("NameEN")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasComment("The promo code name in English");
-
-                    b.Property<string>("NameRO")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasComment("The promo code name in Romanian");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PromoCodeNames");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            NameBG = "-10 % за регистрация",
-                            NameEN = "-10 % for registration",
-                            NameRO = "-10 % pentru inregistrare"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            NameBG = "-20 % отстъпка",
-                            NameEN = "-20 % discount",
-                            NameRO = "-20 % reducere"
+                            ExpirationDate = new DateTime(2025, 4, 22, 12, 12, 43, 335, DateTimeKind.Utc).AddTicks(8557)
                         });
                 });
 
@@ -1532,7 +1430,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 2,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 4, 22, 19, 23, 40, 424, DateTimeKind.Local).AddTicks(2111),
+                            CreatedOn = new DateTime(2024, 4, 22, 15, 12, 43, 335, DateTimeKind.Local).AddTicks(7807),
                             Rating = 4,
                             Title = "Great product"
                         },
@@ -1541,7 +1439,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 3,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 4, 22, 19, 23, 40, 424, DateTimeKind.Local).AddTicks(2186),
+                            CreatedOn = new DateTime(2024, 4, 22, 15, 12, 43, 335, DateTimeKind.Local).AddTicks(7878),
                             Rating = 3,
                             Title = "Great product"
                         },
@@ -1550,7 +1448,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 4,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 4, 22, 19, 23, 40, 424, DateTimeKind.Local).AddTicks(2190),
+                            CreatedOn = new DateTime(2024, 4, 22, 15, 12, 43, 335, DateTimeKind.Local).AddTicks(7883),
                             Rating = 3,
                             Title = "Great product"
                         });
@@ -2604,13 +2502,13 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("NameId")
-                        .HasColumnType("int")
-                        .HasComment("Name of the status Id");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("Name of the status");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("NameId");
 
                     b.ToTable("StatusOrders", t =>
                         {
@@ -2621,96 +2519,27 @@ namespace LilsCareApp.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            NameId = 1
+                            Name = "Неизпълнена"
                         },
                         new
                         {
                             Id = 2,
-                            NameId = 2
+                            Name = "Отменена"
                         },
                         new
                         {
                             Id = 3,
-                            NameId = 3
+                            Name = "Изпълнена"
                         },
                         new
                         {
                             Id = 4,
-                            NameId = 4
+                            Name = "Получена"
                         },
                         new
                         {
                             Id = 5,
-                            NameId = 5
-                        });
-                });
-
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.StatusOrderName", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasComment("Status order name id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("NameBG")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasComment("The status order name in Bulgarian");
-
-                    b.Property<string>("NameEN")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasComment("The status order name in English");
-
-                    b.Property<string>("NameRO")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasComment("The status order name in Romanian");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("StatusOrderNames");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            NameBG = "Неизпълнена",
-                            NameEN = "Unfulfilled",
-                            NameRO = "Neîndeplinită"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            NameBG = "Отменена",
-                            NameEN = "Canceled",
-                            NameRO = "Anulat"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            NameBG = "Изпълнена",
-                            NameEN = "Fulfilled",
-                            NameRO = "Îndeplinit"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            NameBG = "Получена",
-                            NameEN = "Received",
-                            NameRO = "Primit"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            NameBG = "Върната",
-                            NameEN = "Returned",
-                            NameRO = "Returnat"
+                            Name = "Върната"
                         });
                 });
 
@@ -3033,17 +2862,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Navigation("StatusOrder");
                 });
 
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.PaymentMethod", b =>
-                {
-                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.PaymentType", "Type")
-                        .WithMany("PaymentMethods")
-                        .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Type");
-                });
-
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Product", b =>
                 {
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.ProductName", "Name")
@@ -3109,15 +2927,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.PromoCodeName", "Code")
-                        .WithMany("PromoCodes")
-                        .HasForeignKey("CodeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("AppUser");
-
-                    b.Navigation("Code");
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Review", b =>
@@ -3173,17 +2983,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasForeignKey("ShippingProviderId");
 
                     b.Navigation("ShippingProvider");
-                });
-
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.StatusOrder", b =>
-                {
-                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.StatusOrderName", "Name")
-                        .WithMany("StatusOrders")
-                        .HasForeignKey("NameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Name");
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Subscriber", b =>
@@ -3299,11 +3098,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.PaymentType", b =>
-                {
-                    b.Navigation("PaymentMethods");
-                });
-
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Product", b =>
                 {
                     b.Navigation("BagsUsers");
@@ -3336,11 +3130,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.PromoCodeName", b =>
-                {
-                    b.Navigation("PromoCodes");
-                });
-
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Review", b =>
                 {
                     b.Navigation("Images");
@@ -3369,11 +3158,6 @@ namespace LilsCareApp.Infrastructure.Migrations
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.StatusOrder", b =>
                 {
                     b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.StatusOrderName", b =>
-                {
-                    b.Navigation("StatusOrders");
                 });
 #pragma warning restore 612, 618
         }

@@ -86,6 +86,12 @@
             public const int NameMaxLength = 100;
         }
 
+        public static class PromoCode
+        {
+            public const int NameMinLength = 3;
+            public const int NameMaxLength = 100;
+        }
+
         public static class AddressDelivery
         {
             public const int FirstNameMaxLength = 100;
