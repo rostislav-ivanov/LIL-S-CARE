@@ -6,7 +6,7 @@ namespace LilsCareApp.Core.Extensions
 {
     public static class IQuerableProductExtension
     {
-        public static IQueryable<ProductDTO> ProjectToProductDTO(this IQueryable<Product> products, string userId, string language)
+        public static IQueryable<ProductDTO> ProjectToProductDTO(this IQueryable<Product> products, string userId, string language, decimal exchangeRate)
         {
             return products
                 .Where(p => p.IsShow)
@@ -19,13 +19,11 @@ namespace LilsCareApp.Core.Extensions
                         { Romanian, p.Name.NameRO },
                         { English, p.Name.NameEN }
                     }[language],
-                    Price = p.Price,
+                    Price = Math.Round((p.Price / exchangeRate), 2),
                     ImageUrl = p.Images.OrderBy(im => im.ImageOrder).FirstOrDefault().ImagePath ?? "https://via.placeholder.com/150",
                     Quantity = p.Quantity,
                     IsWish = p.WishesUsers.Any(wu => wu.AppUserId == userId),
                 });
-
-
         }
 
     }

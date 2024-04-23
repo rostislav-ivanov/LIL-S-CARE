@@ -1,6 +1,5 @@
 ﻿using LilsCareApp.Core.Models.Account;
 using LilsCareApp.Infrastructure.Data.Models;
-using static LilsCareApp.Infrastructure.DataConstants.AppConstants;
 
 namespace LilsCareApp.Core.Models.Checkout
 {
@@ -34,7 +33,7 @@ namespace LilsCareApp.Core.Models.Checkout
         // If the subtotal is greater than or equal to FreeShipping, shipping price is 0.
         public decimal? ShippingPrice()
         {
-            if (SubTotal() >= FreeShipping)
+            if (SubTotal() >= 35.00m)
             {
                 return 0;
             }
@@ -44,7 +43,7 @@ namespace LilsCareApp.Core.Models.Checkout
             }
             else if (DeliveryType() == AddressDeliveryType)
             {
-                return AddressDeliveryPrice;
+                return 8.00m;
             }
             else
             {

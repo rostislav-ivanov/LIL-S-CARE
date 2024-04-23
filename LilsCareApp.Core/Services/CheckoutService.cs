@@ -10,11 +10,16 @@ namespace LilsCareApp.Core.Services
     public class CheckoutService : ICheckoutService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IAppConfigService _appConfigService;
         private readonly IHttpContextManager _httpContextManager;
 
-        public CheckoutService(ApplicationDbContext context, IHttpContextManager httpContextManager)
+        public CheckoutService(
+            ApplicationDbContext context,
+            IAppConfigService appConfigService,
+            IHttpContextManager httpContextManager)
         {
             _context = context;
+            _appConfigService = appConfigService;
             _httpContextManager = httpContextManager;
         }
 

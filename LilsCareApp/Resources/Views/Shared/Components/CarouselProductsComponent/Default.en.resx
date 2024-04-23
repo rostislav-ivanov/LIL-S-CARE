@@ -123,6 +123,9 @@
   <data name="Exhausted" xml:space="preserve">
     <value>Exhausted</value>
   </data>
+  <data name="Price" xml:space="preserve">
+    <value>€</value>
+  </data>
   <data name="YOU MIGHT LIKE…" xml:space="preserve">
     <value>YOU MIGHT LIKE…</value>
   </data>

@@ -12,13 +12,18 @@ namespace LilsCareApp.Core.Services
     public class DetailsService : IDetailsService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IAppConfigService _appConfigService;
         private readonly IHttpContextManager _httpContextManager;
 
         private const string patternVideo = @"\.mp(4)?$";
 
-        public DetailsService(ApplicationDbContext context, IHttpContextManager httpContextManager)
+        public DetailsService(
+            ApplicationDbContext context,
+            IAppConfigService appConfigService,
+            IHttpContextManager httpContextManager)
         {
             _context = context;
+            _appConfigService = appConfigService;
             _httpContextManager = httpContextManager;
         }
 
@@ -30,6 +35,7 @@ namespace LilsCareApp.Core.Services
             }
 
             var language = _httpContextManager.GetLanguage();
+            decimal exchangeRate = await _appConfigService.GetExchangeRateAsync(language);
 
             var details = await _context.Products
                 .Select(p => new DetailsDTO
@@ -41,7 +47,7 @@ namespace LilsCareApp.Core.Services
                         { Romanian, p.Name.NameRO },
                         { English, p.Name.NameEN }
                     }[language],
-                    Price = p.Price,
+                    Price = p.Price / exchangeRate,
                     Quantity = 1,
                     AvailableQuantity = p.Quantity,
                     Optional = new Dictionary<string, string>
@@ -117,6 +123,8 @@ namespace LilsCareApp.Core.Services
                 })
                 .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == productId);
+
+            details.Price = Math.Round(details.Price, 2);
 
             return details;
         }

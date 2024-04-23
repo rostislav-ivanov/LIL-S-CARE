@@ -10,8 +10,8 @@
         }
         public static class AppConstants
         {
-            public const decimal FreeShipping = 35.00m;
-            public const decimal AddressDeliveryPrice = 8.00m;
+            //public const decimal FreeShipping = 35.00m;
+            //public const decimal AddressDeliveryPrice = 8.00m;
         }
 
         public static class AppUser

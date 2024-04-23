@@ -118,15 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Add" xml:space="preserve">
-    <value>Добави</value>
+    <value>Add</value>
   </data>
   <data name="Exhausted" xml:space="preserve">
-    <value>Изчерпано</value>
+    <value>Exhausted</value>
   </data>
   <data name="Price" xml:space="preserve">
-    <value>лв.</value>
-  </data>
-  <data name="YOU MIGHT LIKE…" xml:space="preserve">
-    <value>МОЖЕ ДА ХАРЕСАТЕ...</value>
+    <value>€</value>
   </data>
 </root>

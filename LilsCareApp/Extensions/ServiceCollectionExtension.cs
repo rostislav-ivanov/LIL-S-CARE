@@ -25,6 +25,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddOptions<AuthMessageSenderOptions>()
                     .Bind(configuration.GetSection("AuthMessageSenderOptions"));
 
+            services.AddScoped<IAppConfigService, AppConfigService>();
             services.AddScoped<IHomeService, HomeService>();
             services.AddScoped<IProductsService, ProductsService>();
             services.AddScoped<IDetailsService, DetailsService>();

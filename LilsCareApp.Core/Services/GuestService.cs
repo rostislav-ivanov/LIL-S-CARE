@@ -10,13 +10,18 @@ namespace LilsCareApp.Core.Services
 {
     public class GuestService : IGuestService
     {
-        private readonly IHttpContextManager _httpContextManager;
         private readonly ApplicationDbContext _context;
+        private readonly IAppConfigService _appConfigService;
+        private readonly IHttpContextManager _httpContextManager;
 
-        public GuestService(IHttpContextManager httpContextManager, ApplicationDbContext context)
+        public GuestService(
+            ApplicationDbContext context,
+            IAppConfigService appConfigService,
+            IHttpContextManager httpContextManager)
         {
-            _httpContextManager = httpContextManager;
             _context = context;
+            _appConfigService = appConfigService;
+            _httpContextManager = httpContextManager;
         }
 
         // AddToCart method is used to add a product to the guest's bag.
@@ -82,6 +87,7 @@ namespace LilsCareApp.Core.Services
 
             List<ProductsInBagDTO> productsInBagDTOs = new List<ProductsInBagDTO>();
             var language = _httpContextManager.GetLanguage();
+            decimal exchangeRate = await _appConfigService.GetExchangeRateAsync(language);
 
             foreach (var guestProduct in session.GuestBags)
             {
@@ -102,7 +108,7 @@ namespace LilsCareApp.Core.Services
                             { Bulgarian, p.Optional.OptionalBG },
                             { Romanian, p.Optional.OptionalRO },
                         }[language],
-                        Price = p.Price,
+                        Price = p.Price / exchangeRate,
                         ImageUrl = p.Images!.FirstOrDefault()!.ImagePath,
                         Quantity = guestProduct.Quantity
                     })
@@ -154,13 +160,16 @@ namespace LilsCareApp.Core.Services
             };
 
             // add products to order
+            var language = _httpContextManager.GetLanguage();
+            decimal exchangeRate = await _appConfigService.GetExchangeRateAsync(language);
+
             foreach (var product in orderDTO.ProductsInBag)
             {
                 ProductOrder productOrder = new ProductOrder()
                 {
                     ProductId = product.Id,
                     Quantity = product.Quantity,
-                    Price = product.Price,
+                    Price = product.Price / exchangeRate,
                     ImagePath = await _context.ImageProducts
                         .Where(ip => ip.ProductId == product.Id)
                         .OrderBy(ip => ip.ImageOrder)

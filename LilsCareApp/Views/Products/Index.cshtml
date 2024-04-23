@@ -1,4 +1,5 @@
 ﻿@model ProductsDTO
+@inject IViewLocalizer Localizer
 @{
     ViewData["Title"] = "Products";
 }
@@ -95,18 +96,18 @@
                                 </div>
                                 <div class="px-3 py-2">
                                     <h6>@product.Name</h6>
-                                    <p class="fs-5 fw-bold mb-0">@product.Price лв.</p>
+                                    <p class="fs-5 fw-bold mb-0">@product.Price @Localizer["Price"]</p>
                                     <div class="clearfix mt-2">
                                         @if (product.Quantity > 0)
                                         {
                                             <a asp-controller="Products" asp-action="AddToCart" asp-route-productId="@product.Id" class="btn">
-                                                <i class="fa fa-shopping-bag me-2"></i> Добави
+                                                <i class="fa fa-shopping-bag me-2"></i> @Localizer["Add"]
                                             </a>
                                         }
                                         else
                                         {
                                             <a class="float-start btn unactive-button">
-                                                Изчерпано
+                                                @Localizer["Exhausted"]
                                             </a>
                                         }
 
