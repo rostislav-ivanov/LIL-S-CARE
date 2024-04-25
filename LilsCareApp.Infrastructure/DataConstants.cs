@@ -65,12 +65,6 @@
             public const int NameMaxLength = 100;
         }
 
-        public static class Speditor
-        {
-            public const int NameMinLength = 3;
-            public const int NameMaxLength = 100;
-        }
-
         public static class Order
         {
             public const int TrackingNumberMaxLength = 30;
@@ -78,9 +72,23 @@
             public const int OrdersPerPages = 10;
             public const string Paid = "Платена";
             public const string Unpaid = "Неплатена";
+            public const int LanguageMaxLength = 10;
+            public const int NoteForDeliveryMaxLength = 500;
         }
 
         public static class PaymentMethod
+        {
+            public const int NameMinLength = 3;
+            public const int NameMaxLength = 100;
+        }
+
+        public static class DeliveryMethod
+        {
+            public const int NameMinLength = 3;
+            public const int NameMaxLength = 100;
+        }
+
+        public static class ShippingProvider
         {
             public const int NameMinLength = 3;
             public const int NameMaxLength = 100;

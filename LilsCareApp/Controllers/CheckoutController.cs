@@ -36,42 +36,22 @@ namespace LilsCareApp.Controllers
             _emailSender = emailSender;
         }
 
-        // GET: CheckoutController
-        // Display the order summary page with all the necessary information for the order
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            string userId = User.GetUserId();
+            string? userId = User.GetUserId();
 
-            OrderDTO order = new OrderDTO();
-            order.PaymentMethods = await _checkoutService.GetPaymentMethodsAsync();
+            OrderDTO order = await _checkoutService.GetOrderAsync(userId);
             if (userId != null)
             {
                 order.ProductsInBag = await _productsService.GetProductsInBagAsync(userId);
-                order.PromoCodes = await _checkoutService.GetPromoCodesAsync(userId);
-
-                int? defaultAddressId = await _checkoutService.GetDefaultAddressIdAsync(userId);
-
-                if (defaultAddressId != null)
-                {
-                    var defaultAddress = await _accountService.GetAddressDeliveryAsync(defaultAddressId.Value);
-                    if (defaultAddress.DeliveryType() == defaultAddress.OfficeDeliveryType)
-                    {
-                        order.Office = defaultAddress.Office;
-                        order.IsValidOrder = true;
-                    }
-                    else if (defaultAddress.DeliveryType() == defaultAddress.AddressDeliveryType)
-                    {
-                        order.Address = defaultAddress.Address;
-                        order.IsValidOrder = true;
-                    }
-                }
             }
             else
             {
                 order.ProductsInBag = await _guestService.GetProductsInBagAsync();
             }
 
+            order = await _checkoutService.CalculateCheckout(order);
 
             SetSession(order);
 
@@ -79,30 +59,20 @@ namespace LilsCareApp.Controllers
         }
 
 
-
-        // Select the delivery type of address (office or address).
-        // If the delivery type is office, get the shipping provider.
         [AllowAnonymous]
-        public async Task<IActionResult> SelectDeliveryType(bool isShippingToOffice)
+        public async Task<IActionResult> SelectDeliveryMethod(int deliveryMethodId)
         {
             OrderDTO order = GetSession();
 
-            if (isShippingToOffice)
+            order.Address = new AddressOrderDTO();
+            order.DeliveryMethodId = deliveryMethodId;
+            order.IsSelectedAddress = false;
+
+            if (deliveryMethodId == 1)
             {
-                order.Address = null;
-                order.Office ??= new OfficeDTO()
-                {
-                    ShippingProviders = await _accountService.GetShippingProvidersAsync()
-                };
-                order.Office.Id = 0;
+                order.Address.ShippingProviders = await _accountService.GetShippingProvidersAsync();
+                order.Address.IsShippingToOffice = true;
             }
-            else
-            {
-                order.Office = null;
-                order.Address ??= new AddressDTO();
-                order.Address.Id = 0;
-            }
-            order.IsValidOrder = false;
 
             SetSession(order);
 
@@ -116,10 +86,9 @@ namespace LilsCareApp.Controllers
         {
             OrderDTO order = GetSession();
 
-            order.Office.ShippingProviderId = shippingProviderId;
-            order.Office.ShippingProviderCities = await _accountService.GetShippingProviderCitiesAsync(shippingProviderId);
-            order.Office.CityName = null;
-            order.Office.ShippingOfficeId = null;
+            order.Address.ShippingProviderId = shippingProviderId;
+            order.Address.ShippingProviderCities = await _accountService.GetShippingProviderCitiesAsync(shippingProviderId);
+            order.Address.ShippingProviderCity = string.Empty;
 
             SetSession(order);
 
@@ -134,9 +103,9 @@ namespace LilsCareApp.Controllers
         {
             OrderDTO order = GetSession();
 
-            order.Office.CityName = city;
-            order.Office.ShippingOffices = await _accountService.GetShippingOfficesAsync(order.Office.ShippingProviderId, city);
-            order.Office.ShippingOfficeId = null;
+            order.Address.ShippingProviderCity = city;
+            order.Address.ShippingOffices = await _accountService.GetShippingOfficesAsync(order.Address.ShippingProviderId, city);
+            order.Address.ShippingOfficeId = 0;
 
             SetSession(order);
 
@@ -149,7 +118,8 @@ namespace LilsCareApp.Controllers
         {
             OrderDTO order = GetSession();
 
-            order.Office.ShippingOfficeId = officeId;
+            order.Address.ShippingOfficeId = officeId;
+            order.Address.ShippingOffice = order.Address.ShippingOffices.FirstOrDefault(x => x.Id == officeId);
 
             SetSession(order);
 
@@ -162,13 +132,14 @@ namespace LilsCareApp.Controllers
         {
             OrderDTO order = GetSession();
 
-            order!.Office!.FirstName = officeDTO.FirstName;
-            order.Office.LastName = officeDTO.LastName;
-            order.Office.PhoneNumber = officeDTO.PhoneNumber;
+            order!.Address!.FirstName = officeDTO.FirstName;
+            order.Address.LastName = officeDTO.LastName;
+            order.Address.PhoneNumber = officeDTO.PhoneNumber;
 
-            if (ModelState.IsValid && order.Office.IsSelectedOffice())
+            if (ModelState.IsValid && order.Address.ShippingOffice != null)
             {
-                order.IsValidOrder = true;
+                order.IsSelectedAddress = true;
+                order = await _checkoutService.CalculateCheckout(order);
             }
 
             SetSession(order);
@@ -180,7 +151,7 @@ namespace LilsCareApp.Controllers
         // Add or Edit address of type delivery to address
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> AddAddressDelivery(AddressDTO addressDTO)
+        public async Task<IActionResult> AddAddressDelivery(AddressOrderDTO addressDTO)
         {
             OrderDTO order = GetSession();
 
@@ -193,7 +164,8 @@ namespace LilsCareApp.Controllers
 
             if (ModelState.IsValid)
             {
-                order.IsValidOrder = true;
+                order.IsSelectedAddress = true;
+                order = await _checkoutService.CalculateCheckout(order);
             }
 
             SetSession(order);
@@ -203,11 +175,13 @@ namespace LilsCareApp.Controllers
 
 
         // Select the payment method for the order.
-        public async Task<IActionResult> DiscountWithPromoCode(int? promoCodeId)
+        public async Task<IActionResult> DiscountWithPromoCode(int promoCodeId)
         {
             OrderDTO order = GetSession();
 
             order.PromoCodeId = promoCodeId;
+
+            order = await _checkoutService.CalculateCheckout(order);
 
             SetSession(order);
 
@@ -231,6 +205,7 @@ namespace LilsCareApp.Controllers
                 order.ProductsInBag = await _guestService.GetProductsInBagAsync();
             }
 
+            order = await _checkoutService.CalculateCheckout(order);
             SetSession(order);
 
             return View(nameof(Index), order);
@@ -253,6 +228,7 @@ namespace LilsCareApp.Controllers
                 order.ProductsInBag = await _guestService.GetProductsInBagAsync();
             }
 
+            order = await _checkoutService.CalculateCheckout(order);
             SetSession(order);
 
             return View(nameof(Index), order);
@@ -261,7 +237,7 @@ namespace LilsCareApp.Controllers
         // Save order to database and return unique order number.
         // Add new address delivery to database if not existing.
         // Remove products from user's bag.
-        //remove ordered quantity from products store
+        // Remove ordered quantity from products store
         // Set the applied date to promo code if is applied.
         // Set new default address delivery to user.
         // Return unique order number to user.

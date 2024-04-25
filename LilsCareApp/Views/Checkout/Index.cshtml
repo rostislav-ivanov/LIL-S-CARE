@@ -1,6 +1,7 @@
 ﻿@model OrderDTO
+@inject IViewLocalizer Localizer
 @{
-    ViewData["Title"] = "ПОРЪЧКА";
+    ViewData["Title"] = Localizer["ORDER"];
 }
 @section Styles {
     <link rel="stylesheet" href="~/css/checkout.css" />
@@ -9,9 +10,9 @@
 @if (Model.ProductsInBag.Count() == 0)
 {
     <div class="text-center mt-5">
-        <h1 style="height:100px">Количката е празна</h1>
+        <h1 style="height:100px">@Localizer["The shopping bag is empty"]</h1>
         <a asp-controller="Products" asp-action="Index" class="btn">
-            Към магазина...
+            @Localizer["To the store..."]
         </a>
         <div style="height:100px"></div>
     </div>
@@ -29,86 +30,86 @@ else
                     {
                         <div class="d-flex justify-content-between">
                             <div class="small">
-                                Влезли сте като @User.Identity.Name
+                                @Localizer["You are signed in as"] @User.Identity.Name
                             </div>
                             <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Checkout", new { area = "" })">
-                                <input class="nav-link small text-decoration-underline" type="submit" style="color: rgb(var(--app-btn-bg))" value="Изход">
+                                <input class="nav-link small text-decoration-underline" type="submit" style="color: rgb(var(--app-btn-bg))" value="@Localizer["Logout"]">
                             </form>
                         </div>
                     }
                     else
                     {
                         <small>
-                            Вече имате акаунт?
+                            @Localizer["Already have an account?"]
                             <a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Index", "Checkout", new { area = "" })" style="color: rgb(var(--app-btn-bg))">
-                                Влезте
+                                @Localizer["Login"]
                             </a>
-                            в него за по-бърза поръчка.
+                            @Localizer["in it for faster ordering."]
                         </small>
                     }
                 </div>
                 <div class="w-100">
                     <!-- Delivery Type Start -->
-                    <h5>Метод за доставка</h5>
+                    <h5>@Localizer["Delivery method"]</h5>
                     <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown">
-                        @if (Model.DeliveryType() is null)
+                        @if (Model.DeliveryMethodId == 0)
                         {
-                            <span class="text-danger">Изберете метод за доставка...</span>
+                            <span class="text-danger">@Localizer["Choose a shipping method..."]</span>
                         }
                         else
                         {
-                            <span>@Model.DeliveryType()</span>
-                        }
+                            <span>@Model.DeliveryMethods.FirstOrDefault(dm => dm.Id == Model.DeliveryMethodId)?.Name</span>
+                        } 
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a asp-controller="Checkout" asp-action="SelectDeliveryType" asp-route-isShippingToOffice="false" class="dropdown-item">
-                                @Model.AddressDeliveryType
+                            <a asp-controller="Checkout" asp-action="SelectDeliveryMethod" asp-route-deliveryMethodId="1" class="dropdown-item">
+                                @Model.DeliveryMethods?.First().Name 
                             </a>
                         </li>
                         <li>
-                            <a asp-controller="Checkout" asp-action="SelectDeliveryType" asp-route-isShippingToOffice="true" class="dropdown-item">
-                                @Model.OfficeDeliveryType
+                            <a asp-controller="Checkout" asp-action="SelectDeliveryMethod" asp-route-deliveryMethodId="2" class="dropdown-item">
+                                @Model.DeliveryMethods?.Last().Name
                             </a>
                         </li>
                     </ul>
                     <hr />
                     <!-- Delivery Type End -->
-                    @if (Model.IsValidOrder)
+                    @if (Model.IsSelectedAddress)
                     {
-                        if (Model.DeliveryType() == Model.OfficeDeliveryType)
+                        if (Model.DeliveryMethodId == 1)
                         {
                             <!-- Office Start -->
                             <div class="row">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <h5>Доставка до куриерски офис</h5>
-                                    <a asp-controller="Checkout" asp-action="SelectDeliveryType" asp-route-isShippingToOffice="true" style="color: rgb(var(--app-btn-bg))">
-                                        Редактиране
+                                    <h5>@Localizer["Delivery to a courier office"]</h5>
+                                    <a asp-controller="Checkout" asp-action="SelectDeliveryMethod" asp-route-isShippingToOffice="true" style="color: rgb(var(--app-btn-bg))">
+                                        @Localizer["Edit"]
                                     </a>
                                 </div>
-                                <span>Куриер: @Model.Office!.Provider()</span>
-                                <span>Офис: @Model.Office.City(), @Model.Office.OfficeAddress()</span>
-                                <span>Получател: @Model.Office.FirstName @Model.Office.LastName</span>
-                                <span>Телефон: @Model.Office.PhoneNumber</span>
+                                <span>@Localizer["Courier"]: @Model.Address.ShippingProviders.FirstOrDefault(sp => sp.Id == Model.Address.ShippingProviderId)?.Name</span>
+                                <span>@Localizer["Office"]: @Model.Address.ShippingOffice?.City, @Model.Address.ShippingOffice?.OfficeAddress</span>
+                                <span>@Localizer["Recipient"]: @Model.Address.FirstName @Model.Address.LastName</span>
+                                <span>@Localizer["Phone number"]: @Model.Address.PhoneNumber</span>
                             </div>
                             <hr />
                             <!-- Office Start -->
                         }
-                        else if (Model.DeliveryType() == Model.AddressDeliveryType)
+                        else if (Model.DeliveryMethodId == 2)
                         {
                             <!-- Address Start -->
                             <div class="row">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <h5>Доставка до адрес</h5>
-                                    <a asp-controller="Checkout" asp-action="SelectDeliveryType" asp-route-isShippingToOffice="false" style="color: rgb(var(--app-btn-bg))">
-                                            Редактиране
+                                    <h5>@Localizer["Delivery to address"]</h5>
+                                    <a asp-controller="Checkout" asp-action="SelectDeliveryMethod" asp-route-isShippingToOffice="false" style="color: rgb(var(--app-btn-bg))">
+                                        @Localizer["Edit"]
                                     </a>
                                 </div>
-                                <span>Адрес:</span>
+                                <span>@Localizer["Address"]:</span>
                                 <span class="ms-5">@Model.Address!.Country, @Model.Address.District</span>
                                 <span class="ms-5">@Model.Address.PostCode, @Model.Address.Town</span>
                                 <span class="ms-5">@Model.Address.Address</span>
-                                <span>Получател:</span>
+                                <span>@Localizer["Recipient"]:</span>
                                 <span class="ms-5">@Model.Address.FirstName @Model.Address.LastName</span>
                                 <span class="ms-5">@Model.Address.PhoneNumber</span>
                                 <span class="ms-5">@Model.Address.Email</span>
@@ -119,12 +120,12 @@ else
                     }
                     else
                     {
-                        if (Model.DeliveryType() == Model.OfficeDeliveryType)
+                        if (Model.DeliveryMethodId == 1)
                         {
-                            <partial name="_DeliveryToOfficePartial" model="@Model.Office" />
+                            <partial name="_DeliveryToOfficePartial" model="@Model.Address" />
                             <hr />
                         }
-                        else if (Model.DeliveryType() == Model.AddressDeliveryType)
+                        else if (Model.DeliveryMethodId == 2)
                         {
                             <partial name="_DeliveryToAddressPartial" model="@Model.Address" />
                             <hr />
@@ -134,26 +135,25 @@ else
 
 
                     <!-- Payment Start -->
-                    <h5>Метод на плащане</h5>
-                    <p style="opacity: 0.9">@Model.PaymentMethod()</p>
+                    <h5>@Localizer["Payment method"]</h5>
+                    <p style="opacity: 0.9">@Model.PaymentMethods.FirstOrDefault(pm => pm.Id == Model.PaymentMethodId)?.Name</p>
                     <!-- Payment End -->
                     <!-- Confirm Order Start-->
                     <hr />
-                    @if (Model.IsValidOrder)
+                    @if (Model.IsSelectedAddress)
                     {
                         <form asp-controller="Checkout" asp-action="CheckoutSummary" method="post">
                             <div class="my-2">
                                 <textarea asp-for="@Model.NoteForDelivery" class="form-control"
-                                          rows="4" placeholder="Напишете допълнителни изисквания относно доставката..."></textarea>
+                                          rows="4" placeholder="@Localizer["Write additional shipping requirements..."]"></textarea>
                             </div>
                             <p>
-                                Прегледайте подробностите за поръчката по-горе и направете
-                                поръчката си, когато сте готови.
+                                @Localizer["Review the order details above and place your order when you're ready."]
                             </p>
                             <button type="submit"
                                class="btn mt-3"
                                style="width: 100%">
-                                Направете поръчка
+                                @Localizer["Place an order"]
                             </button>
                         </form>
                     }
@@ -167,7 +167,7 @@ else
                 <div class="container mt-4 px-4 pb-2 rounded"
                      style="background-color: rgb(var(--app-bg-secondary))">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="py-4 m-0">Резюме на поръчката (@Model.ProductsInBag.Sum(p => p.Quantity))</h5>
+                        <h5 class="py-4 m-0">@Localizer["Order Summary"] (@Model.ProductsInBag.Sum(p => p.Quantity))</h5>
                         <a hidden href="#"
                            style="color: rgb(var(--app-btn-bg))"
                            target="_blank">
@@ -192,13 +192,13 @@ else
                                 <div>
                                     <p>@product.Name</p>
                                     <p>@product.Optional</p>
-                                    <p>Цена: @product.Price лв.</p>
+                                    <p>@Localizer["Price"]: @product.Price @Localizer["Currency"]</p>
 
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between align-items-center mt-3">
                                 <a asp-controller="Checkout" asp-action="DeleteProductFromCart" asp-route-id="@product.Id" class="nav-link">
-                                    <i class="fas fa-trash-alt me-2"></i>Извади от количка
+                                    <i class="fas fa-trash-alt me-2"></i>@Localizer["Remove"]
                                 </a>
                                 <div class="d-flex justify-content-start align-items-center my-2">
                                     <form asp-controller="Checkout" asp-action="AddToCart" asp-route-productId="@product.Id"
@@ -222,7 +222,7 @@ else
                                     </form>
                                 </div>
                                 <p class="mb-0">
-                                    <span><strong>@(product.Quantity * product.Price) лв.</strong></span>
+                                    <span><strong>@(product.Quantity * product.Price) @Localizer["Currency"]</strong></span>
                                 </p>
                             </div>
                         </div>
@@ -233,29 +233,29 @@ else
                         @if (Model.PromoCodes.Any())
                         {
                             <div>
-                                <a class="nav-link dropdown-toggle text-danger" href="#" role="button" data-bs-toggle="dropdown"> <i class="fa-solid fa-tag me-1"></i>Имате промо код</a>
+                                <a class="nav-link dropdown-toggle text-danger" href="#" role="button" data-bs-toggle="dropdown"> <i class="fa-solid fa-tag me-1"></i>@Localizer["You have a promo code"]</a>
                                 <ul class="dropdown-menu">
                                     <li>
                                         <a asp-controller="Checkout" asp-action="DiscountWithPromoCode" class="dropdown-item">
-                                            Без промо код
+                                            @Localizer["No promo code"]
                                         </a>
                                     </li>
                                     <li>
                                         @foreach (var promoCode in Model.PromoCodes)
                                         {
                                             <a asp-controller="Checkout" asp-action="DiscountWithPromoCode" asp-route-promoCodeId="@promoCode.Id" class="dropdown-item">
-                                                @(promoCode.Code) до @promoCode.ExpirationDate.Date.ToString("dd/MM/yyyy")
+                                                @(promoCode.Code) @Localizer["until"] @promoCode.ExpirationDate.Date.ToString("dd/MM/yyyy")
                                             </a>
                                         }
                                     </li>
                                 </ul>
                             </div>
                         }
-                        @if (Model.Discount() != 0)
+                        @if (Model.PromoCodeId != 0)
                         {
                             <span>@Model.PromoCodes.FirstOrDefault(pc => pc.Id == Model.PromoCodeId)?.Code</span>
                             <span class="mb-0">
-                                <strong>- @Model.Discount().ToString("f2") лв.</strong>
+                                <strong>- @Model.Discount @Localizer["Currency"]</strong>
                             </span>
                         }
                     </div>
@@ -264,27 +264,27 @@ else
                     <hr />
                     <!-- Subtotal Start -->
                     <div class="d-flex justify-content-between mb-3">
-                        <span>Междинна сума</span>
+                        <span>@Localizer["Subtotal"]</span>
                         <span class="mb-0">
-                            <strong>@Model.SubTotal().ToString("f2") лв.</strong>
+                            <strong>@Model.SubTotal @Localizer["Currency"]</strong>
                         </span>
                     </div>
                     <!-- Subtotal End -->
                     <!-- Delivery Start -->
                     <div class="d-flex justify-content-between mb-3">
-                        <span>Доставка</span>
+                        <span>@Localizer["Shipping"]</span>
                         <span class="mb-0">
-                            @if (Model.ShippingPrice() == 0)
+                            @if (!Model.IsSelectedAddress)
                             {
-                                <strong>безплатна</strong>
+                                <strong class="text-danger">@Localizer["No delivery address"]</strong>
                             }
-                            else if (Model.ShippingPrice() is null)
+                            else if (Model.ShippingPrice == 0)
                             {
-                                <strong>няма избран доставчик</strong>
+                                <strong>@Localizer["Free"]</strong>
                             }
                             else
                             {
-                                <strong>@Model.ShippingPrice()?.ToString("f2") лв.</strong>
+                                <strong>@Model.ShippingPrice @Localizer["Currency"]</strong>
                             }
                         </span>
                     </div>
@@ -292,8 +292,8 @@ else
                     <hr />
                     <!-- Total Price Start -->
                     <div class="d-flex justify-content-between my-3 fs-4">
-                        <span>Общо :</span>
-                        <span>@Model.Total().ToString("f2") лв.</span>
+                        <span>@Localizer["Total"]:</span>
+                        <span>@Model.Total @Localizer["Currency"]</span>
                     </div>
                     <!-- Total Price End -->
                 </div>

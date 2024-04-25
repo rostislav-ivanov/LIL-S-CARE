@@ -23,20 +23,94 @@ namespace LilsCareApp.Core.Services
             _httpContextManager = httpContextManager;
         }
 
-
-        // get default address delivery Id for user if existing
-        public async Task<int?> GetDefaultAddressIdAsync(string userId)
+        public async Task<OrderDTO> GetOrderAsync(string? userId)
         {
-            return await _context.Users
-                .Where(u => u.Id == userId)
-                .Select(u => u.DefaultAddressDeliveryId)
-                .FirstOrDefaultAsync();
+            OrderDTO order = new OrderDTO()
+            {
+                AppUserId = userId ?? string.Empty,
+                PaymentMethodId = 1,
+                PaymentMethods = await GetPaymentMethodsAsync(),
+                DeliveryMethodId = 0,
+                DeliveryMethods = await GetDeliveryMethodsAsync(),
+                PromoCodeId = 0,
+                PromoCodes = userId != null ? await GetPromoCodesAsync(userId) : [],
+                NoteForDelivery = string.Empty,
+                IsSelectedAddress = false,
+                Discount = 0,
+                SubTotal = 0,
+                Total = 0,
+                ShippingPrice = 0,
+                Address = new AddressOrderDTO()
+            };
+
+            if (userId != null)
+            {
+                var address = await GetDefaultAddressAsync(userId);
+
+                if (address != null)
+                {
+                    order.DeliveryMethodId = address.IsShippingToOffice ? 1 : 2;
+                    order.Address = address;
+                    if (address.IsShippingToOffice)
+                    {
+                        order.Address.ShippingOffice = await _context.ShippingOffices
+                            .Where(so => so.Id == address.ShippingOfficeId)
+                            .Select(so => new ShippingOfficeDTO()
+                            {
+                                Id = so.Id,
+                                ShippingProviderId = so.ShippingProviderId,
+                                ShippingProvider = so.ShippingProvider.Name,
+                                City = so.City,
+                                OfficeAddress = so.OfficeAddress,
+                                Price = so.Price,
+                                ShippingDuration = so.ShippingDuration,
+                            })
+                            .FirstOrDefaultAsync();
+                    }
+
+                    order.IsSelectedAddress = true;
+                }
+            }
+
+            return order;
         }
 
+
         // get all payment methods 
-        public async Task<IEnumerable<PaymentMethod>> GetPaymentMethodsAsync()
+        public async Task<IEnumerable<PaymentMethodDTO>> GetPaymentMethodsAsync()
         {
+            var language = _httpContextManager.GetLanguage();
+
             return await _context.PaymentMethods
+                .Select(pm => new PaymentMethodDTO()
+                {
+                    Id = pm.Id,
+                    Name = new Dictionary<string, string>
+                    {
+                        { Bulgarian, pm.Name.NameBG },
+                        { Romanian, pm.Name.NameRO },
+                        { English, pm.Name.NameEN }
+                    }[language]
+                })
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<DeliveryMethodDTO>> GetDeliveryMethodsAsync()
+        {
+            var language = _httpContextManager.GetLanguage();
+
+            return await _context.DeliveryMethods
+                .Select(dm => new DeliveryMethodDTO()
+                {
+                    Id = dm.Id,
+                    Name = new Dictionary<string, string>
+                    {
+                        { Bulgarian, dm.Name.NameBG },
+                        { Romanian, dm.Name.NameRO },
+                        { English, dm.Name.NameEN }
+                    }[language]
+                })
                 .AsNoTracking()
                 .ToListAsync();
         }
@@ -66,14 +140,55 @@ namespace LilsCareApp.Core.Services
                 .ToListAsync();
         }
 
+        public async Task<AddressOrderDTO?> GetDefaultAddressAsync(string userId)
+        {
+            var defaultAddressId = _context.Users
+                .Where(u => u.Id == userId)
+                .Select(u => u.DefaultAddressDeliveryId)
+                .FirstOrDefault();
 
+            if (defaultAddressId == null)
+            {
+                return null;
+            }
+
+            var address = await _context.AddressDeliveries
+                .Where(ad => ad.Id == defaultAddressId)
+                .Select(ad => new AddressOrderDTO()
+                {
+                    Id = ad.Id,
+                    FirstName = ad.FirstName,
+                    LastName = ad.LastName,
+                    PhoneNumber = ad.PhoneNumber,
+                    PostCode = ad.PostCode ?? string.Empty,
+                    Address = ad.Address ?? string.Empty,
+                    Town = ad.Town ?? string.Empty,
+                    District = ad.District ?? string.Empty,
+                    Country = ad.Country ?? string.Empty,
+                    Email = ad.Email ?? string.Empty,
+                    IsShippingToOffice = ad.IsShippingToOffice,
+                    ShippingOfficeId = ad.ShippingOfficeId,
+                    ShippingOffice = ad.ShippingOffice != null ? new ShippingOfficeDTO()
+                    {
+                        Id = ad.ShippingOffice.Id,
+                        ShippingProviderId = ad.ShippingOffice.ShippingProviderId,
+                        ShippingProvider = ad.ShippingOffice.ShippingProvider.Name,
+                        City = ad.ShippingOffice.City,
+                        OfficeAddress = ad.ShippingOffice.OfficeAddress,
+                        Price = ad.ShippingOffice.Price,
+                        ShippingDuration = ad.ShippingOffice.ShippingDuration,
+                    } : null,
+                })
+                .FirstOrDefaultAsync();
+
+            return address;
+        }
 
         // Save order to database and return unique order number.
-        // Add new address delivery to database if not existing.
+        // Set default address delivery to User.
         // Remove products from user's bag.
-        //remove ordered quantity from products store
+        // Remove ordered quantity from products store
         // Set the applied date to promo code if is applied.
-        // Set new default address delivery to user.
         // Return unique order number to user.
         public async Task<string> CheckoutSaveAsync(OrderDTO orderDTO, string userId)
         {
@@ -84,17 +199,31 @@ namespace LilsCareApp.Core.Services
             {
                 CreatedOn = DateTime.UtcNow,
                 StatusOrderId = 1,
-                AppUser = appUser,
+                DeliveryMethodId = orderDTO.DeliveryMethodId,
+                AddressDeliveryId = orderDTO.Address.Id > 0 ? orderDTO.Address.Id : null,
+                AppUserId = userId,
                 PaymentMethodId = orderDTO.PaymentMethodId,
+                IsPaid = false,
                 NoteForDelivery = orderDTO.NoteForDelivery,
-                ProductsOrders = new List<ProductOrder>(),
-                PromoCodeId = orderDTO.PromoCodeId,
-                SubTotal = orderDTO.SubTotal(),
-                Discount = orderDTO.Discount(),
-                ShippingPrice = orderDTO.ShippingPrice() ?? 0,
-                Total = orderDTO.Total()
-
-
+                ShippingPrice = orderDTO.ShippingPrice,
+                Discount = orderDTO.Discount,
+                SubTotal = orderDTO.SubTotal,
+                Total = orderDTO.Total,
+                PromoCodeId = orderDTO.PromoCodeId > 0 ? orderDTO.PromoCodeId : null,
+                FirstName = orderDTO.Address.FirstName,
+                LastName = orderDTO.Address.LastName,
+                PhoneNumber = orderDTO.Address.PhoneNumber,
+                PostCode = orderDTO.Address.PostCode,
+                Address = orderDTO.Address.Address,
+                Town = orderDTO.Address.Town,
+                District = orderDTO.Address.District,
+                Country = orderDTO.Address.Country,
+                Email = orderDTO.Address.Email,
+                IsShippingToOffice = orderDTO.Address.IsShippingToOffice,
+                ShippingOfficeId = orderDTO.Address.ShippingOfficeId > 0 ? orderDTO.Address.ShippingOfficeId : null,
+                ExchangeRate = orderDTO.ExchangeRate,
+                Language = orderDTO.Language,
+                ProductsOrders = [],
             };
 
             // add products to order
@@ -114,46 +243,40 @@ namespace LilsCareApp.Core.Services
                 order.ProductsOrders.Add(productOrder);
             }
 
-            // add address to order
-
-            int? addressDeliveryId = orderDTO.Address?.Id ?? orderDTO.Office?.Id;
-
-            if (addressDeliveryId > 0) // if existing address set to order this address delivery
-            {
-                order.AddressDelivery = await _context.AddressDeliveries.FirstOrDefaultAsync(ad => ad.Id == addressDeliveryId);
-            }
-            else if (orderDTO.DeliveryType() == orderDTO.AddressDeliveryType) // if new address order add this address delivery
-            {
-                order.AddressDelivery = new AddressDelivery()
-                {
-                    FirstName = orderDTO.Address!.FirstName,
-                    LastName = orderDTO.Address.LastName,
-                    PhoneNumber = orderDTO.Address.PhoneNumber,
-                    Country = orderDTO.Address.Country,
-                    PostCode = orderDTO.Address.PostCode,
-                    Town = orderDTO.Address.Town,
-                    Address = orderDTO.Address.Address,
-                    District = orderDTO.Address.District,
-                    Email = orderDTO.Address.Email,
-                    IsShippingToOffice = false,
-                    AppUser = appUser
-                };
-            }
-            else if (orderDTO.DeliveryType() == orderDTO.OfficeDeliveryType) // if new office order add this address delivery
-            {
-                order.AddressDelivery = new AddressDelivery()
-                {
-                    FirstName = orderDTO.Office!.FirstName,
-                    LastName = orderDTO.Office.LastName,
-                    PhoneNumber = orderDTO.Office.PhoneNumber,
-                    IsShippingToOffice = true,
-                    ShippingOfficeId = orderDTO.Office.ShippingOfficeId,
-                    AppUser = appUser
-                };
-            }
 
             // add order to user
             await _context.Orders.AddAsync(order);
+
+            // set default address delivery to user
+            if (appUser != null)
+            {
+                if (orderDTO.Address.Id > 0)
+                {
+                    appUser.DefaultAddressDeliveryId = orderDTO.Address.Id;
+                }
+                else
+                {
+                    AddressDelivery address = new()
+                    {
+                        FirstName = orderDTO.Address.FirstName,
+                        LastName = orderDTO.Address.LastName,
+                        PhoneNumber = orderDTO.Address.PhoneNumber,
+                        PostCode = orderDTO.Address.PostCode,
+                        Address = orderDTO.Address.Address,
+                        Town = orderDTO.Address.Town,
+                        District = orderDTO.Address.District,
+                        Country = orderDTO.Address.Country,
+                        Email = orderDTO.Address.Email,
+                        IsShippingToOffice = orderDTO.Address.IsShippingToOffice,
+                        ShippingOfficeId = orderDTO.Address.ShippingOfficeId,
+                        AppUserId = userId
+                    };
+
+                    await _context.AddressDeliveries.AddAsync(address);
+                    appUser.DefaultAddressDelivery = address;
+                }
+            }
+
 
             // remove products from user's bag
             IEnumerable<BagUser> bagUsers = await _context.BagsUsers
@@ -179,9 +302,6 @@ namespace LilsCareApp.Core.Services
             {
                 promoCode.AppliedDate = DateTime.UtcNow;
             }
-
-            // set new default address delivery to user
-            appUser.DefaultAddressDelivery = order.AddressDelivery;
 
             await _context.SaveChangesAsync();
 
@@ -222,9 +342,9 @@ namespace LilsCareApp.Core.Services
                     ShippingOfficeAddress = o.AddressDelivery.ShippingOffice.OfficeAddress,
                     PaymentMethod = new Dictionary<string, string>
                     {
-                        { Bulgarian, o.PaymentMethod.Type.NameBG },
-                        { Romanian, o.PaymentMethod.Type.NameRO },
-                        { English, o.PaymentMethod.Type.NameEN }
+                        { Bulgarian, o.PaymentMethod.Name.NameBG },
+                        { Romanian, o.PaymentMethod.Name.NameRO },
+                        { English, o.PaymentMethod.Name.NameEN }
                     }[language],
                     NoteForDelivery = o.NoteForDelivery,
                     Products = o.ProductsOrders
@@ -241,12 +361,12 @@ namespace LilsCareApp.Core.Services
                             Quantity = po.Quantity,
                             Price = po.Price,
                         }),
-                    PromoCode = new Dictionary<string, string>
+                    PromoCode = o.PromoCode != null ? new Dictionary<string, string>
                     {
                         { Bulgarian, o.PromoCode.Code.NameBG },
                         { Romanian, o.PromoCode.Code.NameRO },
                         { English, o.PromoCode.Code.NameEN }
-                    }[language],
+                    }[language] : string.Empty,
                     Discount = o.Discount,
                     SubTotal = o.SubTotal,
                     ShippingPrice = o.ShippingPrice,
@@ -256,6 +376,37 @@ namespace LilsCareApp.Core.Services
                 .FirstOrDefaultAsync();
 
             return orderSummary;
+        }
+
+        public async Task<OrderDTO> CalculateCheckout(OrderDTO order)
+        {
+            order.Language = _httpContextManager.GetLanguage();
+            order.ExchangeRate = await _appConfigService.GetExchangeRateAsync(order.Language);
+            decimal freeShipping = await _appConfigService.GetFreeShipping(order.Language);
+            decimal subTotal = order.ProductsInBag.Sum(p => p.Price * p.Quantity);
+            decimal discount = order.PromoCodes.FirstOrDefault(pc => pc.Id == order.PromoCodeId)?.Discount ?? 0;
+            order.Discount = Math.Round((subTotal * discount), 2);
+            order.SubTotal = Math.Round((subTotal - order.Discount), 2);
+
+            if (order.IsSelectedAddress)
+            {
+                decimal shippingPrice = 0;
+                if (order.DeliveryMethodId == 1)
+                {
+                    shippingPrice = Math.Round((order.Address.ShippingOffice!.Price / order.ExchangeRate), 2);
+                }
+                else if (order.DeliveryMethodId == 2)
+                {
+                    shippingPrice = await _appConfigService.GetAddressDeliveryPriceAsync(order.Language);
+                }
+
+                order.ShippingPrice = order.SubTotal >= freeShipping ? 0 : Math.Round(shippingPrice, 2);
+            }
+
+
+            order.Total = order.SubTotal + order.ShippingPrice;
+
+            return order;
         }
     }
 }

@@ -44,9 +44,13 @@ namespace LilsCareApp.Infrastructure.Data
 
         public DbSet<ShippingProvider> ShippingProviders { get; set; } = null!;
 
-        public DbSet<PaymentType> PaymentTypes { get; set; } = null!;
+        public DbSet<PaymentName> PaymentNames { get; set; } = null!;
 
         public DbSet<PaymentMethod> PaymentMethods { get; set; } = null!;
+
+        public DbSet<DeliveryName> DeliveryNames { get; set; } = null!;
+
+        public DbSet<DeliveryMethod> DeliveryMethods { get; set; } = null!;
 
         public DbSet<AddressDelivery> AddressDeliveries { get; set; } = null!;
 
@@ -104,8 +108,10 @@ namespace LilsCareApp.Infrastructure.Data
             builder.ApplyConfiguration(new StatusOrdersNameConfiguration());
             builder.ApplyConfiguration(new StatusOrdersConfiguration());
             builder.ApplyConfiguration(new ShippingProvidersConfiguration());
-            builder.ApplyConfiguration(new PaymentTypesConfiguration());
+            builder.ApplyConfiguration(new PaymentNamesConfiguration());
             builder.ApplyConfiguration(new PaymentMethodsConfiguration());
+            builder.ApplyConfiguration(new DeliveryNamesConfiguration());
+            builder.ApplyConfiguration(new DeliveryMethodsConfiguration());
             builder.ApplyConfiguration(new AddressDeliveriesConfiguration());
             builder.ApplyConfiguration(new OrdersConfiguration());
             builder.ApplyConfiguration(new ProductsOrdersConfiguration());

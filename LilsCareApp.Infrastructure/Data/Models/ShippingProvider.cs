@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using static LilsCareApp.Infrastructure.DataConstants.Speditor;
+using static LilsCareApp.Infrastructure.DataConstants.ShippingProvider;
 
 namespace LilsCareApp.Infrastructure.Data.Models
 {
@@ -19,7 +19,7 @@ namespace LilsCareApp.Infrastructure.Data.Models
 
 
         [Comment("Navigation property to shipping offices")]
-        public List<ShippingOffice> ShippingOffices { get; set; } = new List<ShippingOffice>();
+        public List<ShippingOffice> ShippingOffices { get; set; } = [];
 
     }
 }

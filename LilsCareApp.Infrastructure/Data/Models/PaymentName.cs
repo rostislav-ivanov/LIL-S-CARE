@@ -4,21 +4,21 @@ using static LilsCareApp.Infrastructure.DataConstants.PaymentMethod;
 
 namespace LilsCareApp.Infrastructure.Data.Models
 {
-    public class PaymentType
+    public class PaymentName
     {
-        [Comment("Payment type id")]
+        [Comment("Payment name id")]
         [Key]
         public int Id { get; set; }
 
-        [Comment("The payment type in English")]
+        [Comment("The payment name in English")]
         [MaxLength(NameMaxLength)]
         public required string NameEN { get; set; }
 
-        [Comment("The payment type in Bulgarian")]
+        [Comment("The payment name in Bulgarian")]
         [MaxLength(NameMaxLength)]
         public required string NameBG { get; set; }
 
-        [Comment("The payment type in Romanian")]
+        [Comment("The payment name in Romanian")]
         [MaxLength(NameMaxLength)]
         public required string NameRO { get; set; }
 

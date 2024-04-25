@@ -34,5 +34,26 @@ namespace LilsCareApp.Core.Services
             return exchangeRate;
         }
 
+        public async Task<decimal> GetAddressDeliveryPriceAsync(string language)
+        {
+            decimal exchangeRate = await GetExchangeRateAsync(language);
+
+            decimal addressDeliveryPrice = await _context.AppConfigs
+                .Select(x => x.AddressDeliveryPrice)
+                .FirstOrDefaultAsync();
+
+            return addressDeliveryPrice / exchangeRate;
+        }
+
+        public async Task<decimal> GetFreeShipping(string language)
+        {
+            decimal exchangeRate = await GetExchangeRateAsync(language);
+
+            decimal freeShipping = await _context.AppConfigs
+                .Select(x => x.FreeShipping)
+                .FirstOrDefaultAsync();
+
+            return freeShipping / exchangeRate;
+        }
     }
 }

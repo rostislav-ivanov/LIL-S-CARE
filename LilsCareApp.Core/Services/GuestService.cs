@@ -138,31 +138,41 @@ namespace LilsCareApp.Core.Services
 
 
         // Save order to database and return unique order number.
-        // Add new address delivery to database related to the order.
         // Remove products from guest's bag.
-        // Set the applied date to promo code if is applied.
         // Return unique order number to guest user.
         public async Task<string> CheckoutSaveAsync(OrderDTO orderDTO)
         {
+            var language = _httpContextManager.GetLanguage();
             Order order = new Order()
             {
                 CreatedOn = DateTime.UtcNow,
                 StatusOrderId = 1,
+                DeliveryMethodId = orderDTO.DeliveryMethodId,
                 PaymentMethodId = orderDTO.PaymentMethodId,
+                IsPaid = false,
                 NoteForDelivery = orderDTO.NoteForDelivery,
-                ProductsOrders = new List<ProductOrder>(),
-                PromoCodeId = orderDTO.PromoCodeId,
-                SubTotal = orderDTO.SubTotal(),
-                Discount = orderDTO.Discount(),
-                ShippingPrice = orderDTO.ShippingPrice() ?? 0,
-                Total = orderDTO.Total()
+                ShippingPrice = orderDTO.ShippingPrice,
+                Discount = orderDTO.Discount,
+                SubTotal = orderDTO.SubTotal,
+                Total = orderDTO.Total,
+                FirstName = orderDTO.Address.FirstName,
+                LastName = orderDTO.Address.LastName,
+                PhoneNumber = orderDTO.Address.PhoneNumber,
+                Address = orderDTO.Address.Address,
+                Town = orderDTO.Address.Town,
+                District = orderDTO.Address.District,
+                Country = orderDTO.Address.Country,
+                Email = orderDTO.Address.Email,
+                IsShippingToOffice = orderDTO.Address.IsShippingToOffice,
+                ShippingOfficeId = orderDTO.Address.ShippingOfficeId > 0 ? orderDTO.Address.ShippingOfficeId : null,
+                ExchangeRate = orderDTO.ExchangeRate,
+                Language = orderDTO.Language,
+                ProductsOrders = [],
 
 
             };
 
             // add products to order
-            var language = _httpContextManager.GetLanguage();
-            decimal exchangeRate = await _appConfigService.GetExchangeRateAsync(language);
 
             foreach (var product in orderDTO.ProductsInBag)
             {
@@ -170,7 +180,7 @@ namespace LilsCareApp.Core.Services
                 {
                     ProductId = product.Id,
                     Quantity = product.Quantity,
-                    Price = product.Price / exchangeRate,
+                    Price = product.Price,
                     ImagePath = await _context.ImageProducts
                         .Where(ip => ip.ProductId == product.Id)
                         .OrderBy(ip => ip.ImageOrder)
@@ -181,55 +191,10 @@ namespace LilsCareApp.Core.Services
                 order.ProductsOrders.Add(productOrder);
             }
 
-            // add address to order
-
-            int? addressDeliveryId = orderDTO.Address?.Id ?? orderDTO.Office?.Id;
-
-            if (addressDeliveryId > 0) // if existing address set to order this address delivery
-            {
-                order.AddressDelivery = await _context.AddressDeliveries.FirstOrDefaultAsync(ad => ad.Id == addressDeliveryId);
-            }
-            else if (orderDTO.DeliveryType() == orderDTO.AddressDeliveryType) // if new address order add this address delivery
-            {
-                order.AddressDelivery = new AddressDelivery()
-                {
-                    FirstName = orderDTO.Address!.FirstName,
-                    LastName = orderDTO.Address.LastName,
-                    PhoneNumber = orderDTO.Address.PhoneNumber,
-                    Country = orderDTO.Address.Country,
-                    PostCode = orderDTO.Address.PostCode,
-                    Town = orderDTO.Address.Town,
-                    Address = orderDTO.Address.Address,
-                    District = orderDTO.Address.District,
-                    Email = orderDTO.Address.Email,
-                    IsShippingToOffice = false,
-                };
-            }
-            else if (orderDTO.DeliveryType() == orderDTO.OfficeDeliveryType) // if new office order add this address delivery
-            {
-                order.AddressDelivery = new AddressDelivery()
-                {
-                    FirstName = orderDTO.Office!.FirstName,
-                    LastName = orderDTO.Office.LastName,
-                    PhoneNumber = orderDTO.Office.PhoneNumber,
-                    IsShippingToOffice = true,
-                    ShippingOfficeId = orderDTO.Office.ShippingOfficeId,
-                };
-            }
-
-            // add order to user
             await _context.Orders.AddAsync(order);
 
             // remove products from user's bag
             ClearBag();
-
-            // set the applied date to promo code if is applied
-            PromoCode promoCode = await _context.PromoCodes.FirstOrDefaultAsync(pc => pc.Id == order.PromoCodeId);
-
-            if (promoCode != null)
-            {
-                promoCode.AppliedDate = DateTime.UtcNow;
-            }
 
             await _context.SaveChangesAsync();
 

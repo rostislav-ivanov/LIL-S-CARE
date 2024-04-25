@@ -4,19 +4,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LilsCareApp.Infrastructure.Data.Models
 {
-    [Comment("Payment methods")]
-    public class PaymentMethod
+    public class DeliveryMethod
     {
-        [Comment("Payment method id")]
+        [Comment("Delivery method id")]
         [Key]
         public int Id { get; set; }
 
-        [Comment("Payment method name Id")]
+        [Comment("Delivery method name Id")]
         public int NameId { get; set; }
 
-        [Comment("Navigation Property to PaymentName")]
+        [Comment("Navigation Property to DeliveryName")]
         [ForeignKey(nameof(NameId))]
-        public PaymentName Name { get; set; } = null!;
+        public DeliveryName Name { get; set; } = null!;
 
         [Comment("Navigation property to orders")]
         public List<Order> Orders { get; set; } = [];

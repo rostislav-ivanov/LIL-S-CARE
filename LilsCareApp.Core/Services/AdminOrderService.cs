@@ -34,7 +34,7 @@ namespace LilsCareApp.Core.Services
                     Customer = o.AddressDelivery.FirstName + " " + o.AddressDelivery.LastName,
                     Payment = o.IsPaid ? "Платена" : "Неплатена",
                     StatusOrder = o.StatusOrder.Name.NameBG,
-                    Total = o.Total
+                    //Total = o.Total
                 });
             ;
 

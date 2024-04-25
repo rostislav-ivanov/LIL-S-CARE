@@ -8,144 +8,92 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LilsCareApp.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class _03 : Migration
+    public partial class _02 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Products_ProductOptional_OptionalId",
-                table: "Products");
+            migrationBuilder.InsertData(
+                table: "AppConfigs",
+                columns: new[] { "Id", "AddressDeliveryPrice", "ExchangeRateBGN", "ExchangeRateEUR", "ExchangeRateRON", "FreeShipping" },
+                values: new object[] { 1, 8.00m, 1m, 1.9558m, 0.3930m, 35.00m });
 
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_ProductOptional",
-                table: "ProductOptional");
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DefaultAddressDeliveryId", "Email", "EmailConfirmed", "FirstName", "ImagePath", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "45fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "1bacb9fc-aa63-458b-8e61-297070588fc8", null, "admin@mail.com", true, "Admin", null, "Adminov", false, null, "ADMIN@MAIL.COM", "ADMIN@MAIL.COM", "AQAAAAIAAYagAAAAEJ79w49/R3p+NipRf4XIk9aXKvsfQF8GvZvKEfHIUYzuviQNWQXdYRvH14b4cqPUeQ==", null, false, "a7f06ee2-fe04-4412-a243-371c160d4b52", false, "admin@mail.com" },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "dae2efd3-fa68-4b1d-999e-24e8e4d0c680", null, "test@softuni.bg", true, "Test", null, "Testov", false, null, "TEST@SOFTUNI.BG", "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAEN5oIPOKOsFdTI269ulJcOjmQukfH0dXt3f3oRVUmKo+oxbeowA2dC2mwBv9C/mPLA==", null, false, "4fdf3a0c-0121-428f-9113-0d2ed344e213", false, "test@softuni.bg" }
+                });
 
-            migrationBuilder.DropColumn(
-                name: "Description",
-                table: "Sections");
+            migrationBuilder.InsertData(
+                table: "CategoryNames",
+                columns: new[] { "Id", "NameBG", "NameEN", "NameRO" },
+                values: new object[,]
+                {
+                    { 1, "всички", "all", "toate" },
+                    { 2, "за тяло", "body", "pentru corp" },
+                    { 3, "за суха кожа", "dry skin", "pentru piele uscata" },
+                    { 4, "за мазна кожа", "oily skin", "pentru piele grasa" },
+                    { 5, "за лице", "face", "pentru fata" }
+                });
 
-            migrationBuilder.DropColumn(
-                name: "Title",
-                table: "Sections");
+            migrationBuilder.InsertData(
+                table: "DeliveryNames",
+                columns: new[] { "Id", "NameBG", "NameEN", "NameRO" },
+                values: new object[,]
+                {
+                    { 1, "Доставка до офис на куриер", "Office delivery", "Livrare la birou" },
+                    { 2, "Доставка до адрес на клиент", "Home delivery", "Livrare la domiciliu" }
+                });
 
-            migrationBuilder.RenameTable(
-                name: "ProductOptional",
-                newName: "ProductOptionals");
+            migrationBuilder.InsertData(
+                table: "PaymentNames",
+                columns: new[] { "Id", "NameBG", "NameEN", "NameRO" },
+                values: new object[,]
+                {
+                    { 1, "Плащане при доставка", "Cash on delivery", "Plata la livrare" },
+                    { 2, "С карта", "With card", "Cu cardul" },
+                    { 3, "Банков превод", "Bank transfer", "Transfer bancar" }
+                });
 
-            migrationBuilder.AddColumn<int>(
-                name: "DescriptionId",
-                table: "Sections",
-                type: "int",
-                nullable: false,
-                defaultValue: 0,
-                comment: "The section's description Id");
+            migrationBuilder.InsertData(
+                table: "ProductNames",
+                columns: new[] { "Id", "NameBG", "NameEN", "NameRO" },
+                values: new object[,]
+                {
+                    { 1, "НАТУРАЛЕН СУХ ДЕЗОДОРАНТ", "NATURAL DRY DEODORANT", "DEODORANT NATURAL USCAT" },
+                    { 2, "БАЛСАМ ЗА УСТНИ С ЖОЖОБА, КАКАО И ПЧЕЛЕН ВОСЪК", "LIP BALM WITH JOJOBA, COCOA AND BEESWAX", "BALSAM DE BUZE CU JOJOBA, CACAO SI CEARA DE ALBINE" },
+                    { 3, "ХИДРАТИРАЩ КРЕМ С ШИПКА И НИАЦИНАМИД", "MOISTURIZING CREAM WITH ROSE BODY AND NIACINAMIDE", "CREMA HIDRATANTE CU CORP DE TRANDAFIRI SI NIACINAMIDA" },
+                    { 4, "ДВУФАЗНА МИЦЕЛАРНА ВОДА ЗЕЛЕН ЧАЙ И ЖОЖОБА", "TWO PHASE GREEN TEA AND JOJOBA MICELLAR WATER", "CEAI VERDE BIFAZICAL ȘI APA MICELARĂ DE JOJOBA" },
+                    { 5, "НАТУРАЛЕН КРЕМ ДЕЗОДОРАНТ", "NATURAL CREAM DEODORANT", "DEODORANT CREMA NATURAL" },
+                    { 6, "СЕРУМ МАСЛО С ШИПКА, ЖОЖОБА, АРГАН И ЯГОДОВИ СЕМКИ", "SERUM OIL WITH ROSE BODY, JOJOBA, ARGAN AND STRAWBERRY SEEDS", "ULEI DE SER CU CORP DE TRANDAFIRI, SEMINTE DE JOJOBA, ARGAN SI CAPSUNI" },
+                    { 7, "", "", "" }
+                });
 
-            migrationBuilder.AddColumn<int>(
-                name: "TitleId",
-                table: "Sections",
-                type: "int",
-                nullable: false,
-                defaultValue: 0,
-                comment: "The section's title Id");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_ProductOptionals",
+            migrationBuilder.InsertData(
                 table: "ProductOptionals",
-                column: "Id");
-
-            migrationBuilder.CreateTable(
-                name: "SectionDescriptions",
-                columns: table => new
+                columns: new[] { "Id", "OptionalBG", "OptionalEN", "OptionalRO" },
+                values: new object[,]
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DescriptionEN = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: false, comment: "The section's description in English"),
-                    DescriptionBG = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: false, comment: "The section's description in Bulgarian"),
-                    DescriptionRO = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: false, comment: "The section's description in Romanian")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SectionDescriptions", x => x.Id);
+                    { 1, "Тегло:  25 г.", "Weight:  25 g.", "Greutate:  25 g." },
+                    { 2, "Тегло:  5 г.", "Weight:  5 g.", "Greutate:  5 g." },
+                    { 3, "Тегло:  50 г.", "Weight:  50 g.", "Greutate:  50 g." },
+                    { 4, "Тегло:  100 мл.", "Weight:  100 ml.", "Greutate:  100 ml." },
+                    { 5, "Тегло:  50 г.", "Weight:  50 g.", "Greutate:  50 g." },
+                    { 6, "Тегло:  20 мл.", "Weight:  20 ml.", "Greutate:  20 ml." },
+                    { 7, "", "", "" }
                 });
 
-            migrationBuilder.CreateTable(
-                name: "SectionTitles",
-                columns: table => new
+            migrationBuilder.InsertData(
+                table: "PromoCodeNames",
+                columns: new[] { "Id", "NameBG", "NameEN", "NameRO" },
+                values: new object[,]
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TitleEN = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "The section's title in English"),
-                    TitleBG = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "The section's title in Bulgarian"),
-                    TitleRO = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "The section's title in Romanian")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SectionTitles", x => x.Id);
+                    { 1, "-10 % за регистрация", "-10 % for registration", "-10 % pentru inregistrare" },
+                    { 2, "-20 % отстъпка", "-20 % discount", "-20 % reducere" }
                 });
-
-            migrationBuilder.UpdateData(
-                table: "AspNetUsers",
-                keyColumn: "Id",
-                keyValue: "45fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                columns: new[] { "ConcurrencyStamp", "PasswordHash", "SecurityStamp" },
-                values: new object[] { "8b9be100-5a8f-4709-85df-d226d57f08cd", "AQAAAAIAAYagAAAAEB3KfcGQFfrwzLf65Sw00b1Q/SnDLC9H08heFdYEaP2bPcbU4JxC2xLboN0IjjtCyg==", "4f002716-2d9d-4408-8aea-78a6eea0331a" });
-
-            migrationBuilder.UpdateData(
-                table: "AspNetUsers",
-                keyColumn: "Id",
-                keyValue: "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                columns: new[] { "ConcurrencyStamp", "PasswordHash", "SecurityStamp" },
-                values: new object[] { "d359383c-f9b1-4a43-89cd-e35b3de56bf6", "AQAAAAIAAYagAAAAELg8TdgQplC8dvFeMTNUHV5x7mYjyO4lGuySxuyPZGHGpOGSTtfpbBDqpxMD8nuu1A==", "e8baa58b-408d-4be0-8c5f-d173899c676f" });
-
-            migrationBuilder.UpdateData(
-                table: "Orders",
-                keyColumn: "Id",
-                keyValue: 1,
-                columns: new[] { "CreatedOn", "DateShipping" },
-                values: new object[] { new DateTime(2024, 4, 22, 8, 2, 25, 23, DateTimeKind.Utc).AddTicks(917), new DateTime(2024, 4, 22, 8, 2, 25, 23, DateTimeKind.Utc).AddTicks(2041) });
-
-            migrationBuilder.UpdateData(
-                table: "Orders",
-                keyColumn: "Id",
-                keyValue: 2,
-                columns: new[] { "CreatedOn", "DateShipping" },
-                values: new object[] { new DateTime(2024, 4, 22, 8, 2, 25, 24, DateTimeKind.Utc).AddTicks(3374), new DateTime(2024, 4, 22, 8, 2, 25, 24, DateTimeKind.Utc).AddTicks(3376) });
-
-            migrationBuilder.UpdateData(
-                table: "PromoCodes",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "ExpirationDate",
-                value: new DateTime(2025, 4, 22, 8, 2, 25, 814, DateTimeKind.Utc).AddTicks(9238));
-
-            migrationBuilder.UpdateData(
-                table: "PromoCodes",
-                keyColumn: "Id",
-                keyValue: 2,
-                column: "ExpirationDate",
-                value: new DateTime(2025, 4, 22, 8, 2, 25, 814, DateTimeKind.Utc).AddTicks(9251));
-
-            migrationBuilder.UpdateData(
-                table: "Reviews",
-                keyColumns: new[] { "AuthorId", "ProductId" },
-                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 2 },
-                column: "CreatedOn",
-                value: new DateTime(2024, 4, 22, 11, 2, 25, 814, DateTimeKind.Local).AddTicks(8776));
-
-            migrationBuilder.UpdateData(
-                table: "Reviews",
-                keyColumns: new[] { "AuthorId", "ProductId" },
-                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 3 },
-                column: "CreatedOn",
-                value: new DateTime(2024, 4, 22, 11, 2, 25, 814, DateTimeKind.Local).AddTicks(8844));
-
-            migrationBuilder.UpdateData(
-                table: "Reviews",
-                keyColumns: new[] { "AuthorId", "ProductId" },
-                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 4 },
-                column: "CreatedOn",
-                value: new DateTime(2024, 4, 22, 11, 2, 25, 814, DateTimeKind.Local).AddTicks(8849));
 
             migrationBuilder.InsertData(
                 table: "SectionDescriptions",
@@ -231,221 +179,224 @@ namespace LilsCareApp.Infrastructure.Migrations
                     { 35, "СЪСТАВ, INCI", "COMPOSITION, INCI", "COMPOZIȚIE, INCI" }
                 });
 
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 1,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 1, 1 });
+            migrationBuilder.InsertData(
+                table: "ShippingProviders",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Еконт" },
+                    { 2, "Спиди" }
+                });
 
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 2,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 2, 2 });
+            migrationBuilder.InsertData(
+                table: "StatusOrderNames",
+                columns: new[] { "Id", "NameBG", "NameEN", "NameRO" },
+                values: new object[,]
+                {
+                    { 1, "Неизпълнена", "Unfulfilled", "Neîndeplinită" },
+                    { 2, "Отменена", "Canceled", "Anulat" },
+                    { 3, "Изпълнена", "Fulfilled", "Îndeplinit" },
+                    { 4, "Получена", "Received", "Primit" },
+                    { 5, "Върната", "Returned", "Returnat" }
+                });
 
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 3,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 3, 3 });
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "NameId" },
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 2, 2 },
+                    { 3, 3 },
+                    { 4, 4 },
+                    { 5, 5 }
+                });
 
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 4,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 4, 4 });
+            migrationBuilder.InsertData(
+                table: "DeliveryMethods",
+                columns: new[] { "Id", "NameId" },
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 2, 2 }
+                });
 
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 5,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 5, 5 });
+            migrationBuilder.InsertData(
+                table: "PaymentMethods",
+                columns: new[] { "Id", "NameId" },
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 2, 2 },
+                    { 3, 3 }
+                });
 
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 6,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 6, 6 });
+            migrationBuilder.InsertData(
+                table: "Products",
+                columns: new[] { "Id", "IsShow", "NameId", "OptionalId", "Price", "Quantity" },
+                values: new object[,]
+                {
+                    { 1, true, 1, 1, 5.50m, 10 },
+                    { 2, true, 2, 2, 4.00m, 20 },
+                    { 3, true, 3, 3, 12.00m, 30 },
+                    { 4, true, 4, 4, 10.00m, 0 },
+                    { 5, true, 5, 5, 8.50m, 10 },
+                    { 6, true, 6, 6, 10.00m, 20 },
+                    { 7, true, 7, 7, 10.00m, 0 }
+                });
 
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 7,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 7, 7 });
+            migrationBuilder.InsertData(
+                table: "PromoCodes",
+                columns: new[] { "Id", "AppUserId", "AppliedDate", "CodeId", "Discount", "ExpirationDate" },
+                values: new object[,]
+                {
+                    { 1, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, 1, 0.1m, new DateTime(2025, 4, 25, 12, 25, 3, 140, DateTimeKind.Utc).AddTicks(3961) },
+                    { 2, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, 2, 0.2m, new DateTime(2025, 4, 25, 12, 25, 3, 140, DateTimeKind.Utc).AddTicks(3978) }
+                });
 
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 8,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 8, 8 });
+            migrationBuilder.InsertData(
+                table: "ShippingOffices",
+                columns: new[] { "Id", "City", "OfficeAddress", "Price", "ShippingDuration", "ShippingProviderId" },
+                values: new object[,]
+                {
+                    { 1, "Sofia", "bul. Vitosha 100", 5.00m, 2, 1 },
+                    { 2, "Sofia", "bul. Hristo Botev 20", 5.00m, 2, 1 },
+                    { 3, "Varna", "bul. Vitosha 100", 5.00m, 2, 1 },
+                    { 4, "Burgas", "bul. Vitosha 100", 5.00m, 2, 1 },
+                    { 5, "Ruse", "bul. Vitosha 100", 5.00m, 2, 1 },
+                    { 6, "Sofia", "bul. Vitosha 200", 5.00m, 2, 2 },
+                    { 7, "Sofia", "bul. Hristo Botev 30", 5.00m, 2, 2 },
+                    { 8, "Sofia", "bul. Bozveli 200", 5.00m, 2, 2 },
+                    { 9, "Burgas", "bul. Vitosha 200", 5.00m, 2, 2 },
+                    { 10, "Ruse", "bul. Vitosha 200", 5.00m, 2, 2 }
+                });
 
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 9,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 9, 9 });
+            migrationBuilder.InsertData(
+                table: "StatusOrders",
+                columns: new[] { "Id", "NameId" },
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 2, 2 },
+                    { 3, 3 },
+                    { 4, 4 },
+                    { 5, 5 }
+                });
 
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 10,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 10, 10 });
+            migrationBuilder.InsertData(
+                table: "BagsUsers",
+                columns: new[] { "AppUserId", "ProductId", "Quantity" },
+                values: new object[,]
+                {
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 1, 2 },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 2, 3 },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 3, 4 }
+                });
 
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 11,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 11, 11 });
+            migrationBuilder.InsertData(
+                table: "ImageProducts",
+                columns: new[] { "Id", "ImageOrder", "ImagePath", "ProductId" },
+                values: new object[,]
+                {
+                    { 1, 1, "/files/products/product-01-image-01.webp", 1 },
+                    { 2, 2, "/files/products/product-01-image-02.webp", 1 },
+                    { 3, 3, "/files/products/product-01-image-03.webp", 1 },
+                    { 4, 4, "/files/products/product-01-image-04.webp", 1 },
+                    { 5, 1, "/files/products/product-02-image-01.webp", 2 },
+                    { 6, 2, "/files/products/product-02-image-02.webp", 2 },
+                    { 7, 3, "/files/products/product-02-image-03.webp", 2 },
+                    { 8, 4, "/files/products/product-02-image-04.webp", 2 },
+                    { 9, 5, "/files/products/product-02-image-05.webp", 2 },
+                    { 10, 1, "/files/products/product-03-image-01.webp", 3 },
+                    { 11, 2, "/files/products/product-03-image-02.webp", 3 },
+                    { 12, 3, "/files/products/product-03-image-03.webp", 3 },
+                    { 13, 4, "/files/products/product-03-image-04.webp", 3 },
+                    { 14, 5, "/files/products/product-03-image-05.webp", 3 },
+                    { 15, 1, "/files/products/product-04-image-01.webp", 4 },
+                    { 16, 2, "/files/products/product-04-image-02.webp", 4 },
+                    { 17, 3, "/files/products/product-04-image-03.webp", 4 },
+                    { 18, 4, "/files/products/product-04-image-04.webp", 4 },
+                    { 19, 1, "/files/products/product-05-image-01.webp", 5 },
+                    { 20, 2, "/files/products/product-05-image-02.webp", 5 },
+                    { 21, 3, "/files/products/product-05-image-03.webp", 5 },
+                    { 22, 4, "/files/products/product-05-image-04.webp", 5 },
+                    { 23, 1, "/files/products/product-06-image-01.webp", 6 },
+                    { 24, 2, "/files/products/product-06-image-02.webp", 6 },
+                    { 25, 3, "/files/products/product-06-image-03.webp", 6 },
+                    { 26, 4, "/files/products/product-06-image-04.webp", 6 },
+                    { 27, 5, "/files/products/product-06-image-05.webp", 6 }
+                });
 
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 12,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 12, 12 });
+            migrationBuilder.InsertData(
+                table: "ProductsCategories",
+                columns: new[] { "CategoryId", "ProductId" },
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 2, 1 },
+                    { 3, 1 },
+                    { 1, 2 },
+                    { 3, 2 },
+                    { 4, 2 },
+                    { 1, 3 },
+                    { 5, 3 },
+                    { 1, 4 },
+                    { 2, 4 },
+                    { 3, 4 },
+                    { 5, 4 },
+                    { 1, 5 },
+                    { 3, 5 },
+                    { 5, 5 },
+                    { 1, 6 },
+                    { 3, 6 },
+                    { 4, 6 }
+                });
 
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 13,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 13, 13 });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 14,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 14, 14 });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 15,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 15, 15 });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 16,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 16, 16 });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 17,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 17, 17 });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 18,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 18, 18 });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 19,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 19, 19 });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 20,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 20, 20 });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 21,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 21, 21 });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 22,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 22, 22 });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 23,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 23, 23 });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 24,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 24, 24 });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 25,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 25, 25 });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 26,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 26, 26 });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 27,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 27, 27 });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 28,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 28, 28 });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 29,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 29, 29 });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 30,
-                columns: new[] { "DescriptionId", "TitleId" },
-                values: new object[] { 30, 30 });
+            migrationBuilder.InsertData(
+                table: "Reviews",
+                columns: new[] { "AuthorId", "ProductId", "Comment", "CreatedOn", "Rating", "Title" },
+                values: new object[,]
+                {
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 2, "Great product, I love it!", new DateTime(2024, 4, 25, 15, 25, 3, 140, DateTimeKind.Local).AddTicks(3098), 4, "Great product" },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 3, "Great product, I love it!", new DateTime(2024, 4, 25, 15, 25, 3, 140, DateTimeKind.Local).AddTicks(3198), 3, "Great product" },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 4, "Great product, I love it!", new DateTime(2024, 4, 25, 15, 25, 3, 140, DateTimeKind.Local).AddTicks(3202), 3, "Great product" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Sections",
                 columns: new[] { "Id", "DescriptionId", "ProductId", "SectionOrder", "TitleId" },
                 values: new object[,]
                 {
+                    { 1, 1, 1, 1, 1 },
+                    { 2, 2, 1, 2, 2 },
+                    { 3, 3, 1, 3, 3 },
+                    { 4, 4, 1, 4, 4 },
+                    { 5, 5, 1, 5, 5 },
+                    { 6, 6, 2, 1, 6 },
+                    { 7, 7, 2, 2, 7 },
+                    { 8, 8, 2, 3, 8 },
+                    { 9, 9, 2, 4, 9 },
+                    { 10, 10, 2, 5, 10 },
+                    { 11, 11, 3, 1, 11 },
+                    { 12, 12, 3, 2, 12 },
+                    { 13, 13, 3, 3, 13 },
+                    { 14, 14, 3, 4, 14 },
+                    { 15, 15, 3, 5, 15 },
+                    { 16, 16, 4, 1, 16 },
+                    { 17, 17, 4, 2, 17 },
+                    { 18, 18, 4, 3, 18 },
+                    { 19, 19, 4, 4, 19 },
+                    { 20, 20, 4, 5, 20 },
+                    { 21, 21, 5, 1, 21 },
+                    { 22, 22, 5, 2, 22 },
+                    { 23, 23, 5, 3, 23 },
+                    { 24, 24, 5, 4, 24 },
+                    { 25, 25, 5, 5, 25 },
+                    { 26, 26, 6, 1, 26 },
+                    { 27, 27, 6, 2, 27 },
+                    { 28, 28, 6, 3, 28 },
+                    { 29, 29, 6, 4, 29 },
+                    { 30, 30, 6, 5, 30 },
                     { 31, 31, 7, 1, 31 },
                     { 32, 32, 7, 2, 32 },
                     { 33, 33, 7, 3, 33 },
@@ -453,73 +404,469 @@ namespace LilsCareApp.Infrastructure.Migrations
                     { 35, 35, 7, 5, 35 }
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Sections_DescriptionId",
-                table: "Sections",
-                column: "DescriptionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Sections_TitleId",
-                table: "Sections",
-                column: "TitleId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Products_ProductOptionals_OptionalId",
-                table: "Products",
-                column: "OptionalId",
-                principalTable: "ProductOptionals",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Sections_SectionDescriptions_DescriptionId",
-                table: "Sections",
-                column: "DescriptionId",
-                principalTable: "SectionDescriptions",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Sections_SectionTitles_TitleId",
-                table: "Sections",
-                column: "TitleId",
-                principalTable: "SectionTitles",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+            migrationBuilder.InsertData(
+                table: "WishesUsers",
+                columns: new[] { "AppUserId", "ProductId" },
+                values: new object[,]
+                {
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 1 },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 3 },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 4 }
+                });
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Products_ProductOptionals_OptionalId",
-                table: "Products");
+            migrationBuilder.DeleteData(
+                table: "AppConfigs",
+                keyColumn: "Id",
+                keyValue: 1);
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_Sections_SectionDescriptions_DescriptionId",
-                table: "Sections");
+            migrationBuilder.DeleteData(
+                table: "AspNetUsers",
+                keyColumn: "Id",
+                keyValue: "45fbe739-6be0-429d-b44b-1ce6cf7eeef");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_Sections_SectionTitles_TitleId",
-                table: "Sections");
+            migrationBuilder.DeleteData(
+                table: "BagsUsers",
+                keyColumns: new[] { "AppUserId", "ProductId" },
+                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 1 });
 
-            migrationBuilder.DropTable(
-                name: "SectionDescriptions");
+            migrationBuilder.DeleteData(
+                table: "BagsUsers",
+                keyColumns: new[] { "AppUserId", "ProductId" },
+                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 2 });
 
-            migrationBuilder.DropTable(
-                name: "SectionTitles");
+            migrationBuilder.DeleteData(
+                table: "BagsUsers",
+                keyColumns: new[] { "AppUserId", "ProductId" },
+                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 3 });
 
-            migrationBuilder.DropIndex(
-                name: "IX_Sections_DescriptionId",
-                table: "Sections");
+            migrationBuilder.DeleteData(
+                table: "DeliveryMethods",
+                keyColumn: "Id",
+                keyValue: 1);
 
-            migrationBuilder.DropIndex(
-                name: "IX_Sections_TitleId",
-                table: "Sections");
+            migrationBuilder.DeleteData(
+                table: "DeliveryMethods",
+                keyColumn: "Id",
+                keyValue: 2);
 
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_ProductOptionals",
-                table: "ProductOptionals");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 6);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 7);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 8);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 9);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 10);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 11);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 12);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 13);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 14);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 15);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 16);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 17);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 18);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 19);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 20);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 21);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 22);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 23);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 24);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 25);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 26);
+
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 27);
+
+            migrationBuilder.DeleteData(
+                table: "PaymentMethods",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "PaymentMethods",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "PaymentMethods",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 1, 1 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 2, 1 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 3, 1 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 1, 2 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 3, 2 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 4, 2 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 1, 3 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 5, 3 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 1, 4 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 2, 4 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 3, 4 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 5, 4 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 1, 5 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 3, 5 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 5, 5 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 1, 6 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 3, 6 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 4, 6 });
+
+            migrationBuilder.DeleteData(
+                table: "PromoCodes",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "PromoCodes",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "Reviews",
+                keyColumns: new[] { "AuthorId", "ProductId" },
+                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 2 });
+
+            migrationBuilder.DeleteData(
+                table: "Reviews",
+                keyColumns: new[] { "AuthorId", "ProductId" },
+                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 3 });
+
+            migrationBuilder.DeleteData(
+                table: "Reviews",
+                keyColumns: new[] { "AuthorId", "ProductId" },
+                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 4 });
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 6);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 7);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 8);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 9);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 10);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 11);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 12);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 13);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 14);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 15);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 16);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 17);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 18);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 19);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 20);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 21);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 22);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 23);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 24);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 25);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 26);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 27);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 28);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 29);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 30);
 
             migrationBuilder.DeleteData(
                 table: "Sections",
@@ -546,321 +893,675 @@ namespace LilsCareApp.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: 35);
 
-            migrationBuilder.DropColumn(
-                name: "DescriptionId",
-                table: "Sections");
+            migrationBuilder.DeleteData(
+                table: "ShippingOffices",
+                keyColumn: "Id",
+                keyValue: 1);
 
-            migrationBuilder.DropColumn(
-                name: "TitleId",
-                table: "Sections");
+            migrationBuilder.DeleteData(
+                table: "ShippingOffices",
+                keyColumn: "Id",
+                keyValue: 2);
 
-            migrationBuilder.RenameTable(
-                name: "ProductOptionals",
-                newName: "ProductOptional");
+            migrationBuilder.DeleteData(
+                table: "ShippingOffices",
+                keyColumn: "Id",
+                keyValue: 3);
 
-            migrationBuilder.AddColumn<string>(
-                name: "Description",
-                table: "Sections",
-                type: "nvarchar(1500)",
-                maxLength: 1500,
-                nullable: false,
-                defaultValue: "",
-                comment: "The section's description");
+            migrationBuilder.DeleteData(
+                table: "ShippingOffices",
+                keyColumn: "Id",
+                keyValue: 4);
 
-            migrationBuilder.AddColumn<string>(
-                name: "Title",
-                table: "Sections",
-                type: "nvarchar(50)",
-                maxLength: 50,
-                nullable: false,
-                defaultValue: "",
-                comment: "The section's title");
+            migrationBuilder.DeleteData(
+                table: "ShippingOffices",
+                keyColumn: "Id",
+                keyValue: 5);
 
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_ProductOptional",
-                table: "ProductOptional",
-                column: "Id");
+            migrationBuilder.DeleteData(
+                table: "ShippingOffices",
+                keyColumn: "Id",
+                keyValue: 6);
 
-            migrationBuilder.UpdateData(
+            migrationBuilder.DeleteData(
+                table: "ShippingOffices",
+                keyColumn: "Id",
+                keyValue: 7);
+
+            migrationBuilder.DeleteData(
+                table: "ShippingOffices",
+                keyColumn: "Id",
+                keyValue: 8);
+
+            migrationBuilder.DeleteData(
+                table: "ShippingOffices",
+                keyColumn: "Id",
+                keyValue: 9);
+
+            migrationBuilder.DeleteData(
+                table: "ShippingOffices",
+                keyColumn: "Id",
+                keyValue: 10);
+
+            migrationBuilder.DeleteData(
+                table: "StatusOrders",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "StatusOrders",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "StatusOrders",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "StatusOrders",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "StatusOrders",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "WishesUsers",
+                keyColumns: new[] { "AppUserId", "ProductId" },
+                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 1 });
+
+            migrationBuilder.DeleteData(
+                table: "WishesUsers",
+                keyColumns: new[] { "AppUserId", "ProductId" },
+                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 3 });
+
+            migrationBuilder.DeleteData(
+                table: "WishesUsers",
+                keyColumns: new[] { "AppUserId", "ProductId" },
+                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 4 });
+
+            migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: "45fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                columns: new[] { "ConcurrencyStamp", "PasswordHash", "SecurityStamp" },
-                values: new object[] { "743950c4-d654-4d15-aa19-2a460f14bb3f", "AQAAAAIAAYagAAAAEM5rP2W21k1UwHLvj/saah+lchT/Q0lCDc963uhA8N7XF6Mfe3Pv1oU3506LedPILg==", "4bd317e4-8034-4b38-ad84-d28a99fe1ede" });
+                keyValue: "85fbe739-6be0-429d-b44b-1ce6cf7eeef");
 
-            migrationBuilder.UpdateData(
-                table: "AspNetUsers",
+            migrationBuilder.DeleteData(
+                table: "Categories",
                 keyColumn: "Id",
-                keyValue: "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                columns: new[] { "ConcurrencyStamp", "PasswordHash", "SecurityStamp" },
-                values: new object[] { "921bc3c2-2ba6-4b7c-82ea-a88311e8137c", "AQAAAAIAAYagAAAAEML84ppg4hw9JQfkJfn5QpBQyykiSiILQpwT55xQ5cH1LTLqixf64hxPZGrSIPeVLA==", "fb045396-3b8e-4bbc-9aab-573239087746" });
+                keyValue: 1);
 
-            migrationBuilder.UpdateData(
-                table: "Orders",
+            migrationBuilder.DeleteData(
+                table: "Categories",
                 keyColumn: "Id",
-                keyValue: 1,
-                columns: new[] { "CreatedOn", "DateShipping" },
-                values: new object[] { new DateTime(2024, 4, 22, 6, 8, 29, 780, DateTimeKind.Utc).AddTicks(9534), new DateTime(2024, 4, 22, 6, 8, 29, 781, DateTimeKind.Utc).AddTicks(743) });
+                keyValue: 2);
 
-            migrationBuilder.UpdateData(
-                table: "Orders",
+            migrationBuilder.DeleteData(
+                table: "Categories",
                 keyColumn: "Id",
-                keyValue: 2,
-                columns: new[] { "CreatedOn", "DateShipping" },
-                values: new object[] { new DateTime(2024, 4, 22, 6, 8, 29, 781, DateTimeKind.Utc).AddTicks(4667), new DateTime(2024, 4, 22, 6, 8, 29, 781, DateTimeKind.Utc).AddTicks(4670) });
+                keyValue: 3);
 
-            migrationBuilder.UpdateData(
-                table: "PromoCodes",
+            migrationBuilder.DeleteData(
+                table: "Categories",
                 keyColumn: "Id",
-                keyValue: 1,
-                column: "ExpirationDate",
-                value: new DateTime(2025, 4, 22, 6, 8, 30, 628, DateTimeKind.Utc).AddTicks(1636));
+                keyValue: 4);
 
-            migrationBuilder.UpdateData(
-                table: "PromoCodes",
+            migrationBuilder.DeleteData(
+                table: "Categories",
                 keyColumn: "Id",
-                keyValue: 2,
-                column: "ExpirationDate",
-                value: new DateTime(2025, 4, 22, 6, 8, 30, 628, DateTimeKind.Utc).AddTicks(1644));
+                keyValue: 5);
 
-            migrationBuilder.UpdateData(
-                table: "Reviews",
-                keyColumns: new[] { "AuthorId", "ProductId" },
-                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 2 },
-                column: "CreatedOn",
-                value: new DateTime(2024, 4, 22, 9, 8, 30, 628, DateTimeKind.Local).AddTicks(1129));
-
-            migrationBuilder.UpdateData(
-                table: "Reviews",
-                keyColumns: new[] { "AuthorId", "ProductId" },
-                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 3 },
-                column: "CreatedOn",
-                value: new DateTime(2024, 4, 22, 9, 8, 30, 628, DateTimeKind.Local).AddTicks(1194));
-
-            migrationBuilder.UpdateData(
-                table: "Reviews",
-                keyColumns: new[] { "AuthorId", "ProductId" },
-                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 4 },
-                column: "CreatedOn",
-                value: new DateTime(2024, 4, 22, 9, 8, 30, 628, DateTimeKind.Local).AddTicks(1202));
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
+            migrationBuilder.DeleteData(
+                table: "DeliveryNames",
                 keyColumn: "Id",
-                keyValue: 1,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "Нежен, изцяло натурален и ръчно изработен сух дезодорант. Подходящ за ежедневна употреба.\r\n \r\nБез парфюм и без етерични масла.\r\n \r\nВ нов твърд вариант за по-лесна употеба и нансяне дирктно.\r\n \r\nИли може да използвате стара опаковка от стик дезодорант, за да разтопите блокчето за удобна ежедневна употреба.\r\n \r\nСрежете блокчето на парченца и ги сложете в стик опаковка. Иползвайте микровълнова фурна на ниска температура и за картки интервали докато блокечето се разтопи. Оставете да изстине и стегне и готово!\r\n \r\nАко не разполагате с микровълнова фурна, може да го разтопите на водна баня в стик. Увийете плътно стик опковката със стреч фолио, за да не влиза вода в опковката и при продукта.\r\n \r\n100% натурален\r\n10 % от България\r\n78.4% био", "ОПИСАНИЕ" });
+                keyValue: 1);
 
-            migrationBuilder.UpdateData(
-                table: "Sections",
+            migrationBuilder.DeleteData(
+                table: "DeliveryNames",
                 keyColumn: "Id",
-                keyValue: 2,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "Сухите съставки като био тапиока поддържат подмишниците сухи през деня.\r\nВитамин Е има антиоксидантен ефект.\r\nКокосово масло, масло от ший (карите) и пчелен восък.", "ЗА СЪСТАВКИТЕ" });
+                keyValue: 2);
 
-            migrationBuilder.UpdateData(
-                table: "Sections",
+            migrationBuilder.DeleteData(
+                table: "PaymentNames",
                 keyColumn: "Id",
-                keyValue: 3,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "Вземете блокчето от кутийката и намажете подмишничите.\r\n \r\nИли внимателно го разтопете в опаковка за стик дезодорант за по-лесна и удобна ежедневна употреба.\r\n \r\nМоже да преизползвате стара опаковка от предишен дезодорант.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено на сухо място, защитено от пряка слънчева светлина.", "УПОТРЕБА" });
+                keyValue: 1);
 
-            migrationBuilder.UpdateData(
-                table: "Sections",
+            migrationBuilder.DeleteData(
+                table: "PaymentNames",
                 keyColumn: "Id",
-                keyValue: 4,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.", "ИЗПАЩАНЕ И ДОСТАВКА" });
+                keyValue: 2);
 
-            migrationBuilder.UpdateData(
-                table: "Sections",
+            migrationBuilder.DeleteData(
+                table: "PaymentNames",
                 keyColumn: "Id",
-                keyValue: 5,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "Cocos Nucifera (Coconut) Oil*, Tapioca Starch*, Butyrospermum Parkii (Shea) Butter*, Cera Alba (Beeswax), Glyceryl Stearate, Sodium Bicarbonate, Tocopherol (Vit E), Helianthus Annuus (Sunflower) Seed Oil* \r\n*Bio", "СЪСТАВ, INCI" });
+                keyValue: 3);
 
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 6,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "Изцяло натурален и ръчно изработен балсам за устни, който носи усещане за уют и мекота. Създаден да е нежен и защитаващ.\r\n \r\nБио какаово масло\r\nЕстствен каков аромат\r\nКомбиниран с натурално масло от ванилия\r\nПчелен восък\r\n \r\nВ два варианта:\r\nЛек и блестящ прозрачен цвят\r\nИзцяло безцветен\r\n \r\nОбогатен с витамин Е и био масло от жожоба.\r\n \r\n100% натурален\r\n49% от България\r\n41% био", "ОПИСАНИЕ" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 7,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "Какаовото масло* придава лек и естествен шоколадов аромат и предпазва устните.\r\n \r\nМаслото от жожоба* ги подхранва.\r\n \r\nПчелния восък* защитава устните, прави балсама траен както върху устните така и в тубичката да не свършва бързо. Придава усещане за възглванича и мекота върху устните.\r\n \r\nВитамин Е - натурален антиоксидант, който защитава от вредните влияния от околната среда.\r\n \r\n*Био 41% от състава", "ЗА СЪСТАВКИТЕ" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 8,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "Изцяло натурален, може да използвате винаги когато искате да подхраните и защитите устните си или просто да им придадете лек блясък за завършен вид на визията си.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте със затворено капаче, на сухо място и защитено от пряка слънчева светлина.", "УПОТРЕБА" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 9,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.", "ИЗПАЩАНЕ И ДОСТАВКА" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 10,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "Apricot Kernel Oil (масло от кайсиеви ядки), Theobroma Cacao Seed Butter (какаово масло)*, Copernicia Cerifera Cera (Карнаубски восък, веган)*, Simmondsia Chinensis Seed Oil (масло от жожоба)*, Helianthus Annuus Seed Oil (слънчогледово масло), Vanilla Planifolia Fruit Extract (екстракт от шушулки ванилия), Mica**, CI 77491 (Iron Oxide)**, Tocopherol (витамин E).\r\n*Био 49% **Минерални пигменти 1%", "СЪСТАВ, INCI" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 11,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "", "ОПИСАНИЕ" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 12,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "Българско студено пресовано масло от шипка* - натурален източник на витамин А, подхранва и стимулура регенерирнето на кожата.\r\n \r\nЕкстракт от шипка - ботанически глицернов екстракт, който в този крем е чъдесна комбинация с маслото от шипка.\r\n \r\nМасло от ший* - Най-лекото и с най-нисък комедогенен рейтинг (0-2) от всички твърди масла. Това означава, че има ниска вероятност да запуши порите като скалата е от 0 до 5.\r\n \r\nВитамин B3 - ниацинамид - антиоксидант, който изравнява тена, регулира себума, помага худратацията и изглажда финни бръчки. Наистирна звучи неверояно, a е доакзрно.\r\n \r\nВитамин Е - има ефективо и естетвено антиоксидантно действие:  забвя стареенето като помага за възстановяването на кожата и я предпазва от свободните радикали и вредите от околната среда.\r\n \r\nРастителни глицерин и хиалурон - хумектанти - привличат водата и хидратират кожата. Ключова е концентрацията! Твърде много от тях могат да изсушат кожата, като започнат да издърпват влагата от по-дълбоките слоеве на кожата, когато въздуха е сух. Важен е баланса между вода и хумектанти в продукта.\r\n \r\n*Био", "ЗА СЪСТАВКИТЕ" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 13,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "Нанесете върху суха или влажна кожа. Малко количество е достатъчно за цялото лице и шия. Използвайте 1-2 пъти дневно според необходимостта и сухотата на кожата.\r\n \r\nМоже да нансете върху влажна кожа, например след душ и измивен гел, за да заключите хидратацията.\r\n \r\nИли върхъ суха кожа, за да я защитите.\r\n \r\nНанасяйте върху добре почистена кожа с чисти ръце. Само за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено, на сухо място, защитено от пряка слънчева светлина.", "УПОТРЕБА" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 14,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.", "ИЗПАЩАНЕ И ДОСТАВКА" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 15,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "Aqua (Вода), Rosa Canina Seed Oil* (масло от шипка, 10%) , Butyrospermum Parkii Butter* (масло от ший/карите), Glycerin (глицерин), Rosa Canina Fruit Extract (екстракт от шипка), Niacinamide (витамин B3), Cetearyl Olivate, Sorbitan Olivate (емулгатори), Sodium Hyaluronate (хиалуронова киселина), Tocopherol (витамин E), Helianthus Annuus (Слънчоглед) Seed Oil*, Sodium Benzoate, Potassium Sorbate (консерванти), Lactic Acid (млечна киселина, AHA, регулира pH на продукта).\r\n*Bio", "СЪСТАВ, INCI" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 16,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "Натурална мицеларна вода с два компонента. Разклатете преди употреба, за да се смесят двете фази. Идеална е за нежното отстраняване на грима в края на деня.\r\n \r\nИма двойно действие е като тоник за лице с екстракт от зелен чай и витамин Е.\r\n \r\nФаза 1 е изключително нежна. Има успокояващо и антиоксидантно действие благодарение на екстракта от зелен чай, сквален и пантенол (провитамин B3).\r\n \r\nФаза 2 е с био масло от жожоба и допринся за разтврянето на грима. Оставя кожата мека, подхранена и защитена.\r\n \r\nВ удобно шишенце с попма за лесно използване.\r\n \r\n100% натурална\r\n94% от България", "ОПИСАНИЕ" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 17,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "Екстракт от зелен чай - антиоксидантно и успокояващо действе, помага против появата на акне\r\n \r\nБио масло от Жожоба - помага за нежното разтваряне на грима и подхранва кожата\r\n \r\nВитамин Е - антиоксидант, успокоява раздразненията, бори се със свободните радикали и забавя стареенето на кожата\r\n \r\nПантенол - провитамин B5 - с растителен прозход. Хидратира и подхранва\r\n \r\nЕтерично масло грейпфрут - лек цитрусов аромат", "ЗА СЪСТАВКИТЕ" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 18,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "Разклаете преди употреба.\r\n \r\nМоже да използвате винаги, когато искате нежно да премахнете грима. Разклатете преди употреба и напоете памучно тампонче. Нежно притиснете към кожата, за да се намокри и да започне да разтваря грима. След това отстранете грима с леки движения от центъра на лицето към страните.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте на сухо място, защитено от пряка слънчева светлина.", "УПОТРЕБА" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 19,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.", "ИЗПАЩАНЕ И ДОСТАВКА" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 20,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "Aqua, Vitis Vinifera (Grape) Seed Oil, Camellia Sinensis (Green Tea) Leaf Extract,  Glycerin, Caprylic / Capric Triglycerides (Fractioned Coconut Oil), Simmondsia Chinensis (Jojoba) Seed Oil*, D-panthenol (Provitamin B5, plant-based), Coco Glucoside, Squalane, Sodium Surfactin, Tocopherol (Vit E), Helianthus Annuus (Sunflower) Seed Oil*, Potassium Sorbate, Sodium Benzoate, Benzyl Alcohol, Citric Acid, Citrus Paradisi (Grapefruit) Peel Oil, Limonene, Citral, Linalool.\r\n*Био", "СЪСТАВ, INCI" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 21,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "Нежен, изцяло натурален и ръчно изработен дезодорант. Подходящ за ежедневна употреба. Етеричните масла от сладък портокал и евкалипт придват лек цитрусов аромат.\r\n \r\nИзбрахме точно тези етерични масла не само заради приятния аромат. Те притежават и по-добър антибактериален фект спрямо повечето етерични масла. Дори пречат на развитието и на различни видове гъбички. Това ознчава, че натурално може да намали лошата миризма при потене, която е причинена от бактериите под мишниците.\r\n \r\n100% натурален\r\n45.7 % от България\r\n44.5% био", "ОПИСАНИЕ" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 22,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "Етеричните масла от сладък портокал и евкалипт придават свеж, леко ментов цитрусов аромат и имат антибактериален ефект.\r\n \r\nСухите съставки като био тапиока поддържат подмишниците сухи през деня.\r\n \r\nВитамин Е има антиоксидантен ефект.\r\n \r\nА цялата комбинация от съставки държи неприятните миризми далеч.", "ЗА СЪСТАВКИТЕ" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 23,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "Вземете на върха на пръстите много малко количесто (по-малко дори от грахово зрънце), леко го затоплете между пръстите и разнесете добре подмишниците.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено на сухо място, защитено от пряка слънчева светлина.", "УПОТРЕБА" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 24,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.", "ИЗПАЩАНЕ И ДОСТАВКА" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 25,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "Vitis Vinifera (Grape) Seed Oil, Tapioca Starch*, Theobroma Cacao (Cocoa) Seed Butter*, Copernicia Cerifera Cera (Carnauba Wax)*, Sodium Bicarbonate, Glyceryl Stearate, Citrus Sinensis (Orange) Peel Oil*, Eucalyptus Globulus Leaf Oil*, Limonene**, Linalool**, Citral**, Tocopherol (Vit E), Helianthus Annuus (Sunflower) Seed Oil*\r\n*Bio\r\n**Компоненти на етерини масла", "СЪСТАВ, INCI" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 26,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "Създаден, за да се поглезите - с био масла от: шипка, ягодови семки, арган и жожба. Подхранва и защитава кожата. Запазва хидратацията като предпазва кожата от загуба на вода и я оставя мека и гладка.\r\n \r\nОбогатен с витамин Е за добър антиоксидантен ефект, който предпазва клетките от вредното въздействие отоколната среда, свободните радикали и оксидативни процеси. По този начин поддържа кожата млада и елстична.\r\n \r\nМаслото от шипка е натурален източник на витамин А. Аргановото масло и маслото от ягодови семки подхранват кожата, а маслото от жожоба съдържа натурални серамиди, подсилват кожната бариера и заздравяват връзките между клетките.\r\n\r\nНекомедогенен.\r\nНай-подходящ за суха кожа.\r\nИли като защита след по-изтощаваща рутина, напр. след химичен пилинг.\r\nПодхранва, заздравява и защитава кожната бариера.\r\n \r\nИзползвате няколко капки върху суха или влажна кожа (на пример след душ) или след хидратиращ лосион, за да 'заклчючите' хидратацията и да защитите кожата. \r\n \r\n100% натурален\r\n80% от България\r\n31% био", "ОПИСАНИЕ" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 27,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "Масло от шипка - помога ревитализирането на кожата \r\nМасло от ягодови семки - хидратира в дълбочина и има протививъзвпалителен ефект\r\nМасло от жожоба* - натурално съдържа над 95% серамиди, подхранва кожата и заздравява кожната бариера\r\nАрганово масло* - подхранва, защитава и подобрява хидратацията и еластичносттна на кожата\r\nМсла от мандарина и иланг-иланг* - придават лек, свеж и релаксиращ аромат, за да се насладите максимално на момента в грижа за кожата\r\nВитамин Е* - антиоксидант - успокоява раздразнената кожа и забавя страеенето като бори се със свободните радикали, UV уверждането и процесите на оксидация\r\n*Био", "ЗА СЪСТАВКИТЕ" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 28,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "Например след лек хидратиращ лосион, за да заключи хидратацията и полезните съставки.\r\nДиректно върху влажна кожа за по-добро абсорбиране и защита.\r\nИли върху суха кожа, за да предотврати трансепидеррмалната загуба на вода от кожата.\r\n \r\nПодходящ за защита на кожата в края на рутината. Комбинира се добре след ексфолиращи и/или хидратиращи продукти.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Използвайте с чисти ръце и кожа. Съхранявайте добре затворено, на сухо място, защитено от пряка слънчева светлина.", "УПОТРЕБА" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 29,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.", "ИЗПАЩАНЕ И ДОСТАВКА" });
-
-            migrationBuilder.UpdateData(
-                table: "Sections",
-                keyColumn: "Id",
-                keyValue: 30,
-                columns: new[] { "Description", "Title" },
-                values: new object[] { "Vitis Vinifera Seed Oil (масло от гроздови смеки), Rosa Canina Seed Oil (българско студенпресовно био масло от семената на шипка)*, Fragaria Ananassa Seed Oil (студенопресовано масло от семки на ягода), Argania Spinosa Kernel Oil (арганово масло)*, Simmondsia Chinensis Seed Oil (масло от жожоба)*, Tocopherol (Витамин E), Helianthus Annuus Seed Oil (Слънчогледово масло <0,2%) *,  Citrus Reticulata Oil (Етерично масло от мандарина) , Limonene**, Linalool**, Cananga Odorata flower Oil (Етерично масло от Иланг Иланф) *.\r\n*Био, 31%\r\n**Компоненети на етерични масла", "СЪСТАВ, INCI" });
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Products_ProductOptional_OptionalId",
+            migrationBuilder.DeleteData(
                 table: "Products",
-                column: "OptionalId",
-                principalTable: "ProductOptional",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 6);
+
+            migrationBuilder.DeleteData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 7);
+
+            migrationBuilder.DeleteData(
+                table: "PromoCodeNames",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "PromoCodeNames",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 6);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 7);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 8);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 9);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 10);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 11);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 12);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 13);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 14);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 15);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 16);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 17);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 18);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 19);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 20);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 21);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 22);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 23);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 24);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 25);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 26);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 27);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 28);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 29);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 30);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 31);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 32);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 33);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 34);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 35);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 6);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 7);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 8);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 9);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 10);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 11);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 12);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 13);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 14);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 15);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 16);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 17);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 18);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 19);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 20);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 21);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 22);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 23);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 24);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 25);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 26);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 27);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 28);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 29);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 30);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 31);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 32);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 33);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 34);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 35);
+
+            migrationBuilder.DeleteData(
+                table: "ShippingProviders",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "ShippingProviders",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "StatusOrderNames",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "StatusOrderNames",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "StatusOrderNames",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "StatusOrderNames",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "StatusOrderNames",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "CategoryNames",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "CategoryNames",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "CategoryNames",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "CategoryNames",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "CategoryNames",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "ProductNames",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "ProductNames",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "ProductNames",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "ProductNames",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "ProductNames",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "ProductNames",
+                keyColumn: "Id",
+                keyValue: 6);
+
+            migrationBuilder.DeleteData(
+                table: "ProductNames",
+                keyColumn: "Id",
+                keyValue: 7);
+
+            migrationBuilder.DeleteData(
+                table: "ProductOptionals",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "ProductOptionals",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "ProductOptionals",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "ProductOptionals",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "ProductOptionals",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "ProductOptionals",
+                keyColumn: "Id",
+                keyValue: 6);
+
+            migrationBuilder.DeleteData(
+                table: "ProductOptionals",
+                keyColumn: "Id",
+                keyValue: 7);
         }
     }
 }

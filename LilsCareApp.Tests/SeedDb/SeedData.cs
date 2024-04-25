@@ -348,12 +348,14 @@ namespace LilsCareApp.Tests.SeedDb
         };
 
 
-        public IEnumerable<Order> Orders = new List<Order>
-        {
-           new Order
+        public IEnumerable<Order> Orders =
+        [
+           new ()
             {
                 Id = 1,
                 OrderNumber = "123456",
+                Language = "bg",
+                ExchangeRate = 1.00m,
                 CreatedOn = DateTime.ParseExact("28/10/2023", "dd/MM/yyyy", CultureInfo.InvariantCulture),
                 StatusOrderId = 1,
                 AddressDeliveryId = 1,
@@ -362,27 +364,31 @@ namespace LilsCareApp.Tests.SeedDb
                 TrackingNumber = "1234567890",
                 PaymentMethodId = 1,
                 ShippingPrice = 5.00m,
-                SubTotal = 30.50m,
                 Discount = 10.00m,
-                Total = 20.50m,
+                FirstName = "John",
+                LastName = "Doe",
+                PhoneNumber = "1234567890",
             },
-          new Order
+          new ()
              {
                 Id = 2,
                 OrderNumber = "123456x",
+                Language = "en",
+                ExchangeRate = 1.95m,
                 CreatedOn = DateTime.ParseExact("25/10/2023", "dd/MM/yyyy", CultureInfo.InvariantCulture),
                 StatusOrderId = 2,
                 AddressDeliveryId = 2,
                 AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                 PaymentMethodId = 2,
                 ShippingPrice = 5.00m,
-                SubTotal = 22.50m,
                 Discount = 0.00m,
-                Total = 27.5m,
+                FirstName = "Jane",
+                LastName = "Doe",
+                PhoneNumber = "1234567890x",
              },
-        };
+        ];
 
-        public IEnumerable<PaymentType> PaymentTypes =
+        public IEnumerable<PaymentName> PaymentTypes =
         [
             new ()
                     {
@@ -412,17 +418,17 @@ namespace LilsCareApp.Tests.SeedDb
             new()
             {
                 Id = 1,
-                TypeId = 1,
+                NameId = 1,
             },
             new()
             {
                 Id = 2,
-                TypeId = 2,
+                NameId = 2,
             },
             new()
             {
                 Id = 3,
-                TypeId = 3,
+                NameId = 3,
             },
         ];
 

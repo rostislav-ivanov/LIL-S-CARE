@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LilsCareApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240422162342_05")]
-    partial class _05
+    [Migration("20240425123254_03")]
+    partial class _03
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -107,17 +107,12 @@ namespace LilsCareApp.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Address = "bul. Vitosha",
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                            Country = "Bulgaria",
-                            District = "Sofia",
                             FirstName = "Ivan",
-                            IsShippingToOffice = false,
+                            IsShippingToOffice = true,
                             LastName = "Ivanov",
                             PhoneNumber = "0888888888",
-                            PostCode = "1000",
-                            ShippingOfficeId = 1,
-                            Town = "Sofia"
+                            ShippingOfficeId = 1
                         },
                         new
                         {
@@ -131,8 +126,51 @@ namespace LilsCareApp.Infrastructure.Migrations
                             LastName = "Petrov",
                             PhoneNumber = "0888888888",
                             PostCode = "1000",
-                            ShippingOfficeId = 2,
                             Town = "Sofia"
+                        });
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.AppConfig", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("AddressDeliveryPrice")
+                        .HasColumnType("decimal(18,2)")
+                        .HasComment("The price at which the delivery to an address is paid.");
+
+                    b.Property<decimal>("ExchangeRateBGN")
+                        .HasColumnType("decimal(18,4)")
+                        .HasComment("The exchange rate of the leva.");
+
+                    b.Property<decimal>("ExchangeRateEUR")
+                        .HasColumnType("decimal(18,4)")
+                        .HasComment("The exchange rate of the euro.");
+
+                    b.Property<decimal>("ExchangeRateRON")
+                        .HasColumnType("decimal(18,4)")
+                        .HasComment("The exchange rate of the lei.");
+
+                    b.Property<decimal>("FreeShipping")
+                        .HasColumnType("decimal(18,2)")
+                        .HasComment("The price at which the shipping is free.");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppConfigs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AddressDeliveryPrice = 8.00m,
+                            ExchangeRateBGN = 1m,
+                            ExchangeRateEUR = 1.9558m,
+                            ExchangeRateRON = 0.3930m,
+                            FreeShipping = 35.00m
                         });
                 });
 
@@ -230,7 +268,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f77de1c2-8fab-47fc-8c33-a74110715e39",
+                            ConcurrencyStamp = "46345fcc-1cc1-4fca-b667-0bd1ffeaeee8",
                             Email = "test@softuni.bg",
                             EmailConfirmed = true,
                             FirstName = "Test",
@@ -238,9 +276,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "TEST@SOFTUNI.BG",
                             NormalizedUserName = "TEST@SOFTUNI.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAENVZeAcidZVjRg4Tv9wb5a6agAjJhN7Wp+url7n6P6WEvLkz3ktVdVqt/A92F3STwA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJpbc45eRKwqbGwBQ7muXu6Z6B8WKLZCBjj7Qx1SZvOJeIhWWtzHDa5GLJGSBZQ0vg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "531f1674-3867-46ba-aad0-49530b887a2f",
+                            SecurityStamp = "be17529f-8381-495c-b61e-a6ea4b3c23b8",
                             TwoFactorEnabled = false,
                             UserName = "test@softuni.bg"
                         },
@@ -248,7 +286,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = "45fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "65edfe19-e3cb-4b0c-8be3-c8174388402d",
+                            ConcurrencyStamp = "1bb6131c-b813-4e31-afbc-b6fb533db74a",
                             Email = "admin@mail.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -256,9 +294,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENm66+QQQzybKRcPLppw4BotQUrp6vVavUv9b85mb0Xr61A1FrfGPFJt71jIivT1Kg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOflOli0lIMYHlfUUr1dbbgMgVkJb0dGErsNA4Zc8ouG4erlB68NySQuWhO9jMfo9A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bfd6b824-8089-40ae-85e2-77e33112cf0e",
+                            SecurityStamp = "4c906e21-f51c-4345-9e33-8edc58697643",
                             TwoFactorEnabled = false,
                             UserName = "admin@mail.com"
                         });
@@ -423,6 +461,86 @@ namespace LilsCareApp.Infrastructure.Migrations
                             NameBG = "за лице",
                             NameEN = "face",
                             NameRO = "pentru fata"
+                        });
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.DeliveryMethod", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("Delivery method id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("NameId")
+                        .HasColumnType("int")
+                        .HasComment("Delivery method name Id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NameId");
+
+                    b.ToTable("DeliveryMethods");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            NameId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            NameId = 2
+                        });
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.DeliveryName", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("The delivery name Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("NameBG")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("The delivery name in Bulgarian");
+
+                    b.Property<string>("NameEN")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("The delivery name in English");
+
+                    b.Property<string>("NameRO")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("The delivery name in Romanian");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DeliveryNames");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            NameBG = "Доставка до офис на куриер",
+                            NameEN = "Office delivery",
+                            NameRO = "Livrare la birou"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            NameBG = "Доставка до адрес на клиент",
+                            NameEN = "Home delivery",
+                            NameRO = "Livrare la domiciliu"
                         });
                 });
 
@@ -727,13 +845,23 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AddressDeliveryId")
+                    b.Property<string>("Address")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)")
+                        .HasComment("Address");
+
+                    b.Property<int?>("AddressDeliveryId")
                         .HasColumnType("int")
                         .HasComment("Address Delivery Id");
 
                     b.Property<string>("AppUserId")
                         .HasColumnType("nvarchar(450)")
                         .HasComment("App User Id");
+
+                    b.Property<string>("Country")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("Country");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2")
@@ -743,29 +871,83 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasColumnType("datetime2")
                         .HasComment("Date of Shipping Creating");
 
+                    b.Property<int>("DeliveryMethodId")
+                        .HasColumnType("int")
+                        .HasComment("Method of Delivery");
+
                     b.Property<decimal>("Discount")
                         .HasColumnType("decimal(18,2)")
                         .HasComment("Absolute Discount value");
+
+                    b.Property<string>("District")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("District");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("Email");
+
+                    b.Property<decimal>("ExchangeRate")
+                        .HasColumnType("decimal(18,4)")
+                        .HasComment("Exchange Rate of the Prices");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("First Name Recipient");
 
                     b.Property<bool>("IsPaid")
                         .HasColumnType("bit")
                         .HasComment("Is Paid Order");
 
+                    b.Property<bool>("IsShippingToOffice")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasComment("Language of Order, determinate the currency of the prices");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("Last Name Recipient");
+
                     b.Property<string>("NoteForDelivery")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
                         .HasComment("Note for Delivery");
 
                     b.Property<string>("OrderNumber")
                         .HasColumnType("nvarchar(max)")
                         .HasComment("Order Number");
 
-                    b.Property<int?>("PaymentMethodId")
+                    b.Property<int>("PaymentMethodId")
                         .HasColumnType("int")
                         .HasComment("Payment Method Id");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("Phone Number Recipient");
+
+                    b.Property<string>("PostCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("Post Code");
 
                     b.Property<int?>("PromoCodeId")
                         .HasColumnType("int")
                         .HasComment("Promo Code Id");
+
+                    b.Property<int?>("ShippingOfficeId")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("ShippingPrice")
                         .HasColumnType("decimal(18,2)")
@@ -777,11 +959,16 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     b.Property<decimal>("SubTotal")
                         .HasColumnType("decimal(18,2)")
-                        .HasComment("Sub Total");
+                        .HasComment("Sub Total Price of Order");
 
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)")
-                        .HasComment("Total");
+                        .HasComment("Total Price of Order");
+
+                    b.Property<string>("Town")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("Town");
 
                     b.Property<string>("TrackingNumber")
                         .HasMaxLength(30)
@@ -794,53 +981,21 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     b.HasIndex("AppUserId");
 
+                    b.HasIndex("DeliveryMethodId");
+
                     b.HasIndex("PaymentMethodId");
 
                     b.HasIndex("PromoCodeId")
                         .IsUnique()
                         .HasFilter("[PromoCodeId] IS NOT NULL");
 
+                    b.HasIndex("ShippingOfficeId");
+
                     b.HasIndex("StatusOrderId");
 
                     b.ToTable("Orders", t =>
                         {
                             t.HasComment("Order");
-                        });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AddressDeliveryId = 1,
-                            AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                            CreatedOn = new DateTime(2024, 4, 22, 16, 23, 39, 241, DateTimeKind.Utc).AddTicks(1542),
-                            DateShipping = new DateTime(2024, 4, 22, 16, 23, 39, 241, DateTimeKind.Utc).AddTicks(2859),
-                            Discount = 0m,
-                            IsPaid = false,
-                            OrderNumber = "123456",
-                            PaymentMethodId = 1,
-                            ShippingPrice = 0m,
-                            StatusOrderId = 1,
-                            SubTotal = 0m,
-                            Total = 0m,
-                            TrackingNumber = "1234567890"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AddressDeliveryId = 2,
-                            AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                            CreatedOn = new DateTime(2024, 4, 22, 16, 23, 39, 241, DateTimeKind.Utc).AddTicks(9781),
-                            DateShipping = new DateTime(2024, 4, 22, 16, 23, 39, 241, DateTimeKind.Utc).AddTicks(9782),
-                            Discount = 0m,
-                            IsPaid = false,
-                            OrderNumber = "123456x",
-                            PaymentMethodId = 2,
-                            ShippingPrice = 0m,
-                            StatusOrderId = 2,
-                            SubTotal = 0m,
-                            Total = 0m,
-                            TrackingNumber = "1234567890x"
                         });
                 });
 
@@ -853,13 +1008,13 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("TypeId")
+                    b.Property<int>("NameId")
                         .HasColumnType("int")
-                        .HasComment("Payment method type Id");
+                        .HasComment("Payment method name Id");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TypeId");
+                    b.HasIndex("NameId");
 
                     b.ToTable("PaymentMethods", t =>
                         {
@@ -870,26 +1025,26 @@ namespace LilsCareApp.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            TypeId = 1
+                            NameId = 1
                         },
                         new
                         {
                             Id = 2,
-                            TypeId = 2
+                            NameId = 2
                         },
                         new
                         {
                             Id = 3,
-                            TypeId = 3
+                            NameId = 3
                         });
                 });
 
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.PaymentType", b =>
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.PaymentName", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasComment("Payment type id");
+                        .HasComment("Payment name id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
@@ -897,23 +1052,23 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
-                        .HasComment("The payment type in Bulgarian");
+                        .HasComment("The payment name in Bulgarian");
 
                     b.Property<string>("NameEN")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
-                        .HasComment("The payment type in English");
+                        .HasComment("The payment name in English");
 
                     b.Property<string>("NameRO")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
-                        .HasComment("The payment type in Romanian");
+                        .HasComment("The payment name in Romanian");
 
                     b.HasKey("Id");
 
-                    b.ToTable("PaymentTypes");
+                    b.ToTable("PaymentNames");
 
                     b.HasData(
                         new
@@ -1349,40 +1504,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             t.HasComment("Many to many relation between products and orders");
                         });
-
-                    b.HasData(
-                        new
-                        {
-                            ProductId = 1,
-                            OrderId = 1,
-                            ImagePath = "/files/products/product-01-image-01.webp",
-                            Price = 5.00m,
-                            Quantity = 2
-                        },
-                        new
-                        {
-                            ProductId = 1,
-                            OrderId = 2,
-                            ImagePath = "/files/products/product-01-image-01.webp",
-                            Price = 5.50m,
-                            Quantity = 3
-                        },
-                        new
-                        {
-                            ProductId = 2,
-                            OrderId = 1,
-                            ImagePath = "/files/products/product-02-image-01.webp",
-                            Price = 6.50m,
-                            Quantity = 4
-                        },
-                        new
-                        {
-                            ProductId = 3,
-                            OrderId = 1,
-                            ImagePath = "/files/products/product-03-image-01.webp",
-                            Price = 5.50m,
-                            Quantity = 3
-                        });
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.PromoCode", b =>
@@ -1432,7 +1553,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             CodeId = 1,
                             Discount = 0.1m,
-                            ExpirationDate = new DateTime(2025, 4, 22, 16, 23, 40, 424, DateTimeKind.Utc).AddTicks(3313)
+                            ExpirationDate = new DateTime(2025, 4, 25, 12, 32, 52, 181, DateTimeKind.Utc).AddTicks(7735)
                         },
                         new
                         {
@@ -1440,7 +1561,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             CodeId = 2,
                             Discount = 0.2m,
-                            ExpirationDate = new DateTime(2025, 4, 22, 16, 23, 40, 424, DateTimeKind.Utc).AddTicks(3348)
+                            ExpirationDate = new DateTime(2025, 4, 25, 12, 32, 52, 181, DateTimeKind.Utc).AddTicks(7746)
                         });
                 });
 
@@ -1535,7 +1656,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 2,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 4, 22, 19, 23, 40, 424, DateTimeKind.Local).AddTicks(2111),
+                            CreatedOn = new DateTime(2024, 4, 25, 15, 32, 52, 181, DateTimeKind.Local).AddTicks(6805),
                             Rating = 4,
                             Title = "Great product"
                         },
@@ -1544,7 +1665,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 3,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 4, 22, 19, 23, 40, 424, DateTimeKind.Local).AddTicks(2186),
+                            CreatedOn = new DateTime(2024, 4, 25, 15, 32, 52, 181, DateTimeKind.Local).AddTicks(6900),
                             Rating = 3,
                             Title = "Great product"
                         },
@@ -1553,7 +1674,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 4,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 4, 22, 19, 23, 40, 424, DateTimeKind.Local).AddTicks(2190),
+                            CreatedOn = new DateTime(2024, 4, 25, 15, 32, 52, 181, DateTimeKind.Local).AddTicks(6905),
                             Rating = 3,
                             Title = "Great product"
                         });
@@ -2460,7 +2581,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasComment("Duration of shipping");
 
-                    b.Property<int?>("ShippingProviderId")
+                    b.Property<int>("ShippingProviderId")
                         .HasColumnType("int")
                         .HasComment("Shipping Provider Id");
 
@@ -2970,6 +3091,17 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Navigation("Name");
                 });
 
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.DeliveryMethod", b =>
+                {
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.DeliveryName", "Name")
+                        .WithMany("DeliveryMethod")
+                        .HasForeignKey("NameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Name");
+                });
+
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ImageProduct", b =>
                 {
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.Product", "Product")
@@ -3003,21 +3135,31 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.AddressDelivery", "AddressDelivery")
                         .WithMany("Orders")
-                        .HasForeignKey("AddressDeliveryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AddressDeliveryId");
 
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.AppUser", "AppUser")
                         .WithMany("Orders")
                         .HasForeignKey("AppUserId");
 
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.DeliveryMethod", "DeliveryMethod")
+                        .WithMany("Orders")
+                        .HasForeignKey("DeliveryMethodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.PaymentMethod", "PaymentMethod")
                         .WithMany("Orders")
-                        .HasForeignKey("PaymentMethodId");
+                        .HasForeignKey("PaymentMethodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.PromoCode", "PromoCode")
                         .WithOne("Order")
                         .HasForeignKey("LilsCareApp.Infrastructure.Data.Models.Order", "PromoCodeId");
+
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.ShippingOffice", "ShippingOffice")
+                        .WithMany()
+                        .HasForeignKey("ShippingOfficeId");
 
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.StatusOrder", "StatusOrder")
                         .WithMany("Orders")
@@ -3029,22 +3171,26 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     b.Navigation("AppUser");
 
+                    b.Navigation("DeliveryMethod");
+
                     b.Navigation("PaymentMethod");
 
                     b.Navigation("PromoCode");
+
+                    b.Navigation("ShippingOffice");
 
                     b.Navigation("StatusOrder");
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.PaymentMethod", b =>
                 {
-                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.PaymentType", "Type")
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.PaymentName", "Name")
                         .WithMany("PaymentMethods")
-                        .HasForeignKey("TypeId")
+                        .HasForeignKey("NameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Type");
+                    b.Navigation("Name");
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Product", b =>
@@ -3173,7 +3319,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.ShippingProvider", "ShippingProvider")
                         .WithMany("ShippingOffices")
-                        .HasForeignKey("ShippingProviderId");
+                        .HasForeignKey("ShippingProviderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ShippingProvider");
                 });
@@ -3292,6 +3440,16 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Navigation("Categories");
                 });
 
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.DeliveryMethod", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.DeliveryName", b =>
+                {
+                    b.Navigation("DeliveryMethod");
+                });
+
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Order", b =>
                 {
                     b.Navigation("ProductsOrders");
@@ -3302,7 +3460,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.PaymentType", b =>
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.PaymentName", b =>
                 {
                     b.Navigation("PaymentMethods");
                 });

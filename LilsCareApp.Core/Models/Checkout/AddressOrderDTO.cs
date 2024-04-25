@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using static LilsCareApp.Core.ErrorMessageConstants;
 using static LilsCareApp.Infrastructure.DataConstants.AddressDelivery;
 
-namespace LilsCareApp.Core.Models.Account
+namespace LilsCareApp.Core.Models.Checkout
 {
-    public class AddressDTO
+    public class AddressOrderDTO
     {
         [Key]
         [Comment("Address Id")]
@@ -72,5 +72,22 @@ namespace LilsCareApp.Core.Models.Account
             ErrorMessageResourceType = typeof(SharedResource))]
         [Display(Name = "Email", ResourceType = typeof(SharedResource))]
         public string? Email { get; set; }
+
+        public bool IsShippingToOffice { get; set; }
+
+        public int? ShippingOfficeId { get; set; }
+
+        public ShippingOfficeDTO? ShippingOffice { get; set; }
+
+        public int ShippingProviderId { get; set; }
+
+        public IEnumerable<ShippingProviderDTO> ShippingProviders { get; set; } = [];
+
+        public string ShippingProviderCity { get; set; } = string.Empty;
+
+        public IEnumerable<string> ShippingProviderCities { get; set; } = [];
+
+        public IEnumerable<ShippingOfficeDTO> ShippingOffices { get; set; } = [];
+
     }
 }

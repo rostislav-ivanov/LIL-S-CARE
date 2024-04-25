@@ -96,7 +96,7 @@ namespace LilsCareApp.Core.Services
                         { Romanian, o.StatusOrder.Name.NameRO },
                         { English, o.StatusOrder.Name.NameEN }
                     }[language],
-                    Total = o.Total,
+                    //Total = o.Total,
                     Products = o.ProductsOrders
                         .Select(op => new MyProductOrderDTO
                         {
@@ -115,7 +115,7 @@ namespace LilsCareApp.Core.Services
                     DateShipping = o.DateShipping,
                     TrackingNumber = o.TrackingNumber,
                     ShippingPrice = o.ShippingPrice,
-                    SubTotal = o.SubTotal,
+                    //SubTotal = o.SubTotal,
                     Discount = o.Discount
                 })
                 .AsNoTracking()

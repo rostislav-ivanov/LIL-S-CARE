@@ -1,57 +1,41 @@
-﻿using LilsCareApp.Core.Models.Account;
-using LilsCareApp.Infrastructure.Data.Models;
-
-namespace LilsCareApp.Core.Models.Checkout
+﻿namespace LilsCareApp.Core.Models.Checkout
 {
-    public class OrderDTO : DeliveryAddressesDTO
+    public class OrderDTO
     {
+        public string AppUserId { get; set; } = string.Empty;
+
         public IEnumerable<ProductsInBagDTO> ProductsInBag { get; set; } = [];
 
         public int PaymentMethodId { get; set; } = 1;
 
-        public IEnumerable<PaymentMethod> PaymentMethods { get; set; } = [];
+        public IEnumerable<PaymentMethodDTO> PaymentMethods { get; set; } = [];
 
-        public int? PromoCodeId { get; set; }
+        public int DeliveryMethodId { get; set; }
+
+        public IEnumerable<DeliveryMethodDTO> DeliveryMethods { get; set; } = [];
+
+        public int PromoCodeId { get; set; }
 
         public IEnumerable<PromoCodeDTO> PromoCodes { get; set; } = [];
 
         public string? NoteForDelivery { get; set; }
 
-        public bool IsValidOrder { get; set; }
+        public bool IsSelectedAddress { get; set; }
 
-        // Get the payment method type
-        public string? PaymentMethod() => PaymentMethods.FirstOrDefault(p => p.Id == PaymentMethodId)?.Type.NameBG;
+        public string Language { get; set; } = string.Empty;
 
-        // Calculate the discount of the order
-        public decimal Discount() => ProductsInBag.Sum(p => p.Quantity * p.Price) * PromoCodes.FirstOrDefault(p => p.Id == PromoCodeId)?.Discount ?? 0;
+        public decimal ExchangeRate { get; set; }
 
-        // Calculate the subtotal of the order
-        public decimal SubTotal() => ProductsInBag.Sum(p => p.Quantity * p.Price) - Discount();
+        public decimal Discount { get; set; }
+
+        public decimal SubTotal { get; set; }
+
+        public decimal Total { get; set; }
+
+        public decimal ShippingPrice { get; set; }
+
+        public AddressOrderDTO Address { get; set; } = null!;
 
 
-        // Get shipping price based on the delivery type and subtotal.
-        // If the subtotal is greater than or equal to FreeShipping, shipping price is 0.
-        public decimal? ShippingPrice()
-        {
-            if (SubTotal() >= 35.00m)
-            {
-                return 0;
-            }
-            else if (DeliveryType() == OfficeDeliveryType)
-            {
-                return Office?.Price();
-            }
-            else if (DeliveryType() == AddressDeliveryType)
-            {
-                return 8.00m;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        // Calculate the total of the order
-        public decimal Total() => SubTotal() + (ShippingPrice() ?? 0);
     }
 }

@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace LilsCareApp.Infrastructure.Data.DataConfiguration
 {
-    internal class PaymentTypesConfiguration : IEntityTypeConfiguration<PaymentType>
+    internal class PaymentNamesConfiguration : IEntityTypeConfiguration<PaymentName>
     {
-        private readonly IEnumerable<PaymentType> paymentTypes =
+        private readonly IEnumerable<PaymentName> paymentTypes =
         [
             new ()
             {
@@ -31,7 +31,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
             }
         ];
 
-        public void Configure(EntityTypeBuilder<PaymentType> builder)
+        public void Configure(EntityTypeBuilder<PaymentName> builder)
         {
             builder.HasData(paymentTypes);
         }

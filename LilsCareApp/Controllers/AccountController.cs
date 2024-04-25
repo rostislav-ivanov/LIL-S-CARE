@@ -217,7 +217,7 @@ namespace LilsCareApp.Controllers
             model.Office.ShippingProviderId = shippingProviderId;
             model.Office.ShippingProviderCities = await _accountService.GetShippingProviderCitiesAsync(shippingProviderId);
             model.Office.CityName = null;
-            model.Office.ShippingOfficeId = null;
+            model.Office.ShippingOfficeId = 0;
 
             HttpContext.Session.SetString("AddressDelivery", JsonConvert.SerializeObject(model));
 
@@ -232,7 +232,7 @@ namespace LilsCareApp.Controllers
 
             model.Office.CityName = city;
             model.Office.ShippingOffices = await _accountService.GetShippingOfficesAsync(model.Office.ShippingProviderId, city);
-            model.Office.ShippingOfficeId = null;
+            model.Office.ShippingOfficeId = 0;
 
             HttpContext.Session.SetString("AddressDelivery", JsonConvert.SerializeObject(model));
 

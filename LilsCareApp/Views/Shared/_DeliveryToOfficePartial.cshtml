@@ -1,5 +1,5 @@
 ﻿@inject IViewLocalizer Localizer
-@model OfficeDTO
+@model AddressOrderDTO
 
 <!-- New Delivery Office Start Start -->
 <form asp-action="AddOfficeDelivery" method="post">
@@ -8,13 +8,14 @@
         <div class="col-4">
             <h5>@Localizer["Courier"]</h5>
             <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown">
-                @if (Model.Provider() != null)
+                @{var providerName = @Model.ShippingProviders.FirstOrDefault(p => p.Id == Model.ShippingProviderId)?.Name; }
+                @if (!string.IsNullOrEmpty(providerName))
                 {
-                    @Model.Provider();
+                    @providerName
                 }
                 else
                 {
-                    @Localizer["Courier..."];
+                    <span class="text-danger">@Localizer["Courier..."]</span>
                 }
             </a>
             <ul class="dropdown-menu">
@@ -31,58 +32,66 @@
         <!-- Select Shipping Provider End -->
         <!-- Select Shipping City Start -->
         <div class="col-4">
-            <h5>@Localizer["City"]</h5>
-            <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown">
-                @if(Model.CityName != null)
-                {
-                    @Model.CityName;
-                }
-                else
-                {
-                    @Localizer["City..."];
-                }
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                    @foreach (var city in Model.ShippingProviderCities)
+            @if (!string.IsNullOrEmpty(providerName))
+            {
+                <h5>@Localizer["City"]</h5>
+                <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown">
+                    @if (!string.IsNullOrEmpty(Model.ShippingProviderCity))
                     {
-                        <a asp-action="SelectShippingCity" asp-route-city="@city" class="dropdown-item">
-                            @city
-                        </a>
+                        @Model.ShippingProviderCity
                     }
-                </li>
-            </ul>
+                    else
+                    {
+                        <span class="text-danger">@Localizer["City..."]</span>
+                    }
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        @foreach (var city in Model.ShippingProviderCities)
+                        {
+                            <a asp-action="SelectShippingCity" asp-route-city="@city" class="dropdown-item">
+                                @city
+                            </a>
+                        }
+                    </li>
+                </ul>
+            }
         </div>
         <!-- Select Shipping City End -->
         <!-- Select Shipping Office Start -->
         <div class="col-4">
-            <h5>@Localizer["Courier office"]</h5>
-            <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown">
-                @if(Model.OfficeAddress() != null)
-                {
-                    @Model.OfficeAddress();
-                }
-                else
-                {
-                    @Localizer["Courier office..."];
-                }
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                    @foreach (var office in Model.ShippingOffices)
+            @if (!string.IsNullOrEmpty(Model.ShippingProviderCity))
+            {
+                <h5>@Localizer["Courier office"]</h5>
+                <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown">
+                    @{var officeAddress = Model.ShippingOffices.FirstOrDefault(so => so.Id == Model.ShippingOfficeId)?.OfficeAddress;}
+                    @if (!string.IsNullOrEmpty(officeAddress))
                     {
-                        <a asp-action="SelectShippingOffice" asp-route-officeId="@office.Id" class="dropdown-item">
-                            @office.OfficeAddress
-                        </a>
+                        @officeAddress
                     }
-                </li>
-            </ul>
+                    else
+                    {
+
+                        <span class="text-danger">@Localizer["Courier office..."]</span>
+                    }
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        @foreach (var office in Model.ShippingOffices)
+                        {
+                            <a asp-action="SelectShippingOffice" asp-route-officeId="@office.Id" class="dropdown-item">
+                                @office.OfficeAddress
+                            </a>
+                        }
+                    </li>
+                </ul>
+            }
         </div>
         <!-- Select Office City End -->
     </div>
     <hr />
     <!-- Input Recipient Data Start-->
-    @if (Model.IsSelectedOffice())
+    @if (Model.ShippingOfficeId != 0)
     {
         <div class="row my-2">
             <div class="col-6">

@@ -11,17 +11,17 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
             new ()
             {
                 Id = 1,
-                TypeId = 1,
+                NameId = 1,
             },
             new ()
             {
                 Id = 2,
-                TypeId = 2,
+                NameId = 2,
             },
             new ()
             {
                 Id = 3,
-                TypeId = 3,
+                NameId = 3,
             },
         ];
         public void Configure(EntityTypeBuilder<PaymentMethod> builder)
