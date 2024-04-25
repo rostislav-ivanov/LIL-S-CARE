@@ -142,18 +142,8 @@ namespace LilsCareApp.Core.Services
 
         public async Task<AddressOrderDTO?> GetDefaultAddressAsync(string userId)
         {
-            var defaultAddressId = _context.Users
-                .Where(u => u.Id == userId)
-                .Select(u => u.DefaultAddressDeliveryId)
-                .FirstOrDefault();
-
-            if (defaultAddressId == null)
-            {
-                return null;
-            }
-
             var address = await _context.AddressDeliveries
-                .Where(ad => ad.Id == defaultAddressId)
+                .Where(ad => ad.AppUserId == userId && !ad.IsDeleted && ad.IsDefault)
                 .Select(ad => new AddressOrderDTO()
                 {
                     Id = ad.Id,
@@ -252,7 +242,13 @@ namespace LilsCareApp.Core.Services
             {
                 if (orderDTO.Address.Id > 0)
                 {
-                    appUser.DefaultAddressDeliveryId = orderDTO.Address.Id;
+                    var address = await _context.AddressDeliveries
+                        .FirstOrDefaultAsync(ad => ad.Id == orderDTO.Address.Id);
+
+                    if (address != null && address.AppUserId == userId)
+                    {
+                        address.IsDefault = true;
+                    }
                 }
                 else
                 {
@@ -269,11 +265,11 @@ namespace LilsCareApp.Core.Services
                         Email = orderDTO.Address.Email,
                         IsShippingToOffice = orderDTO.Address.IsShippingToOffice,
                         ShippingOfficeId = orderDTO.Address.ShippingOfficeId,
-                        AppUserId = userId
+                        AppUserId = userId,
+                        IsDefault = true
                     };
 
                     await _context.AddressDeliveries.AddAsync(address);
-                    appUser.DefaultAddressDelivery = address;
                 }
             }
 
@@ -318,28 +314,25 @@ namespace LilsCareApp.Core.Services
 
 
         // get order summary by order number
-        public async Task<OrderSummaryDTO> OrderSummaryAsync(string orderSNumber)
+        public async Task<OrderSummaryDTO> OrderSummaryAsync(string orderNumber)
         {
             var language = _httpContextManager.GetLanguage();
 
             OrderSummaryDTO? orderSummary = await _context.Orders
-                .Where(o => o.OrderNumber == orderSNumber)
+                .Where(o => o.OrderNumber == orderNumber)
                 .Select(o => new OrderSummaryDTO()
                 {
                     OrderNumber = o.OrderNumber,
                     OrderDate = o.CreatedOn,
-                    FirstName = o.AddressDelivery.FirstName,
-                    LastName = o.AddressDelivery.LastName,
-                    PhoneNumber = o.AddressDelivery.PhoneNumber,
-                    PostCode = o.AddressDelivery.PostCode,
-                    Address = o.AddressDelivery.Address,
-                    Town = o.AddressDelivery.Town,
-                    District = o.AddressDelivery.District,
-                    Country = o.AddressDelivery.Country,
-                    IsShippingToOffice = o.AddressDelivery.IsShippingToOffice,
-                    ShippingProviderName = o.AddressDelivery.ShippingOffice.ShippingProvider.Name,
-                    ShippingOfficeCity = o.AddressDelivery.ShippingOffice.City,
-                    ShippingOfficeAddress = o.AddressDelivery.ShippingOffice.OfficeAddress,
+                    FirstName = o.FirstName,
+                    LastName = o.LastName,
+                    PhoneNumber = o.PhoneNumber,
+                    PostCode = o.PostCode,
+                    Address = o.Address,
+                    Town = o.Town,
+                    District = o.District,
+                    Country = o.Country,
+                    IsShippingToOffice = o.IsShippingToOffice,
                     PaymentMethod = new Dictionary<string, string>
                     {
                         { Bulgarian, o.PaymentMethod.Name.NameBG },
@@ -374,6 +367,20 @@ namespace LilsCareApp.Core.Services
                 })
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
+
+            if (orderSummary.IsShippingToOffice)
+            {
+                var shippingOffice = await _context.Orders
+                    .Where(o => o.OrderNumber == orderNumber)
+                    .Select(o => o.ShippingOffice)
+                    .FirstOrDefaultAsync();
+                if (shippingOffice != null)
+                {
+                    orderSummary.ShippingOfficeCity = shippingOffice.City;
+                    orderSummary.ShippingOfficeAddress = shippingOffice.OfficeAddress;
+                    orderSummary.ShippingProviderName = shippingOffice.ShippingProvider.Name;
+                }
+            }
 
             return orderSummary;
         }

@@ -105,7 +105,6 @@ namespace LilsCareApp.Controllers
 
             order.Address.ShippingProviderCity = city;
             order.Address.ShippingOffices = await _accountService.GetShippingOfficesAsync(order.Address.ShippingProviderId, city);
-            order.Address.ShippingOfficeId = 0;
 
             SetSession(order);
 

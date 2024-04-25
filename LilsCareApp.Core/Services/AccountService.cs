@@ -126,13 +126,8 @@ namespace LilsCareApp.Core.Services
         // Return all delivery addresses  of the user (to address and to office)
         public async Task<IEnumerable<DeliveryAddressDTO>> GetMyAddressesAsync(string userId)
         {
-            var defaultAddressId = await _context.Users
-                .Where(u => u.Id == userId)
-                .Select(u => u.DefaultAddressDeliveryId)
-                .FirstOrDefaultAsync();
-
             IEnumerable<DeliveryAddressDTO> myAddresses = await _context.AddressDeliveries
-                .Where(ad => ad.AppUserId == userId)
+                .Where(ad => ad.AppUserId == userId && !ad.IsDeleted)
                 .Select(ad => new DeliveryAddressDTO
                 {
                     AddressId = ad.Id,
@@ -149,7 +144,7 @@ namespace LilsCareApp.Core.Services
                     OfficeCity = ad.ShippingOffice.City,
                     OfficeAddress = ad.ShippingOffice.OfficeAddress,
                     IsOffice = ad.IsShippingToOffice,
-                    IsDefault = ad.Id == defaultAddressId
+                    IsDefault = ad.IsDefault
                 })
                 .AsNoTracking()
                 .ToListAsync();
@@ -169,14 +164,8 @@ namespace LilsCareApp.Core.Services
                 return;
             }
 
-            var appUser = await _context.Users.FirstOrDefaultAsync(au => au.Id == address.AppUserId);
-            if (appUser?.DefaultAddressDelivery != null)
-            {
-                appUser.DefaultAddressDelivery = null;
-            }
-
-            address.AppUser = null;
-
+            address.IsDeleted = true;
+            address.IsDefault = false;
 
             await _context.SaveChangesAsync();
         }
@@ -185,14 +174,16 @@ namespace LilsCareApp.Core.Services
         // Set the default delivery address
         public async Task SetDefaultAddressAsync(string userId, int addressId)
         {
-            var users = await _context.Users.ToListAsync();
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
-            var address = await _context.AddressDeliveries.FirstOrDefaultAsync(ad => ad.Id == addressId);
-            if (user != null && address != null)
+            var addresses = await _context.AddressDeliveries
+                .Where(ad => ad.AppUserId == userId)
+                .ToListAsync();
+
+            foreach (var address in addresses)
             {
-                user.DefaultAddressDelivery = address;
-                await _context.SaveChangesAsync();
+                address.IsDefault = address.Id == addressId;
             }
+
+            await _context.SaveChangesAsync();
         }
 
 
@@ -274,38 +265,13 @@ namespace LilsCareApp.Core.Services
                 return;
             }
 
-            if (await _context.Orders.AnyAsync(o => o.AddressDeliveryId == address.Id))
-            {
-                AddressDelivery addressDelivery = new()
-                {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    PhoneNumber = model.PhoneNumber,
-                    ShippingOfficeId = model.ShippingOfficeId,
-                    AppUserId = userId,
-                    IsShippingToOffice = true
-                };
-
-                var appUser = await _context.Users.FirstOrDefaultAsync(au => au.Id == address.AppUserId);
-                if (appUser?.DefaultAddressDelivery != null)
-                {
-                    appUser.DefaultAddressDelivery = addressDelivery;
-                }
-
-                address.AppUser = null;
-
-                await _context.AddressDeliveries.AddAsync(addressDelivery);
-            }
-            else
-            {
-                address.AppUser = null;
-                address.FirstName = model.FirstName;
-                address.LastName = model.LastName;
-                address.PhoneNumber = model.PhoneNumber;
-                address.ShippingOfficeId = model.ShippingOfficeId;
-                address.AppUserId = userId;
-                address.IsShippingToOffice = true;
-            }
+            address.AppUser = null;
+            address.FirstName = model.FirstName;
+            address.LastName = model.LastName;
+            address.PhoneNumber = model.PhoneNumber;
+            address.ShippingOfficeId = model.ShippingOfficeId;
+            address.AppUserId = userId;
+            address.IsShippingToOffice = true;
 
             await _context.SaveChangesAsync();
         }
@@ -347,50 +313,17 @@ namespace LilsCareApp.Core.Services
             {
                 return;
             }
-
-            if (await _context.Orders.AnyAsync(o => o.AddressDeliveryId == address.Id))
-            {
-                // Add a new address with the edited data
-                AddressDelivery addressDelivery = new()
-                {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    PhoneNumber = model.PhoneNumber,
-                    Country = model.Country,
-                    PostCode = model.PostCode,
-                    Town = model.Town,
-                    Address = model.Address,
-                    District = model.District,
-                    Email = model.Email,
-                    AppUserId = userId,
-                    IsShippingToOffice = false
-                };
-
-                var appUser = await _context.Users.FirstOrDefaultAsync(au => au.Id == address.AppUserId);
-                if (appUser?.DefaultAddressDelivery != null)
-                {
-                    appUser.DefaultAddressDelivery = addressDelivery;
-                }
-
-                address.AppUser = null;
-
-
-                await _context.AddressDeliveries.AddAsync(addressDelivery);
-            }
-            else
-            {
-                address.FirstName = model.FirstName;
-                address.LastName = model.LastName;
-                address.PhoneNumber = model.PhoneNumber;
-                address.Country = model.Country;
-                address.PostCode = model.PostCode;
-                address.Town = model.Town;
-                address.Address = model.Address;
-                address.District = model.District;
-                address.Email = model.Email;
-                address.AppUserId = userId;
-                address.IsShippingToOffice = false;
-            }
+            address.FirstName = model.FirstName;
+            address.LastName = model.LastName;
+            address.PhoneNumber = model.PhoneNumber;
+            address.Country = model.Country;
+            address.PostCode = model.PostCode;
+            address.Town = model.Town;
+            address.Address = model.Address;
+            address.District = model.District;
+            address.Email = model.Email;
+            address.AppUserId = userId;
+            address.IsShippingToOffice = false;
 
             await _context.SaveChangesAsync();
         }

@@ -60,13 +60,17 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("Navigation property to Order")]
         public List<Order> Orders { get; set; } = new List<Order>();
 
-
+        [Required]
         [Comment("App User Id")]
-        public string? AppUserId { get; set; }
+        public required string AppUserId { get; set; }
 
         [ForeignKey(nameof(AppUserId))]
         [Comment("Navigation property to AppUser")]
-        public AppUser? AppUser { get; set; }
+        public AppUser AppUser { get; set; } = null!;
+
+        public bool IsDeleted { get; set; }
+
+        public bool IsDefault { get; set; }
     }
 }
 
