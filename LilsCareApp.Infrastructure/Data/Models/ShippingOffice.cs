@@ -32,6 +32,9 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("Navigation Property to AddressDelivery")]
         public IEnumerable<AddressDelivery> DeliveryAddresses { get; set; } = [];
 
+        [Comment("Navigation Property to Order")]
+        public IEnumerable<Order> Orders { get; set; } = [];
+
 
 
 

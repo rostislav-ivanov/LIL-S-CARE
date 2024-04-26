@@ -1,10 +1,10 @@
 ﻿using LilsCareApp.Core.Contracts;
-using LilsCareApp.Core.Models.Account;
 using LilsCareApp.Core.Models.Checkout;
 using LilsCareApp.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using System.Security.Claims;
 using System.Text;
@@ -19,6 +19,7 @@ namespace LilsCareApp.Controllers
         private readonly IAccountService _accountService;
         private readonly IGuestService _guestService;
         private readonly IEmailSender _emailSender;
+        private readonly IStringLocalizer<CheckoutController> _localizer;
 
         public CheckoutController(
             ILogger<CheckoutController> logger,
@@ -26,7 +27,8 @@ namespace LilsCareApp.Controllers
             IProductsService productsService,
             IAccountService accountService,
             IGuestService guestService,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IStringLocalizer<CheckoutController> localizer)
         {
             _logger = logger;
             _checkoutService = checkoutService;
@@ -34,6 +36,7 @@ namespace LilsCareApp.Controllers
             _accountService = accountService;
             _guestService = guestService;
             _emailSender = emailSender;
+            _localizer = localizer;
         }
 
         [AllowAnonymous]
@@ -89,6 +92,7 @@ namespace LilsCareApp.Controllers
             order.Address.ShippingProviderId = shippingProviderId;
             order.Address.ShippingProviderCities = await _accountService.GetShippingProviderCitiesAsync(shippingProviderId);
             order.Address.ShippingProviderCity = string.Empty;
+            order.Address.ShippingOfficeId = null;
 
             SetSession(order);
 
@@ -105,6 +109,7 @@ namespace LilsCareApp.Controllers
 
             order.Address.ShippingProviderCity = city;
             order.Address.ShippingOffices = await _accountService.GetShippingOfficesAsync(order.Address.ShippingProviderId, city);
+            order.Address.ShippingOfficeId = null;
 
             SetSession(order);
 
@@ -125,15 +130,26 @@ namespace LilsCareApp.Controllers
             return View(nameof(Index), order);
         }
 
-        // Add or Edit address of type delivery to office
+        // Add address of type delivery to office
         [AllowAnonymous]
-        public async Task<IActionResult> AddOfficeDelivery(OfficeDTO officeDTO)
+        public async Task<IActionResult> AddOfficeDelivery(AddressOrderDTO addressDTO)
         {
             OrderDTO order = GetSession();
 
-            order!.Address!.FirstName = officeDTO.FirstName;
-            order.Address.LastName = officeDTO.LastName;
-            order.Address.PhoneNumber = officeDTO.PhoneNumber;
+            if (addressDTO is null)
+            {
+                return BadRequest();
+            }
+
+            order!.Address!.FirstName = addressDTO.FirstName;
+            order.Address.LastName = addressDTO.LastName;
+            order.Address.PhoneNumber = addressDTO.PhoneNumber;
+
+            ModelState.Remove("Country");
+            ModelState.Remove("PostCode");
+            ModelState.Remove("Town");
+            ModelState.Remove("Address");
+
 
             if (ModelState.IsValid && order.Address.ShippingOffice != null)
             {
@@ -147,7 +163,7 @@ namespace LilsCareApp.Controllers
         }
 
 
-        // Add or Edit address of type delivery to address
+        // Add address of type delivery to address
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> AddAddressDelivery(AddressOrderDTO addressDTO)
@@ -170,6 +186,28 @@ namespace LilsCareApp.Controllers
             SetSession(order);
 
             return View(nameof(Index), order);
+        }
+
+        public async Task<IActionResult> EditDeliveryAddress()
+        {
+            OrderDTO order = GetSession();
+
+            order.IsSelectedAddress = false;
+
+            if (order.Address.IsShippingToOffice && order.Address.ShippingOffice != null)
+            {
+                order.Address.ShippingProviders = await _accountService.GetShippingProvidersAsync();
+                order.Address.ShippingProviderId = order.Address.ShippingOffice.ShippingProviderId;
+                order.Address.ShippingProviderCities = await _accountService.GetShippingProviderCitiesAsync(order.Address.ShippingProviderId);
+                order.Address.ShippingProviderCity = order.Address.ShippingOffice.City;
+                order.Address.ShippingOffices = await _accountService.GetShippingOfficesAsync(order.Address.ShippingProviderId, order.Address.ShippingProviderCity);
+                order.Address.ShippingOfficeId = order.Address.ShippingOffice.Id;
+            }
+
+            SetSession(order);
+
+            return View(nameof(Index), order);
+
         }
 
 
@@ -263,7 +301,7 @@ namespace LilsCareApp.Controllers
             if (User.GetUserEmail() != null)
             {
                 string message = CreateOrderSummaryEmailMessage(orderSummary);
-                string subject = $"Благодарим ви, че пазарувате при нас (#{orderNumber})";
+                string subject = $"{_localizer["Thank you for shopping with us"]} (#{orderNumber})";
                 await _emailSender.SendEmailAsync(User.GetUserEmail(), subject, message);
             }
 
@@ -306,7 +344,7 @@ namespace LilsCareApp.Controllers
                                                       </td>
                                                     </tr>
                                                     <tr>
-                                                      <td>Цена: {product.Price} лв.</td>
+                                                      <td>{_localizer["Price"]}: {product.Price} {_localizer["Currency"]}</td>
                                                     </tr>
                                                   </tbody>
                                                 </table>
@@ -319,14 +357,14 @@ namespace LilsCareApp.Controllers
                                         valign=""top""
                                         width=""80""
                                       >
-                                        Количество: {product.Quantity}
+                                        {_localizer["Quantity"]}: {product.Quantity}
                                       </td>
                                       <td
                                         align=""right""
                                         width=""80""
                                         valign=""top""
                                       >
-                                        {product.Quantity * product.Price} лв.
+                                        {product.Quantity * product.Price} {_localizer["Currency"]}
                                       </td>
                                     </tr>
                     
@@ -359,7 +397,7 @@ namespace LilsCareApp.Controllers
                                                 >
                                                   <tbody>
                                                     <tr>
-                                                      <td>Отстъпка:</td>
+                                                      <td>{_localizer["Discount"]}:</td>
                                                     </tr>
                                                   </tbody>
                                                 </table>
@@ -381,7 +419,7 @@ namespace LilsCareApp.Controllers
                 addressDelivery = $@"                                                                        
                                                                         <tr>
                                                                           <td style=""padding-bottom: 20px;"">
-                                                                            Доставка до офис на куриер
+                                                                             {_localizer["Delivery to courier office"]}
                                                                           </td>
                                                                         </tr>
                                                                         <tr>
@@ -395,7 +433,7 @@ namespace LilsCareApp.Controllers
                                                                         </tr>
                                                                         <tr>    
                                                                           <td style=""padding-bottom: 20px;"">
-                                                                            Получател
+                                                                            {_localizer["Recipient"]}
                                                                           </td>
                                                                         </tr>
                                                                         <tr>
@@ -413,7 +451,7 @@ namespace LilsCareApp.Controllers
                 addressDelivery = $@"                                                                        
                                                                         <tr>
                                                                           <td style=""padding-bottom: 20px;"">
-                                                                            Доставка до адрес на клиент
+                                                                            {_localizer["Delivery to customer address"]}
                                                                           </td>
                                                                         </tr>
                                                                         <tr>
@@ -497,14 +535,13 @@ namespace LilsCareApp.Controllers
 
                             <tr>
                               <td style=""padding-bottom: 19px"">
-                                Блягодарим за поръчката!
+                                {_localizer["Thank you for the order!"]}
                               </td>
                             </tr>
 
                             <tr>
                               <td style=""padding-bottom: 54px"">
-                                Ще се свържем за потвърждение на наличност и
-                                адрес.
+                                {_localizer["We will be in touch to confirm availability and address."]}
                               </td>
                             </tr>
 
@@ -524,7 +561,7 @@ namespace LilsCareApp.Controllers
                                         style=""padding-right: 25px""
                                         valign=""top""
                                       >
-                                        № на поръчка #{orderSummary.OrderNumber}
+                                        {_localizer["order no"]} #{orderSummary.OrderNumber}
                                       </td>
 
                                       <td
@@ -532,7 +569,7 @@ namespace LilsCareApp.Controllers
                                         style=""padding-left: 25px""
                                         valign=""top""
                                       >
-                                        Направена на {orderSummary.OrderDate.ToString("dd/MM/yyyy")}
+                                        {_localizer["Created on"]} {orderSummary.OrderDate.ToString("dd/MM/yyyy")}
                                       </td>
                                     </tr>
                                     <tr>
@@ -575,7 +612,7 @@ namespace LilsCareApp.Controllers
                                                           padding-bottom: 20px;
                                                         ""
                                                       >
-                                                        Информация за доставка
+                                                        {_localizer["Delivery Information"]}
                                                       </td>
                                                     </tr>
                                                     {addressDelivery}
@@ -622,7 +659,7 @@ namespace LilsCareApp.Controllers
                         >
                           <tbody>
                             <tr>
-                              <td>Резюме на поръчката</td>
+                              <td>{_localizer["Order Summary"]}</td>
                             </tr>
                             <tr>
                               <td style=""padding-bottom: 30px"">
@@ -666,13 +703,13 @@ namespace LilsCareApp.Controllers
                                   <tbody>
                                     <tr>
                                       <td style=""padding-right: 25px"">
-                                        Междинна сума:
+                                        {_localizer["Subtotal"]}:
                                       </td>
                                       <td
                                         align=""right""
                                         style=""padding-left: 30px""
                                       >
-                                        {orderSummary.SubTotal} лв.
+                                        {orderSummary.SubTotal} {_localizer["Currency"]}
                                       </td>
                                     </tr>
                                     <tr>
@@ -683,7 +720,7 @@ namespace LilsCareApp.Controllers
                                           padding-bottom: 10px;
                                         ""
                                       >
-                                        Доставка:
+                                        {_localizer["Shipping"]}:
                                       </td>
                                       <td
                                         align=""right""
@@ -693,7 +730,7 @@ namespace LilsCareApp.Controllers
                                           padding-bottom: 10px;
                                         ""
                                       >
-                                        {orderSummary.ShippingPrice} лв.
+                                        {orderSummary.ShippingPrice} {_localizer["Currency"]}
                                       </td>
                                     </tr>
                                     <tr>
@@ -713,7 +750,7 @@ namespace LilsCareApp.Controllers
                                           padding-bottom: 0;
                                         ""
                                       >
-                                        Общо:
+                                        {_localizer["Total"]}:
                                       </td>
                                       <td
                                         align=""right""
@@ -723,7 +760,7 @@ namespace LilsCareApp.Controllers
                                           padding-bottom: 0;
                                         ""
                                       >
-                                        {orderSummary.Total} лв.
+                                        {orderSummary.Total} {_localizer["Currency"]}
                                       </td>
                                     </tr>
                                   </tbody>
@@ -762,15 +799,13 @@ namespace LilsCareApp.Controllers
                                   <tbody>
                                     <tr>
                                       <td style=""padding-bottom: 20px"">
-                                        Нужда от помощ? Въпрос?
+                                        {_localizer["Need help? Question?"]}
                                       </td>
                                     </tr>
 
                                     <tr>
-                                      <td
-                                        class=""m_5933629958401189717assistance-content""
-                                      >
-                                        Изпратете ни имейл:
+                                      <td>
+                                        {_localizer["Send us an email"]}:
                                         <a
                                           href=""mailto:lils.care.handmade@gmail.com""
                                           target=""_blank""
@@ -794,7 +829,7 @@ namespace LilsCareApp.Controllers
                                   <tbody>
                                     <tr>
                                       <td style=""padding-bottom: 20px"">
-                                        Този имейл беше изпратен от Lil's Care
+                                        {_localizer["This email was sent by"]} Lil's Care
                                         handmade
                                       </td>
                                     </tr>

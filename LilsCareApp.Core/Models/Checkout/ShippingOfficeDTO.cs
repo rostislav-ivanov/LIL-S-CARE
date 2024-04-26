@@ -10,7 +10,7 @@ namespace LilsCareApp.Core.Models.Checkout
 
         public int ShippingProviderId { get; set; }
 
-        public string ShippingProvider { get; set; } = null!;
+        public string ShippingProviderName { get; set; } = null!;
 
         [Comment("City for Delivery")]
         [Required(ErrorMessage = RequiredField)]

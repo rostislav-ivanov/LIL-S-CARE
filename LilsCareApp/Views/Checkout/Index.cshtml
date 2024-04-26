@@ -83,11 +83,11 @@ else
                             <div class="row">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h5>@Localizer["Delivery to a courier office"]</h5>
-                                    <a asp-controller="Checkout" asp-action="SelectDeliveryMethod" asp-route-isShippingToOffice="true" style="color: rgb(var(--app-btn-bg))">
+                                    <a asp-controller="Checkout" asp-action="EditDeliveryAddress" style="color: rgb(var(--app-btn-bg))">
                                         @Localizer["Edit"]
                                     </a>
                                 </div>
-                                <span>@Localizer["Courier"]: @Model.Address.ShippingProviders.FirstOrDefault(sp => sp.Id == Model.Address.ShippingProviderId)?.Name</span>
+                                <span>@Localizer["Courier"]: @Model.Address.ShippingOffice?.ShippingProviderName</span>
                                 <span>@Localizer["Office"]: @Model.Address.ShippingOffice?.City, @Model.Address.ShippingOffice?.OfficeAddress</span>
                                 <span>@Localizer["Recipient"]: @Model.Address.FirstName @Model.Address.LastName</span>
                                 <span>@Localizer["Phone number"]: @Model.Address.PhoneNumber</span>
@@ -101,7 +101,7 @@ else
                             <div class="row">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h5>@Localizer["Delivery to address"]</h5>
-                                    <a asp-controller="Checkout" asp-action="SelectDeliveryMethod" asp-route-isShippingToOffice="false" style="color: rgb(var(--app-btn-bg))">
+                                    <a asp-controller="Checkout" asp-action="EditDeliveryAddress" style="color: rgb(var(--app-btn-bg))">
                                         @Localizer["Edit"]
                                     </a>
                                 </div>

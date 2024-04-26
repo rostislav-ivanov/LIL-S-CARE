@@ -59,7 +59,7 @@ namespace LilsCareApp.Core.Services
                             {
                                 Id = so.Id,
                                 ShippingProviderId = so.ShippingProviderId,
-                                ShippingProvider = so.ShippingProvider.Name,
+                                ShippingProviderName = so.ShippingProvider.Name,
                                 City = so.City,
                                 OfficeAddress = so.OfficeAddress,
                                 Price = so.Price,
@@ -162,7 +162,7 @@ namespace LilsCareApp.Core.Services
                     {
                         Id = ad.ShippingOffice.Id,
                         ShippingProviderId = ad.ShippingOffice.ShippingProviderId,
-                        ShippingProvider = ad.ShippingOffice.ShippingProvider.Name,
+                        ShippingProviderName = ad.ShippingOffice.ShippingProvider.Name,
                         City = ad.ShippingOffice.City,
                         OfficeAddress = ad.ShippingOffice.OfficeAddress,
                         Price = ad.ShippingOffice.Price,

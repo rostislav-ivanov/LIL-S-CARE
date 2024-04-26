@@ -21,7 +21,7 @@
             public const int ImagePathMaxLength = 2048;
             public const int UserNameMinLength = 6;
             public const int UserNameMaxLength = 20;
-            public const int EmailMaxLength = 20;
+            public const int EmailMaxLength = 50;
         }
 
         public static class Product
@@ -34,7 +34,7 @@
             public const string QuantityMaxValue = "1000";
             public const int OptionalMinLength = 3;
             public const int OptionalMaxLength = 200;
-            public const int ProductsPerPages = 3;
+            public const int ProductsPerPages = 6;
         }
 
         public static class Category

@@ -50,6 +50,7 @@ namespace LilsCareApp.Core.Services
             user.LastName = myAccount.LastName;
             user.PhoneNumber = myAccount.PhoneNumber;
             user.Email = myAccount.Email;
+            user.NormalizedEmail = myAccount.Email?.ToUpper();
             // Update the image path if a new image was uploaded
             if (myAccount.ImagePath != null)
             {
@@ -222,6 +223,8 @@ namespace LilsCareApp.Core.Services
                 .Select(so => new ShippingOfficeDTO
                 {
                     Id = so.Id,
+                    ShippingProviderId = so.ShippingProviderId,
+                    ShippingProviderName = so.ShippingProvider.Name,
                     City = so.City,
                     OfficeAddress = so.OfficeAddress,
                     Price = so.Price,
