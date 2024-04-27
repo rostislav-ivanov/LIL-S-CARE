@@ -89,5 +89,8 @@ namespace LilsCareApp.Core.Models.Checkout
 
         public IEnumerable<ShippingOfficeDTO> ShippingOffices { get; set; } = [];
 
+        public bool IsDefault { get; set; }
+
+        public int DeliveryMethodId { get; set; }
     }
 }

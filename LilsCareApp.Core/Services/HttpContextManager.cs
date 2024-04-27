@@ -1,4 +1,5 @@
 ﻿using LilsCareApp.Core.Contracts;
+using LilsCareApp.Core.Models.Checkout;
 using LilsCareApp.Core.Models.GuestUser;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -41,6 +42,16 @@ namespace LilsCareApp.Core.Services
             var language = _httpContextAccessor.HttpContext?.Request.Cookies[".AspNetCore.Culture"]?.Split('=').Last() ?? Default;
 
             return language;
+        }
+
+        public AddressOrderDTO? GetSessionAddress()
+        {
+            return JsonConvert.DeserializeObject<AddressOrderDTO>(_httpContextAccessor.HttpContext.Session.GetString("Address"));
+        }
+
+        public void SetSessionAddress(AddressOrderDTO? address)
+        {
+            _httpContextAccessor.HttpContext?.Session.SetString("Address", JsonConvert.SerializeObject(address));
         }
     }
 }

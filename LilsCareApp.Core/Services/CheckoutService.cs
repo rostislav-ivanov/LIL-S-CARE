@@ -51,23 +51,6 @@ namespace LilsCareApp.Core.Services
                 {
                     order.DeliveryMethodId = address.IsShippingToOffice ? 1 : 2;
                     order.Address = address;
-                    if (address.IsShippingToOffice)
-                    {
-                        order.Address.ShippingOffice = await _context.ShippingOffices
-                            .Where(so => so.Id == address.ShippingOfficeId)
-                            .Select(so => new ShippingOfficeDTO()
-                            {
-                                Id = so.Id,
-                                ShippingProviderId = so.ShippingProviderId,
-                                ShippingProviderName = so.ShippingProvider.Name,
-                                City = so.City,
-                                OfficeAddress = so.OfficeAddress,
-                                Price = so.Price,
-                                ShippingDuration = so.ShippingDuration,
-                            })
-                            .FirstOrDefaultAsync();
-                    }
-
                     order.IsSelectedAddress = true;
                 }
             }
@@ -169,6 +152,7 @@ namespace LilsCareApp.Core.Services
                         ShippingDuration = ad.ShippingOffice.ShippingDuration,
                     } : null,
                 })
+                .AsNoTracking()
                 .FirstOrDefaultAsync();
 
             return address;

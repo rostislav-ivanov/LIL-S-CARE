@@ -105,7 +105,12 @@ namespace LilsCareApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> SelectShippingCity(string city)
         {
-            OrderDTO order = GetSession();
+            var order = GetSession();
+
+            if (string.IsNullOrEmpty(city) || order is null)
+            {
+                return BadRequest();
+            }
 
             order.Address.ShippingProviderCity = city;
             order.Address.ShippingOffices = await _accountService.GetShippingOfficesAsync(order.Address.ShippingProviderId, city);
@@ -120,7 +125,12 @@ namespace LilsCareApp.Controllers
         [AllowAnonymous]
         public IActionResult SelectShippingOffice(int officeId)
         {
-            OrderDTO order = GetSession();
+            var order = GetSession();
+
+            if (officeId == 0 || order is null)
+            {
+                return BadRequest();
+            }
 
             order.Address.ShippingOfficeId = officeId;
             order.Address.ShippingOffice = order.Address.ShippingOffices.FirstOrDefault(x => x.Id == officeId);
@@ -134,14 +144,14 @@ namespace LilsCareApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> AddOfficeDelivery(AddressOrderDTO addressDTO)
         {
-            OrderDTO order = GetSession();
+            var order = GetSession();
 
-            if (addressDTO is null)
+            if (addressDTO is null || order is null)
             {
                 return BadRequest();
             }
 
-            order!.Address!.FirstName = addressDTO.FirstName;
+            order.Address.FirstName = addressDTO.FirstName;
             order.Address.LastName = addressDTO.LastName;
             order.Address.PhoneNumber = addressDTO.PhoneNumber;
 

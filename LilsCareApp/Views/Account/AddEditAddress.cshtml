@@ -1,5 +1,5 @@
 ﻿@inject IViewLocalizer Localizer
-@model DeliveryAddressesDTO
+@model AddressOrderDTO
 @{
     ViewData["Title"] = @Localizer["Addresses"];
 }
@@ -14,43 +14,44 @@
         <!-- Delivery Type Start -->
         <h5>@Localizer["Delivery method"]</h5>
         <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown">
-            @if(Model.DeliveryType() == null)
+            @if (Model.DeliveryMethodId == 0)
             {
                 @Localizer["No supplier selected..."]
             }
-            else 
+            else if (@Model.DeliveryMethodId == 1)
             {
-                if(@Model.DeliveryType() == Model.OfficeDeliveryType)
-                {
-                    @Localizer["Delivery to courier office"]
-                }
-                else if (Model.DeliveryType() == Model.AddressDeliveryType)
-                {
-                    @Localizer["Delivery to customer address"]
-                }
+                @Localizer["Delivery to courier office"]
+            }
+            else if (@Model.DeliveryMethodId == 2)
+            {
+                @Localizer["Delivery to customer address"]
             }
         </a>
         <ul class="dropdown-menu">
             <li>
-                <a asp-controller="Account" asp-action="SelectDeliveryType" asp-route-isShippingToOffice="false" class="dropdown-item">
-                    @Localizer["Delivery to customer address"]
+                <a asp-controller="Account" asp-action="SelectDeliveryMethod" asp-route-deliveryMethodId=1 class="dropdown-item">
+                    @Localizer["Delivery to courier office"]
                 </a>
             </li>
             <li>
-                <a asp-controller="Account" asp-action="SelectDeliveryType" asp-route-isShippingToOffice="true" class="dropdown-item">
-                    @Localizer["Delivery to courier office"]
+                <a asp-controller="Account" asp-action="SelectDeliveryMethod" asp-route-deliveryMethodId=2 class="dropdown-item">
+                    @Localizer["Delivery to customer address"]
                 </a>
             </li>
         </ul>
         <hr/>
         <!-- Delivery Type End -->
+            @if (Model.DeliveryMethodId == 1)
+            {
+                <partial name="_DeliveryToOfficePartial" model="@Model" />
+            }
+        else if (Model.DeliveryMethodId == 2)
+            {
+                <partial name="_DeliveryToAddressPartial" model="@Model" />
+            }
 
-        @if (Model.DeliveryType() == Model.OfficeDeliveryType)
-        {
-            <partial name="_DeliveryToOfficePartial" model="@Model.Office"/>
-        }
-        else if (Model.DeliveryType() == Model.AddressDeliveryType)
-        {
-            <partial name="_DeliveryToAddressPartial" model="@Model.Address" />
-        }
 </div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }

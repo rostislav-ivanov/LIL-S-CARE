@@ -1,4 +1,5 @@
-﻿using LilsCareApp.Core.Models.GuestUser;
+﻿using LilsCareApp.Core.Models.Checkout;
+using LilsCareApp.Core.Models.GuestUser;
 
 namespace LilsCareApp.Core.Contracts
 {
@@ -6,6 +7,10 @@ namespace LilsCareApp.Core.Contracts
     {
         GuestSession? GetSession();
         void SetSession(GuestSession? session);
+
+        AddressOrderDTO? GetSessionAddress();
+
+        void SetSessionAddress(AddressOrderDTO? address);
 
         string GetLanguage();
     }
