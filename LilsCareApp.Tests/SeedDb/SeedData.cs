@@ -353,7 +353,7 @@ namespace LilsCareApp.Tests.SeedDb
             {
                 Id = 1,
                 OrderNumber = "123456",
-                Language = "bg",
+                Currency = "bg",
                 ExchangeRate = 1.00m,
                 CreatedOn = DateTime.ParseExact("28/10/2023", "dd/MM/yyyy", CultureInfo.InvariantCulture),
                 StatusOrderId = 1,
@@ -372,7 +372,7 @@ namespace LilsCareApp.Tests.SeedDb
              {
                 Id = 2,
                 OrderNumber = "123456x",
-                Language = "en",
+                Currency = "en",
                 ExchangeRate = 1.95m,
                 CreatedOn = DateTime.ParseExact("25/10/2023", "dd/MM/yyyy", CultureInfo.InvariantCulture),
                 StatusOrderId = 2,

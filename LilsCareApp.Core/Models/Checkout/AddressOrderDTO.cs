@@ -12,20 +12,17 @@ namespace LilsCareApp.Core.Models.Checkout
         [Comment("Address Id")]
         public int Id { get; set; }
 
-        [Comment("First Name Recipient")]
         [Required(ErrorMessageResourceName = "ResourceRequired", ErrorMessageResourceType = typeof(SharedResource))]
-        [MaxLength(FirstNameMaxLength)]
+        [MaxLength(FirstNameMaxLength, ErrorMessageResourceName = "StringLengthMax", ErrorMessageResourceType = typeof(SharedResource))]
         [Display(Name = "FirstName", ResourceType = typeof(SharedResource))]
         public string FirstName { get; set; } = string.Empty;
 
-        [Comment("Last Name Recipient")]
         [Required(ErrorMessageResourceName = "ResourceRequired", ErrorMessageResourceType = typeof(SharedResource))]
-        [MaxLength(LastNameMaxLength)]
+        [MaxLength(LastNameMaxLength, ErrorMessageResourceName = "StringLengthMax", ErrorMessageResourceType = typeof(SharedResource))]
         [Display(Name = "LastName", ResourceType = typeof(SharedResource))]
         public string LastName { get; set; } = string.Empty;
 
 
-        [Comment("Phone Number Recipient")]
         [MaxLength(PhoneNumberMaxLength)]
         [Required(ErrorMessageResourceName = "ResourceRequired", ErrorMessageResourceType = typeof(SharedResource))]
         [RegularExpression(
@@ -36,44 +33,36 @@ namespace LilsCareApp.Core.Models.Checkout
         public string PhoneNumber { get; set; } = string.Empty;
 
 
-        [Comment("Country")]
         [Required(ErrorMessageResourceName = "ResourceRequired", ErrorMessageResourceType = typeof(SharedResource))]
-        [MaxLength(CountryMaxLength)]
+        [MaxLength(CountryMaxLength, ErrorMessageResourceName = "StringLengthMax", ErrorMessageResourceType = typeof(SharedResource))]
         [Display(Name = "Country", ResourceType = typeof(SharedResource))]
         public string Country { get; set; } = string.Empty;
 
-        [Comment("Post Code")]
         [Required(ErrorMessageResourceName = "ResourceRequired", ErrorMessageResourceType = typeof(SharedResource))]
-        [MaxLength(PostCodeMaxLength)]
+        [MaxLength(PostCodeMaxLength, ErrorMessageResourceName = "StringLengthMax", ErrorMessageResourceType = typeof(SharedResource))]
         [Display(Name = "PostCode", ResourceType = typeof(SharedResource))]
         public string PostCode { get; set; } = string.Empty;
 
-        [Comment("Town")]
         [Required(ErrorMessageResourceName = "ResourceRequired", ErrorMessageResourceType = typeof(SharedResource))]
-        [MaxLength(TownMaxLength)]
+        [MaxLength(TownMaxLength, ErrorMessageResourceName = "StringLengthMax", ErrorMessageResourceType = typeof(SharedResource))]
         [Display(Name = "Town", ResourceType = typeof(SharedResource))]
         public string Town { get; set; } = string.Empty;
 
-        [Comment("Address")]
         [Required(ErrorMessageResourceName = "ResourceRequired", ErrorMessageResourceType = typeof(SharedResource))]
-        [MaxLength(AddressMaxLength)]
+        [MaxLength(AddressMaxLength, ErrorMessageResourceName = "StringLengthMax", ErrorMessageResourceType = typeof(SharedResource))]
         [Display(Name = "Address", ResourceType = typeof(SharedResource))]
         public string Address { get; set; } = string.Empty;
 
-        [MaxLength(DistrictMaxLength)]
-        [Comment("District")]
+        [MaxLength(DistrictMaxLength, ErrorMessageResourceName = "StringLengthMax", ErrorMessageResourceType = typeof(SharedResource))]
         public string? District { get; set; }
 
-        [Comment("Email Address not required")]
-        [MaxLength(EmailNumberMaxLength)]
+        [MaxLength(EmailMaxLength)]
         [RegularExpression(
             EmailPatternNotRequired,
             ErrorMessageResourceName = "InvalidEmailAddress",
             ErrorMessageResourceType = typeof(SharedResource))]
         [Display(Name = "Email", ResourceType = typeof(SharedResource))]
         public string? Email { get; set; }
-
-        public bool IsShippingToOffice { get; set; }
 
         public int? ShippingOfficeId { get; set; }
 

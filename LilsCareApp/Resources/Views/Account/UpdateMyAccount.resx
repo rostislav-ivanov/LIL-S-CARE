@@ -117,43 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Address" xml:space="preserve">
-    <value>адрес</value>
+  <data name="Cancel" xml:space="preserve">
+    <value>Отказ</value>
   </data>
-  <data name="Country" xml:space="preserve">
-    <value>държава</value>
+  <data name="cannot be changed" xml:space="preserve">
+    <value>не може да бъде променяно</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Редактиране</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>имейл</value>
+    <value>Имейл</value>
   </data>
-  <data name="FirstName" xml:space="preserve">
-    <value>име</value>
+  <data name="First Name" xml:space="preserve">
+    <value>Собствено име</value>
   </data>
-  <data name="InvalidEmailAddress" xml:space="preserve">
-    <value>Невалиден имейл адрес.</value>
+  <data name="Last Name" xml:space="preserve">
+    <value>Фамилия</value>
   </data>
-  <data name="InvalidPhoneNumber" xml:space="preserve">
-    <value>Невалиден телефонен номер</value>
+  <data name="My Account" xml:space="preserve">
+    <value>Моят акаунт</value>
   </data>
-  <data name="LastName" xml:space="preserve">
-    <value>фамилия</value>
-  </data>
-  <data name="PhoneNumber" xml:space="preserve">
-    <value>телефонен номер</value>
+  <data name="Phone Number" xml:space="preserve">
+    <value>Телефон</value>
   </data>
   <data name="Photo" xml:space="preserve">
-    <value>снимка</value>
+    <value>Снимка</value>
   </data>
-  <data name="PostCode" xml:space="preserve">
-    <value>пощенски код</value>
+  <data name="Save" xml:space="preserve">
+    <value>Запази</value>
   </data>
-  <data name="ResourceRequired" xml:space="preserve">
-    <value>Моля, въведете {0}</value>
+  <data name="Update Account" xml:space="preserve">
+    <value>Редактиране акунт</value>
   </data>
-  <data name="StringLengthMax" xml:space="preserve">
-    <value>Полето {0} трябва да бъде най-много {1} символа дълго</value>
+  <data name="Upload a photo" xml:space="preserve">
+    <value>Качи снимка</value>
   </data>
-  <data name="Town" xml:space="preserve">
-    <value>град</value>
+  <data name="User Name" xml:space="preserve">
+    <value>Потребителското име</value>
   </data>
 </root>

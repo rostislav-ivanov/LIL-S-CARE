@@ -2,8 +2,8 @@
 using LilsCareApp.Core.Models.Checkout;
 using LilsCareApp.Core.Models.GuestUser;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 using System.Text;
+using System.Text.Json;
 using static LilsCareApp.Infrastructure.DataConstants.Language;
 
 namespace LilsCareApp.Core.Services
@@ -17,24 +17,24 @@ namespace LilsCareApp.Core.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public GuestSession? GetSession()
+        public GuestSession? GetSessionGuest()
         {
             if (_httpContextAccessor.HttpContext?.Session.GetString("GuestSession") == null)
             {
-                _httpContextAccessor.HttpContext?.Session.SetString("GuestSession", JsonConvert.SerializeObject(new GuestSession()));
+                _httpContextAccessor.HttpContext?.Session.SetString("GuestSession", JsonSerializer.Serialize(new GuestSession()));
             }
 
-            return JsonConvert.DeserializeObject<GuestSession>(_httpContextAccessor.HttpContext.Session.GetString("GuestSession"));
+            return JsonSerializer.Deserialize<GuestSession>(_httpContextAccessor.HttpContext.Session.GetString("GuestSession"));
         }
 
-        public void SetSession(GuestSession? session)
+        public void SetSessionGuest(GuestSession? guest)
         {
-            if (session == null)
+            if (guest == null)
             {
-                session = new GuestSession();
+                guest = new GuestSession();
             }
 
-            _httpContextAccessor.HttpContext?.Session.SetString("GuestSession", JsonConvert.SerializeObject(session));
+            _httpContextAccessor.HttpContext?.Session.SetString("GuestSession", JsonSerializer.Serialize(guest));
         }
 
         public string GetLanguage()
@@ -46,12 +46,39 @@ namespace LilsCareApp.Core.Services
 
         public AddressOrderDTO? GetSessionAddress()
         {
-            return JsonConvert.DeserializeObject<AddressOrderDTO>(_httpContextAccessor.HttpContext.Session.GetString("Address"));
+            if (_httpContextAccessor.HttpContext?.Session.GetString("Address") == null)
+            {
+                _httpContextAccessor.HttpContext?.Session.SetString("Address", JsonSerializer.Serialize(new AddressOrderDTO()));
+            }
+            return JsonSerializer.Deserialize<AddressOrderDTO>(_httpContextAccessor.HttpContext.Session.GetString("Address"));
         }
 
         public void SetSessionAddress(AddressOrderDTO? address)
         {
-            _httpContextAccessor.HttpContext?.Session.SetString("Address", JsonConvert.SerializeObject(address));
+            if (address == null)
+            {
+                address = new AddressOrderDTO();
+            }
+
+            _httpContextAccessor.HttpContext?.Session.SetString("Address", JsonSerializer.Serialize(address));
+        }
+
+        public OrderDTO? GetSessionOrder()
+        {
+            if (_httpContextAccessor.HttpContext?.Session.GetString("Order") == null)
+            {
+                _httpContextAccessor.HttpContext?.Session.SetString("Order", JsonSerializer.Serialize(new OrderDTO()));
+            }
+            return JsonSerializer.Deserialize<OrderDTO>(_httpContextAccessor.HttpContext.Session.GetString("Order"));
+        }
+
+        public void SetSessionOrder(OrderDTO? order)
+        {
+            if (order == null)
+            {
+                order = new OrderDTO();
+            }
+            _httpContextAccessor.HttpContext?.Session.SetString("Order", JsonSerializer.Serialize(order));
         }
     }
 }

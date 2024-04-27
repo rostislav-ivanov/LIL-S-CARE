@@ -105,13 +105,12 @@
             public const int FirstNameMaxLength = 100;
             public const int LastNameMaxLength = 100;
             public const int PhoneNumberMaxLength = 50;
-            public const int EmailNumberMaxLength = 50;
+            public const int EmailMaxLength = 50;
             public const int AddressMaxLength = 250;
             public const int TownMaxLength = 100;
             public const int DistrictMaxLength = 100;
             public const int CountryMaxLength = 100;
             public const int PostCodeMaxLength = 50;
-            public const int EmailMaxLength = 50;
         }
 
         public static class Section

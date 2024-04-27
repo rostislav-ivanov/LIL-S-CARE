@@ -77,7 +77,7 @@ namespace LilsCareApp.Infrastructure.Data.Models
 
         [Comment("Language of Order, determinate the currency of the prices")]
         [MaxLength(LanguageMaxLength)]
-        public required string Language { get; set; }
+        public required string Currency { get; set; }
 
         [Comment("Shipping Price")]
         [Column(TypeName = "decimal(18,2)")]

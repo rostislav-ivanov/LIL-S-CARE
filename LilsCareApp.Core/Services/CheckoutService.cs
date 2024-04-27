@@ -12,15 +12,17 @@ namespace LilsCareApp.Core.Services
         private readonly ApplicationDbContext _context;
         private readonly IAppConfigService _appConfigService;
         private readonly IHttpContextManager _httpContextManager;
-
+        private readonly IAccountService _accountService;
         public CheckoutService(
             ApplicationDbContext context,
             IAppConfigService appConfigService,
-            IHttpContextManager httpContextManager)
+            IHttpContextManager httpContextManager,
+            IAccountService accountService)
         {
             _context = context;
             _appConfigService = appConfigService;
             _httpContextManager = httpContextManager;
+            _accountService = accountService;
         }
 
         public async Task<OrderDTO> GetOrderAsync(string? userId)
@@ -49,7 +51,7 @@ namespace LilsCareApp.Core.Services
 
                 if (address != null)
                 {
-                    order.DeliveryMethodId = address.IsShippingToOffice ? 1 : 2;
+                    order.DeliveryMethodId = address.DeliveryMethodId;
                     order.Address = address;
                     order.IsSelectedAddress = true;
                 }
@@ -139,7 +141,7 @@ namespace LilsCareApp.Core.Services
                     District = ad.District ?? string.Empty,
                     Country = ad.Country ?? string.Empty,
                     Email = ad.Email ?? string.Empty,
-                    IsShippingToOffice = ad.IsShippingToOffice,
+                    DeliveryMethodId = ad.IsShippingToOffice ? 1 : 2,
                     ShippingOfficeId = ad.ShippingOfficeId,
                     ShippingOffice = ad.ShippingOffice != null ? new ShippingOfficeDTO()
                     {
@@ -193,13 +195,18 @@ namespace LilsCareApp.Core.Services
                 District = orderDTO.Address.District,
                 Country = orderDTO.Address.Country,
                 Email = orderDTO.Address.Email,
-                IsShippingToOffice = orderDTO.Address.IsShippingToOffice,
+                IsShippingToOffice = orderDTO.Address.DeliveryMethodId == 1,
                 ShippingOfficeId = orderDTO.Address.ShippingOfficeId,
                 ShippingProviderName = orderDTO.Address.ShippingOffice?.ShippingProviderName,
                 ShippingOfficeCity = orderDTO.Address.ShippingOffice?.City,
                 ShippingOfficeAddress = orderDTO.Address.ShippingOffice?.OfficeAddress,
                 ExchangeRate = orderDTO.ExchangeRate,
-                Language = orderDTO.Language,
+                Currency = new Dictionary<string, string>
+                            {
+                                { Bulgarian, "лв." },
+                                { Romanian, "Lei" },
+                                { English, "€" }
+                            }[orderDTO.Language],
                 ProductsOrders = [],
             };
 
@@ -243,9 +250,8 @@ namespace LilsCareApp.Core.Services
                         address.District = orderDTO.Address.District;
                         address.Country = orderDTO.Address.Country;
                         address.Email = orderDTO.Address.Email;
-                        address.IsShippingToOffice = orderDTO.Address.IsShippingToOffice;
+                        address.IsShippingToOffice = orderDTO.Address.DeliveryMethodId == 1;
                         address.ShippingOfficeId = orderDTO.Address.ShippingOfficeId;
-                        address.IsDefault = true;
                     }
                 }
                 else
@@ -261,13 +267,14 @@ namespace LilsCareApp.Core.Services
                         District = orderDTO.Address.District,
                         Country = orderDTO.Address.Country,
                         Email = orderDTO.Address.Email,
-                        IsShippingToOffice = orderDTO.Address.IsShippingToOffice,
+                        IsShippingToOffice = orderDTO.Address.DeliveryMethodId == 1,
                         ShippingOfficeId = orderDTO.Address.ShippingOfficeId,
                         AppUserId = userId,
-                        IsDefault = true
                     };
 
                     await _context.AddressDeliveries.AddAsync(address);
+                    await _context.SaveChangesAsync();
+                    await _accountService.SetDefaultAddressAsync(userId, address.Id);
                 }
             }
 
@@ -290,7 +297,7 @@ namespace LilsCareApp.Core.Services
             }
 
             // set the applied date to promo code if is applied
-            PromoCode promoCode = await _context.PromoCodes.FirstOrDefaultAsync(pc => pc.Id == order.PromoCodeId);
+            var promoCode = await _context.PromoCodes.FirstOrDefaultAsync(pc => pc.Id == order.PromoCodeId);
 
             if (promoCode != null)
             {
@@ -316,7 +323,7 @@ namespace LilsCareApp.Core.Services
         {
             var language = _httpContextManager.GetLanguage();
 
-            OrderSummaryDTO? orderSummary = await _context.Orders
+            var orderSummary = await _context.Orders
                 .Where(o => o.OrderNumber == orderNumber)
                 .Select(o => new OrderSummaryDTO()
                 {

@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using Newtonsoft.Json;
 using System.Security.Claims;
 using System.Text;
 
@@ -20,6 +19,7 @@ namespace LilsCareApp.Controllers
         private readonly IGuestService _guestService;
         private readonly IEmailSender _emailSender;
         private readonly IStringLocalizer<CheckoutController> _localizer;
+        private readonly IHttpContextManager _httpContextManager;
 
         public CheckoutController(
             ILogger<CheckoutController> logger,
@@ -28,7 +28,8 @@ namespace LilsCareApp.Controllers
             IAccountService accountService,
             IGuestService guestService,
             IEmailSender emailSender,
-            IStringLocalizer<CheckoutController> localizer)
+            IStringLocalizer<CheckoutController> localizer,
+            IHttpContextManager httpContextManager)
         {
             _logger = logger;
             _checkoutService = checkoutService;
@@ -37,14 +38,16 @@ namespace LilsCareApp.Controllers
             _guestService = guestService;
             _emailSender = emailSender;
             _localizer = localizer;
+            _httpContextManager = httpContextManager;
         }
 
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            string? userId = User.GetUserId();
+            var userId = User.GetUserId();
 
-            OrderDTO order = await _checkoutService.GetOrderAsync(userId);
+            var order = await _checkoutService.GetOrderAsync(userId);
+
             if (userId != null)
             {
                 order.ProductsInBag = await _productsService.GetProductsInBagAsync(userId);
@@ -56,7 +59,7 @@ namespace LilsCareApp.Controllers
 
             order = await _checkoutService.CalculateCheckout(order);
 
-            SetSession(order);
+            _httpContextManager.SetSessionOrder(order);
 
             return View(order);
         }
@@ -65,7 +68,12 @@ namespace LilsCareApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> SelectDeliveryMethod(int deliveryMethodId)
         {
-            OrderDTO order = GetSession();
+            var order = _httpContextManager.GetSessionOrder();
+
+            if (order is null || deliveryMethodId == 0)
+            {
+                return BadRequest();
+            }
 
             order.Address = new AddressOrderDTO();
             order.DeliveryMethodId = deliveryMethodId;
@@ -74,10 +82,10 @@ namespace LilsCareApp.Controllers
             if (deliveryMethodId == 1)
             {
                 order.Address.ShippingProviders = await _accountService.GetShippingProvidersAsync();
-                order.Address.IsShippingToOffice = true;
+                order.Address.DeliveryMethodId = 1;
             }
 
-            SetSession(order);
+            _httpContextManager.SetSessionOrder(order);
 
             return View(nameof(Index), order);
         }
@@ -87,14 +95,19 @@ namespace LilsCareApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> SelectShippingProvider(int shippingProviderId)
         {
-            OrderDTO order = GetSession();
+            var order = _httpContextManager.GetSessionOrder();
+
+            if (shippingProviderId == 0 || order is null)
+            {
+                return BadRequest();
+            }
 
             order.Address.ShippingProviderId = shippingProviderId;
             order.Address.ShippingProviderCities = await _accountService.GetShippingProviderCitiesAsync(shippingProviderId);
             order.Address.ShippingProviderCity = string.Empty;
             order.Address.ShippingOfficeId = null;
 
-            SetSession(order);
+            _httpContextManager.SetSessionOrder(order);
 
             return View(nameof(Index), order);
         }
@@ -105,7 +118,7 @@ namespace LilsCareApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> SelectShippingCity(string city)
         {
-            var order = GetSession();
+            var order = _httpContextManager.GetSessionOrder();
 
             if (string.IsNullOrEmpty(city) || order is null)
             {
@@ -116,7 +129,7 @@ namespace LilsCareApp.Controllers
             order.Address.ShippingOffices = await _accountService.GetShippingOfficesAsync(order.Address.ShippingProviderId, city);
             order.Address.ShippingOfficeId = null;
 
-            SetSession(order);
+            _httpContextManager.SetSessionOrder(order);
 
             return View(nameof(Index), order);
         }
@@ -125,7 +138,7 @@ namespace LilsCareApp.Controllers
         [AllowAnonymous]
         public IActionResult SelectShippingOffice(int officeId)
         {
-            var order = GetSession();
+            var order = _httpContextManager.GetSessionOrder();
 
             if (officeId == 0 || order is null)
             {
@@ -135,7 +148,7 @@ namespace LilsCareApp.Controllers
             order.Address.ShippingOfficeId = officeId;
             order.Address.ShippingOffice = order.Address.ShippingOffices.FirstOrDefault(x => x.Id == officeId);
 
-            SetSession(order);
+            _httpContextManager.SetSessionOrder(order);
 
             return View(nameof(Index), order);
         }
@@ -144,7 +157,7 @@ namespace LilsCareApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> AddOfficeDelivery(AddressOrderDTO addressDTO)
         {
-            var order = GetSession();
+            var order = _httpContextManager.GetSessionOrder();
 
             if (addressDTO is null || order is null)
             {
@@ -167,7 +180,7 @@ namespace LilsCareApp.Controllers
                 order = await _checkoutService.CalculateCheckout(order);
             }
 
-            SetSession(order);
+            _httpContextManager.SetSessionOrder(order);
 
             return View(nameof(Index), order);
         }
@@ -178,7 +191,12 @@ namespace LilsCareApp.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAddressDelivery(AddressOrderDTO addressDTO)
         {
-            OrderDTO order = GetSession();
+            var order = _httpContextManager.GetSessionOrder();
+
+            if (order is null || addressDTO is null)
+            {
+                return BadRequest();
+            }
 
             order.Address = addressDTO;
 
@@ -193,18 +211,23 @@ namespace LilsCareApp.Controllers
                 order = await _checkoutService.CalculateCheckout(order);
             }
 
-            SetSession(order);
+            _httpContextManager.SetSessionOrder(order);
 
             return View(nameof(Index), order);
         }
 
         public async Task<IActionResult> EditDeliveryAddress()
         {
-            OrderDTO order = GetSession();
+            var order = _httpContextManager.GetSessionOrder();
+
+            if (order is null)
+            {
+                return BadRequest();
+            }
 
             order.IsSelectedAddress = false;
 
-            if (order.Address.IsShippingToOffice && order.Address.ShippingOffice != null)
+            if (order.Address.DeliveryMethodId == 1 && order.Address.ShippingOffice != null)
             {
                 order.Address.ShippingProviders = await _accountService.GetShippingProvidersAsync();
                 order.Address.ShippingProviderId = order.Address.ShippingOffice.ShippingProviderId;
@@ -214,7 +237,7 @@ namespace LilsCareApp.Controllers
                 order.Address.ShippingOfficeId = order.Address.ShippingOffice.Id;
             }
 
-            SetSession(order);
+            _httpContextManager.SetSessionOrder(order);
 
             return View(nameof(Index), order);
 
@@ -224,13 +247,20 @@ namespace LilsCareApp.Controllers
         // Select the payment method for the order.
         public async Task<IActionResult> DiscountWithPromoCode(int promoCodeId)
         {
-            OrderDTO order = GetSession();
+            var order = _httpContextManager.GetSessionOrder();
+            var userId = User.GetUserId();
+            var ownerPromoCodeId = await _accountService.GetPromoCodeOwnerId(promoCodeId);
+
+            if (userId != ownerPromoCodeId || order is null)
+            {
+                return BadRequest();
+            }
 
             order.PromoCodeId = promoCodeId;
 
             order = await _checkoutService.CalculateCheckout(order);
 
-            SetSession(order);
+            _httpContextManager.SetSessionOrder(order);
 
             return View(nameof(Index), order);
         }
@@ -239,7 +269,12 @@ namespace LilsCareApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> AddToCart(int productId, int quantity)
         {
-            OrderDTO order = GetSession();
+            var order = _httpContextManager.GetSessionOrder();
+
+            if (order is null)
+            {
+                return BadRequest();
+            }
 
             if (User.GetUserId() != null)
             {
@@ -253,7 +288,7 @@ namespace LilsCareApp.Controllers
             }
 
             order = await _checkoutService.CalculateCheckout(order);
-            SetSession(order);
+            _httpContextManager.SetSessionOrder(order);
 
             return View(nameof(Index), order);
         }
@@ -262,7 +297,12 @@ namespace LilsCareApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> DeleteProductFromCart(int id)
         {
-            OrderDTO order = GetSession();
+            var order = _httpContextManager.GetSessionOrder();
+
+            if (order is null || id == 0)
+            {
+                return BadRequest();
+            }
 
             if (User.GetUserId() != null)
             {
@@ -276,7 +316,7 @@ namespace LilsCareApp.Controllers
             }
 
             order = await _checkoutService.CalculateCheckout(order);
-            SetSession(order);
+            _httpContextManager.SetSessionOrder(order);
 
             return View(nameof(Index), order);
         }
@@ -293,7 +333,12 @@ namespace LilsCareApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> CheckoutSummary(string noteForDelivery)
         {
-            OrderDTO order = GetSession();
+            var order = _httpContextManager.GetSessionOrder();
+
+            if (order is null)
+            {
+                return BadRequest();
+            }
 
             order.NoteForDelivery = noteForDelivery;
 
@@ -879,16 +924,6 @@ namespace LilsCareApp.Controllers
 ";
 
             return message;
-        }
-
-        private OrderDTO? GetSession()
-        {
-            return JsonConvert.DeserializeObject<OrderDTO>(HttpContext.Session.GetString("Order"));
-        }
-
-        private void SetSession(OrderDTO? order)
-        {
-            HttpContext.Session.SetString("Order", JsonConvert.SerializeObject(order));
         }
     }
 }

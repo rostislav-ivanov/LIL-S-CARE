@@ -5,12 +5,16 @@ namespace LilsCareApp.Core.Contracts
 {
     public interface IHttpContextManager
     {
-        GuestSession? GetSession();
-        void SetSession(GuestSession? session);
+        GuestSession? GetSessionGuest();
+        void SetSessionGuest(GuestSession? session);
 
         AddressOrderDTO? GetSessionAddress();
 
         void SetSessionAddress(AddressOrderDTO? address);
+
+        OrderDTO? GetSessionOrder();
+
+        void SetSessionOrder(OrderDTO? order);
 
         string GetLanguage();
     }

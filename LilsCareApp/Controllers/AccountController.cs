@@ -85,13 +85,13 @@ namespace LilsCareApp.Controllers
         }
 
         // Get all orders of the user and send to view
-        //public async Task<IActionResult> MyOrders()
-        //{
-        //    string userId = User.GetUserId();
-        //    IEnumerable<MyOrderDTO> myOrders = await _accountService.GetMyOrdersAsync(userId);
+        public async Task<IActionResult> MyOrders()
+        {
+            string userId = User.GetUserId();
+            IEnumerable<MyOrderDTO> myOrders = await _accountService.GetMyOrdersAsync(userId);
 
-        //    return View(myOrders);
-        //}
+            return View(myOrders);
+        }
 
         public async Task<IActionResult> MyWishes()
         {
@@ -99,6 +99,15 @@ namespace LilsCareApp.Controllers
             IEnumerable<ProductDTO> myWishes = await _productsService.GetMyWishesAsync(userId);
 
             return View(myWishes);
+        }
+
+        public async Task<IActionResult> AddRemoveWish(int productId)
+        {
+            string userId = User.GetUserId();
+
+            await _productsService.AddRemoveWishAsync(productId, userId);
+
+            return RedirectToAction(nameof(MyWishes));
         }
 
 
@@ -183,7 +192,7 @@ namespace LilsCareApp.Controllers
             if (deliveryMethodId == 1)
             {
                 address.ShippingProviders = await _accountService.GetShippingProvidersAsync();
-                address.IsShippingToOffice = true;
+                address.DeliveryMethodId = 1;
             }
 
             _httpContextManager.SetSessionAddress(address);

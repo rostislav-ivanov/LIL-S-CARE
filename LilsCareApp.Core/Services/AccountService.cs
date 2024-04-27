@@ -4,6 +4,7 @@ using LilsCareApp.Core.Models.Checkout;
 using LilsCareApp.Infrastructure.Data;
 using LilsCareApp.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using static LilsCareApp.Infrastructure.DataConstants.Language;
 
 namespace LilsCareApp.Core.Services
 {
@@ -78,49 +79,50 @@ namespace LilsCareApp.Core.Services
         }
 
         // Get all orders of the user
-        //public async Task<IEnumerable<MyOrderDTO>> GetMyOrdersAsync(string userId)
-        //{
-        //    var language = _httpContextManager.GetLanguage();
+        public async Task<IEnumerable<MyOrderDTO>> GetMyOrdersAsync(string userId)
+        {
+            var language = _httpContextManager.GetLanguage();
 
-        //    return await _context.Orders
-        //        .Where(o => o.AppUserId == userId)
-        //        .OrderByDescending(o => o.CreatedOn)
-        //        .Select(o => new MyOrderDTO
-        //        {
-        //            Id = o.Id,
-        //            CreatedOn = o.CreatedOn,
-        //            OrderNumber = o.OrderNumber,
-        //            StatusOrder = new Dictionary<string, string>
-        //            {
-        //                { Bulgarian, o.StatusOrder.Name.NameBG },
-        //                { Romanian, o.StatusOrder.Name.NameRO },
-        //                { English, o.StatusOrder.Name.NameEN }
-        //            }[language],
-        //            //Total = o.Total,
-        //            Products = o.ProductsOrders
-        //                .Select(op => new MyProductOrderDTO
-        //                {
-        //                    ProductId = op.ProductId,
-        //                    ProductName = new Dictionary<string, string>
-        //                    {
-        //                        { Bulgarian, op.Product.Name.NameBG },
-        //                        { Romanian, op.Product.Name.NameRO },
-        //                        { English, op.Product.Name.NameEN }
-        //                    }[language],
-        //                    ImagePath = op.ImagePath,
-        //                    Quantity = op.Quantity,
-        //                    Price = op.Price,
-        //                })
-        //                .ToList(),
-        //            DateShipping = o.DateShipping,
-        //            TrackingNumber = o.TrackingNumber,
-        //            ShippingPrice = o.ShippingPrice,
-        //            SubTotal = o.SubTotal,
-        //            Discount = o.Discount
-        //        })
-        //        .AsNoTracking()
-        //        .ToListAsync();
-        //}
+            return await _context.Orders
+                .Where(o => o.AppUserId == userId)
+                .OrderByDescending(o => o.CreatedOn)
+                .Select(o => new MyOrderDTO
+                {
+                    Id = o.Id,
+                    CreatedOn = o.CreatedOn,
+                    OrderNumber = o.OrderNumber,
+                    StatusOrder = new Dictionary<string, string>
+                    {
+                        { Bulgarian, o.StatusOrder.Name.NameBG },
+                        { Romanian, o.StatusOrder.Name.NameRO },
+                        { English, o.StatusOrder.Name.NameEN }
+                    }[language],
+                    Products = o.ProductsOrders
+                        .Select(op => new MyProductOrderDTO
+                        {
+                            ProductId = op.ProductId,
+                            ProductName = new Dictionary<string, string>
+                            {
+                                { Bulgarian, op.Product.Name.NameBG },
+                                { Romanian, op.Product.Name.NameRO },
+                                { English, op.Product.Name.NameEN }
+                            }[language],
+                            ImagePath = op.ImagePath,
+                            Quantity = op.Quantity,
+                            Price = op.Price,
+                        })
+                        .ToList(),
+                    DateShipping = o.DateShipping,
+                    TrackingNumber = o.TrackingNumber,
+                    Currency = o.Currency,
+                    Discount = o.Discount,
+                    SubTotal = o.SubTotal,
+                    ShippingPrice = o.ShippingPrice,
+                    Total = o.Total,
+                })
+                .AsNoTracking()
+                .ToListAsync();
+        }
 
 
         // Return all delivery addresses  of the user (to address and to office)
@@ -233,51 +235,6 @@ namespace LilsCareApp.Core.Services
                 .ToListAsync();
         }
 
-
-        // Add the office delivery address
-        //public async Task AddOfficeDeliveryAsync(string userId, OfficeDTO model)
-        //{
-        //    AddressDelivery addressDelivery = new()
-        //    {
-        //        FirstName = model.FirstName,
-        //        LastName = model.LastName,
-        //        PhoneNumber = model.PhoneNumber,
-        //        ShippingOfficeId = model.ShippingOfficeId,
-        //        AppUserId = userId,
-        //        IsShippingToOffice = true
-        //    };
-
-        //    await _context.AddressDeliveries.AddAsync(addressDelivery);
-
-        //    await _context.SaveChangesAsync();
-        //}
-
-        // Edit the office delivery address
-        // If the address has any orders,
-        // remain the address to the database.
-        // Create a new address with the edited data to user
-        // and remove the old address form the user
-        // else edit the address
-        //public async Task EditOfficeDeliveryAsync(string userId, OfficeDTO model)
-        //{
-        //    var address = await _context.AddressDeliveries.FirstOrDefaultAsync(ad => ad.Id == model.Id);
-
-        //    if (address == null)
-        //    {
-        //        return;
-        //    }
-
-        //    address.AppUser = null;
-        //    address.FirstName = model.FirstName;
-        //    address.LastName = model.LastName;
-        //    address.PhoneNumber = model.PhoneNumber;
-        //    address.ShippingOfficeId = model.ShippingOfficeId;
-        //    address.AppUserId = userId;
-        //    address.IsShippingToOffice = true;
-
-        //    await _context.SaveChangesAsync();
-        //}
-
         // Add the address delivery
         public async Task AddAddressDeliveryAsync(string userId, AddressOrderDTO address)
         {
@@ -298,7 +255,7 @@ namespace LilsCareApp.Core.Services
                 District = address.District,
                 Email = address.Email,
                 AppUserId = userId,
-                IsShippingToOffice = address.IsShippingToOffice,
+                IsShippingToOffice = address.DeliveryMethodId == 1,
                 ShippingOfficeId = address.ShippingOfficeId,
                 IsDefault = false,
                 IsDeleted = false,
@@ -334,7 +291,7 @@ namespace LilsCareApp.Core.Services
             address.District = model.District;
             address.Email = model.Email;
             address.AppUserId = userId;
-            address.IsShippingToOffice = model.IsShippingToOffice;
+            address.IsShippingToOffice = model.DeliveryMethodId == 1;
             address.ShippingOfficeId = model.ShippingOfficeId;
             address.IsDefault = false;
             address.IsDeleted = false;
@@ -359,7 +316,6 @@ namespace LilsCareApp.Core.Services
                     District = ad.District ?? string.Empty,
                     Country = ad.Country ?? string.Empty,
                     Email = ad.Email ?? string.Empty,
-                    IsShippingToOffice = ad.IsShippingToOffice,
                     ShippingOfficeId = ad.ShippingOfficeId,
                     ShippingOffice = ad.ShippingOffice != null ? new ShippingOfficeDTO()
                     {
@@ -378,7 +334,7 @@ namespace LilsCareApp.Core.Services
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
 
-            if (address != null && address.IsShippingToOffice)
+            if (address != null && address.DeliveryMethodId == 1)
             {
                 address.ShippingProviders = await GetShippingProvidersAsync();
                 address.ShippingProviderCities = await GetShippingProviderCitiesAsync(address.ShippingProviderId);
@@ -401,6 +357,14 @@ namespace LilsCareApp.Core.Services
             return await _context.AddressDeliveries
                 .Where(ad => ad.Id == addressId)
                 .Select(ad => ad.AppUserId)
+                .FirstOrDefaultAsync();
+        }
+
+        public Task<string?> GetPromoCodeOwnerId(int promoCodeId)
+        {
+            return _context.PromoCodes
+                .Where(pc => pc.Id == promoCodeId)
+                .Select(pc => pc.AppUserId)
                 .FirstOrDefaultAsync();
         }
     }

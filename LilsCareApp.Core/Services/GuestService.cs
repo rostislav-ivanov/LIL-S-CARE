@@ -27,7 +27,7 @@ namespace LilsCareApp.Core.Services
         // AddToCart method is used to add a product to the guest's bag.
         public void AddToCart(int productId, int quantity)
         {
-            GuestSession? session = _httpContextManager.GetSession();
+            GuestSession? session = _httpContextManager.GetSessionGuest();
             if (session == null)
             {
                 return;
@@ -47,13 +47,13 @@ namespace LilsCareApp.Core.Services
                 bag.Quantity += quantity;
             }
 
-            _httpContextManager.SetSession(session);
+            _httpContextManager.SetSessionGuest(session);
         }
 
         // DeleteProductFromCart method is used to delete a product from the guest's bag.
         public void DeleteProductFromCart(int id)
         {
-            GuestSession? session = _httpContextManager.GetSession();
+            GuestSession? session = _httpContextManager.GetSessionGuest();
 
             if (session == null)
             {
@@ -62,14 +62,14 @@ namespace LilsCareApp.Core.Services
 
             session.GuestBags.RemoveAll(b => b.ProductId == id);
 
-            _httpContextManager.SetSession(session);
+            _httpContextManager.SetSessionGuest(session);
         }
 
 
         // GetCountInBag method is used to get the total number of products in the guest's bag.
         public int GetCountInBag()
         {
-            GuestSession? session = _httpContextManager.GetSession();
+            GuestSession? session = _httpContextManager.GetSessionGuest();
 
             return session?.GuestBags.Sum(gb => gb.Quantity) ?? 0;
         }
@@ -78,7 +78,7 @@ namespace LilsCareApp.Core.Services
         // GetProductsInBagAsync method is used to get the products in the guest's bag.
         public async Task<IEnumerable<ProductsInBagDTO>> GetProductsInBagAsync()
         {
-            GuestSession? session = _httpContextManager.GetSession();
+            GuestSession? session = _httpContextManager.GetSessionGuest();
 
             if (session == null)
             {
@@ -129,11 +129,11 @@ namespace LilsCareApp.Core.Services
         // ClearBag method is used to remove all products form the guest's bag.
         public void ClearBag()
         {
-            GuestSession? session = _httpContextManager.GetSession();
+            GuestSession? session = _httpContextManager.GetSessionGuest();
 
             session?.GuestBags.Clear();
 
-            _httpContextManager.SetSession(session);
+            _httpContextManager.SetSessionGuest(session);
         }
 
 
@@ -163,15 +163,13 @@ namespace LilsCareApp.Core.Services
                 District = orderDTO.Address.District,
                 Country = orderDTO.Address.Country,
                 Email = orderDTO.Address.Email,
-                IsShippingToOffice = orderDTO.Address.IsShippingToOffice,
+                IsShippingToOffice = orderDTO.Address.DeliveryMethodId == 1,
                 ShippingOfficeId = orderDTO.Address.ShippingOfficeId,
                 ShippingProviderName = orderDTO.Address.ShippingOffice?.ShippingProviderName,
                 ShippingOfficeCity = orderDTO.Address.ShippingOffice?.City,
                 ShippingOfficeAddress = orderDTO.Address.ShippingOffice?.OfficeAddress,
-                Language = orderDTO.Language,
+                Currency = orderDTO.Language,
                 ProductsOrders = [],
-
-
             };
 
             // add products to order
@@ -212,7 +210,7 @@ namespace LilsCareApp.Core.Services
 
         public GuestSession GetSession()
         {
-            return _httpContextManager.GetSession();
+            return _httpContextManager.GetSessionGuest();
         }
     }
 }
