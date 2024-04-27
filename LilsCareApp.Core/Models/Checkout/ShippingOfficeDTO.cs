@@ -10,7 +10,7 @@ namespace LilsCareApp.Core.Models.Checkout
 
         public int ShippingProviderId { get; set; }
 
-        public string ShippingProviderName { get; set; } = null!;
+        public string ShippingProviderName { get; set; } = string.Empty;
 
         [Comment("City for Delivery")]
         [Required(ErrorMessage = RequiredField)]
@@ -20,7 +20,7 @@ namespace LilsCareApp.Core.Models.Checkout
         [Comment("Office Address for Delivery")]
         [Required(ErrorMessage = RequiredField)]
         [Display(Name = "адрес на офиса")]
-        public string OfficeAddress { get; set; } = null!;
+        public string OfficeAddress { get; set; } = string.Empty;
 
         public decimal Price { get; set; }
 

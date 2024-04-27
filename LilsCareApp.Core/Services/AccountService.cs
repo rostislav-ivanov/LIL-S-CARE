@@ -382,5 +382,13 @@ namespace LilsCareApp.Core.Services
 
             return addressDeliveryDTO;
         }
+
+        public async Task<string?> GetEmailUser(string userId)
+        {
+            return await _context.Users
+                .Where(u => u.Id == userId)
+                .Select(u => u.Email)
+                .FirstOrDefaultAsync();
+        }
     }
 }

@@ -34,11 +34,5 @@ namespace LilsCareApp.Infrastructure.Data.Models
 
         [Comment("Navigation Property to Order")]
         public IEnumerable<Order> Orders { get; set; } = [];
-
-
-
-
-
-
     }
 }

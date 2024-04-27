@@ -147,6 +147,11 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("Navigation property to ShippingOffice")]
         public ShippingOffice? ShippingOffice { get; set; }
 
+        public string? ShippingProviderName { get; set; }
+
+        public string? ShippingOfficeCity { get; set; }
+
+        public string? ShippingOfficeAddress { get; set; }
     }
 
 }

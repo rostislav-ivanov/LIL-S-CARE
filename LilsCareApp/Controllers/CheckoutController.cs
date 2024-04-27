@@ -298,12 +298,18 @@ namespace LilsCareApp.Controllers
             }
 
             OrderSummaryDTO orderSummary = await _checkoutService.OrderSummaryAsync(orderNumber);
-            if (User.GetUserEmail() != null)
+            var userId = User.GetUserId();
+            if (userId != null)
             {
-                string message = CreateOrderSummaryEmailMessage(orderSummary);
-                string subject = $"{_localizer["Thank you for shopping with us"]} (#{orderNumber})";
-                await _emailSender.SendEmailAsync(User.GetUserEmail(), subject, message);
+                var emailUser = await _accountService.GetEmailUser(userId);
+                if (emailUser != null)
+                {
+                    string message = CreateOrderSummaryEmailMessage(orderSummary);
+                    string subject = $"{_localizer["Thank you for shopping with us"]} (#{orderNumber})";
+                    await _emailSender.SendEmailAsync(emailUser, subject, message);
+                }
             }
+
 
             return View(orderSummary);
         }

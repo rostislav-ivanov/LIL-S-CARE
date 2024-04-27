@@ -20,5 +20,6 @@ namespace LilsCareApp.Core.Contracts
         Task AddAddressDeliveryAsync(string userId, AddressDTO address);
         Task EditAddressDeliveryAsync(string userId, AddressDTO model);
         Task<DeliveryAddressesDTO> GetAddressDeliveryAsync(int addressId);
+        Task<string?> GetEmailUser(string userId);
     }
 }

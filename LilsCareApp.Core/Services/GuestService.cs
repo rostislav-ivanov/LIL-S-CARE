@@ -164,8 +164,10 @@ namespace LilsCareApp.Core.Services
                 Country = orderDTO.Address.Country,
                 Email = orderDTO.Address.Email,
                 IsShippingToOffice = orderDTO.Address.IsShippingToOffice,
-                ShippingOfficeId = orderDTO.Address.ShippingOfficeId > 0 ? orderDTO.Address.ShippingOfficeId : null,
-                ExchangeRate = orderDTO.ExchangeRate,
+                ShippingOfficeId = orderDTO.Address.ShippingOfficeId,
+                ShippingProviderName = orderDTO.Address.ShippingOffice?.ShippingProviderName,
+                ShippingOfficeCity = orderDTO.Address.ShippingOffice?.City,
+                ShippingOfficeAddress = orderDTO.Address.ShippingOffice?.OfficeAddress,
                 Language = orderDTO.Language,
                 ProductsOrders = [],
 

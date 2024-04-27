@@ -210,7 +210,10 @@ namespace LilsCareApp.Core.Services
                 Country = orderDTO.Address.Country,
                 Email = orderDTO.Address.Email,
                 IsShippingToOffice = orderDTO.Address.IsShippingToOffice,
-                ShippingOfficeId = orderDTO.Address.ShippingOfficeId > 0 ? orderDTO.Address.ShippingOfficeId : null,
+                ShippingOfficeId = orderDTO.Address.ShippingOfficeId,
+                ShippingProviderName = orderDTO.Address.ShippingOffice?.ShippingProviderName,
+                ShippingOfficeCity = orderDTO.Address.ShippingOffice?.City,
+                ShippingOfficeAddress = orderDTO.Address.ShippingOffice?.OfficeAddress,
                 ExchangeRate = orderDTO.ExchangeRate,
                 Language = orderDTO.Language,
                 ProductsOrders = [],
@@ -247,6 +250,17 @@ namespace LilsCareApp.Core.Services
 
                     if (address != null && address.AppUserId == userId)
                     {
+                        address.FirstName = orderDTO.Address.FirstName;
+                        address.LastName = orderDTO.Address.LastName;
+                        address.PhoneNumber = orderDTO.Address.PhoneNumber;
+                        address.PostCode = orderDTO.Address.PostCode;
+                        address.Address = orderDTO.Address.Address;
+                        address.Town = orderDTO.Address.Town;
+                        address.District = orderDTO.Address.District;
+                        address.Country = orderDTO.Address.Country;
+                        address.Email = orderDTO.Address.Email;
+                        address.IsShippingToOffice = orderDTO.Address.IsShippingToOffice;
+                        address.ShippingOfficeId = orderDTO.Address.ShippingOfficeId;
                         address.IsDefault = true;
                     }
                 }
@@ -333,6 +347,9 @@ namespace LilsCareApp.Core.Services
                     District = o.District,
                     Country = o.Country,
                     IsShippingToOffice = o.IsShippingToOffice,
+                    ShippingProviderName = o.ShippingProviderName,
+                    ShippingOfficeCity = o.ShippingOfficeCity,
+                    ShippingOfficeAddress = o.ShippingOfficeAddress,
                     PaymentMethod = new Dictionary<string, string>
                     {
                         { Bulgarian, o.PaymentMethod.Name.NameBG },
@@ -367,20 +384,6 @@ namespace LilsCareApp.Core.Services
                 })
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
-
-            if (orderSummary.IsShippingToOffice)
-            {
-                var shippingOffice = await _context.Orders
-                    .Where(o => o.OrderNumber == orderNumber)
-                    .Select(o => o.ShippingOffice)
-                    .FirstOrDefaultAsync();
-                if (shippingOffice != null)
-                {
-                    orderSummary.ShippingOfficeCity = shippingOffice.City;
-                    orderSummary.ShippingOfficeAddress = shippingOffice.OfficeAddress;
-                    orderSummary.ShippingProviderName = shippingOffice.ShippingProvider.Name;
-                }
-            }
 
             return orderSummary;
         }
