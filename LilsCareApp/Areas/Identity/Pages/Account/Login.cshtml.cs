@@ -22,7 +22,11 @@ namespace LilsCareApp.Areas.Identity.Pages.Account
         private readonly IProductsService _productService;
         private readonly IGuestService _guestService;
 
-        public LoginModel(SignInManager<AppUser> signInManager, ILogger<LoginModel> logger, IProductsService productsService, IGuestService guestService)
+        public LoginModel(
+            SignInManager<AppUser> signInManager,
+            ILogger<LoginModel> logger,
+            IProductsService productsService,
+            IGuestService guestService)
         {
             _signInManager = signInManager;
             _logger = logger;
@@ -81,7 +85,7 @@ namespace LilsCareApp.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Запази?")]
             public bool RememberMe { get; set; }
         }
 

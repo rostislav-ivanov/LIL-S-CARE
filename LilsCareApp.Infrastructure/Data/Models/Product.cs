@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static LilsCareApp.Infrastructure.DataConstants.Product;
 
 namespace LilsCareApp.Infrastructure.Data.Models
 {
@@ -12,9 +11,11 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Key]
         public int Id { get; set; }
 
-        [Comment("The product's name")]
-        [MaxLength(NameMaxLength)]
-        public required string Name { get; set; }
+        [Comment("The product's name Id")]
+        public int NameId { get; set; }
+
+        [ForeignKey(nameof(NameId))]
+        public ProductName Name { get; set; } = null!;
 
         [Comment("The product's price")]
         [Column(TypeName = "decimal(18,2)")]
@@ -23,9 +24,11 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("The product's quantity")]
         public int Quantity { get; set; }
 
-        [Comment("The optional property of product")]
-        [MaxLength(OptionalMaxLength)]
-        public required string Optional { get; set; }
+        [Comment("The product's optional Id")]
+        public int OptionalId { get; set; }
+
+        [ForeignKey(nameof(OptionalId))]
+        public ProductOptional Optional { get; set; } = null!;
 
         [Comment("Sections keeping descriptions of product")]
         public List<Section> Sections { get; set; } = [];

@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="100% NATURAL SKIN CARE" xml:space="preserve">
+    <value>100% НАТУРАЛНА ГРИЖА ЗА КОЖАТА</value>
+  </data>
+  <data name="ALUMINUM AND GLASS. AND THE CARDBOARD BOXES AND THE FILLING ARE 100% RECYCLED PRODUCT FROM BULGARIA" xml:space="preserve">
+    <value>АЛУМИНИЕВИ И СТЪКЛЕНИ. А КАРТОНЕНИТЕ КУТИЙКИ И ПЪЛНЕЖА СА 100%
+РЕЦИКЛИРАН ПРОДУКТ ОТ БЪЛГАРИЯ</value>
+  </data>
+  <data name="AND FOR NATURE" xml:space="preserve">
+    <value>И ЗА ПРИРОДАТА</value>
+  </data>
+  <data name="AND FOR THE SKIN" xml:space="preserve">
+    <value>И ЗА КОЖАТА</value>
+  </data>
+  <data name="Ask us about the products, personal suggestions or share an opinion." xml:space="preserve">
+    <value>Попитай ни за продуктите, персонални предложения или споделете мнение.</value>
+  </data>
+  <data name="Confirm agreement with the privacy policy." xml:space="preserve">
+    <value>Потвърдете съгласието с политиката за поверителност.</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Емайл</value>
+  </data>
+  <data name="First Name" xml:space="preserve">
+    <value>Име</value>
+  </data>
+  <data name="FOCUS ON YOU" xml:space="preserve">
+    <value>ФОКУС ВЪРХУ ТЕБ</value>
+  </data>
+  <data name="FOR US" xml:space="preserve">
+    <value>ЗА НАС</value>
+  </data>
+  <data name="GENTLE FORMULAS" xml:space="preserve">
+    <value>НЕЖНИ ФОРМУЛИ</value>
+  </data>
+  <data name="HANDMADE" xml:space="preserve">
+    <value>РЪЧНО ИЗРАБОТЕНА</value>
+  </data>
+  <data name="Handmade 100% natural skin care with ingredients from" xml:space="preserve">
+    <value>Ръчно изработена 100% натурална грижа за кожата със съставки от
+България и някои с био произход. Използваме еко съобразени
+опаковки като стъклени бутилки и алуминиеви кутийки. А картонените
+кутийки за изпращане и хартияния пълнеж са изцяло рециклирани
+продукти от България.</value>
+  </data>
+  <data name="I agree" xml:space="preserve">
+    <value>Съгласенсен съм</value>
+  </data>
+  <data name="INGREDIENTS FROM BULGARIA AND BIO ORIGIN. ALCOHOL-FREE. CREATED YES NOURISH, HYDRATE AND PROTECT" xml:space="preserve">
+    <value>СЪСТАВКИ ОТ БЪЛГАРИЯ И С БИО ПРОЗХОД. БЕЗ АЛКОХОЛ. СЪЗДАДЕНИ ДА
+                        ПОДХРАНВАТ, ХИДРАТИРАТ И ЗАЩИТАВАТ</value>
+  </data>
+  <data name="It has a pleasant action and a relaxing aroma." xml:space="preserve">
+    <value>Има приятно действие и релаксиращ аромат.</value>
+  </data>
+  <data name="Last Name" xml:space="preserve">
+    <value>Фамилия</value>
+  </data>
+  <data name="LIL'S CARE is handmade natural skin care. Homemade with Bulgarian and organic ingredients. With gentle formulas and with care for a soft feel." xml:space="preserve">
+    <value>LIL'S CARE e ръчно изработена натурална грижа за кожата. Домашно приготвена с български съставки и такива с био произход. С нежни формули и със старание за меко усещане.</value>
+  </data>
+  <data name="MOISTURIZING LOTION WITH CALENDULUS" xml:space="preserve">
+    <value>ХИДРАТИРАЩ ЛОСИОН С НЕВЕН</value>
+  </data>
+  <data name="OUR FAVORITES" xml:space="preserve">
+    <value>ЛЮБИМИТЕ НИ</value>
+  </data>
+  <data name="OUR PACKAGING" xml:space="preserve">
+    <value>ОПАКОВКИТЕ НИ</value>
+  </data>
+  <data name="Section1Description" xml:space="preserve">
+    <value>Постоянно обновявам и подобрявам продуктите. За това не е изненада,
+ако вече не са налични същите или имат нов, малко по-различен етикет и
+състав.</value>
+  </data>
+  <data name="SEE HERE" xml:space="preserve">
+    <value>ВИЖ ТУК</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Изпрати</value>
+  </data>
+  <data name="SERUM OIL WITH ROSE BORN AND JOJOBA" xml:space="preserve">
+    <value>СЕРУМ МАСЛО С ШИПКА И ЖОЖОБА</value>
+  </data>
+  <data name="Soft and pleasant feeling" xml:space="preserve">
+    <value>Меко и приятно усещане. Семпли, нежни и ефективни формули, които
+хидратират, подрхранват и защитават. Не съдържат изсушаващ
+алкохол, изкуствени оцветители, избелващи или други потенциално
+агресивни съставки. Кожата е нашата бариера от външната среда и за
+това е важно и ние да я пазим и да се грижим за нея</value>
+  </data>
+  <data name="TAKE A LOOK" xml:space="preserve">
+    <value>РАЗГЛЕДАЙ</value>
+  </data>
+  <data name="the conditions" xml:space="preserve">
+    <value>условията</value>
+  </data>
+  <data name="The lotion is suitable for all skin types" xml:space="preserve">
+    <value>Лосионът е подходящ за всеки тип кожа, включително и чувствителна. Деликатен, попива бързо и не оставя мазни следи. Има успокояващо действие благодарение на комбинацията от съставки като екстракт от невен, масло от кайсиви ядки и витамин Е. Други важни съставки са хиалуроновата киселина, която помага за худратацията и ниацинамид (витамин B3), които има антиоксиднтно и балнсиращо действие.</value>
+  </data>
+  <data name="We send an email 1 to 2 times a month." xml:space="preserve">
+    <value>Изпращаме имейл 1 до 2 пъти месечно.</value>
+  </data>
+  <data name="With Bulgarian organic rosehip oil" xml:space="preserve">
+    <value>С българско био масло от шипка, био масла от ягодови семки, арган и жожоба. Съдържа естествени серамиди и има антиоксидантен ефект с витамин Е, който се бори със свобдните радикали и увреждането на кожата от околната среда. Серума е некомедогенен и идеално "заключва" хидратацията и защитава кожата.</value>
+  </data>
+  <data name="WITH LOVE" xml:space="preserve">
+    <value>С ЛЮБОВ</value>
+  </data>
+  <data name="Write a message..." xml:space="preserve">
+    <value>Напишете съобщение...</value>
+  </data>
+  <data name="Your experience will always be our first priority - to deliver" xml:space="preserve">
+    <value>Твоето изживяване винаги ще е първия ни приоритет - да доставим
+висококачествен продукт подходящ за теб.</value>
+  </data>
+</root>

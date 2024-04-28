@@ -46,17 +46,17 @@ namespace LilsCareApp.Core.Services
                     AppUserId = o.AppUserId,
                     DateShipping = o.DateShipping,
                     TrackingNumber = o.TrackingNumber,
-                    PaymentMethod = o.PaymentMethod.Type,
+                    PaymentMethod = o.PaymentMethod.Name.NameBG,
                     IsPaid = o.IsPaid,
                     ProductsOrders = o.ProductsOrders
                         .Select(po => new ProductsOrdersDTO
                         {
                             Id = po.Product.Id,
-                            Name = po.Product.Name,
+                            Name = po.Product.Name.NameBG,
                             Quantity = po.Quantity,
                             Price = po.Price,
                             ImageUrl = po.ImagePath,
-                            Optional = po.Product.Optional
+                            Optional = po.Product.Optional.OptionalBG,
                         })
                         .ToList(),
                     ShippingPrice = o.ShippingPrice,
@@ -74,7 +74,7 @@ namespace LilsCareApp.Core.Services
                 .Select(p => new ProductsNamesDTO
                 {
                     Id = p.Id,
-                    Name = p.Name
+                    Name = p.Name.NameBG
                 })
                 .AsNoTracking()
                 .ToListAsync();

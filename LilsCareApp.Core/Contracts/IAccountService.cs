@@ -15,10 +15,11 @@ namespace LilsCareApp.Core.Contracts
         Task<IEnumerable<ShippingProviderDTO>> GetShippingProvidersAsync();
         Task<IEnumerable<string>> GetShippingProviderCitiesAsync(int shippingProviderId);
         Task<IEnumerable<ShippingOfficeDTO>> GetShippingOfficesAsync(int? shippingProviderId, string city);
-        Task AddOfficeDeliveryAsync(string userId, OfficeDTO model);
-        Task EditOfficeDeliveryAsync(string userId, OfficeDTO model);
-        Task AddAddressDeliveryAsync(string userId, AddressDTO address);
-        Task EditAddressDeliveryAsync(string userId, AddressDTO model);
-        Task<DeliveryAddressesDTO> GetAddressDeliveryAsync(int addressId);
+        Task AddAddressDeliveryAsync(string userId, AddressOrderDTO address);
+        Task EditAddressDeliveryAsync(string userId, AddressOrderDTO model);
+        Task<AddressOrderDTO> GetAddressDeliveryAsync(int addressId);
+        Task<string?> GetEmailUser(string userId);
+        Task<string?> GetAddressOwnerId(int addressId);
+        Task<string?> GetPromoCodeOwnerId(int promoCodeId);
     }
 }

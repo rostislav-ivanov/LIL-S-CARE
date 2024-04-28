@@ -1,18 +1,20 @@
-﻿@model AddressDTO
+﻿@inject IViewLocalizer Localizer
+@model AddressOrderDTO
 
 <!-- New Delivery Address Start -->
 <form asp-action="AddAddressDelivery" method="post">
     <input asp-for="@Model.Id" value="@Model.Id" hidden />
+    <input asp-for="@Model.DeliveryMethodId" value="@Model.DeliveryMethodId" hidden />
     <div class="row my-2">
         <div class="col-6">
-            <label asp-for="@Model.FirstName" class="form-label small">Име*</label>
+            <label asp-for="@Model.FirstName" class="form-label small">@Localizer["First Name"]*</label>
             <input asp-for="@Model.FirstName"
                    type="text"
                    class="form-control" />
             <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
         </div>
         <div class="col-6">
-            <label asp-for="@Model.LastName" class="form-label small">Фамилия*</label>
+            <label asp-for="@Model.LastName" class="form-label small">@Localizer["Last Name"]*</label>
             <input asp-for="@Model.LastName"
                    type="text"
                    class="form-control" />
@@ -21,21 +23,21 @@
     </div>
     <div class="row my-2">
         <div class="col-4">
-            <label asp-for="@Model.Country" class="form-label small">Държава*</label>
+            <label asp-for="@Model.Country" class="form-label small">@Localizer["Country"]*</label>
             <select asp-for="@Model.Country" class="form-select">
                 <option>България</option>
             </select>
             <span asp-validation-for="@Model.Country" class="text-danger"></span>
         </div>
         <div class="col-3">
-            <label asp-for="@Model.PostCode" class="form-label small">Пощенски код*</label>
+            <label asp-for="@Model.PostCode" class="form-label small">@Localizer["ZIP Code"]*</label>
             <input asp-for="@Model.PostCode"
                    type="text"
                    class="form-control" />
             <span asp-validation-for="@Model.PostCode" class="text-danger"></span>
         </div>
         <div class="col-5">
-            <label asp-for="@Model.Town" class="form-label small">Град*</label>
+            <label asp-for="@Model.Town" class="form-label small">@Localizer["City"]*</label>
             <input asp-for="@Model.Town"
                    type="text"
                    class="form-control" />
@@ -44,14 +46,14 @@
     </div>
     <div class="row my-2>">
         <div class="col-8">
-            <label asp-for="@Model.Address" class="form-label small">Адрес*</label>
+            <label asp-for="@Model.Address" class="form-label small">@Localizer["Address"]*</label>
             <input asp-for="@Model.Address"
                    type="text"
                    class="form-control" />
             <span asp-validation-for="@Model.Address" class="text-danger"></span>
         </div>
         <div class="col-4">
-            <label asp-for="@Model.District" class="form-label small">Окръг</label>
+            <label asp-for="@Model.District" class="form-label small">@Localizer["District"]</label>
             <input asp-for="@Model.District"
                    type="text"
                    class="form-control" />
@@ -59,20 +61,20 @@
         </div>
     </div>
     <div class="my-2">
-        <label asp-for="@Model.PhoneNumber" class="form-label small">Телефонен номер* - използваме го само ако има проблем с доставката.</label>
+        <label asp-for="@Model.PhoneNumber" class="form-label small">@Localizer["Phone number* - we only use it if there is a problem with the delivery."]</label>
         <input asp-for="@Model.PhoneNumber"
                class="form-control" />
         <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
     </div>
     <div class="my-2">
-        <label asp-for="@Model.Email" class="form-label small">Имейл за потвърждение на поръчката</label>
+        <label asp-for="@Model.Email" class="form-label small">@Localizer["Order confirmation email"]</label>
         <input asp-for="@Model.Email"
                class="form-control" />
         <span asp-validation-for="@Model.Email" class="text-danger"></span>
     </div>
     <div class="d-flex justify-content-end">
         <!-- Save Changes Start -->
-        <button type="submit" class="btn btn-sm ms-3">Запази</button>
+        <button type="submit" class="btn btn-sm ms-3">@Localizer["Save"]</button>
         <!-- Save Changes End -->
     </div>
 </form>

@@ -1,6 +1,7 @@
-﻿@model IEnumerable<DeliveryAddressDTO>
+﻿@inject IViewLocalizer Localizer
+@model IEnumerable<DeliveryAddressDTO>
 @{
-    ViewData["Title"] = "Адреси";
+    ViewData["Title"] = @Localizer["Addresses"];
 }
 
 <div class="d-flex justify-content-center">
@@ -9,8 +10,8 @@
     <!-- Menu My Account  End -->
     <!-- My Addresses Start-->
     <div class="border rounded p-2 w-50" style="margin: 50px 100px 20px 20px">
-        <h5 class="my-4">Моите адреси</h5>
-        <p>Добави и управлявай адресите, които ползваш често</p>
+        <h5 class="my-4">@Localizer["My addresses"]</h5>
+        <p>@Localizer["Add and manage the addresses you use often"]</p>
         <hr />
         @foreach (var address in Model)
         {
@@ -18,11 +19,11 @@
             {
                 <!-- Office Start -->
                 <div class="row">
-                    <h5>Доставка до куриерски офис</h5>
-                    <span>Куриер: @(address.ShippingProvider)</span>
-                    <span>Офис: @address.OfficeCity, @address.OfficeAddress</span>
-                    <span>Получател: @address.FirstName @address.LastName</span>
-                    <span>Телефон: @address.PhoneNumber</span>
+                    <h5>@Localizer["Delivery to a courier office"]</h5>
+                    <span>@Localizer["Courier"]: @(address.ShippingProvider)</span>
+                    <span>@Localizer["Office"]: @address.OfficeCity, @address.OfficeAddress</span>
+                    <span>@Localizer["Recipient"]: @address.FirstName @address.LastName</span>
+                    <span>@Localizer["Phone Number"]: @address.PhoneNumber</span>
                 </div>
                 <!-- Office Start -->
             }
@@ -30,12 +31,12 @@
             {
                 <!-- Address Start -->
                 <div class="row">
-                    <h5>Доставка до адрес</h5>
-                    <span>Адрес:</span>
+                    <h5>@Localizer["Delivery to address"]</h5>
+                    <span>@Localizer["Address"]:</span>
                     <span class="ms-5">@address.Country, @address.District</span>
                     <span class ="ms-5">@address.PostCode, @address.Town</span>
                     <span class="ms-5">@address.Address</span>
-                    <span>Получател:</span>
+                    <span>@Localizer["Recipient"]:</span>
                     <span class="ms-5">@address.FirstName @address.LastName</span>
                     <span class="ms-5">@address.PhoneNumber</span>
                     <span class="ms-5">@address.Email</span>
@@ -44,15 +45,15 @@
             }
             <div class="d-flex justify-content-start my-3">
                 <a asp-controller="Account" asp-action="EditAddress" asp-route-addressId="@address.AddressId" class="btn btn-sm">
-                    Редактирай<i class="fa-solid fa-user-pen ms-2"></i>
+                    @Localizer["Edit"]<i class="fa-solid fa-user-pen ms-2"></i>
                 </a>
                 <a asp-controller="Account" asp-action="RemoveAddress" asp-route-addressId="@address.AddressId" class="btn btn-sm ms-3">
-                    Изтрий<i class="fa fa-trash-can ms-2"></i>
+                    @Localizer["Delete"]<i class="fa fa-trash-can ms-2"></i>
                 </a>
                 @if (address.IsDefault)
                 {
                     <div class="ms-5">
-                        Адрес по подразбиране
+                        @Localizer["Default address"]
                         <i class="fa fa-check ms-2"></i>
                     </div>
                 }
@@ -60,12 +61,12 @@
             @if (!address.IsDefault)
             {
                 <a asp-controller="Account" asp-action="SetDefaultAddress" asp-route-addressId="@address.AddressId" style="color: rgb(var(--app-btn-bg))">
-                    Направете това моя адрес по подразбиране
+                    @Localizer["Make this my default address"]
                 </a>
             }
             <hr />
         }
-        <a asp-controller="Account" asp-action="AddAddress" class="btn btn-sm">Добави адрес</a>
+        <a asp-controller="Account" asp-action="AddAddress" class="btn btn-sm">@Localizer["Add an address"]</a>
     </div>
     <!--My Addresses End -->
 </div>

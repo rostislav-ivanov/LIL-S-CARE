@@ -11,7 +11,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
             new PromoCode
             {
                 Id = 1,
-                Code = "-10 % за регистрация",
+                CodeId = 1,
                 Discount = 0.1m,
                 ExpirationDate = DateTime.UtcNow.AddMonths(12),
                 AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef"
@@ -19,7 +19,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
             new PromoCode
             {
                 Id = 2,
-                Code = "-20 % отстъпка",
+                CodeId = 2,
                 Discount = 0.2m,
                 ExpirationDate = DateTime.UtcNow.AddMonths(12),
                 AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef"

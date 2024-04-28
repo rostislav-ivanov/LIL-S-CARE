@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static LilsCareApp.Infrastructure.DataConstants.Section;
 
 namespace LilsCareApp.Infrastructure.Data.Models
 {
@@ -12,15 +11,17 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Key]
         public int Id { get; set; }
 
-        [Comment("The section's title")]
-        [Required]
-        [MaxLength(TitleMaxLength)]
-        public required string Title { get; set; }
+        [Comment("The section's title Id")]
+        public int TitleId { get; set; }
 
-        [Comment("The section's description")]
-        [Required]
-        [MaxLength(DescriptionMaxLength)]
-        public required string Description { get; set; }
+        [ForeignKey(nameof(TitleId))]
+        public SectionTitle Title { get; set; } = null!;
+
+        [Comment("The section's description Id")]
+        public int DescriptionId { get; set; }
+
+        [ForeignKey(nameof(DescriptionId))]
+        public SectionDescription Description { get; set; } = null!;
 
         [Comment("The section's order in page")]
         public int SectionOrder { get; set; }

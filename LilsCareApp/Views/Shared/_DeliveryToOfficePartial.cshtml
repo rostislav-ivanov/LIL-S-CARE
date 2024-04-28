@@ -1,13 +1,22 @@
-﻿@model OfficeDTO
+﻿@inject IViewLocalizer Localizer
+@model AddressOrderDTO
 
 <!-- New Delivery Office Start Start -->
 <form asp-action="AddOfficeDelivery" method="post">
     <div class="d-flex justify-content-between align-items-center">
         <!-- Select Shipping Provider Start -->
         <div class="col-4">
-            <h5>Куриер</h5>
+            <h5>@Localizer["Courier"]</h5>
             <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown">
-                @(Model.Provider() ?? "Куриер...")
+                @{var providerName = @Model.ShippingProviders.FirstOrDefault(p => p.Id == Model.ShippingProviderId)?.Name; }
+                @if (!string.IsNullOrEmpty(providerName))
+                {
+                    @providerName
+                }
+                else
+                {
+                    <span class="text-danger">@Localizer["Courier..."]</span>
+                }
             </a>
             <ul class="dropdown-menu">
                 <li>
@@ -23,55 +32,77 @@
         <!-- Select Shipping Provider End -->
         <!-- Select Shipping City Start -->
         <div class="col-4">
-            <h5>Населено място</h5>
-            <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown">
-                @(Model.CityName ?? "Населено място...")
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                    @foreach (var city in Model.ShippingProviderCities)
+            @if (!string.IsNullOrEmpty(providerName))
+            {
+                <h5>@Localizer["City"]</h5>
+                <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown">
+                    @if (!string.IsNullOrEmpty(Model.ShippingProviderCity))
                     {
-                        <a asp-action="SelectShippingCity" asp-route-city="@city" class="dropdown-item">
-                            @city
-                        </a>
+                        @Model.ShippingProviderCity
                     }
-                </li>
-            </ul>
+                    else
+                    {
+                        <span class="text-danger">@Localizer["City..."]</span>
+                    }
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        @foreach (var city in Model.ShippingProviderCities)
+                        {
+                            <a asp-action="SelectShippingCity" asp-route-city="@city" class="dropdown-item">
+                                @city
+                            </a>
+                        }
+                    </li>
+                </ul>
+            }
         </div>
         <!-- Select Shipping City End -->
         <!-- Select Shipping Office Start -->
         <div class="col-4">
-            <h5>Офис на куриер</h5>
-            <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown">
-                @(Model.OfficeAddress() ?? "Офис на куриер...")
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                    @foreach (var office in Model.ShippingOffices)
+            @if (!string.IsNullOrEmpty(Model.ShippingProviderCity))
+            {
+                <h5>@Localizer["Courier office"]</h5>
+                <a class="nav-link dropdown-toggle fs-6" href="#" role="button" data-bs-toggle="dropdown">
+                    @{var officeAddress = Model.ShippingOffices.FirstOrDefault(so => so.Id == Model.ShippingOfficeId)?.OfficeAddress;}
+                    @if (!string.IsNullOrEmpty(officeAddress))
                     {
-                        <a asp-action="SelectShippingOffice" asp-route-officeId="@office.Id" class="dropdown-item">
-                            @office.OfficeAddress
-                        </a>
+                        @officeAddress
                     }
-                </li>
-            </ul>
+                    else
+                    {
+
+                        <span class="text-danger">@Localizer["Courier office..."]</span>
+                    }
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        @foreach (var office in Model.ShippingOffices)
+                        {
+                            <a asp-action="SelectShippingOffice" asp-route-officeId="@office.Id" class="dropdown-item">
+                                @office.OfficeAddress
+                            </a>
+                        }
+                    </li>
+                </ul>
+            }
         </div>
         <!-- Select Office City End -->
     </div>
     <hr />
     <!-- Input Recipient Data Start-->
-    @if (Model.IsSelectedOffice())
+    @if (Model.ShippingOfficeId != null)
     {
         <div class="row my-2">
             <div class="col-6">
-                <label asp-for="@Model.FirstName" class="form-label small">Име*</label>
+                <label asp-for="@Model.FirstName" class="form-label small">@Localizer["First Name"]*</label>
                 <input asp-for="@Model.FirstName"
                        type="text"
                        class="form-control" />
                 <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
             </div>
             <div class="col-6">
-                <label asp-for="@Model.LastName" class="form-label small">Фамилия*</label>
+                <label asp-for="@Model.LastName" class="form-label small">@Localizer["Last Name"]*</label>
                 <input asp-for="@Model.LastName"
                        type="text"
                        class="form-control" />
@@ -79,14 +110,14 @@
             </div>
         </div>
         <div class="my-2">
-            <label asp-for="@Model.PhoneNumber" class="form-label small">Телефонен номер*</label>
+            <label asp-for="@Model.PhoneNumber" class="form-label small">@Localizer["Phone Number"]*</label>
             <input asp-for="@Model.PhoneNumber"
                    class="form-control" />
             <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
         </div>
         <div class="d-flex justify-content-end">
             <!-- Save Changes Start -->
-            <button type="submit" class="btn btn-sm ms-3">Запази</button>
+            <button type="submit" class="btn btn-sm ms-3">@Localizer["Save"]</button>
             <!-- Save Changes End -->
         </div>
     }

@@ -1,8 +1,8 @@
 ﻿using LilsCareApp.Core.Contracts;
 using LilsCareApp.Core.Models.Account;
+using LilsCareApp.Core.Models.Checkout;
 using LilsCareApp.Core.Models.Products;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System.Security.Claims;
 
 namespace LilsCareApp.Controllers
@@ -12,13 +12,18 @@ namespace LilsCareApp.Controllers
         private readonly IAccountService _accountService;
         private readonly IProductsService _productsService;
         private readonly ILogger<AccountController> _logger;
+        private readonly IHttpContextManager _httpContextManager;
 
-        public AccountController(IAccountService accountService, IProductsService productsService, ILogger<AccountController> logger)
+        public AccountController(
+            IAccountService accountService,
+            IProductsService productsService,
+            ILogger<AccountController> logger,
+            IHttpContextManager httpContextManager)
         {
             _accountService = accountService;
             _productsService = productsService;
             _logger = logger;
-
+            _httpContextManager = httpContextManager;
         }
 
         // Get the user account details and send to view
@@ -96,27 +101,14 @@ namespace LilsCareApp.Controllers
             return View(myWishes);
         }
 
-        public async Task<IActionResult> AddToCart(int productId)
-        {
-
-            string userId = User.GetUserId();
-
-            await _productsService.AddToCartAsync(productId, userId, 1);
-
-            TempData["ShowBag"] = "show";
-
-            return RedirectToAction(nameof(MyWishes), "Account");
-        }
-
         public async Task<IActionResult> AddRemoveWish(int productId)
         {
             string userId = User.GetUserId();
 
             await _productsService.AddRemoveWishAsync(productId, userId);
 
-            return RedirectToAction(nameof(MyWishes), "Account");
+            return RedirectToAction(nameof(MyWishes));
         }
-
 
 
         // Get all delivery addresses  of the user and send to view to be edited or deleted or set as default
@@ -132,7 +124,9 @@ namespace LilsCareApp.Controllers
         // Delete the delivery address
         public async Task<IActionResult> RemoveAddress(int addressId)
         {
-            if (addressId == 0)
+            var userId = User.GetUserId();
+            var ownerId = await _accountService.GetAddressOwnerId(addressId);
+            if (ownerId != userId)
             {
                 return BadRequest();
             }
@@ -144,11 +138,18 @@ namespace LilsCareApp.Controllers
         // Set the default delivery address
         public async Task<IActionResult> SetDefaultAddress(int addressId)
         {
+            var userId = User.GetUserId();
+            var ownerId = await _accountService.GetAddressOwnerId(addressId);
+            if (ownerId != userId)
+            {
+                return BadRequest();
+            }
+
             if (addressId == 0)
             {
                 return BadRequest();
             }
-            string userId = User.GetUserId();
+
             await _accountService.SetDefaultAddressAsync(userId, addressId);
 
             return RedirectToAction(nameof(MyAddresses));
@@ -158,9 +159,9 @@ namespace LilsCareApp.Controllers
         // Create a new delivery address and send to view to be filled
         public IActionResult AddAddress()
         {
-            DeliveryAddressesDTO model = new();
+            AddressOrderDTO model = new();
 
-            HttpContext.Session.SetString("AddressDelivery", JsonConvert.SerializeObject(model));
+            _httpContextManager.SetSessionAddress(model);
 
             return View("AddEditAddress", model);
         }
@@ -168,115 +169,131 @@ namespace LilsCareApp.Controllers
         // Get an existing delivery address and send to view to be edited
         public async Task<IActionResult> EditAddress(int addressId)
         {
-            if (addressId == 0)
+            var userId = User.GetUserId();
+            var ownerId = await _accountService.GetAddressOwnerId(addressId);
+            if (userId != ownerId)
             {
                 return BadRequest();
             }
 
-            DeliveryAddressesDTO model = await _accountService.GetAddressDeliveryAsync(addressId);
+            AddressOrderDTO model = await _accountService.GetAddressDeliveryAsync(addressId);
 
-            HttpContext.Session.SetString("AddressDelivery", JsonConvert.SerializeObject(model));
+            _httpContextManager.SetSessionAddress(model);
 
             return View("AddEditAddress", model);
         }
 
 
-        // Select the delivery type of address (office or address)
-        public async Task<IActionResult> SelectDeliveryType(bool isShippingToOffice)
+        public async Task<IActionResult> SelectDeliveryMethod(int deliveryMethodId)
         {
-            DeliveryAddressesDTO model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(HttpContext.Session.GetString("AddressDelivery"));
-            if (model == null)
+            AddressOrderDTO address = _httpContextManager.GetSessionAddress();
+            address.DeliveryMethodId = deliveryMethodId;
+
+            if (deliveryMethodId == 1)
             {
-                model = new DeliveryAddressesDTO();
-            }
-            else if (isShippingToOffice)
-            {
-                model.Address = null;
-                model.Office = new OfficeDTO()
-                {
-                    ShippingProviders = await _accountService.GetShippingProvidersAsync(),
-                };
-            }
-            else
-            {
-                model.Office = null;
-                model.Address = new AddressDTO();
+                address.ShippingProviders = await _accountService.GetShippingProvidersAsync();
+                address.DeliveryMethodId = 1;
             }
 
-            HttpContext.Session.SetString("AddressDelivery", JsonConvert.SerializeObject(model));
+            _httpContextManager.SetSessionAddress(address);
 
-            return View("AddEditAddress", model);
+            return View("AddEditAddress", address);
         }
 
 
         // Select the shipping provider for office delivery
         public async Task<IActionResult> SelectShippingProvider(int shippingProviderId)
         {
-            DeliveryAddressesDTO model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(HttpContext.Session.GetString("AddressDelivery"));
+            var address = _httpContextManager.GetSessionAddress();
 
-            model.Office.ShippingProviderId = shippingProviderId;
-            model.Office.ShippingProviderCities = await _accountService.GetShippingProviderCitiesAsync(shippingProviderId);
-            model.Office.CityName = null;
-            model.Office.ShippingOfficeId = null;
+            if (address is null || address is null)
+            {
+                return BadRequest();
+            }
 
-            HttpContext.Session.SetString("AddressDelivery", JsonConvert.SerializeObject(model));
+            address.ShippingProviderId = shippingProviderId;
+            address.ShippingProviderCities = await _accountService.GetShippingProviderCitiesAsync(shippingProviderId);
+            address.ShippingProviderCity = string.Empty;
+            address.ShippingOfficeId = null;
 
-            return View("AddEditAddress", model);
+            _httpContextManager.SetSessionAddress(address);
+
+            return View("AddEditAddress", address);
         }
-
 
         // Select the city for office delivery
         public async Task<IActionResult> SelectShippingCity(string city)
         {
-            DeliveryAddressesDTO model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(HttpContext.Session.GetString("AddressDelivery"));
+            var address = _httpContextManager.GetSessionAddress();
 
-            model.Office.CityName = city;
-            model.Office.ShippingOffices = await _accountService.GetShippingOfficesAsync(model.Office.ShippingProviderId, city);
-            model.Office.ShippingOfficeId = null;
+            if (address is null || address is null)
+            {
+                return BadRequest();
+            }
 
-            HttpContext.Session.SetString("AddressDelivery", JsonConvert.SerializeObject(model));
+            address.ShippingProviderCity = city;
+            address.ShippingOffices = await _accountService.GetShippingOfficesAsync(address.ShippingProviderId, city);
+            address.ShippingOfficeId = null;
 
-            return View("AddEditAddress", model);
+            _httpContextManager.SetSessionAddress(address);
+
+            return View("AddEditAddress", address);
         }
 
         // Select the shipping office for office delivery
         public IActionResult SelectShippingOffice(int officeId)
         {
-            DeliveryAddressesDTO model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(HttpContext.Session.GetString("AddressDelivery"));
+            var address = _httpContextManager.GetSessionAddress();
 
-            model.Office.ShippingOfficeId = officeId;
+            if (address is null || address is null)
+            {
+                return BadRequest();
+            }
 
-            HttpContext.Session.SetString("AddressDelivery", JsonConvert.SerializeObject(model));
+            address.ShippingOfficeId = officeId;
+            address.ShippingOffice = address.ShippingOffices.FirstOrDefault(x => x.Id == officeId);
 
-            return View("AddEditAddress", model);
+            _httpContextManager.SetSessionAddress(address);
+
+            return View("AddEditAddress", address);
         }
 
 
         // Add or Edit address of type delivery to office
-        public async Task<IActionResult> AddOfficeDelivery(OfficeDTO officeDTO)
+        public async Task<IActionResult> AddOfficeDelivery(AddressOrderDTO model)
         {
-            DeliveryAddressesDTO model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(HttpContext.Session.GetString("AddressDelivery"));
+            var address = _httpContextManager.GetSessionAddress();
 
-            model.Office.FirstName = officeDTO.FirstName;
-            model.Office.LastName = officeDTO.LastName;
-            model.Office.PhoneNumber = officeDTO.PhoneNumber;
-
-            if (!ModelState.IsValid || !model.Office.IsSelectedOffice())
+            if (model is null || address is null)
             {
-                HttpContext.Session.SetString("AddressDelivery", JsonConvert.SerializeObject(model));
+                return BadRequest();
+            }
 
-                return View("AddEditAddress", model);
+            address.FirstName = model.FirstName;
+            address.LastName = model.LastName;
+            address.PhoneNumber = model.PhoneNumber;
+
+            ModelState.Remove("Country");
+            ModelState.Remove("PostCode");
+            ModelState.Remove("Town");
+            ModelState.Remove("Address");
+
+            if (!ModelState.IsValid || address.ShippingOffice == null)
+            {
+                _httpContextManager.SetSessionAddress(address);
+
+                return View("AddEditAddress", address);
             }
 
             string userId = User.GetUserId();
 
-            if (model.Office.Id == 0)
+            if (address.Id == 0)
             {
-                await _accountService.AddOfficeDeliveryAsync(userId, model.Office);
+                await _accountService.AddAddressDeliveryAsync(userId, address);
             }
             else
             {
-                await _accountService.EditOfficeDeliveryAsync(userId, model.Office);
+                await _accountService.EditAddressDeliveryAsync(userId, address);
             }
 
             return RedirectToAction(nameof(MyAddresses));
@@ -285,33 +302,29 @@ namespace LilsCareApp.Controllers
 
         // Add or Edit address of type delivery to address
         [HttpPost]
-        public async Task<IActionResult> AddAddressDelivery(AddressDTO addressDTO)
+        public async Task<IActionResult> AddAddressDelivery(AddressOrderDTO model)
         {
-            DeliveryAddressesDTO model = JsonConvert.DeserializeObject<DeliveryAddressesDTO>(HttpContext.Session.GetString("AddressDelivery"));
-
-            model.Address = addressDTO;
-
-            if (addressDTO is null)
+            if (model is null)
             {
                 return BadRequest();
             }
 
             if (!ModelState.IsValid)
             {
-                HttpContext.Session.SetString("AddressDelivery", JsonConvert.SerializeObject(model));
+                _httpContextManager.SetSessionAddress(model);
 
                 return View("AddEditAddress", model);
             }
 
             string userId = User.GetUserId();
 
-            if (model.Address.Id == 0)
+            if (model.Id == 0)
             {
-                await _accountService.AddAddressDeliveryAsync(userId, model.Address);
+                await _accountService.AddAddressDeliveryAsync(userId, model);
             }
             else
             {
-                await _accountService.EditAddressDeliveryAsync(userId, model.Address);
+                await _accountService.EditAddressDeliveryAsync(userId, model);
             };
 
             return RedirectToAction(nameof(MyAddresses));

@@ -1,4 +1,6 @@
-﻿@model IEnumerable<ProductDTO>
+﻿@inject IViewLocalizer Localizer
+
+@model IEnumerable<ProductDTO>
 @{
 }
 @section Styles {
@@ -9,7 +11,7 @@
 
 
 <div id="owl-carousel" class="container-fluid p-5">
-    <p class="text-center fs-3">МОЖЕ ДА ХАРЕСАТЕ...</p>
+    <p class="text-center fs-3">@Localizer["YOU MIGHT LIKE…"]</p>
     <div class="vesitable">
         <div class="owl-carousel vegetable-carousel justify-content-center">
             @foreach (var product in Model)
@@ -27,17 +29,18 @@
                         </div>
                         <div class="px-3 py-2">
                             <h6>@product.Name</h6>
+                            <p class="fs-5 fw-bold mb-0">@product.Price @Localizer["Price"]</p>
                             <div class="clearfix mt-2">
                                 @if (product.Quantity > 0)
                                 {
                                     <a asp-action="AddToCart" asp-route-productId="@product.Id" class="btn">
-                                        <i class="fa fa-shopping-bag me-2"></i> Добави
+                                        <i class="fa fa-shopping-bag me-2"></i> @Localizer["Add"]
                                     </a>
                                 }
                                 else
                                 {
                                     <a class="float-start btn unactive-button">
-                                        Изчерпано
+                                        @Localizer["Exhausted"]
                                     </a>
                                 }
 

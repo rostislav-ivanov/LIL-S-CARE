@@ -1,12 +1,10 @@
 ﻿using LilsCareApp.Core.Configurations;
 using LilsCareApp.Core.Contracts;
-using LilsCareApp.Core.Resources;
 using LilsCareApp.Core.Services;
 using LilsCareApp.Infrastructure.Data;
 using LilsCareApp.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -27,6 +25,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddOptions<AuthMessageSenderOptions>()
                     .Bind(configuration.GetSection("AuthMessageSenderOptions"));
 
+            services.AddScoped<IAppConfigService, AppConfigService>();
             services.AddScoped<IHomeService, HomeService>();
             services.AddScoped<IProductsService, ProductsService>();
             services.AddScoped<IDetailsService, DetailsService>();
@@ -36,7 +35,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IAdminDetailsService, AdminDetailsService>();
             services.AddScoped<IAdminOrderService, AdminOrderService>();
             services.AddScoped<IAdminOrderDetailsService, AdminOrderDetailsService>();
-            services.AddScoped<IGuestSessionManager, GuestSessionManager>();
+            services.AddScoped<IHttpContextManager, HttpContextManager>();
             services.AddScoped<IGuestService, GuestService>();
             services.AddScoped<IFileService, FileService>();
             services.AddTransient<IEmailSender, EmailSender>();
@@ -74,21 +73,21 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
-        public static IServiceCollection AddAppLocalization(this IServiceCollection services)
-        {
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
+        //public static IServiceCollection AddAppLocalization(this IServiceCollection services)
+        //{
+        //    services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-            services.AddControllersWithViews()
-                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-                .AddDataAnnotationsLocalization(options =>
-                {
-                    options.DataAnnotationLocalizerProvider = (type, factory) =>
-                        factory.Create(typeof(SharedResource));
-                });
-            services.AddMvc();
+        //    services.AddControllersWithViews()
+        //        .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+        //        .AddDataAnnotationsLocalization(options =>
+        //        {
+        //            options.DataAnnotationLocalizerProvider = (type, factory) =>
+        //                factory.Create(typeof(SharedResource));
+        //        });
+        //    services.AddMvc();
 
-            return services;
-        }
+        //    return services;
+        //}
 
         public static IServiceCollection AddAppAuthentication(this IServiceCollection services, IConfiguration configuration)
         {

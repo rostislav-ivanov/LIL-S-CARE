@@ -1,5 +1,6 @@
-﻿@{
-}
+﻿@model HeaderComponentViewModel
+@inject IViewLocalizer Localizer
+
 <!-- Top Bar Start -->
 <div class="text-center"
      style="
@@ -7,8 +8,8 @@
           font-size: 13px;
           letter-spacing: 0.2em;
         ">
-    <p class="mb-0">БЕЗПЛАТНА ДОСТАВКА НАД 35 ЛВ</p>
-    <p class="mb-0">-10% КОД ЗА ОТСТЪПКА ПРИ РЕГИСТРАЦИЯ</p>
+    <p class="mb-0">@Localizer["Free Delivery"]</p>
+    <p class="mb-0">@Localizer["10% Discount"]</p>
 </div>
 <!-- Top Bar End -->
 
@@ -24,16 +25,36 @@
             <div class="container-fluid">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" asp-controller="Home" asp-action="Index">НАЧАЛО</a>
+                        <a class="nav-link @(ViewData["Title"] == "Home" ? "active" : "")"
+                           asp-area=""
+                           asp-controller="Home"
+                           asp-action="Index">
+                            @Localizer["HOME"]
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Products" asp-action="Index">ПРОДУКТИ</a>
+                        <a class="nav-link @(ViewData["Title"] == "Products" ? "active" : "")"
+                           asp-area=""
+                           asp-controller="Products"
+                           asp-action="Index">
+                            @Localizer["PRODUCTS"]
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Ingredients" asp-action="Index">СЪСТАВКИ</a>
+                        <a class="nav-link @(ViewData["Title"] == "Ingredients" ? "active" : "")"
+                           asp-area=""
+                           asp-controller="Ingredients"
+                           asp-action="Index">
+                            @Localizer["INGREDIENTS"]
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Skin" asp-action="Index">ЗА КОЖАТА</a>
+                        <a class="nav-link @(ViewData["Title"] == "Skin" ? "active" : "")"
+                           asp-area=""
+                           asp-controller="Skin"
+                           asp-action="Index">
+                            @Localizer["ABOUT SKIN"]
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -52,18 +73,18 @@
     </a>
     <!-- Brand Logo End -->
     <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg" >
+    <nav class="navbar navbar-expand-lg">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-left:200px">
             @if (User.Identity?.IsAuthenticated ?? false)
             {
-            <!-- User Account Start -->
+                <!-- User Account Start -->
                 <li class="nav-item dropdown">
                     <a href="#"
                        class="nav-link dropdown-toggle"
                        data-bs-toggle="dropdown">
-                        @if (ViewBag.UserImagePath != null)
+                        @if (Model.UserImagePath != null)
                         {
-                            <img src="@ViewBag.UserImagePath" alt="User Image" class="rounded-circle" style="width: 30px; height: 30px" />
+                            <img src="@Model.UserImagePath" alt="User Image" class="rounded-circle" style="width: 30px; height: 30px" />
                         }
                         else
                         {
@@ -71,29 +92,29 @@
                         }
                     </a>
                     <div class="dropdown-menu m-0 rounded-0">
-                        <a class="dropdown-item" asp-controller="Account" asp-action="MyOrders">Моите поръчки</a>
-                        <a class="dropdown-item" asp-controller="Account" asp-action="MyAddresses">Адреси</a>
-                        <a class="dropdown-item" asp-controller="Account" asp-action="MyWishes">Желани продукти</a>
-                        <a class="dropdown-item" asp-controller="Account" asp-action="MyAccount">Моят акаунт</a>
+                        <a class="dropdown-item" asp-controller="Account" asp-action="MyOrders">@Localizer["My Orders"]</a>
+                        <a class="dropdown-item" asp-controller="Account" asp-action="MyAddresses">@Localizer["My Addresses"]</a>
+                        <a class="dropdown-item" asp-controller="Account" asp-action="MyWishes">@Localizer["My Wishes"]</a>
+                        <a class="dropdown-item" asp-controller="Account" asp-action="MyAccount">@Localizer["My Account"]</a>
                         <hr class="dropdown-divider" />
-                        <form  asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                            <button class="dropdown-item" type="submit">Изход</button>
+                        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                            <button class="dropdown-item" type="submit">@Localizer["Exit"]</button>
                         </form>
                     </div>
                 </li>
-            <!-- User Account End -->
+                <!-- User Account End -->
             }
             else
             {
-            <!-- Unlogin User Start-->
+                <!-- Unlogin User Start-->
                 <li class="nav-item">
                     <a class="nav-link py-2 px-0 px-lg-2"
                        asp-area="Identity" asp-page="/Account/Login">
                         <i class="fa fa-circle-user fs-4"></i>
-                        <span style="margin-left: 10px">Вход</span>
+                        <span style="margin-left: 10px">@Localizer["Login"]</span>
                     </a>
                 </li>
-            <!-- Unlogin User End -->
+                <!-- Unlogin User End -->
             }
 
 
@@ -120,11 +141,34 @@
                     </svg>
                     <span class="position-absolute d-flex px-1"
                           style="top: -5px; left: 23px; font-size: 16px">
-                        @ViewBag.Count
+                        @Model.CountInBag
                     </span>
                 </a>
             </li>
             <!-- Shopping Bag End -->
+            <!-- Language Localization Start -->
+            <li class="nav-item dropdown">
+                <a href="#"
+                   class="nav-link dropdown-toggle"
+                   data-bs-toggle="dropdown"
+                   role="button"
+                   aria-expanded="false">
+                    <i class="fa-solid fa-language fs-1"></i>
+                </a>
+                <div class="dropdown-menu m-0 rounded-0 dropdown-menu-end">
+                    @foreach (var culture in Model.Cultures.Keys)
+                    {
+                        <a class="dropdown-item"
+                           asp-controller="Home"
+                           asp-action="SetLanguage"
+                           asp-route-culture="@culture"
+                           asp-route-returnUrl="@Model.ReturnUrl">
+                           @culture - @Model.Cultures[culture]
+                        </a>
+                    }
+                </div>
+            </li>
+            <!-- Language Localization End -->
         </ul>
     </nav>
     <!-- Navbar End -->

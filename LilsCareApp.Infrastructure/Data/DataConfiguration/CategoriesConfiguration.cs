@@ -8,11 +8,11 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
     {
         private readonly IEnumerable<Category> categories =
         [
-            new () { Id = 1, Name = "всички" },
-            new () { Id = 2, Name = "за тяло" },
-            new () { Id = 3, Name = "за суха кожа" },
-            new () { Id = 4, Name = "за мазна кожа" },
-            new () { Id = 5, Name = "за лице" },
+            new () { Id = 1, NameId = 1 },
+            new () { Id = 2, NameId = 2 },
+            new () { Id = 3, NameId = 3 },
+            new () { Id = 4, NameId = 4 },
+            new () { Id = 5, NameId = 5 },
         ];
 
         public void Configure(EntityTypeBuilder<Category> builder)

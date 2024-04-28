@@ -5,17 +5,26 @@ using LilsCareApp.Infrastructure.Data;
 using LilsCareApp.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
+using static LilsCareApp.Infrastructure.DataConstants.Language;
 
 namespace LilsCareApp.Core.Services
 {
     public class DetailsService : IDetailsService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IAppConfigService _appConfigService;
+        private readonly IHttpContextManager _httpContextManager;
+
         private const string patternVideo = @"\.mp(4)?$";
 
-        public DetailsService(ApplicationDbContext context)
+        public DetailsService(
+            ApplicationDbContext context,
+            IAppConfigService appConfigService,
+            IHttpContextManager httpContextManager)
         {
             _context = context;
+            _appConfigService = appConfigService;
+            _httpContextManager = httpContextManager;
         }
 
         public async Task<DetailsDTO> GetDetailsByIdAsync(int productId, string appUserId)
@@ -25,23 +34,46 @@ namespace LilsCareApp.Core.Services
                 return null;
             }
 
+            var language = _httpContextManager.GetLanguage();
+            decimal exchangeRate = await _appConfigService.GetExchangeRateAsync(language);
+
             var details = await _context.Products
                 .Select(p => new DetailsDTO
                 {
                     Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
+                    Name = new Dictionary<string, string>
+                    {
+                        { Bulgarian, p.Name.NameBG },
+                        { Romanian, p.Name.NameRO },
+                        { English, p.Name.NameEN }
+                    }[language],
+                    Price = p.Price / exchangeRate,
                     Quantity = 1,
                     AvailableQuantity = p.Quantity,
-                    Optional = p.Optional,
+                    Optional = new Dictionary<string, string>
+                        {
+                            { English, p.Optional.OptionalEN },
+                            { Bulgarian, p.Optional.OptionalBG },
+                            { Romanian, p.Optional.OptionalRO },
+                        }[language],
                     Sections = p.Sections
                         .Where(s => s.ProductId == p.Id)
                         .OrderBy(s => s.SectionOrder)
                         .Select(s => new SectionDTO
                         {
                             Id = s.Id,
-                            Title = s.Title,
-                            Description = s.Description,
+                            Title = new Dictionary<string, string>
+                            {
+                                { Bulgarian, s.Title.TitleBG },
+                                { Romanian, s.Title.TitleRO },
+                                { English, s.Title.TitleEN }
+                            }[language],
+                            Description = new Dictionary<string, string>
+                            {
+                                { Bulgarian, s.Description.DescriptionBG },
+                                { Romanian, s.Description.DescriptionRO },
+                                { English, s.Description.DescriptionEN }
+                            }[language],
                             SectionOrder = s.SectionOrder
                         })
                         .ToList(),
@@ -80,12 +112,19 @@ namespace LilsCareApp.Core.Services
                         .Select(pc => new CategoryDTO
                         {
                             Id = pc.Category.Id,
-                            Name = pc.Category.Name
+                            Name = new Dictionary<string, string>
+                            {
+                                { Bulgarian, pc.Category.Name.NameBG },
+                                { Romanian, pc.Category.Name.NameRO },
+                                { English, pc.Category.Name.NameEN }
+                            }[language],
                         }).ToList(),
                     IsWish = p.WishesUsers.Any(w => w.ProductId == p.Id && w.AppUserId == appUserId)
                 })
                 .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == productId);
+
+            details.Price = Math.Round(details.Price, 2);
 
             return details;
         }
@@ -103,12 +142,19 @@ namespace LilsCareApp.Core.Services
                 return null;
             }
 
+            var language = _httpContextManager.GetLanguage();
+
             AddReviewDTO? review = await _context.Reviews
                 .Where(r => r.ProductId == productId && r.AuthorId == userId)
                 .Select(r => new AddReviewDTO
                 {
                     ProductId = r.ProductId,
-                    ProductName = r.Product.Name,
+                    ProductName = new Dictionary<string, string>
+                    {
+                        { Bulgarian, r.Product.Name.NameBG },
+                        { Romanian, r.Product.Name.NameRO },
+                        { English, r.Product.Name.NameEN }
+                    }[language],
                     ProductImage = r.Product.Images.FirstOrDefault(im => im.ImageOrder == 1).ImagePath,
                     AuthorId = r.AuthorId,
                     AuthorName = r.Author.UserName ?? string.Empty,
@@ -136,7 +182,12 @@ namespace LilsCareApp.Core.Services
                     .Select(p => new AddReviewDTO
                     {
                         ProductId = p.Id,
-                        ProductName = p.Name,
+                        ProductName = new Dictionary<string, string>
+                        {
+                            { Bulgarian, p.Name.NameBG },
+                            { Romanian, p.Name.NameRO },
+                            { English, p.Name.NameEN }
+                        }[language],
                         ProductImage = p.Images.FirstOrDefault().ImagePath,
                         AuthorId = userId,
                         AuthorName = _context.Users.Find(userId).UserName ?? string.Empty,

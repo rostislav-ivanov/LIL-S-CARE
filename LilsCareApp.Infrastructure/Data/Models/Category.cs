@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using static LilsCareApp.Infrastructure.DataConstants.Category;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LilsCareApp.Infrastructure.Data.Models
 {
@@ -11,10 +11,11 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Key]
         public int Id { get; set; }
 
-        [Comment("The category's name")]
-        [Required]
-        [MaxLength(NameMaxLength)]
-        public required string Name { get; set; }
+        [Comment("The category's name Id")]
+        public int NameId { get; set; }
+
+        [ForeignKey(nameof(NameId))]
+        public CategoryName Name { get; set; } = null!;
 
         [Comment("Navigation property to the products in this category")]
         public List<ProductCategory> ProductsCategories { get; set; } = new List<ProductCategory>();

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using LilsCareApp.Core.Resources;
+using System.ComponentModel.DataAnnotations;
 using static LilsCareApp.Core.ErrorMessageConstants;
 using static LilsCareApp.Infrastructure.DataConstants.AppUser;
 
@@ -8,25 +9,32 @@ namespace LilsCareApp.Core.Models.Account
     {
         public required string UserName { get; set; }
 
-        [MaxLength(FirstNameMaxLength, ErrorMessage = StringLengthMax)]
-        [Display(Name = "име")]
+
+        [MaxLength(FirstNameMaxLength, ErrorMessageResourceName = "StringLengthMax", ErrorMessageResourceType = typeof(SharedResource))]
+        [Display(Name = "FirstName", ResourceType = typeof(SharedResource))]
         public string? FirstName { get; set; }
 
-        [MaxLength(LastNameMaxLength, ErrorMessage = StringLengthMax)]
-        [Display(Name = "фамилия")]
+        [MaxLength(LastNameMaxLength, ErrorMessageResourceName = "StringLengthMax", ErrorMessageResourceType = typeof(SharedResource))]
+        [Display(Name = "LastName", ResourceType = typeof(SharedResource))]
         public string? LastName { get; set; }
 
-        [MaxLength(EmailMaxLength, ErrorMessage = StringLengthMax)]
-        [RegularExpression(EmailPatternNotRequired, ErrorMessage = InvalidEmailAddress)]
-        [Display(Name = "имейл")]
+        [MaxLength(EmailMaxLength)]
+        [RegularExpression(
+            EmailPatternNotRequired,
+            ErrorMessageResourceName = "InvalidEmailAddress",
+            ErrorMessageResourceType = typeof(SharedResource))]
+        [Display(Name = "Email", ResourceType = typeof(SharedResource))]
         public string? Email { get; set; }
 
-        [RegularExpression(PhoneNumberPatternNotRequired, ErrorMessage = InvalidPhoneNumber)]
-        [Display(Name = "телефонен номер")]
+        [RegularExpression(
+            PhoneNumberPattern,
+            ErrorMessageResourceName = "InvalidPhoneNumber",
+            ErrorMessageResourceType = typeof(SharedResource))]
+        [Display(Name = "PhoneNumber", ResourceType = typeof(SharedResource))]
         public string? PhoneNumber { get; set; }
 
-        [MaxLength(ImagePathMaxLength, ErrorMessage = StringLengthMax)]
-        [Display(Name = "снимка")]
+        [MaxLength(ImagePathMaxLength, ErrorMessageResourceName = "StringLengthMax", ErrorMessageResourceType = typeof(SharedResource))]
+        [Display(Name = "Photo", ResourceType = typeof(SharedResource))]
         public string? ImagePath { get; set; }
 
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using static LilsCareApp.Infrastructure.DataConstants.PaymentMethod;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LilsCareApp.Infrastructure.Data.Models
 {
@@ -11,12 +11,14 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Key]
         public int Id { get; set; }
 
-        [Comment("Payment method type")]
-        [Required]
-        [MinLength(NameMinLength)]
-        public required string Type { get; set; }
+        [Comment("Payment method name Id")]
+        public int NameId { get; set; }
+
+        [Comment("Navigation Property to PaymentName")]
+        [ForeignKey(nameof(NameId))]
+        public PaymentName Name { get; set; } = null!;
 
         [Comment("Navigation property to orders")]
-        public List<Order> Orders { get; set; } = new List<Order>();
+        public List<Order> Orders { get; set; } = [];
     }
 }

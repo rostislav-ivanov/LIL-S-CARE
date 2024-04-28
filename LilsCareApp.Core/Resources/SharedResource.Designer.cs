@@ -149,5 +149,29 @@ namespace LilsCareApp.Core.Resources {
                 return ResourceManager.GetString("Town", resourceCulture);
             }
         }
+
+        public static string InvalidPhoneNumber
+        {
+            get
+            {
+                return ResourceManager.GetString("InvalidPhoneNumber", resourceCulture);
+            }
+        }
+
+        public static string StringLengthMax
+        {
+            get
+            {
+                return ResourceManager.GetString("StringLengthMax", resourceCulture);
+            }
+        }
+
+        public static string Photo
+        {
+            get
+            {
+                return ResourceManager.GetString("photo", resourceCulture);
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
-﻿@model IEnumerable<ProductDTO>
+﻿@inject IViewLocalizer Localizer
+@model IEnumerable<ProductDTO>
 @{
-    ViewData["Title"] = "Моите продукти";
+    ViewData["Title"] = Localizer["My Products"];
 }
 
 @section Styles {
@@ -12,18 +13,17 @@
     <partial name="_AccountMenuPartial" />
     <!-- Menu My Account  End -->
     <!-- My Wish List Start-->
-    <div class="border rounded p-3" style="margin: 50px 100px 20px 20px">
-        <h5 class="my-4">Моят списък с желания</h5>
+    <div class="border rounded p-3 w-75" style="margin: 50px 100px 20px 20px">
+        <h5 class="my-4">@Localizer["My wish list"]</h5>
         <p>
-            Преглеждайте любими продукти, които сте запазили в списъка си с
-            желания.
+            @Localizer["Browse favorite products you've saved to your wishlist."]
         </p>
         <hr />
         @if (Model.Count() == 0)
         {
             <div class="text-center">
-                <p>Нямате добавени продукти в списъка с желания.</p>
-                <a asp-controller="Products" asp-action="Index" class="btn btn-sm">Разгледайте нашите продукти</a>
+                <p>@Localizer["You have no products added to your wishlist."]</p>
+                <a asp-controller="Products" asp-action="Index" class="btn btn-sm">@Localizer["Check out our products"]</a>
             </div>
         }
         else
@@ -46,18 +46,18 @@
                                             </div>
                                             <div class="px-3 py-2">
                                                 <h6>@product.Name</h6>
-                                                <p class="fs-5 fw-bold mb-0">@product.Price лв.</p>
+                                                <p class="fs-5 fw-bold mb-0">@product.Price @Localizer["Currency"]</p>
                                                 <div class="clearfix mt-2">
                                                     @if (product.Quantity > 0)
                                                     {
                                                         <a asp-controller="Account" asp-action="AddToCart" asp-route-productId="@product.Id" class="btn">
-                                                            <i class="fa fa-shopping-bag me-2"></i> Добави
+                                                            <i class="fa fa-shopping-bag me-2"></i> @Localizer["Add"]
                                                         </a>
                                                     }
                                                     else
                                                     {
                                                         <a class="float-start btn unactive-button">
-                                                            Изчерпано
+                                                            @Localizer["Exhausted"]
                                                         </a>
                                                     }
 

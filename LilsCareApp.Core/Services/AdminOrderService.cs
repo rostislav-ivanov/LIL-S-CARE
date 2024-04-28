@@ -23,7 +23,7 @@ namespace LilsCareApp.Core.Services
             int ordersPerPage)
         {
             var ordersFiltered = _context.Orders
-                .Where(o => string.IsNullOrEmpty(status) || o.StatusOrder.Name == status)
+                .Where(o => string.IsNullOrEmpty(status) || o.StatusOrder.Name.NameBG == status)
                 .Where(o => payment == null || o.IsPaid == payment)
                 .Where(o => string.IsNullOrEmpty(search) || o.OrderNumber.Contains(search) || o.AddressDelivery.FirstName.Contains(search) || o.AddressDelivery.LastName.Contains(search))
                 .Select(o => new AdminOrderDTO
@@ -33,8 +33,8 @@ namespace LilsCareApp.Core.Services
                     Date = o.CreatedOn,
                     Customer = o.AddressDelivery.FirstName + " " + o.AddressDelivery.LastName,
                     Payment = o.IsPaid ? "Платена" : "Неплатена",
-                    StatusOrder = o.StatusOrder.Name,
-                    Total = o.Total
+                    StatusOrder = o.StatusOrder.Name.NameBG,
+                    //Total = o.Total
                 });
             ;
 
@@ -83,7 +83,7 @@ namespace LilsCareApp.Core.Services
                 .Select(so => new StatusOrderDTO
                 {
                     Id = so.Id,
-                    Status = so.Name
+                    Status = so.Name.NameBG
                 })
                 .AsNoTracking()
                 .ToListAsync();

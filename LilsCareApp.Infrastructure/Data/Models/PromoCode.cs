@@ -11,8 +11,11 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Key]
         public int Id { get; set; }
 
-        [Comment("Promo Code")]
-        public required string Code { get; set; }
+        [Comment("Promo Code Id")]
+        public int CodeId { get; set; }
+
+        [ForeignKey(nameof(CodeId))]
+        public PromoCodeName Code { get; set; } = null!;
 
         [Comment("Discount of Total Price Order")]
         [Column(TypeName = "decimal(18,2)")]

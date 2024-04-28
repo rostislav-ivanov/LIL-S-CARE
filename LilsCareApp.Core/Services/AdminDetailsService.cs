@@ -6,6 +6,7 @@ using LilsCareApp.Infrastructure.Data;
 using LilsCareApp.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
+using static LilsCareApp.Infrastructure.DataConstants.Language;
 
 namespace LilsCareApp.Core.Services
 {
@@ -14,31 +15,35 @@ namespace LilsCareApp.Core.Services
 
         private readonly ApplicationDbContext _context;
         private const string patternVideo = @"\.mp(4)?$";
+        private readonly IHttpContextManager _httpContextManager;
 
-        public AdminDetailsService(ApplicationDbContext context)
+        public AdminDetailsService(ApplicationDbContext context, IHttpContextManager httpContextManager)
         {
             _context = context;
+            _httpContextManager = httpContextManager;
         }
 
         // Get product by id
         public async Task<AdminDetailsDTO> GetProductByIdAsync(int id)
         {
+            var language = _httpContextManager.GetLanguage();
+
             var details = await _context.Products
              .Select(p => new AdminDetailsDTO
              {
                  Id = p.Id,
-                 Name = p.Name,
+                 Name = p.Name.NameBG,
                  Price = p.Price,
                  AvailableQuantity = p.Quantity,
-                 Optional = p.Optional,
+                 Optional = p.Optional.OptionalBG,
                  Sections = p.Sections
                         .Where(s => s.ProductId == p.Id)
                         .OrderBy(s => s.SectionOrder)
                         .Select(s => new SectionDTO
                         {
                             Id = s.Id,
-                            Title = s.Title,
-                            Description = s.Description,
+                            Title = s.Title.TitleBG,
+                            Description = s.Description.DescriptionBG,
                             SectionOrder = s.SectionOrder
                         })
                         .ToList(),
@@ -57,7 +62,12 @@ namespace LilsCareApp.Core.Services
                      .Select(pc => new CategoryDTO
                      {
                          Id = pc.Category.Id,
-                         Name = pc.Category.Name
+                         Name = new Dictionary<string, string>
+                            {
+                                { Bulgarian, pc.Category.Name.NameBG },
+                                { Romanian, pc.Category.Name.NameRO },
+                                { English, pc.Category.Name.NameEN }
+                            }[language],
                      }).ToList(),
              })
              .AsNoTracking()
@@ -69,11 +79,18 @@ namespace LilsCareApp.Core.Services
         // Get all categories
         public async Task<IEnumerable<CategoryDTO>> GetCategoriesAsync()
         {
+            var language = _httpContextManager.GetLanguage();
+
             return await _context.Categories
                 .Select(c => new CategoryDTO
                 {
                     Id = c.Id,
-                    Name = c.Name
+                    Name = new Dictionary<string, string>
+                    {
+                        { Bulgarian, c.Name.NameBG },
+                        { Romanian, c.Name.NameRO },
+                        { English, c.Name.NameEN }
+                    }[language],
                 })
                 .AsNoTracking()
                 .ToArrayAsync();
@@ -84,8 +101,18 @@ namespace LilsCareApp.Core.Services
         {
             Product product = new Product()
             {
-                Name = "Нов продукт",
-                Optional = "",
+                Name = new ProductName
+                {
+                    NameBG = "Нов продукт",
+                    NameEN = "New product",
+                    NameRO = "Produs nou"
+                },
+                Optional = new ProductOptional
+                {
+                    OptionalEN = "",
+                    OptionalBG = "",
+                    OptionalRO = "",
+                },
             };
 
             await _context.Products.AddAsync(product);
@@ -95,10 +122,10 @@ namespace LilsCareApp.Core.Services
             AdminDetailsDTO details = new AdminDetailsDTO
             {
                 Id = product.Id,
-                Name = product.Name,
+                Name = product.Name.NameBG,
                 Price = product.Price,
                 Quantity = product.Quantity,
-                Optional = product.Optional,
+                Optional = product.Optional.OptionalBG,
                 Sections = [],
                 ProductsCategories = []
             };
@@ -113,7 +140,12 @@ namespace LilsCareApp.Core.Services
                 .Where(p => p.Id == id)
                 .Select(p => new Product
                 {
-                    Name = "Нов продукт",
+                    Name = new ProductName
+                    {
+                        NameBG = "Нов продукт",
+                        NameEN = "New product",
+                        NameRO = "Produs nou"
+                    },
                     Price = p.Price,
                     Optional = p.Optional,
                     IsShow = false,
@@ -157,7 +189,7 @@ namespace LilsCareApp.Core.Services
                 return;
             }
 
-            product.Name = name;
+            product.Name.NameBG = name;
             await _context.SaveChangesAsync();
         }
 
@@ -278,10 +310,28 @@ namespace LilsCareApp.Core.Services
             }
 
             int count = product.Sections.Count;
+
+            SectionTitle sectionTitle = new SectionTitle
+            {
+                TitleBG = "Нов раздел",
+                TitleEN = "New section",
+                TitleRO = "Secțiune nouă"
+            };
+
+            SectionDescription sectionDescription = new SectionDescription
+            {
+                DescriptionBG = "",
+                DescriptionEN = "",
+                DescriptionRO = ""
+            };
+
+            await _context.SectionTitles.AddAsync(sectionTitle);
+            await _context.SectionDescriptions.AddAsync(sectionDescription);
+
             Section section = new Section
             {
-                Title = "",
-                Description = "",
+                Title = sectionTitle,
+                Description = sectionDescription,
                 SectionOrder = count + 1,
                 ProductId = id
             };
@@ -301,8 +351,8 @@ namespace LilsCareApp.Core.Services
                 return;
             }
 
-            section.Title = title;
-            section.Description = description;
+            section.Title.TitleBG = title;
+            section.Description.DescriptionBG = description;
             await _context.SaveChangesAsync();
         }
 
@@ -449,25 +499,25 @@ namespace LilsCareApp.Core.Services
                 return;
             }
 
-            product.Optional = optional;
+            product.Optional.OptionalBG = optional;
             await _context.SaveChangesAsync();
         }
 
         // Add new category to database
         public async Task AddNewCategoryAsync(string newCategory)
         {
-            var categories = await _context.Categories
-                .Where(c => c.Name == newCategory)
-                .FirstOrDefaultAsync();
-            if (categories != null)
-            {
-                return;
-            }
+            //var categories = await _context.Categories
+            //    .Where(c => c.Name.NameBG == newCategory)
+            //    .FirstOrDefaultAsync();
+            //if (categories != null)
+            //{
+            //    return;
+            //}
 
-            await _context.Categories.AddAsync(new Category
-            {
-                Name = newCategory
-            });
+            //await _context.Categories.AddAsync(new Category
+            //{
+            //    Name = newCategory
+            //});
 
             await _context.SaveChangesAsync();
         }

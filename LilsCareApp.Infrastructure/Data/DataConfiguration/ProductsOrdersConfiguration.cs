@@ -12,52 +12,34 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
             {
                 ProductId = 1,
                 OrderId = 1,
+                Price = 5.00m,
+                Quantity = 2,
+                ImagePath = "/files/products/product-01-image-01.webp",
             },
             new ()
             {
                 ProductId = 1,
                 OrderId = 2,
+                Price = 5.50m,
+                Quantity = 3,
+                ImagePath = "/files/products/product-01-image-01.webp",
             },
             new ()
             {
                 ProductId = 2,
                 OrderId = 1,
+                Price = 6.50m,
+                Quantity = 4,
+                ImagePath = "/files/products/product-02-image-01.webp",
             },
             new ()
             {
                 ProductId = 3,
                 OrderId = 1,
+                Price = 5.50m,
+                Quantity = 3,
+                ImagePath = "/files/products/product-03-image-01.webp",
             },
-            new ()
-            {
-                ProductId = 3,
-                OrderId = 2,
-            },
-            new ()
-            {
-                ProductId = 4,
-                OrderId = 1,
-            },
-            new ()
-            {
-                ProductId = 5,
-                OrderId = 2,
-            },
-            new ()
-            {
-                ProductId = 6,
-                OrderId = 1,
-            },
-            new ()
-            {
-                ProductId = 6,
-                OrderId = 2,
-            },
-            new ()
-            {
-                ProductId = 7,
-                OrderId = 1,
-            }
         ];
 
         public void Configure(EntityTypeBuilder<ProductOrder> builder)

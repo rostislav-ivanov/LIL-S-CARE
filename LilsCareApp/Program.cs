@@ -1,5 +1,7 @@
+using LilsCareApp.Core.Resources;
 using LilsCareApp.Infrastructure.Data.DataConfiguration;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,11 +9,34 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAppDbContext(builder.Configuration);
 builder.Services.AddAppIdentity();
-builder.Services.AddAppLocalization();
 builder.Services.AddAppAuthentication(builder.Configuration);
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var supportedCultures = new[]
+    {
+        new CultureInfo("en"),
+        new CultureInfo("bg")
+    };
+    options.DefaultRequestCulture = new RequestCulture("en");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+    options.RequestCultureProviders = new List<IRequestCultureProvider>
+    {
+        new CookieRequestCultureProvider(),
+    };
+});
 
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+    .AddDataAnnotationsLocalization((options =>
+    {
+        options.DataAnnotationLocalizerProvider = (type, factory) =>
+            factory.Create(typeof(SharedResource));
+    }));
+
+
 builder.Services.AddAppServices();
 
 var app = builder.Build();
@@ -31,23 +56,13 @@ else
 }
 
 app.UseHttpsRedirection();
+app.UseRequestLocalization();
 app.UseStaticFiles();
 
 app.UseRouting();
 
 app.UseAuthorization();
 
-app.UseRequestLocalization(options =>
-{
-    var supportedCultures = new[]
-    {
-        new CultureInfo("en-US"),
-        new CultureInfo("bg-BG")
-    };
-    options.DefaultRequestCulture = new RequestCulture("en-US");
-    options.SupportedCultures = supportedCultures;
-    options.SupportedUICultures = supportedCultures;
-});
 
 
 // Enable session middleware

@@ -132,17 +132,26 @@
   <data name="InvalidEmailAddress" xml:space="preserve">
     <value>Невалиден имейл адрес.</value>
   </data>
+  <data name="InvalidPhoneNumber" xml:space="preserve">
+    <value>Невалиден телефонен номер</value>
+  </data>
   <data name="LastName" xml:space="preserve">
     <value>фамилия</value>
   </data>
   <data name="PhoneNumber" xml:space="preserve">
     <value>телефонен номер</value>
   </data>
+  <data name="Photo" xml:space="preserve">
+    <value>снимка</value>
+  </data>
   <data name="PostCode" xml:space="preserve">
     <value>пощенски код</value>
   </data>
   <data name="ResourceRequired" xml:space="preserve">
     <value>Моля, въведете {0}</value>
+  </data>
+  <data name="StringLengthMax" xml:space="preserve">
+    <value>Полето {0} трябва да бъде най-много {1} символа дълго</value>
   </data>
   <data name="Town" xml:space="preserve">
     <value>град</value>

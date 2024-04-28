@@ -3,6 +3,7 @@
 #nullable disable
 
 using LilsCareApp.Core.Contracts;
+using LilsCareApp.Core.Services;
 using LilsCareApp.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -26,6 +27,8 @@ namespace LilsCareApp.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IHomeService _homeService;
+        private readonly IProductsService _productService;
+        private readonly IGuestService _guestService;
 
         public RegisterModel(
             UserManager<AppUser> userManager,
@@ -33,7 +36,9 @@ namespace LilsCareApp.Areas.Identity.Pages.Account
             SignInManager<AppUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            IHomeService homeService)
+            IHomeService homeService,
+            IProductsService productService,
+            IGuestService guestService)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -42,6 +47,8 @@ namespace LilsCareApp.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _homeService = homeService;
+            _productService = productService;
+            _guestService = guestService;
         }
 
         /// <summary>
@@ -127,6 +134,14 @@ namespace LilsCareApp.Areas.Identity.Pages.Account
 
                     // Add promo code for first registration
                     await _homeService.AddPromoCodeForFirstRegistrationAsync(userId);
+
+                    // Migrate products in bag from guest to user when user logs in.
+                    var guestProduct = await _guestService.GetProductsInBagAsync();
+                    if (guestProduct.Count() > 0)
+                    {
+                        await _productService.MigrateProductsInBagAsync(userId, guestProduct);
+                        _guestService.ClearBag();
+                    }
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

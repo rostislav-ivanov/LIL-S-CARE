@@ -17,7 +17,7 @@ namespace LilsCareApp.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -37,6 +37,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasComment("Address");
 
                     b.Property<string>("AppUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasComment("App User Id");
 
@@ -60,6 +61,12 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasComment("First Name Recipient");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsShippingToOffice")
                         .HasColumnType("bit");
@@ -104,17 +111,14 @@ namespace LilsCareApp.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Address = "bul. Vitosha",
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                            Country = "Bulgaria",
-                            District = "Sofia",
                             FirstName = "Ivan",
-                            IsShippingToOffice = false,
+                            IsDefault = false,
+                            IsDeleted = false,
+                            IsShippingToOffice = true,
                             LastName = "Ivanov",
                             PhoneNumber = "0888888888",
-                            PostCode = "1000",
-                            ShippingOfficeId = 1,
-                            Town = "Sofia"
+                            ShippingOfficeId = 1
                         },
                         new
                         {
@@ -124,12 +128,57 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Country = "Bulgaria",
                             District = "Sofia",
                             FirstName = "Petar",
+                            IsDefault = false,
+                            IsDeleted = false,
                             IsShippingToOffice = false,
                             LastName = "Petrov",
                             PhoneNumber = "0888888888",
                             PostCode = "1000",
-                            ShippingOfficeId = 2,
                             Town = "Sofia"
+                        });
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.AppConfig", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("AddressDeliveryPrice")
+                        .HasColumnType("decimal(18,2)")
+                        .HasComment("The price at which the delivery to an address is paid.");
+
+                    b.Property<decimal>("ExchangeRateBGN")
+                        .HasColumnType("decimal(18,4)")
+                        .HasComment("The exchange rate of the leva.");
+
+                    b.Property<decimal>("ExchangeRateEUR")
+                        .HasColumnType("decimal(18,4)")
+                        .HasComment("The exchange rate of the euro.");
+
+                    b.Property<decimal>("ExchangeRateRON")
+                        .HasColumnType("decimal(18,4)")
+                        .HasComment("The exchange rate of the lei.");
+
+                    b.Property<decimal>("FreeShipping")
+                        .HasColumnType("decimal(18,2)")
+                        .HasComment("The price at which the shipping is free.");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppConfigs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AddressDeliveryPrice = 8.00m,
+                            ExchangeRateBGN = 1m,
+                            ExchangeRateEUR = 1.9558m,
+                            ExchangeRateRON = 0.3930m,
+                            FreeShipping = 35.00m
                         });
                 });
 
@@ -144,10 +193,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("DefaultAddressDeliveryId")
-                        .HasColumnType("int")
-                        .HasComment("Default Address Delivery Id");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -207,8 +252,6 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DefaultAddressDeliveryId");
-
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -227,7 +270,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "42fa6574-c753-4af1-b6ca-b3f2f168efcc",
+                            ConcurrencyStamp = "f4c3f3d9-1845-40fc-8a35-c4431d2e2cea",
                             Email = "test@softuni.bg",
                             EmailConfirmed = true,
                             FirstName = "Test",
@@ -235,9 +278,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "TEST@SOFTUNI.BG",
                             NormalizedUserName = "TEST@SOFTUNI.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAENeOV9+4klsC4/k7H1UUW0uZOIcwnE/4410rsaC/Iqn0UGW61BdbyKb6xTp5QlMABw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELrk/J2uOysXJLVHUO48f287zrdQIhXy3GRVV8PRB4uKvMhSm1NKYfyVQcFEMV//7w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "acf14a3e-424c-4a38-b226-56b370caf0da",
+                            SecurityStamp = "fa92c284-23a4-4a32-b3d5-b232e9be722f",
                             TwoFactorEnabled = false,
                             UserName = "test@softuni.bg"
                         },
@@ -245,7 +288,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = "45fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "475e879e-5ef2-43ac-9dbe-097a024d2e0a",
+                            ConcurrencyStamp = "411a0be6-e4fc-48b1-8f90-84775de6fbd8",
                             Email = "admin@mail.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -253,9 +296,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEnsDfA3oK7wGhMzYU5sw8oSI0E6/Yo5Aip2C5VQDRXh7wWKvAOJlidNnHYB1306aQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMGLE3YgUs+tM+4949hTdn401+0ROyCLG/JFmhd8FD0Xq4dpGfVL/Miz53gaAeijxw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3cd61d81-dec4-4275-92c0-910f57b03d77",
+                            SecurityStamp = "7c94d325-8006-472f-9511-caa62a5093b7",
                             TwoFactorEnabled = false,
                             UserName = "admin@mail.com"
                         });
@@ -314,13 +357,13 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasComment("The category's name");
+                    b.Property<int>("NameId")
+                        .HasColumnType("int")
+                        .HasComment("The category's name Id");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("NameId");
 
                     b.ToTable("Categories", t =>
                         {
@@ -331,27 +374,175 @@ namespace LilsCareApp.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "всички"
+                            NameId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Name = "за тяло"
+                            NameId = 2
                         },
                         new
                         {
                             Id = 3,
-                            Name = "за суха кожа"
+                            NameId = 3
                         },
                         new
                         {
                             Id = 4,
-                            Name = "за мазна кожа"
+                            NameId = 4
                         },
                         new
                         {
                             Id = 5,
-                            Name = "за лице"
+                            NameId = 5
+                        });
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.CategoryName", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("NameBG")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("The category's name in Bulgarian");
+
+                    b.Property<string>("NameEN")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("The category's name in English");
+
+                    b.Property<string>("NameRO")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("The category's name in Romanian");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CategoryNames");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            NameBG = "всички",
+                            NameEN = "all",
+                            NameRO = "toate"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            NameBG = "за тяло",
+                            NameEN = "body",
+                            NameRO = "pentru corp"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            NameBG = "за суха кожа",
+                            NameEN = "dry skin",
+                            NameRO = "pentru piele uscata"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            NameBG = "за мазна кожа",
+                            NameEN = "oily skin",
+                            NameRO = "pentru piele grasa"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            NameBG = "за лице",
+                            NameEN = "face",
+                            NameRO = "pentru fata"
+                        });
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.DeliveryMethod", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("Delivery method id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("NameId")
+                        .HasColumnType("int")
+                        .HasComment("Delivery method name Id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NameId");
+
+                    b.ToTable("DeliveryMethods");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            NameId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            NameId = 2
+                        });
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.DeliveryName", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("The delivery name Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("NameBG")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("The delivery name in Bulgarian");
+
+                    b.Property<string>("NameEN")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("The delivery name in English");
+
+                    b.Property<string>("NameRO")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("The delivery name in Romanian");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DeliveryNames");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            NameBG = "Доставка до офис на куриер",
+                            NameEN = "Office delivery",
+                            NameRO = "Livrare la birou"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            NameBG = "Доставка до адрес на клиент",
+                            NameEN = "Home delivery",
+                            NameRO = "Livrare la domiciliu"
                         });
                 });
 
@@ -656,7 +847,12 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AddressDeliveryId")
+                    b.Property<string>("Address")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)")
+                        .HasComment("Address");
+
+                    b.Property<int?>("AddressDeliveryId")
                         .HasColumnType("int")
                         .HasComment("Address Delivery Id");
 
@@ -664,41 +860,109 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasComment("App User Id");
 
+                    b.Property<string>("Country")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("Country");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2")
                         .HasComment("Date of Order Creating");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasComment("Language of Order, determinate the currency of the prices");
 
                     b.Property<DateTime?>("DateShipping")
                         .HasColumnType("datetime2")
                         .HasComment("Date of Shipping Creating");
 
+                    b.Property<int>("DeliveryMethodId")
+                        .HasColumnType("int")
+                        .HasComment("Method of Delivery");
+
                     b.Property<decimal>("Discount")
                         .HasColumnType("decimal(18,2)")
                         .HasComment("Absolute Discount value");
+
+                    b.Property<string>("District")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("District");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("Email");
+
+                    b.Property<decimal>("ExchangeRate")
+                        .HasColumnType("decimal(18,4)")
+                        .HasComment("Exchange Rate of the Prices");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("First Name Recipient");
 
                     b.Property<bool>("IsPaid")
                         .HasColumnType("bit")
                         .HasComment("Is Paid Order");
 
+                    b.Property<bool>("IsShippingToOffice")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("Last Name Recipient");
+
                     b.Property<string>("NoteForDelivery")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
                         .HasComment("Note for Delivery");
 
                     b.Property<string>("OrderNumber")
                         .HasColumnType("nvarchar(max)")
                         .HasComment("Order Number");
 
-                    b.Property<int?>("PaymentMethodId")
+                    b.Property<int>("PaymentMethodId")
                         .HasColumnType("int")
                         .HasComment("Payment Method Id");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("Phone Number Recipient");
+
+                    b.Property<string>("PostCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("Post Code");
 
                     b.Property<int?>("PromoCodeId")
                         .HasColumnType("int")
                         .HasComment("Promo Code Id");
 
+                    b.Property<string>("ShippingOfficeAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShippingOfficeCity")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ShippingOfficeId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("ShippingPrice")
                         .HasColumnType("decimal(18,2)")
                         .HasComment("Shipping Price");
+
+                    b.Property<string>("ShippingProviderName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StatusOrderId")
                         .HasColumnType("int")
@@ -706,11 +970,16 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     b.Property<decimal>("SubTotal")
                         .HasColumnType("decimal(18,2)")
-                        .HasComment("Sub Total");
+                        .HasComment("Sub Total Price of Order");
 
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)")
-                        .HasComment("Total");
+                        .HasComment("Total Price of Order");
+
+                    b.Property<string>("Town")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("Town");
 
                     b.Property<string>("TrackingNumber")
                         .HasMaxLength(30)
@@ -723,11 +992,15 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     b.HasIndex("AppUserId");
 
+                    b.HasIndex("DeliveryMethodId");
+
                     b.HasIndex("PaymentMethodId");
 
                     b.HasIndex("PromoCodeId")
                         .IsUnique()
                         .HasFilter("[PromoCodeId] IS NOT NULL");
+
+                    b.HasIndex("ShippingOfficeId");
 
                     b.HasIndex("StatusOrderId");
 
@@ -742,13 +1015,20 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Id = 1,
                             AddressDeliveryId = 1,
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                            CreatedOn = new DateTime(2024, 4, 16, 17, 44, 33, 731, DateTimeKind.Utc).AddTicks(2934),
-                            DateShipping = new DateTime(2024, 4, 16, 17, 44, 33, 731, DateTimeKind.Utc).AddTicks(4104),
-                            Discount = 0m,
+                            CreatedOn = new DateTime(2023, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Currency = "bg",
+                            DateShipping = new DateTime(2023, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DeliveryMethodId = 1,
+                            Discount = 10.00m,
+                            ExchangeRate = 1.00m,
+                            FirstName = "John",
                             IsPaid = false,
+                            IsShippingToOffice = false,
+                            LastName = "Doe",
                             OrderNumber = "123456",
                             PaymentMethodId = 1,
-                            ShippingPrice = 0m,
+                            PhoneNumber = "1234567890",
+                            ShippingPrice = 5.00m,
                             StatusOrderId = 1,
                             SubTotal = 0m,
                             Total = 0m,
@@ -759,17 +1039,22 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Id = 2,
                             AddressDeliveryId = 2,
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                            CreatedOn = new DateTime(2024, 4, 16, 17, 44, 33, 731, DateTimeKind.Utc).AddTicks(5302),
-                            DateShipping = new DateTime(2024, 4, 16, 17, 44, 33, 731, DateTimeKind.Utc).AddTicks(5303),
-                            Discount = 0m,
+                            CreatedOn = new DateTime(2023, 10, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Currency = "en",
+                            DeliveryMethodId = 2,
+                            Discount = 0.00m,
+                            ExchangeRate = 1.95m,
+                            FirstName = "Jane",
                             IsPaid = false,
+                            IsShippingToOffice = false,
+                            LastName = "Doe",
                             OrderNumber = "123456x",
                             PaymentMethodId = 2,
-                            ShippingPrice = 0m,
+                            PhoneNumber = "1234567890x",
+                            ShippingPrice = 5.00m,
                             StatusOrderId = 2,
                             SubTotal = 0m,
-                            Total = 0m,
-                            TrackingNumber = "1234567890x"
+                            Total = 0m
                         });
                 });
 
@@ -782,12 +1067,13 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasComment("Payment method type");
+                    b.Property<int>("NameId")
+                        .HasColumnType("int")
+                        .HasComment("Payment method name Id");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("NameId");
 
                     b.ToTable("PaymentMethods", t =>
                         {
@@ -798,17 +1084,72 @@ namespace LilsCareApp.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Type = "Наложен платеж"
+                            NameId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Type = "С карта"
+                            NameId = 2
                         },
                         new
                         {
                             Id = 3,
-                            Type = "Банков превод"
+                            NameId = 3
+                        });
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.PaymentName", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("Payment name id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("NameBG")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("The payment name in Bulgarian");
+
+                    b.Property<string>("NameEN")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("The payment name in English");
+
+                    b.Property<string>("NameRO")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("The payment name in Romanian");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PaymentNames");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            NameBG = "Плащане при доставка",
+                            NameEN = "Cash on delivery",
+                            NameRO = "Plata la livrare"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            NameBG = "С карта",
+                            NameEN = "With card",
+                            NameRO = "Cu cardul"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            NameBG = "Банков превод",
+                            NameEN = "Bank transfer",
+                            NameRO = "Transfer bancar"
                         });
                 });
 
@@ -825,17 +1166,13 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasColumnType("bit")
                         .HasComment("Is the product show on online store");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasComment("The product's name");
+                    b.Property<int>("NameId")
+                        .HasColumnType("int")
+                        .HasComment("The product's name Id");
 
-                    b.Property<string>("Optional")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasComment("The optional property of product");
+                    b.Property<int>("OptionalId")
+                        .HasColumnType("int")
+                        .HasComment("The product's optional Id");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)")
@@ -847,6 +1184,10 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("NameId");
+
+                    b.HasIndex("OptionalId");
+
                     b.ToTable("Products", t =>
                         {
                             t.HasComment("The product model");
@@ -857,8 +1198,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 1,
                             IsShow = true,
-                            Name = "НАТУРАЛЕН СУХ ДЕЗОДОРАНТ",
-                            Optional = "Тегло:  25 г.",
+                            NameId = 1,
+                            OptionalId = 1,
                             Price = 5.50m,
                             Quantity = 10
                         },
@@ -866,8 +1207,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 2,
                             IsShow = true,
-                            Name = "БАЛСАМ ЗА УСТНИ С ЖОЖОБА, КАКАО И ПЧЕЛЕН ВОСЪК",
-                            Optional = "Тегло:  5 г.",
+                            NameId = 2,
+                            OptionalId = 2,
                             Price = 4.00m,
                             Quantity = 20
                         },
@@ -875,8 +1216,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 3,
                             IsShow = true,
-                            Name = "ХИДРАТИРАЩ КРЕМ С ШИПКА И НИАЦИНАМИД",
-                            Optional = "Тегло:  50 г.",
+                            NameId = 3,
+                            OptionalId = 3,
                             Price = 12.00m,
                             Quantity = 30
                         },
@@ -884,8 +1225,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 4,
                             IsShow = true,
-                            Name = "ДВУФАЗНА МИЦЕЛАРНА ВОДА ЗЕЛЕН ЧАЙ И ЖОЖОБА",
-                            Optional = "Тегло:  100 мл.",
+                            NameId = 4,
+                            OptionalId = 4,
                             Price = 10.00m,
                             Quantity = 0
                         },
@@ -893,8 +1234,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 5,
                             IsShow = true,
-                            Name = "НАТУРАЛЕН КРЕМ ДЕЗОДОРАНТ",
-                            Optional = "Тегло:  50 г.",
+                            NameId = 5,
+                            OptionalId = 5,
                             Price = 8.50m,
                             Quantity = 10
                         },
@@ -902,8 +1243,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 6,
                             IsShow = true,
-                            Name = "СЕРУМ МАСЛО С ШИПКА, ЖОЖОБА, АРГАН И ЯГОДОВИ СЕМКИ",
-                            Optional = "Тегло:  20 мл.",
+                            NameId = 6,
+                            OptionalId = 6,
                             Price = 10.00m,
                             Quantity = 20
                         },
@@ -911,8 +1252,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 7,
                             IsShow = true,
-                            Name = "",
-                            Optional = "",
+                            NameId = 7,
+                            OptionalId = 7,
                             Price = 10.00m,
                             Quantity = 0
                         });
@@ -1030,6 +1371,170 @@ namespace LilsCareApp.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ProductName", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("NameBG")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("The product's name in Bulgarian");
+
+                    b.Property<string>("NameEN")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("The product's name in English");
+
+                    b.Property<string>("NameRO")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("The product's name in Romanian");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductNames");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            NameBG = "НАТУРАЛЕН СУХ ДЕЗОДОРАНТ",
+                            NameEN = "NATURAL DRY DEODORANT",
+                            NameRO = "DEODORANT NATURAL USCAT"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            NameBG = "БАЛСАМ ЗА УСТНИ С ЖОЖОБА, КАКАО И ПЧЕЛЕН ВОСЪК",
+                            NameEN = "LIP BALM WITH JOJOBA, COCOA AND BEESWAX",
+                            NameRO = "BALSAM DE BUZE CU JOJOBA, CACAO SI CEARA DE ALBINE"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            NameBG = "ХИДРАТИРАЩ КРЕМ С ШИПКА И НИАЦИНАМИД",
+                            NameEN = "MOISTURIZING CREAM WITH ROSE BODY AND NIACINAMIDE",
+                            NameRO = "CREMA HIDRATANTE CU CORP DE TRANDAFIRI SI NIACINAMIDA"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            NameBG = "ДВУФАЗНА МИЦЕЛАРНА ВОДА ЗЕЛЕН ЧАЙ И ЖОЖОБА",
+                            NameEN = "TWO PHASE GREEN TEA AND JOJOBA MICELLAR WATER",
+                            NameRO = "CEAI VERDE BIFAZICAL ȘI APA MICELARĂ DE JOJOBA"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            NameBG = "НАТУРАЛЕН КРЕМ ДЕЗОДОРАНТ",
+                            NameEN = "NATURAL CREAM DEODORANT",
+                            NameRO = "DEODORANT CREMA NATURAL"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            NameBG = "СЕРУМ МАСЛО С ШИПКА, ЖОЖОБА, АРГАН И ЯГОДОВИ СЕМКИ",
+                            NameEN = "SERUM OIL WITH ROSE BODY, JOJOBA, ARGAN AND STRAWBERRY SEEDS",
+                            NameRO = "ULEI DE SER CU CORP DE TRANDAFIRI, SEMINTE DE JOJOBA, ARGAN SI CAPSUNI"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            NameBG = "",
+                            NameEN = "",
+                            NameRO = ""
+                        });
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ProductOptional", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("OptionalBG")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasComment("The product's optional in Bulgarian");
+
+                    b.Property<string>("OptionalEN")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasComment("The product's optional in English");
+
+                    b.Property<string>("OptionalRO")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasComment("The product's optional in Romanian");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductOptionals");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            OptionalBG = "Тегло:  25 г.",
+                            OptionalEN = "Weight:  25 g.",
+                            OptionalRO = "Greutate:  25 g."
+                        },
+                        new
+                        {
+                            Id = 2,
+                            OptionalBG = "Тегло:  5 г.",
+                            OptionalEN = "Weight:  5 g.",
+                            OptionalRO = "Greutate:  5 g."
+                        },
+                        new
+                        {
+                            Id = 3,
+                            OptionalBG = "Тегло:  50 г.",
+                            OptionalEN = "Weight:  50 g.",
+                            OptionalRO = "Greutate:  50 g."
+                        },
+                        new
+                        {
+                            Id = 4,
+                            OptionalBG = "Тегло:  100 мл.",
+                            OptionalEN = "Weight:  100 ml.",
+                            OptionalRO = "Greutate:  100 ml."
+                        },
+                        new
+                        {
+                            Id = 5,
+                            OptionalBG = "Тегло:  50 г.",
+                            OptionalEN = "Weight:  50 g.",
+                            OptionalRO = "Greutate:  50 g."
+                        },
+                        new
+                        {
+                            Id = 6,
+                            OptionalBG = "Тегло:  20 мл.",
+                            OptionalEN = "Weight:  20 ml.",
+                            OptionalRO = "Greutate:  20 ml."
+                        },
+                        new
+                        {
+                            Id = 7,
+                            OptionalBG = "",
+                            OptionalEN = "",
+                            OptionalRO = ""
+                        });
+                });
+
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ProductOrder", b =>
                 {
                     b.Property<int>("ProductId")
@@ -1064,81 +1569,33 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             ProductId = 1,
                             OrderId = 1,
-                            ImagePath = "",
-                            Price = 0m,
-                            Quantity = 0
+                            ImagePath = "/files/products/product-01-image-01.webp",
+                            Price = 5.00m,
+                            Quantity = 2
                         },
                         new
                         {
                             ProductId = 1,
                             OrderId = 2,
-                            ImagePath = "",
-                            Price = 0m,
-                            Quantity = 0
+                            ImagePath = "/files/products/product-01-image-01.webp",
+                            Price = 5.50m,
+                            Quantity = 3
                         },
                         new
                         {
                             ProductId = 2,
                             OrderId = 1,
-                            ImagePath = "",
-                            Price = 0m,
-                            Quantity = 0
+                            ImagePath = "/files/products/product-02-image-01.webp",
+                            Price = 6.50m,
+                            Quantity = 4
                         },
                         new
                         {
                             ProductId = 3,
                             OrderId = 1,
-                            ImagePath = "",
-                            Price = 0m,
-                            Quantity = 0
-                        },
-                        new
-                        {
-                            ProductId = 3,
-                            OrderId = 2,
-                            ImagePath = "",
-                            Price = 0m,
-                            Quantity = 0
-                        },
-                        new
-                        {
-                            ProductId = 4,
-                            OrderId = 1,
-                            ImagePath = "",
-                            Price = 0m,
-                            Quantity = 0
-                        },
-                        new
-                        {
-                            ProductId = 5,
-                            OrderId = 2,
-                            ImagePath = "",
-                            Price = 0m,
-                            Quantity = 0
-                        },
-                        new
-                        {
-                            ProductId = 6,
-                            OrderId = 1,
-                            ImagePath = "",
-                            Price = 0m,
-                            Quantity = 0
-                        },
-                        new
-                        {
-                            ProductId = 6,
-                            OrderId = 2,
-                            ImagePath = "",
-                            Price = 0m,
-                            Quantity = 0
-                        },
-                        new
-                        {
-                            ProductId = 7,
-                            OrderId = 1,
-                            ImagePath = "",
-                            Price = 0m,
-                            Quantity = 0
+                            ImagePath = "/files/products/product-03-image-01.webp",
+                            Price = 5.50m,
+                            Quantity = 3
                         });
                 });
 
@@ -1159,10 +1616,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Property<DateTime?>("AppliedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasComment("Promo Code");
+                    b.Property<int>("CodeId")
+                        .HasColumnType("int")
+                        .HasComment("Promo Code Id");
 
                     b.Property<decimal>("Discount")
                         .HasColumnType("decimal(18,2)")
@@ -1176,6 +1632,8 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     b.HasIndex("AppUserId");
 
+                    b.HasIndex("CodeId");
+
                     b.ToTable("PromoCodes", t =>
                         {
                             t.HasComment("Promo Code for one User");
@@ -1186,17 +1644,65 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = 1,
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                            Code = "-10 % за регистрация",
+                            CodeId = 1,
                             Discount = 0.1m,
-                            ExpirationDate = new DateTime(2025, 4, 16, 17, 44, 34, 518, DateTimeKind.Utc).AddTicks(7104)
+                            ExpirationDate = new DateTime(2025, 4, 27, 15, 9, 5, 332, DateTimeKind.Utc).AddTicks(2653)
                         },
                         new
                         {
                             Id = 2,
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
-                            Code = "-20 % отстъпка",
+                            CodeId = 2,
                             Discount = 0.2m,
-                            ExpirationDate = new DateTime(2025, 4, 16, 17, 44, 34, 518, DateTimeKind.Utc).AddTicks(7123)
+                            ExpirationDate = new DateTime(2025, 4, 27, 15, 9, 5, 332, DateTimeKind.Utc).AddTicks(2662)
+                        });
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.PromoCodeName", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("Promo code name id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("NameBG")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("The promo code name in Bulgarian");
+
+                    b.Property<string>("NameEN")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("The promo code name in English");
+
+                    b.Property<string>("NameRO")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("The promo code name in Romanian");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PromoCodeNames");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            NameBG = "-10 % за регистрация",
+                            NameEN = "-10 % for registration",
+                            NameRO = "-10 % pentru inregistrare"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            NameBG = "-20 % отстъпка",
+                            NameEN = "-20 % discount",
+                            NameRO = "-20 % reducere"
                         });
                 });
 
@@ -1243,7 +1749,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 2,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 4, 16, 20, 44, 34, 518, DateTimeKind.Local).AddTicks(5793),
+                            CreatedOn = new DateTime(2024, 4, 27, 18, 9, 5, 332, DateTimeKind.Local).AddTicks(1818),
                             Rating = 4,
                             Title = "Great product"
                         },
@@ -1252,7 +1758,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 3,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 4, 16, 20, 44, 34, 518, DateTimeKind.Local).AddTicks(5867),
+                            CreatedOn = new DateTime(2024, 4, 27, 18, 9, 5, 332, DateTimeKind.Local).AddTicks(1897),
                             Rating = 3,
                             Title = "Great product"
                         },
@@ -1261,7 +1767,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 4,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 4, 16, 20, 44, 34, 518, DateTimeKind.Local).AddTicks(5873),
+                            CreatedOn = new DateTime(2024, 4, 27, 18, 9, 5, 332, DateTimeKind.Local).AddTicks(1901),
                             Rating = 3,
                             Title = "Great product"
                         });
@@ -1276,11 +1782,9 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(1500)
-                        .HasColumnType("nvarchar(1500)")
-                        .HasComment("The section's description");
+                    b.Property<int>("DescriptionId")
+                        .HasColumnType("int")
+                        .HasComment("The section's description Id");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int")
@@ -1290,15 +1794,17 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasComment("The section's order in page");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasComment("The section's title");
+                    b.Property<int>("TitleId")
+                        .HasColumnType("int")
+                        .HasComment("The section's title Id");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DescriptionId");
+
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("TitleId");
 
                     b.ToTable("Sections", t =>
                         {
@@ -1309,242 +1815,838 @@ namespace LilsCareApp.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Нежен, изцяло натурален и ръчно изработен сух дезодорант. Подходящ за ежедневна употреба.\r\n \r\nБез парфюм и без етерични масла.\r\n \r\nВ нов твърд вариант за по-лесна употеба и нансяне дирктно.\r\n \r\nИли може да използвате стара опаковка от стик дезодорант, за да разтопите блокчето за удобна ежедневна употреба.\r\n \r\nСрежете блокчето на парченца и ги сложете в стик опаковка. Иползвайте микровълнова фурна на ниска температура и за картки интервали докато блокечето се разтопи. Оставете да изстине и стегне и готово!\r\n \r\nАко не разполагате с микровълнова фурна, може да го разтопите на водна баня в стик. Увийете плътно стик опковката със стреч фолио, за да не влиза вода в опковката и при продукта.\r\n \r\n100% натурален\r\n10 % от България\r\n78.4% био",
+                            DescriptionId = 1,
                             ProductId = 1,
                             SectionOrder = 1,
-                            Title = "ОПИСАНИЕ"
+                            TitleId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Description = "Сухите съставки като био тапиока поддържат подмишниците сухи през деня.\r\nВитамин Е има антиоксидантен ефект.\r\nКокосово масло, масло от ший (карите) и пчелен восък.",
+                            DescriptionId = 2,
                             ProductId = 1,
                             SectionOrder = 2,
-                            Title = "ЗА СЪСТАВКИТЕ"
+                            TitleId = 2
                         },
                         new
                         {
                             Id = 3,
-                            Description = "Вземете блокчето от кутийката и намажете подмишничите.\r\n \r\nИли внимателно го разтопете в опаковка за стик дезодорант за по-лесна и удобна ежедневна употреба.\r\n \r\nМоже да преизползвате стара опаковка от предишен дезодорант.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено на сухо място, защитено от пряка слънчева светлина.",
+                            DescriptionId = 3,
                             ProductId = 1,
                             SectionOrder = 3,
-                            Title = "УПОТРЕБА"
+                            TitleId = 3
                         },
                         new
                         {
                             Id = 4,
-                            Description = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.",
+                            DescriptionId = 4,
                             ProductId = 1,
                             SectionOrder = 4,
-                            Title = "ИЗПАЩАНЕ И ДОСТАВКА"
+                            TitleId = 4
                         },
                         new
                         {
                             Id = 5,
-                            Description = "Cocos Nucifera (Coconut) Oil*, Tapioca Starch*, Butyrospermum Parkii (Shea) Butter*, Cera Alba (Beeswax), Glyceryl Stearate, Sodium Bicarbonate, Tocopherol (Vit E), Helianthus Annuus (Sunflower) Seed Oil* \r\n*Bio",
+                            DescriptionId = 5,
                             ProductId = 1,
                             SectionOrder = 5,
-                            Title = "СЪСТАВ, INCI"
+                            TitleId = 5
                         },
                         new
                         {
                             Id = 6,
-                            Description = "Изцяло натурален и ръчно изработен балсам за устни, който носи усещане за уют и мекота. Създаден да е нежен и защитаващ.\r\n \r\nБио какаово масло\r\nЕстствен каков аромат\r\nКомбиниран с натурално масло от ванилия\r\nПчелен восък\r\n \r\nВ два варианта:\r\nЛек и блестящ прозрачен цвят\r\nИзцяло безцветен\r\n \r\nОбогатен с витамин Е и био масло от жожоба.\r\n \r\n100% натурален\r\n49% от България\r\n41% био",
+                            DescriptionId = 6,
                             ProductId = 2,
                             SectionOrder = 1,
-                            Title = "ОПИСАНИЕ"
+                            TitleId = 6
                         },
                         new
                         {
                             Id = 7,
-                            Description = "Какаовото масло* придава лек и естествен шоколадов аромат и предпазва устните.\r\n \r\nМаслото от жожоба* ги подхранва.\r\n \r\nПчелния восък* защитава устните, прави балсама траен както върху устните така и в тубичката да не свършва бързо. Придава усещане за възглванича и мекота върху устните.\r\n \r\nВитамин Е - натурален антиоксидант, който защитава от вредните влияния от околната среда.\r\n \r\n*Био 41% от състава",
+                            DescriptionId = 7,
                             ProductId = 2,
                             SectionOrder = 2,
-                            Title = "ЗА СЪСТАВКИТЕ"
+                            TitleId = 7
                         },
                         new
                         {
                             Id = 8,
-                            Description = "Изцяло натурален, може да използвате винаги когато искате да подхраните и защитите устните си или просто да им придадете лек блясък за завършен вид на визията си.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте със затворено капаче, на сухо място и защитено от пряка слънчева светлина.",
+                            DescriptionId = 8,
                             ProductId = 2,
                             SectionOrder = 3,
-                            Title = "УПОТРЕБА"
+                            TitleId = 8
                         },
                         new
                         {
                             Id = 9,
-                            Description = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.",
+                            DescriptionId = 9,
                             ProductId = 2,
                             SectionOrder = 4,
-                            Title = "ИЗПАЩАНЕ И ДОСТАВКА"
+                            TitleId = 9
                         },
                         new
                         {
                             Id = 10,
-                            Description = "Apricot Kernel Oil (масло от кайсиеви ядки), Theobroma Cacao Seed Butter (какаово масло)*, Copernicia Cerifera Cera (Карнаубски восък, веган)*, Simmondsia Chinensis Seed Oil (масло от жожоба)*, Helianthus Annuus Seed Oil (слънчогледово масло), Vanilla Planifolia Fruit Extract (екстракт от шушулки ванилия), Mica**, CI 77491 (Iron Oxide)**, Tocopherol (витамин E).\r\n*Био 49% **Минерални пигменти 1%",
+                            DescriptionId = 10,
                             ProductId = 2,
                             SectionOrder = 5,
-                            Title = "СЪСТАВ, INCI"
+                            TitleId = 10
                         },
                         new
                         {
                             Id = 11,
-                            Description = "",
+                            DescriptionId = 11,
                             ProductId = 3,
                             SectionOrder = 1,
-                            Title = "ОПИСАНИЕ"
+                            TitleId = 11
                         },
                         new
                         {
                             Id = 12,
-                            Description = "Българско студено пресовано масло от шипка* - натурален източник на витамин А, подхранва и стимулура регенерирнето на кожата.\r\n \r\nЕкстракт от шипка - ботанически глицернов екстракт, който в този крем е чъдесна комбинация с маслото от шипка.\r\n \r\nМасло от ший* - Най-лекото и с най-нисък комедогенен рейтинг (0-2) от всички твърди масла. Това означава, че има ниска вероятност да запуши порите като скалата е от 0 до 5.\r\n \r\nВитамин B3 - ниацинамид - антиоксидант, който изравнява тена, регулира себума, помага худратацията и изглажда финни бръчки. Наистирна звучи неверояно, a е доакзрно.\r\n \r\nВитамин Е - има ефективо и естетвено антиоксидантно действие:  забвя стареенето като помага за възстановяването на кожата и я предпазва от свободните радикали и вредите от околната среда.\r\n \r\nРастителни глицерин и хиалурон - хумектанти - привличат водата и хидратират кожата. Ключова е концентрацията! Твърде много от тях могат да изсушат кожата, като започнат да издърпват влагата от по-дълбоките слоеве на кожата, когато въздуха е сух. Важен е баланса между вода и хумектанти в продукта.\r\n \r\n*Био",
+                            DescriptionId = 12,
                             ProductId = 3,
                             SectionOrder = 2,
-                            Title = "ЗА СЪСТАВКИТЕ"
+                            TitleId = 12
                         },
                         new
                         {
                             Id = 13,
-                            Description = "Нанесете върху суха или влажна кожа. Малко количество е достатъчно за цялото лице и шия. Използвайте 1-2 пъти дневно според необходимостта и сухотата на кожата.\r\n \r\nМоже да нансете върху влажна кожа, например след душ и измивен гел, за да заключите хидратацията.\r\n \r\nИли върхъ суха кожа, за да я защитите.\r\n \r\nНанасяйте върху добре почистена кожа с чисти ръце. Само за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено, на сухо място, защитено от пряка слънчева светлина.",
+                            DescriptionId = 13,
                             ProductId = 3,
                             SectionOrder = 3,
-                            Title = "УПОТРЕБА"
+                            TitleId = 13
                         },
                         new
                         {
                             Id = 14,
-                            Description = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.",
+                            DescriptionId = 14,
                             ProductId = 3,
                             SectionOrder = 4,
-                            Title = "ИЗПАЩАНЕ И ДОСТАВКА"
+                            TitleId = 14
                         },
                         new
                         {
                             Id = 15,
-                            Description = "Aqua (Вода), Rosa Canina Seed Oil* (масло от шипка, 10%) , Butyrospermum Parkii Butter* (масло от ший/карите), Glycerin (глицерин), Rosa Canina Fruit Extract (екстракт от шипка), Niacinamide (витамин B3), Cetearyl Olivate, Sorbitan Olivate (емулгатори), Sodium Hyaluronate (хиалуронова киселина), Tocopherol (витамин E), Helianthus Annuus (Слънчоглед) Seed Oil*, Sodium Benzoate, Potassium Sorbate (консерванти), Lactic Acid (млечна киселина, AHA, регулира pH на продукта).\r\n*Bio",
+                            DescriptionId = 15,
                             ProductId = 3,
                             SectionOrder = 5,
-                            Title = "СЪСТАВ, INCI"
+                            TitleId = 15
                         },
                         new
                         {
                             Id = 16,
-                            Description = "Натурална мицеларна вода с два компонента. Разклатете преди употреба, за да се смесят двете фази. Идеална е за нежното отстраняване на грима в края на деня.\r\n \r\nИма двойно действие е като тоник за лице с екстракт от зелен чай и витамин Е.\r\n \r\nФаза 1 е изключително нежна. Има успокояващо и антиоксидантно действие благодарение на екстракта от зелен чай, сквален и пантенол (провитамин B3).\r\n \r\nФаза 2 е с био масло от жожоба и допринся за разтврянето на грима. Оставя кожата мека, подхранена и защитена.\r\n \r\nВ удобно шишенце с попма за лесно използване.\r\n \r\n100% натурална\r\n94% от България",
+                            DescriptionId = 16,
                             ProductId = 4,
                             SectionOrder = 1,
-                            Title = "ОПИСАНИЕ"
+                            TitleId = 16
                         },
                         new
                         {
                             Id = 17,
-                            Description = "Екстракт от зелен чай - антиоксидантно и успокояващо действе, помага против появата на акне\r\n \r\nБио масло от Жожоба - помага за нежното разтваряне на грима и подхранва кожата\r\n \r\nВитамин Е - антиоксидант, успокоява раздразненията, бори се със свободните радикали и забавя стареенето на кожата\r\n \r\nПантенол - провитамин B5 - с растителен прозход. Хидратира и подхранва\r\n \r\nЕтерично масло грейпфрут - лек цитрусов аромат",
+                            DescriptionId = 17,
                             ProductId = 4,
                             SectionOrder = 2,
-                            Title = "ЗА СЪСТАВКИТЕ"
+                            TitleId = 17
                         },
                         new
                         {
                             Id = 18,
-                            Description = "Разклаете преди употреба.\r\n \r\nМоже да използвате винаги, когато искате нежно да премахнете грима. Разклатете преди употреба и напоете памучно тампонче. Нежно притиснете към кожата, за да се намокри и да започне да разтваря грима. След това отстранете грима с леки движения от центъра на лицето към страните.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте на сухо място, защитено от пряка слънчева светлина.",
+                            DescriptionId = 18,
                             ProductId = 4,
                             SectionOrder = 3,
-                            Title = "УПОТРЕБА"
+                            TitleId = 18
                         },
                         new
                         {
                             Id = 19,
-                            Description = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.",
+                            DescriptionId = 19,
                             ProductId = 4,
                             SectionOrder = 4,
-                            Title = "ИЗПАЩАНЕ И ДОСТАВКА"
+                            TitleId = 19
                         },
                         new
                         {
                             Id = 20,
-                            Description = "Aqua, Vitis Vinifera (Grape) Seed Oil, Camellia Sinensis (Green Tea) Leaf Extract,  Glycerin, Caprylic / Capric Triglycerides (Fractioned Coconut Oil), Simmondsia Chinensis (Jojoba) Seed Oil*, D-panthenol (Provitamin B5, plant-based), Coco Glucoside, Squalane, Sodium Surfactin, Tocopherol (Vit E), Helianthus Annuus (Sunflower) Seed Oil*, Potassium Sorbate, Sodium Benzoate, Benzyl Alcohol, Citric Acid, Citrus Paradisi (Grapefruit) Peel Oil, Limonene, Citral, Linalool.\r\n*Био",
+                            DescriptionId = 20,
                             ProductId = 4,
                             SectionOrder = 5,
-                            Title = "СЪСТАВ, INCI"
+                            TitleId = 20
                         },
                         new
                         {
                             Id = 21,
-                            Description = "Нежен, изцяло натурален и ръчно изработен дезодорант. Подходящ за ежедневна употреба. Етеричните масла от сладък портокал и евкалипт придват лек цитрусов аромат.\r\n \r\nИзбрахме точно тези етерични масла не само заради приятния аромат. Те притежават и по-добър антибактериален фект спрямо повечето етерични масла. Дори пречат на развитието и на различни видове гъбички. Това ознчава, че натурално може да намали лошата миризма при потене, която е причинена от бактериите под мишниците.\r\n \r\n100% натурален\r\n45.7 % от България\r\n44.5% био",
+                            DescriptionId = 21,
                             ProductId = 5,
                             SectionOrder = 1,
-                            Title = "ОПИСАНИЕ"
+                            TitleId = 21
                         },
                         new
                         {
                             Id = 22,
-                            Description = "Етеричните масла от сладък портокал и евкалипт придават свеж, леко ментов цитрусов аромат и имат антибактериален ефект.\r\n \r\nСухите съставки като био тапиока поддържат подмишниците сухи през деня.\r\n \r\nВитамин Е има антиоксидантен ефект.\r\n \r\nА цялата комбинация от съставки държи неприятните миризми далеч.",
+                            DescriptionId = 22,
                             ProductId = 5,
                             SectionOrder = 2,
-                            Title = "ЗА СЪСТАВКИТЕ"
+                            TitleId = 22
                         },
                         new
                         {
                             Id = 23,
-                            Description = "Вземете на върха на пръстите много малко количесто (по-малко дори от грахово зрънце), леко го затоплете между пръстите и разнесете добре подмишниците.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено на сухо място, защитено от пряка слънчева светлина.",
+                            DescriptionId = 23,
                             ProductId = 5,
                             SectionOrder = 3,
-                            Title = "УПОТРЕБА"
+                            TitleId = 23
                         },
                         new
                         {
                             Id = 24,
-                            Description = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.",
+                            DescriptionId = 24,
                             ProductId = 5,
                             SectionOrder = 4,
-                            Title = "ИЗПАЩАНЕ И ДОСТАВКА"
+                            TitleId = 24
                         },
                         new
                         {
                             Id = 25,
-                            Description = "Vitis Vinifera (Grape) Seed Oil, Tapioca Starch*, Theobroma Cacao (Cocoa) Seed Butter*, Copernicia Cerifera Cera (Carnauba Wax)*, Sodium Bicarbonate, Glyceryl Stearate, Citrus Sinensis (Orange) Peel Oil*, Eucalyptus Globulus Leaf Oil*, Limonene**, Linalool**, Citral**, Tocopherol (Vit E), Helianthus Annuus (Sunflower) Seed Oil*\r\n*Bio\r\n**Компоненти на етерини масла",
+                            DescriptionId = 25,
                             ProductId = 5,
                             SectionOrder = 5,
-                            Title = "СЪСТАВ, INCI"
+                            TitleId = 25
                         },
                         new
                         {
                             Id = 26,
-                            Description = "Създаден, за да се поглезите - с био масла от: шипка, ягодови семки, арган и жожба. Подхранва и защитава кожата. Запазва хидратацията като предпазва кожата от загуба на вода и я оставя мека и гладка.\r\n \r\nОбогатен с витамин Е за добър антиоксидантен ефект, който предпазва клетките от вредното въздействие отоколната среда, свободните радикали и оксидативни процеси. По този начин поддържа кожата млада и елстична.\r\n \r\nМаслото от шипка е натурален източник на витамин А. Аргановото масло и маслото от ягодови семки подхранват кожата, а маслото от жожоба съдържа натурални серамиди, подсилват кожната бариера и заздравяват връзките между клетките.\r\n\r\nНекомедогенен.\r\nНай-подходящ за суха кожа.\r\nИли като защита след по-изтощаваща рутина, напр. след химичен пилинг.\r\nПодхранва, заздравява и защитава кожната бариера.\r\n \r\nИзползвате няколко капки върху суха или влажна кожа (на пример след душ) или след хидратиращ лосион, за да 'заклчючите' хидратацията и да защитите кожата. \r\n \r\n100% натурален\r\n80% от България\r\n31% био",
+                            DescriptionId = 26,
                             ProductId = 6,
                             SectionOrder = 1,
-                            Title = "ОПИСАНИЕ"
+                            TitleId = 26
                         },
                         new
                         {
                             Id = 27,
-                            Description = "Масло от шипка - помога ревитализирането на кожата \r\nМасло от ягодови семки - хидратира в дълбочина и има протививъзвпалителен ефект\r\nМасло от жожоба* - натурално съдържа над 95% серамиди, подхранва кожата и заздравява кожната бариера\r\nАрганово масло* - подхранва, защитава и подобрява хидратацията и еластичносттна на кожата\r\nМсла от мандарина и иланг-иланг* - придават лек, свеж и релаксиращ аромат, за да се насладите максимално на момента в грижа за кожата\r\nВитамин Е* - антиоксидант - успокоява раздразнената кожа и забавя страеенето като бори се със свободните радикали, UV уверждането и процесите на оксидация\r\n*Био",
+                            DescriptionId = 27,
                             ProductId = 6,
                             SectionOrder = 2,
-                            Title = "ЗА СЪСТАВКИТЕ"
+                            TitleId = 27
                         },
                         new
                         {
                             Id = 28,
-                            Description = "Например след лек хидратиращ лосион, за да заключи хидратацията и полезните съставки.\r\nДиректно върху влажна кожа за по-добро абсорбиране и защита.\r\nИли върху суха кожа, за да предотврати трансепидеррмалната загуба на вода от кожата.\r\n \r\nПодходящ за защита на кожата в края на рутината. Комбинира се добре след ексфолиращи и/или хидратиращи продукти.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Използвайте с чисти ръце и кожа. Съхранявайте добре затворено, на сухо място, защитено от пряка слънчева светлина.",
+                            DescriptionId = 28,
                             ProductId = 6,
                             SectionOrder = 3,
-                            Title = "УПОТРЕБА"
+                            TitleId = 28
                         },
                         new
                         {
                             Id = 29,
-                            Description = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.",
+                            DescriptionId = 29,
                             ProductId = 6,
                             SectionOrder = 4,
-                            Title = "ИЗПАЩАНЕ И ДОСТАВКА"
+                            TitleId = 29
                         },
                         new
                         {
                             Id = 30,
-                            Description = "Vitis Vinifera Seed Oil (масло от гроздови смеки), Rosa Canina Seed Oil (българско студенпресовно био масло от семената на шипка)*, Fragaria Ananassa Seed Oil (студенопресовано масло от семки на ягода), Argania Spinosa Kernel Oil (арганово масло)*, Simmondsia Chinensis Seed Oil (масло от жожоба)*, Tocopherol (Витамин E), Helianthus Annuus Seed Oil (Слънчогледово масло <0,2%) *,  Citrus Reticulata Oil (Етерично масло от мандарина) , Limonene**, Linalool**, Cananga Odorata flower Oil (Етерично масло от Иланг Иланф) *.\r\n*Био, 31%\r\n**Компоненети на етерични масла",
+                            DescriptionId = 30,
                             ProductId = 6,
                             SectionOrder = 5,
-                            Title = "СЪСТАВ, INCI"
+                            TitleId = 30
+                        },
+                        new
+                        {
+                            Id = 31,
+                            DescriptionId = 31,
+                            ProductId = 7,
+                            SectionOrder = 1,
+                            TitleId = 31
+                        },
+                        new
+                        {
+                            Id = 32,
+                            DescriptionId = 32,
+                            ProductId = 7,
+                            SectionOrder = 2,
+                            TitleId = 32
+                        },
+                        new
+                        {
+                            Id = 33,
+                            DescriptionId = 33,
+                            ProductId = 7,
+                            SectionOrder = 3,
+                            TitleId = 33
+                        },
+                        new
+                        {
+                            Id = 34,
+                            DescriptionId = 34,
+                            ProductId = 7,
+                            SectionOrder = 4,
+                            TitleId = 34
+                        },
+                        new
+                        {
+                            Id = 35,
+                            DescriptionId = 35,
+                            ProductId = 7,
+                            SectionOrder = 5,
+                            TitleId = 35
+                        });
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.SectionDescription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("DescriptionBG")
+                        .IsRequired()
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)")
+                        .HasComment("The section's description in Bulgarian");
+
+                    b.Property<string>("DescriptionEN")
+                        .IsRequired()
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)")
+                        .HasComment("The section's description in English");
+
+                    b.Property<string>("DescriptionRO")
+                        .IsRequired()
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)")
+                        .HasComment("The section's description in Romanian");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SectionDescriptions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DescriptionBG = "Нежен, изцяло натурален и ръчно изработен сух дезодорант. Подходящ за ежедневна употреба.\r\n \r\nБез парфюм и без етерични масла.\r\n \r\nВ нов твърд вариант за по-лесна употеба и нансяне дирктно.\r\n \r\nИли може да използвате стара опаковка от стик дезодорант, за да разтопите блокчето за удобна ежедневна употреба.\r\n \r\nСрежете блокчето на парченца и ги сложете в стик опаковка. Иползвайте микровълнова фурна на ниска температура и за картки интервали докато блокечето се разтопи. Оставете да изстине и стегне и готово!\r\n \r\nАко не разполагате с микровълнова фурна, може да го разтопите на водна баня в стик. Увийете плътно стик опковката със стреч фолио, за да не влиза вода в опковката и при продукта.\r\n \r\n100% натурален\r\n10 % от България\r\n78.4% био",
+                            DescriptionEN = "Gentle, all-natural and handmade dry deodorant. Suitable for daily use.\r\n \r\nNo perfume and no essential oils.\r\n \r\nIn a new hard version for easier application and direct application.\r\n \r\nOr you can use an old deodorant stick pack to melt the bar for convenient daily use.\r\n \r\nCut the bar into pieces and put them in a stick pack. And microwave on low and for short intervals until the block melts. Let it cool and harden and it's done!\r\n \r\nIf you don't have a microwave, you can melt it in a water bath in a stick. Wrap the stick fitting tightly with stretch film to prevent water from entering the fitting and the product.\r\n \r\n100% natural\r\n10% from Bulgaria\r\n78.4% organic",
+                            DescriptionRO = "Deodorant uscat blând, natural și realizat manual. Potrivit pentru utilizarea zilnică.\r\n \r\nFără parfum și fără uleiuri esențiale.\r\n \r\nÎntr-o nouă versiune hard pentru aplicare mai ușoară și aplicare directă.\r\n \r\nSau puteți utiliza un pachet vechi de deodorant pentru a topi batonul pentru o utilizare zilnică convenabilă.\r\n \r\nTăiați batonul în bucăți și puneți-le într-un pachet de bețișoare. Și puneți la microunde la foc mic și pentru intervale scurte până când blocul se topește. Se lasa sa se raceasca si sa se intareasca si gata!\r\n \r\nDaca nu ai cuptor cu microunde il poti topi in baie de apa intr-un bat. Înveliți strâns garnitura cu folie extensibilă pentru a preveni intrarea apei în fiting și în produs.\r\n \r\n100% natural\r\n10% din Bulgaria\r\n78,4% organic"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DescriptionBG = "Сухите съставки като био тапиока поддържат подмишниците сухи през деня.\r\nВитамин Е има антиоксидантен ефект.\r\nКокосово масло, масло от ший (карите) и пчелен восък.",
+                            DescriptionEN = "Dry ingredients such as organic tapioca keep the underarms dry during the day.\r\nVitamin E has an antioxidant effect.\r\nCoconut oil, shea butter and beeswax.",
+                            DescriptionRO = "Ingredientele uscate precum tapioca organică mențin axile uscate în timpul zilei.\r\nVitamina E are efect antioxidant.\r\nUleiul de cocos, untul de shea și ceara de albine."
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DescriptionBG = "Вземете блокчето от кутийката и намажете подмишничите.\r\n \r\nИли внимателно го разтопете в опаковка за стик дезодорант за по-лесна и удобна ежедневна употреба.\r\n \r\nМоже да преизползвате стара опаковка от предишен дезодорант.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено на сухо място, защитено от пряка слънчева светлина.",
+                            DescriptionEN = "Take the stick out of the box and apply to your underarms.\r\n \r\nOr gently melt it into a deodorant stick pack for easier and more convenient daily use.\r\n \r\nYou can reuse an old pack from a previous deodorant.\r\n r\n \r\nFor external use only. Keep out of reach of children. Do not use if allergic to any of the ingredients. Store tightly closed in a dry place protected from direct sunlight.",
+                            DescriptionRO = "Scoateți batonul din cutie și aplicați-l pe axile.\r\n \r\nSau topește-l ușor într-un pachet de deodorant pentru o utilizare zilnică mai ușoară și mai convenabilă.\r\n \r\nPuteți reutiliza un pachet vechi. dintr-un deodorant anterior.\r\n r\n \r\nNumai pentru uz extern. A nu se lăsa la îndemâna copiilor. A nu se utiliza dacă este alergic la oricare dintre ingrediente. A se pastra bine inchis intr-un loc uscat ferit de lumina directa a soarelui."
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DescriptionBG = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.",
+                            DescriptionEN = "Once a shipping address or Econt or Speedy courier office is specified in the address fields when ordering, products are carefully packed in a recycled cardboard box and paper padding for a seal and sent by inspected delivery.",
+                            DescriptionRO = "Odată ce o adresă de expediere sau un birou de curierat Econt sau Speedy este specificată în câmpurile de adresă în momentul comenzii, produsele sunt ambalate cu grijă într-o cutie de carton reciclat și căptușeală de hârtie pentru sigilare și trimise prin livrare inspectată."
+                        },
+                        new
+                        {
+                            Id = 5,
+                            DescriptionBG = "Cocos Nucifera (Coconut) Oil*, Tapioca Starch*, Butyrospermum Parkii (Shea) Butter*, Cera Alba (Beeswax), Glyceryl Stearate, Sodium Bicarbonate, Tocopherol (Vit E), Helianthus Annuus (Sunflower) Seed Oil* \r\n*Bio",
+                            DescriptionEN = "Cocos Nucifera (Coconut) Oil*, Tapioca Starch*, Butyrospermum Parkii (Shea) Butter*, Cera Alba (Beeswax), Glyceryl Stearate, Sodium Bicarbonate, Tocopherol (Vit E), Helianthus Annuus (Sunflower) Seed Oil* \r\n*Bio",
+                            DescriptionRO = "Cocos Nucifera (Coconut) Oil*, Tapioca Starch*, Butyrospermum Parkii (Shea) Butter*, Cera Alba (Beeswax), Glyceryl Stearate, Sodium Bicarbonate, Tocopherol (Vit E), Helianthus Annuus (Sunflower) Seed Oil* \r\n*Bio"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            DescriptionBG = "Изцяло натурален и ръчно изработен балсам за устни, който носи усещане за уют и мекота. Създаден да е нежен и защитаващ.\r\n \r\nБио какаово масло\r\nЕстствен каков аромат\r\nКомбиниран с натурално масло от ванилия\r\nПчелен восък\r\n \r\nВ два варианта:\r\nЛек и блестящ прозрачен цвят\r\nИзцяло безцветен\r\n \r\nОбогатен с витамин Е и био масло от жожоба.\r\n \r\n100% натурален\r\n49% от България\r\n41% био",
+                            DescriptionEN = "An all-natural and hand-crafted lip balm that feels cozy and soft. Designed to be gentle and protective.\r\n \r\nOrganic Cocoa Butter\r\nNatural what a fragrance\r\nCombined with natural vanilla butter\r\nBeeswax\r\n \r\nIn two variants:\r \nLight and shiny transparent color\r\nCompletely colorless\r\n \r\nEnriched with vitamin E and organic jojoba oil.\r\n \r\n100% natural\r\n49% from Bulgaria\r\n41% bio",
+                            DescriptionRO = "Un balsam de buze natural și realizat manual, care se simte confortabil și moale. Conceput să fie blând și protector.\r\n \r\nUnt de cacao organic\r\nNatural ce parfum\r\nCombinat cu unt natural de vanilie\r\nCeară de albine\r\n \r\nÎn două variante:\r\nCuloare transparentă deschisă și strălucitoare\r\nComplet incolor\r\n \r\nÎmbogățit cu vitamina E și ulei organic de jojoba.\r\n \r\n100% natural\r\n49% din Bulgaria\r\n41% bio"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            DescriptionBG = "Какаовото масло* придава лек и естествен шоколадов аромат и предпазва устните.\r\n \r\nМаслото от жожоба* ги подхранва.\r\n \r\nПчелния восък* защитава устните, прави балсама траен както върху устните така и в тубичката да не свършва бързо. Придава усещане за възглванича и мекота върху устните.\r\n \r\nВитамин Е - натурален антиоксидант, който защитава от вредните влияния от околната среда.\r\n \r\n*Био 41% от състава",
+                            DescriptionEN = "Cocoa butter* gives a light and natural chocolate aroma and protects the lips.\r\n \r\nJojoba oil* nourishes them.\r\n \r\nBeeswax* protects the lips, makes the balm last both on the lips and in the tube not to end quickly. Gives a feeling of cushion and softness on the lips.\r\n \r\nVitamin E - a natural antioxidant that protects against harmful environmental influences.\r\n \r\n*Bio 41% of the composition",
+                            DescriptionRO = "Untul de cacao* confera o aroma usoara si naturala de ciocolata si protejeaza buzele.\r\n \r\nUleiul de jojoba* le hraneste.\r\n \r\nCera de albine* protejeaza buzele, face ca balsamul sa reziste atat pe buze cat si în tub să nu se termine repede. Oferă o senzație de perniță și catifelare pe buze.\r\n \r\nVitamina E - un antioxidant natural care protejează împotriva influențelor nocive ale mediului.\r\n \r\n*Bio 41% din compoziție"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            DescriptionBG = "Изцяло натурален, може да използвате винаги когато искате да подхраните и защитите устните си или просто да им придадете лек блясък за завършен вид на визията си.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте със затворено капаче, на сухо място и защитено от пряка слънчева светлина.",
+                            DescriptionEN = "All natural, you can use it whenever you want to nourish and protect your lips or just give them a slight shine to complete your look.\r\n \r\nFor external use only. Keep out of reach of children. Do not use if allergic to any of the ingredients. Store with the cap closed, in a dry place and protected from direct sunlight.",
+                            DescriptionRO = "În totalitate naturală, îl poți folosi oricând vrei să-ți hrănești și să-ți protejezi buzele sau doar să le dai o ușoară strălucire pentru a-ți completa aspectul.\r\n \r\nNumai pentru uz extern. A nu se lăsa la îndemâna copiilor. A nu se utiliza dacă este alergic la oricare dintre ingrediente. A se pastra cu capacul inchis, la loc uscat si ferit de lumina directa a soarelui."
+                        },
+                        new
+                        {
+                            Id = 9,
+                            DescriptionBG = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.",
+                            DescriptionEN = "Once a shipping address or Econt or Speedy courier office is specified in the address fields when ordering, products are carefully packed in a recycled cardboard box and paper padding for a seal and sent by inspected delivery.",
+                            DescriptionRO = "Odată ce o adresă de expediere sau un birou de curierat Econt sau Speedy este specificată în câmpurile de adresă în momentul comenzii, produsele sunt ambalate cu grijă într-o cutie de carton reciclat și căptușeală de hârtie pentru sigilare și trimise prin livrare inspectată."
+                        },
+                        new
+                        {
+                            Id = 10,
+                            DescriptionBG = "Apricot Kernel Oil (масло от кайсиеви ядки), Theobroma Cacao Seed Butter (какаово масло)*, Copernicia Cerifera Cera (Карнаубски восък, веган)*, Simmondsia Chinensis Seed Oil (масло от жожоба)*, Helianthus Annuus Seed Oil (слънчогледово масло), Vanilla Planifolia Fruit Extract (екстракт от шушулки ванилия), Mica**, CI 77491 (Iron Oxide)**, Tocopherol (витамин E).\r\n*Био 49% **Минерални пигменти 1%",
+                            DescriptionEN = "Apricot Kernel Oil (масло от кайсиеви ядки), Theobroma Cacao Seed Butter (какаово масло)*, Copernicia Cerifera Cera (Карнаубски восък, веган)*, Simmondsia Chinensis Seed Oil (масло от жожоба)*, Helianthus Annuus Seed Oil (слънчогледово масло), Vanilla Planifolia Fruit Extract (екстракт от шушулки ванилия), Mica**, CI 77491 (Iron Oxide)**, Tocopherol (витамин E).\r\n*Био 49% **Минерални пигменти 1%",
+                            DescriptionRO = "Apricot Kernel Oil (масло от кайсиеви ядки), Theobroma Cacao Seed Butter (какаово масло)*, Copernicia Cerifera Cera (Карнаубски восък, веган)*, Simmondsia Chinensis Seed Oil (масло от жожоба)*, Helianthus Annuus Seed Oil (слънчогледово масло), Vanilla Planifolia Fruit Extract (екстракт от шушулки ванилия), Mica**, CI 77491 (Iron Oxide)**, Tocopherol (витамин E).\r\n*Био 49% **Минерални пигменти 1%"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            DescriptionBG = "ОПИСАНИЕ",
+                            DescriptionEN = "DESCRIPTION",
+                            DescriptionRO = "DESCRIERE"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            DescriptionBG = "Българско студено пресовано масло от шипка* - натурален източник на витамин А, подхранва и стимулура регенерирнето на кожата.\r\n \r\nЕкстракт от шипка - ботанически глицернов екстракт, който в този крем е чъдесна комбинация с маслото от шипка.\r\n \r\nМасло от ший* - Най-лекото и с най-нисък комедогенен рейтинг (0-2) от всички твърди масла. Това означава, че има ниска вероятност да запуши порите като скалата е от 0 до 5.\r\n \r\nВитамин B3 - ниацинамид - антиоксидант, който изравнява тена, регулира себума, помага худратацията и изглажда финни бръчки. Наистирна звучи неверояно, a е доакзрно.\r\n \r\nВитамин Е - има ефективо и естетвено антиоксидантно действие:  забвя стареенето като помага за възстановяването на кожата и я предпазва от свободните радикали и вредите от околната среда.\r\n \r\nРастителни глицерин и хиалурон - хумектанти - привличат водата и хидратират кожата. Ключова е концентрацията! Твърде много от тях могат да изсушат кожата, като започнат да издърпват влагата от по-дълбоките слоеве на кожата, когато въздуха е сух. Важен е баланса между вода и хумектанти в продукта.\r\n \r\n*Био",
+                            DescriptionEN = "Bulgarian cold-pressed rosehip oil* - a natural source of vitamin A, nourishes and stimulates skin regeneration.\r\n \r\nRosehip extract - botanical glycerine extract, which in this cream is a wonderful combination with rosehip oil.\r \n \r\nShea Butter* - The lightest and lowest comedogenic rating (0-2) of all solid oils. This means it has a low chance of clogging pores on a scale of 0 to 5.\r\n \r\nVitamin B3 - Niacinamide - An antioxidant that evens out the complexion, regulates sebum, aids hydration and smoothes fine lines. Naistirna sounds incredible, a is doaxrno.\r\n \r\nVitamin E - has an effective and natural antioxidant effect: it forgets aging by helping to restore the skin and protects it from free radicals and environmental damage.\r\n \r\nVegetable glycerin and hyaluronic - humectants - attract water and hydrate the skin. Concentration is key! Too much of these can dry out the skin by starting to pull moisture from the deeper layers of the skin when the air is dry. The balance between water and humectants in the product is important.\r\n \r\n*Bio",
+                            DescriptionRO = "Uleiul bulgar de macese presat la rece* - o sursa naturala de vitamina A, hraneste si stimuleaza regenerarea pielii.\r\n \r\nExtract de macese - extract de glicerina botanica, care in aceasta crema este o combinatie minunata cu uleiul de macese.\r\n \r\nUnt de Shea* - Cel mai ușor și cel mai scăzut rating comedogen (0-2) dintre toate uleiurile solide. Aceasta înseamnă că are o șansă scăzută de a înfunda porii pe o scară de la 0 la 5.\r\n \r\nVitamina B3 - Niacinamidă - Un antioxidant care uniformizează tenul, reglează sebumul, ajută la hidratare și netezește liniile fine. Naistirna sună incredibil, a is doaxrno.\r\n \r\nVitamina E - are un efect antioxidant eficient și natural: uită de îmbătrânire ajutând la refacerea pielii și o protejează de radicalii liberi și daunele mediului.\r\n \r\nGlicerina vegetală și hialuronicul - umectanți - atrag apa și hidratează pielea. Concentrarea este cheia! Prea multe dintre acestea pot usca pielea, pornind să atragă umezeala din straturile mai profunde ale pielii atunci când aerul este uscat. Echilibrul dintre apă și umectanți din produs este important.\r\n \r\n*Bio"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            DescriptionBG = "Нанесете върху суха или влажна кожа. Малко количество е достатъчно за цялото лице и шия. Използвайте 1-2 пъти дневно според необходимостта и сухотата на кожата.\r\n \r\nМоже да нансете върху влажна кожа, например след душ и измивен гел, за да заключите хидратацията.\r\n \r\nИли върхъ суха кожа, за да я защитите.\r\n \r\nНанасяйте върху добре почистена кожа с чисти ръце. Само за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено, на сухо място, защитено от пряка слънчева светлина.",
+                            DescriptionEN = "Apply to dry or damp skin. A small amount is enough for the whole face and neck. Use 1-2 times daily as needed and skin dryness.\r\n \r\nCan be applied to damp skin, such as after shower and gel wash to lock in hydration.\r\n \r\nOr to dry skin , to protect it.\r\n \r\nApply to well-cleansed skin with clean hands. For external use only. Keep out of reach of children. Do not use if allergic to any of the ingredients. Store tightly closed, in a dry place, protected from direct sunlight.",
+                            DescriptionRO = "Aplicați pe pielea uscată sau umedă. O cantitate mică este suficientă pentru toată fața și gâtul. Utilizați de 1-2 ori pe zi după cum este necesar și pielea uscată.\r\n \r\nPoate fi aplicat pe pielea umedă, cum ar fi după duș și spălare cu gel pentru a menține hidratarea.\r\n \r\nSau pe pielea uscată , pentru a-l proteja.\r\n \r\nAplicați pe pielea bine curățată cu mâinile curate. Doar pentru uz extern. A nu se lăsa la îndemâna copiilor. A nu se utiliza dacă este alergic la oricare dintre ingrediente. A se pastra bine inchis, intr-un loc uscat, ferit de lumina directa a soarelui."
+                        },
+                        new
+                        {
+                            Id = 14,
+                            DescriptionBG = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.",
+                            DescriptionEN = "Once a shipping address or Econt or Speedy courier office is specified in the address fields when ordering, products are carefully packed in a recycled cardboard box and paper padding for a seal and sent by inspected delivery.",
+                            DescriptionRO = "Odată ce o adresă de expediere sau un birou de curierat Econt sau Speedy este specificată în câmpurile de adresă în momentul comenzii, produsele sunt ambalate cu grijă într-o cutie de carton reciclat și căptușeală de hârtie pentru sigilare și trimise prin livrare inspectată."
+                        },
+                        new
+                        {
+                            Id = 15,
+                            DescriptionBG = "Aqua (apă), ulei de semințe de Rosa Canina* (ulei de măceș, 10%), unt de Butyrospermum Parkii* (unt de shea), glicerină (glicerină), extract de fructe Rosa Canina (extract de măceș), niacinamidă (vitamina B3), olivat de cetearil, Olivat de sorbitan (emulgatori), hialuronat de sodiu (acid hialuronic), tocoferol (vitamina E), ulei de semințe de Helianthus Annuus (floarea-soarelui)*, benzoat de sodiu, sorbat de potasiu (conservanți), acid lactic (acid lactic, AHA, reglează pH-ul) produs).\r\n*Bio",
+                            DescriptionEN = "Aqua (Water), Rosa Canina Seed Oil* (rosehip oil, 10%), Butyrospermum Parkii Butter* (shea butter), Glycerin (glycerin), Rosa Canina Fruit Extract (rosehip extract), Niacinamide (vitamin B3 ), Cetearyl Olivate, Sorbitan Olivate (emulsifiers), Sodium Hyaluronate (hyaluronic acid), Tocopherol (vitamin E), Helianthus Annuus (Sunflower) Seed Oil*, Sodium Benzoate, Potassium Sorbate (preservatives), Lactic Acid (lactic acid, AHA, adjusts the pH of the product).\r\n*Bio",
+                            DescriptionRO = "Aqua (Вода), Rosa Canina Seed Oil* (масло от шипка, 10%) , Butyrospermum Parkii Butter* (масло от ший/карите), Glycerin (глицерин), Rosa Canina Fruit Extract (екстракт от шипка), Niacinamide (витамин B3), Cetearyl Olivate, Sorbitan Olivate (емулгатори), Sodium Hyaluronate (хиалуронова киселина), Tocopherol (витамин E), Helianthus Annuus (Слънчоглед) Seed Oil*, Sodium Benzoate, Potassium Sorbate (консерванти), Lactic Acid (млечна киселина, AHA, регулира pH на продукта).\r\n*Bio"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            DescriptionBG = "Натурална мицеларна вода с два компонента. Разклатете преди употреба, за да се смесят двете фази. Идеална е за нежното отстраняване на грима в края на деня.\r\n \r\nИма двойно действие е като тоник за лице с екстракт от зелен чай и витамин Е.\r\n \r\nФаза 1 е изключително нежна. Има успокояващо и антиоксидантно действие благодарение на екстракта от зелен чай, сквален и пантенол (провитамин B3).\r\n \r\nФаза 2 е с био масло от жожоба и допринся за разтврянето на грима. Оставя кожата мека, подхранена и защитена.\r\n \r\nВ удобно шишенце с попма за лесно използване.\r\n \r\n100% натурална\r\n94% от България",
+                            DescriptionEN = "Natural micellar water with two components. Shake before use to mix the two phases. It is ideal for the gentle removal of make-up at the end of the day.\r\n \r\nIt has a double action as a facial toner with green tea extract and vitamin E.\r\n \r\nPhase 1 is extremely gentle. It has a soothing and antioxidant effect thanks to green tea extract, squalene and panthenol (provitamin B3).\r\n \r\nPhase 2 is with organic jojoba oil and helps to dissolve makeup. Leaves the skin soft, nourished and protected.\r\n \r\nIn a convenient bottle with a popma for easy use.\r\n \r\n100% natural\r\n94% from Bulgaria",
+                            DescriptionRO = "Apa micelara naturala cu doua componente. Agitați înainte de utilizare pentru a amesteca cele două faze. Este ideal pentru demachierea blândă la sfârșitul zilei.\r\n \r\nAre dublă acțiune ca tonic facial cu extract de ceai verde și vitamina E.\r\n \r\nFază 1 este extrem de blând. Are un efect calmant si antioxidant datorita extractului de ceai verde, squalenului si pantenolului (provitamina B3).\r\n \r\nFaza 2 este cu ulei de jojoba organic si ajuta la dizolvarea machiajului. Lasă pielea moale, hrănită și protejată.\r\n \r\nÎntr-o sticlă convenabilă cu popma pentru utilizare ușoară.\r\n \r\n100% natural\r\n94% din Bulgaria"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            DescriptionBG = "Екстракт от зелен чай - антиоксидантно и успокояващо действе, помага против появата на акне\r\n \r\nБио масло от Жожоба - помага за нежното разтваряне на грима и подхранва кожата\r\n \r\nВитамин Е - антиоксидант, успокоява раздразненията, бори се със свободните радикали и забавя стареенето на кожата\r\n \r\nПантенол - провитамин B5 - с растителен прозход. Хидратира и подхранва\r\n \r\nЕтерично масло грейпфрут - лек цитрусов аромат",
+                            DescriptionEN = "Green tea extract - antioxidant and soothing action, helps against the appearance of acne\r\n \r\nBio Jojoba oil - helps to gently dissolve make-up and nourishes the skin\r\n \r\nVitamin E - antioxidant, soothes irritations , fights free radicals and slows skin aging\r\n \r\nPanthenol - provitamin B5 - with plant origin. Hydrates and nourishes\r\n \r\nGrapefruit essential oil - light citrus scent",
+                            DescriptionRO = "Extract de ceai verde - actiune antioxidanta si calmanta, ajuta impotriva aparitiei acneei\r\n \r\nUlei de jojoba Bio - ajuta la dizolvarea delicata a machiajului si hraneste pielea\r\n \r\nVitamina E - antioxidant, calmeaza iritatii, combate radicalii liberi si incetineste imbatranirea pielii\r\n \r\nPantenol - provitamina B5 - cu origine vegetala. Hidratează și hrănește\r\n \r\nUlei esențial de grapefruit - parfum ușor de citrice"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            DescriptionBG = "Разклаете преди употреба.\r\n \r\nМоже да използвате винаги, когато искате нежно да премахнете грима. Разклатете преди употреба и напоете памучно тампонче. Нежно притиснете към кожата, за да се намокри и да започне да разтваря грима. След това отстранете грима с леки движения от центъра на лицето към страните.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте на сухо място, защитено от пряка слънчева светлина.",
+                            DescriptionEN = "Shake before use.\r\n \r\nCan be used whenever you want to gently remove makeup. Shake before use and soak a cotton pad. Gently press into skin to wet and begin to dissolve makeup. Then remove the makeup with light movements from the center of the face to the sides.\r\n \r\nFor external use only. Keep out of reach of children. Do not use if allergic to any of the ingredients. Store in a dry place away from direct sunlight.",
+                            DescriptionRO = "Agitați înainte de utilizare.\r\n \r\nPoate fi folosit oricând doriți să îndepărtați ușor machiajul. Agitați înainte de utilizare și înmuiați un tampon de bumbac. Apăsați ușor pielea pentru a uda și începe să dizolveți machiajul. Apoi indeparteaza machiajul cu miscari usoare din centrul fetei spre laterale.\r\n \r\nNumai pentru uz extern. A nu se lăsa la îndemâna copiilor. A nu se utiliza dacă este alergic la oricare dintre ingrediente. A se pastra intr-un loc uscat ferit de lumina directa a soarelui."
+                        },
+                        new
+                        {
+                            Id = 19,
+                            DescriptionBG = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.",
+                            DescriptionEN = "Once a shipping address or Econt or Speedy courier office is specified in the address fields when ordering, products are carefully packed in a recycled cardboard box and paper padding for a seal and sent by inspected delivery.",
+                            DescriptionRO = "Odată ce o adresă de expediere sau un birou de curierat Econt sau Speedy este specificată în câmpurile de adresă în momentul comenzii, produsele sunt ambalate cu grijă într-o cutie de carton reciclat și căptușeală de hârtie pentru sigilare și trimise prin livrare inspectată."
+                        },
+                        new
+                        {
+                            Id = 20,
+                            DescriptionBG = "Aqua, Vitis Vinifera (Grape) Seed Oil, Camellia Sinensis (Green Tea) Leaf Extract,  Glycerin, Caprylic / Capric Triglycerides (Fractioned Coconut Oil), Simmondsia Chinensis (Jojoba) Seed Oil*, D-panthenol (Provitamin B5, plant-based), Coco Glucoside, Squalane, Sodium Surfactin, Tocopherol (Vit E), Helianthus Annuus (Sunflower) Seed Oil*, Potassium Sorbate, Sodium Benzoate, Benzyl Alcohol, Citric Acid, Citrus Paradisi (Grapefruit) Peel Oil, Limonene, Citral, Linalool.\r\n*Био",
+                            DescriptionEN = "Aqua, Vitis Vinifera (Grape) Seed Oil, Camellia Sinensis (Green Tea) Leaf Extract, Glycerin, Caprylic / Capric Triglycerides (Fractioned Coconut Oil), Simmondsia Chinensis (Jojoba) Seed Oil*, D-panthenol (Provitamin B5, plant-based ), Coco Glucoside, Squalane, Sodium Surfactin, Tocopherol (Vit E), Helianthus Annuus (Sunflower) Seed Oil*, Potassium Sorbate, Sodium Benzoate, Benzyl Alcohol, Citric Acid, Citrus Paradisi (Grapefruit) Peel Oil, Limonene, Citral, Linalool .\r\n*Bio",
+                            DescriptionRO = "Aqua, ulei de semințe de Vitis Vinifera (struguri), extract de frunze de Camellia Sinensis (ceai verde), glicerină, trigliceride caprilice/caprice (ulei de cocos fracționat), ulei de semințe de Simmondsia Chinensis (jojoba)*, D-pantenol (provitamina B5, pe bază de plante) ), glucozid de coco, squalan, surfactin de sodiu, tocoferol (Vit E), ulei de semințe de Helianthus Annuus (floarea-soarelui)*, sorbat de potasiu, benzoat de sodiu, alcool benzilic, acid citric, ulei de coajă de Citrus Paradisi (grapefruit), limonen, citral, .\r\n*Bio"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            DescriptionBG = "Нежен, изцяло натурален и ръчно изработен дезодорант. Подходящ за ежедневна употреба. Етеричните масла от сладък портокал и евкалипт придват лек цитрусов аромат.\r\n \r\nИзбрахме точно тези етерични масла не само заради приятния аромат. Те притежават и по-добър антибактериален фект спрямо повечето етерични масла. Дори пречат на развитието и на различни видове гъбички. Това ознчава, че натурално може да намали лошата миризма при потене, която е причинена от бактериите под мишниците.\r\n \r\n100% натурален\r\n45.7 % от България\r\n44.5% био",
+                            DescriptionEN = "Gentle, all-natural and handmade deodorant. Suitable for daily use. The essential oils of sweet orange and eucalyptus impart a light citrus aroma.\r\n \r\nWe chose these essential oils not only for their pleasant aroma. They also have a better antibacterial effect than most essential oils. They even prevent the development of different types of fungi. This means it can naturally reduce the bad smell of sweat caused by underarm bacteria.\r\n \r\n100% natural\r\n45.7% from Bulgaria\r\n44.5% organic",
+                            DescriptionRO = "Deodorant blând, natural și realizat manual. Potrivit pentru uz zilnic. Uleiurile esențiale de portocală dulce și eucalipt conferă o aromă ușoară de citrice.\r\n \r\nAm ales aceste uleiuri esențiale nu numai pentru aroma lor plăcută. De asemenea, au un efect antibacterian mai bun decât majoritatea uleiurilor esențiale. Ele previn chiar și dezvoltarea diferitelor tipuri de ciuperci. Aceasta înseamnă că poate reduce în mod natural mirosul urât al transpirației cauzat de bacteriile de la subrat.\r\n \r\n100% natural\r\n45,7% din Bulgaria\r\n44,5% organic"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            DescriptionBG = "Етеричните масла от сладък портокал и евкалипт придават свеж, леко ментов цитрусов аромат и имат антибактериален ефект.\r\n \r\nСухите съставки като био тапиока поддържат подмишниците сухи през деня.\r\n \r\nВитамин Е има антиоксидантен ефект.\r\n \r\nА цялата комбинация от съставки държи неприятните миризми далеч.",
+                            DescriptionEN = "The essential oils of sweet orange and eucalyptus give a fresh, slightly minty citrus aroma and have an antibacterial effect.\r\n \r\nDry ingredients such as organic tapioca keep the underarms dry during the day.\r\n \r\nVitamin E has an antioxidant effect. \r\n \r\nAnd the whole combination of ingredients keeps unpleasant odors away.",
+                            DescriptionRO = "Uleiurile esențiale de portocală dulce și eucalipt conferă o aromă de citrice proaspătă, ușor mentată și au efect antibacterian.\r\n \r\nIngredientele uscate precum tapioca organică mențin axilele uscate în timpul zilei.\r\n \r\nVitamina E are efect antioxidant \r\n \r\nIar intreaga combinatie de ingrediente tine la distanta mirosurile neplacute."
+                        },
+                        new
+                        {
+                            Id = 23,
+                            DescriptionBG = "Вземете на върха на пръстите много малко количесто (по-малко дори от грахово зрънце), леко го затоплете между пръстите и разнесете добре подмишниците.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Съхранявайте добре затворено на сухо място, защитено от пряка слънчева светлина.",
+                            DescriptionEN = "Take a very small amount (smaller than a pea) on the fingertips, warm it slightly between the fingers and spread it well under the armpits.\r\n \r\nFor external use only. Keep out of reach of children. Do not use if allergic to any of the ingredients. Store tightly closed in a dry place protected from direct sunlight.",
+                            DescriptionRO = "Luați o cantitate foarte mică (mai mică decât un bob de mazăre) pe vârful degetelor, încălziți-o ușor între degete și întindeți-o bine sub axile.\r\n \r\nNumai pentru uz extern. A nu se lăsa la îndemâna copiilor. A nu se utiliza dacă este alergic la oricare dintre ingrediente. A se pastra bine inchis intr-un loc uscat ferit de lumina directa a soarelui."
+                        },
+                        new
+                        {
+                            Id = 24,
+                            DescriptionBG = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.",
+                            DescriptionEN = "Once a shipping address or Econt or Speedy courier office is specified in the address fields when ordering, products are carefully packed in a recycled cardboard box and paper padding for a seal and sent by inspected delivery.",
+                            DescriptionRO = "Odată ce o adresă de expediere sau un birou de curierat Econt sau Speedy este specificată în câmpurile de adresă în momentul comenzii, produsele sunt ambalate cu grijă într-o cutie de carton reciclat și căptușeală de hârtie pentru sigilare și trimise prin livrare inspectată."
+                        },
+                        new
+                        {
+                            Id = 25,
+                            DescriptionBG = "Vitis Vinifera (Grape) Seed Oil, Tapioca Starch*, Theobroma Cacao (Cocoa) Seed Butter*, Copernicia Cerifera Cera (Carnauba Wax)*, Sodium Bicarbonate, Glyceryl Stearate, Citrus Sinensis (Orange) Peel Oil*, Eucalyptus Globulus Leaf Oil*, Limonene**, Linalool**, Citral**, Tocopherol (Vit E), Helianthus Annuus (Sunflower) Seed Oil*\r\n*Bio\r\n**Компоненти на етерини масла",
+                            DescriptionEN = "Vitis Vinifera (Grape) Seed Oil, Tapioca Starch*, Theobroma Cacao (Cocoa) Seed Butter*, Copernicia Cerifera Cera (Carnauba Wax)*, Sodium Bicarbonate, Glyceryl Stearate, Citrus Sinensis (Orange) Peel Oil*, Eucalyptus Globulus Leaf Oil* , Limonene**, Linalool**, Citral**, Tocopherol (Vit E), Helianthus Annuus (Sunflower) Seed Oil*\r\n*Bio\r\n**Essential Oil Components",
+                            DescriptionRO = "Ulei de semințe de Vitis Vinifera (struguri), amidon de tapioca*, unt de semințe de cacao (cacao) de Theobroma*, Copernicia Cerifera Cera (ceară de carnauba)*, bicarbonat de sodiu, stearat de gliceril, ulei de coajă de Citrus Sinensis (portocale)*, globul de eucalipt* , Limonene**, Linalool**, Citral**, Tocoferol (Vit E), Ulei de semințe de Helianthus Annuus (floarea-soarelui)*\r\n*Bio\r\n**Componente ale uleiului esențial"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            DescriptionBG = "Създаден, за да се поглезите - с био масла от: шипка, ягодови семки, арган и жожба. Подхранва и защитава кожата. Запазва хидратацията като предпазва кожата от загуба на вода и я оставя мека и гладка.\r\n \r\nОбогатен с витамин Е за добър антиоксидантен ефект, който предпазва клетките от вредното въздействие отоколната среда, свободните радикали и оксидативни процеси. По този начин поддържа кожата млада и елстична.\r\n \r\nМаслото от шипка е натурален източник на витамин А. Аргановото масло и маслото от ягодови семки подхранват кожата, а маслото от жожоба съдържа натурални серамиди, подсилват кожната бариера и заздравяват връзките между клетките.\r\n\r\nНекомедогенен.\r\nНай-подходящ за суха кожа.\r\nИли като защита след по-изтощаваща рутина, напр. след химичен пилинг.\r\nПодхранва, заздравява и защитава кожната бариера.\r\n \r\nИзползвате няколко капки върху суха или влажна кожа (на пример след душ) или след хидратиращ лосион, за да 'заклчючите' хидратацията и да защитите кожата. \r\n \r\n100% натурален\r\n80% от България\r\n31% био",
+                            DescriptionEN = "Created to pamper yourself - with organic oils from: rosehip, strawberry seeds, argan and jojoba. Nourishes and protects the skin. Preserves hydration by protecting the skin from water loss and leaving it soft and smooth.\r\n \r\nEnriched with vitamin E for a good antioxidant effect that protects cells from the harmful effects of the environment, free radicals and oxidative processes. In this way, it keeps the skin young and elastic.\r\n \r\nRosehip oil is a natural source of vitamin A. Argan oil and strawberry seed oil nourish the skin, and jojoba oil contains natural ceramides, strengthen the skin barrier and strengthen bonds between cells.\r\n\r\nNon-comedogenic.\r\nBest for dry skin.\r\nOr as protection after a more exhausting routine, e.g. after a chemical peel.\r\nNourishes, strengthens and protects the skin barrier.\r\n \r\nUse a few drops on dry or damp skin (for example after a shower) or after a moisturizing lotion to 'lock in' hydration and protect the skin. \r\n \r\n100% natural\r\n80% from Bulgaria\r\n31% organic",
+                            DescriptionRO = "Creat pentru a te rasfata - cu uleiuri organice din: macese, seminte de capsuni, argan si jojoba. Hraneste si protejeaza pielea. Păstrează hidratarea protejând pielea de pierderea apei și lăsând-o moale și netedă.\r\n \r\nÎmbogățit cu vitamina E pentru un bun efect antioxidant care protejează celulele de efectele nocive ale mediului, radicalilor liberi și proceselor oxidative. În acest fel, menține pielea tânără și elastică.\r\n \r\nUleiul de măceș este o sursă naturală de vitamina A. Uleiul de argan și uleiul de semințe de căpșuni hrănesc pielea, iar uleiul de jojoba conține ceramide naturale, întăresc bariera pielii și întărește legăturile dintre celule.\r\n\r\nNon-comedogenic.\r\nCel mai bun pentru pielea uscată.\r\nSau ca protecție după o rutină mai obositoare, de ex. după un peeling chimic.\r\nHrănește, întărește și protejează bariera cutanată.\r\n \r\nFolosește câteva picături pe pielea uscată sau umedă (de exemplu după un duș) sau după o loțiune hidratantă pentru a „bloca” hidratează și protejează pielea. \r\n \r\n100% natural\r\n80% din Bulgaria\r\n31% organic"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            DescriptionBG = "Масло от шипка - помога ревитализирането на кожата \r\nМасло от ягодови семки - хидратира в дълбочина и има протививъзвпалителен ефект\r\nМасло от жожоба* - натурално съдържа над 95% серамиди, подхранва кожата и заздравява кожната бариера\r\nАрганово масло* - подхранва, защитава и подобрява хидратацията и еластичносттна на кожата\r\nМсла от мандарина и иланг-иланг* - придават лек, свеж и релаксиращ аромат, за да се насладите максимално на момента в грижа за кожата\r\nВитамин Е* - антиоксидант - успокоява раздразнената кожа и забавя страеенето като бори се със свободните радикали, UV уверждането и процесите на оксидация\r\n*Био",
+                            DescriptionEN = "Rosehip oil - helps revitalize the skin \r\nStrawberry seed oil - deeply hydrates and has an anti-inflammatory effect\r\nJojoba oil* - naturally contains over 95% ceramides, nourishes the skin and strengthens the skin barrier\r\nArgan oil* - nourishes, protects and improves the hydration and elasticity of the skin\r\nTangerine and ylang-ylang oils* - give a light, fresh and relaxing aroma to make the most of the skin care moment\r\nVitamin E* - antioxidant - soothes irritated skin and slows aging by fighting free radicals, UV damage and oxidation processes\r\n*Bio",
+                            DescriptionRO = "Ulei de măceș - ajută la revitalizarea pielii \r\nUlei din semințe de căpșuni - hidratează profund și are efect antiinflamator\r\nUlei de jojoba* - conține în mod natural peste 95% ceramide, hrănește pielea și întărește bariera pielii\r\nUlei de argan * - hrănește, protejează și îmbunătățește hidratarea și elasticitatea pielii\r\nUleiuri de mandarine și ylang-ylang* - oferă o aromă ușoară, proaspătă și relaxantă pentru a profita la maximum de momentul de îngrijire a pielii\r\nVitamina E* - antioxidant - calmează pielea iritată și încetinește îmbătrânirea prin combaterea radicalilor liberi, a daunelor UV și a proceselor de oxidare\r\n*Bio"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            DescriptionBG = "Например след лек хидратиращ лосион, за да заключи хидратацията и полезните съставки.\r\nДиректно върху влажна кожа за по-добро абсорбиране и защита.\r\nИли върху суха кожа, за да предотврати трансепидеррмалната загуба на вода от кожата.\r\n \r\nПодходящ за защита на кожата в края на рутината. Комбинира се добре след ексфолиращи и/или хидратиращи продукти.\r\n \r\nСамо за външна употреба. Да се пази от достъп на деца. Не използвайте при алергия към някоя от съставките. Използвайте с чисти ръце и кожа. Съхранявайте добре затворено, на сухо място, защитено от пряка слънчева светлина.",
+                            DescriptionEN = "For example, after a light moisturizing lotion to lock in hydration and beneficial ingredients.\r\nDirectly on damp skin for better absorption and protection.\r\nOr on dry skin to prevent transepidermal water loss from the skin.\r\n \r\nSuitable for skin protection at the end of the routine. Blends well after exfoliating and/or hydrating products.\r\n \r\nFor external use only. Keep out of reach of children. Do not use if allergic to any of the ingredients. Use with clean hands and skin. Store tightly closed, in a dry place, protected from direct sunlight.",
+                            DescriptionRO = "De exemplu, după o loțiune ușoară hidratantă pentru a bloca hidratarea și ingredientele benefice.\r\nDirect pe pielea umedă pentru o mai bună absorbție și protecție.\r\nSau pe pielea uscată pentru a preveni pierderea transepidermică de apă din piele.\r\n \r\nPotrivit pentru protecția pielii la sfârșitul rutinei. Se amestecă bine după produsele de exfoliere și/sau hidratare.\r\n \r\nNumai pentru uz extern. A nu se lăsa la îndemâna copiilor. A nu se utiliza dacă este alergic la oricare dintre ingrediente. Utilizați cu mâinile și pielea curate. A se pastra bine inchis, intr-un loc uscat, ferit de lumina directa a soarelui."
+                        },
+                        new
+                        {
+                            Id = 29,
+                            DescriptionBG = "След като е посочен адрес за доставка или куриерски офис на Еконт или Спиди в полетата за адрес при поръчка, продуктите се опаковат внимателно в рециклирани картонена кутийка и хартиен пълнеж за уплътнение и се изпращат с доставка с преглед.",
+                            DescriptionEN = "Once a shipping address or Econt or Speedy courier office is specified in the address fields when ordering, products are carefully packed in a recycled cardboard box and paper padding for a seal and sent by inspected delivery.",
+                            DescriptionRO = "Odată ce o adresă de expediere sau un birou de curierat Econt sau Speedy este specificată în câmpurile de adresă în momentul comenzii, produsele sunt ambalate cu grijă într-o cutie de carton reciclat și căptușeală de hârtie pentru sigilare și trimise prin livrare inspectată."
+                        },
+                        new
+                        {
+                            Id = 30,
+                            DescriptionBG = "Vitis Vinifera Seed Oil (масло от гроздови смеки), Rosa Canina Seed Oil (българско студенпресовно био масло от семената на шипка)*, Fragaria Ananassa Seed Oil (студенопресовано масло от семки на ягода), Argania Spinosa Kernel Oil (арганово масло)*, Simmondsia Chinensis Seed Oil (масло от жожоба)*, Tocopherol (Витамин E), Helianthus Annuus Seed Oil (Слънчогледово масло <0,2%) *,  Citrus Reticulata Oil (Етерично масло от мандарина) , Limonene**, Linalool**, Cananga Odorata flower Oil (Етерично масло от Иланг Иланф) *.\r\n*Био, 31%\r\n**Компоненети на етерични масла",
+                            DescriptionEN = "Vitis Vinifera Seed Oil, Rosa Canina Seed Oil, Fragaria Ananassa Seed Oil, Argania Spinosa Kernel Oil, Simmondsia Chinensis Seed Oil (Jojoba Oil)*, Tocopherol (Vitamin E), Helianthus Annuus Seed Oil (Sunflower Oil <0.2%) *, Citrus Reticulata Oil (Mandarin Essential Oil), Limonene**, Linalool**, Cananga Odorata flower Oil (Ylang Ylanf essential oil) *.\r\n*Bio, 31%\r\n**Essential oil components",
+                            DescriptionRO = "Ulei de semințe de Vitis Vinifera, ulei de semințe de Rosa Canina, ulei de semințe de Fragaria Ananassa, ulei de semințe de Argania Spinosa, ulei de semințe de Simmondsia Chinensis (ulei de jojoba)*, tocoferol (vitamina E), ulei de semințe de Helianthus annuus (ulei de floarea soarelui <0,2%) *, citrice Ulei de reticulata (ulei esential de mandarina), limonene**, linalool**, ulei de flori de cananga odorata (ulei esential de Ylang Ylanf) *.\r\n*Bio, 31%\r\n**Componente ale uleiului esential"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            DescriptionBG = "",
+                            DescriptionEN = "",
+                            DescriptionRO = ""
+                        },
+                        new
+                        {
+                            Id = 32,
+                            DescriptionBG = "",
+                            DescriptionEN = "",
+                            DescriptionRO = ""
+                        },
+                        new
+                        {
+                            Id = 33,
+                            DescriptionBG = "",
+                            DescriptionEN = "",
+                            DescriptionRO = ""
+                        },
+                        new
+                        {
+                            Id = 34,
+                            DescriptionBG = "",
+                            DescriptionEN = "",
+                            DescriptionRO = ""
+                        },
+                        new
+                        {
+                            Id = 35,
+                            DescriptionBG = "",
+                            DescriptionEN = "",
+                            DescriptionRO = ""
+                        });
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.SectionTitle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("TitleBG")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("The section's title in Bulgarian");
+
+                    b.Property<string>("TitleEN")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("The section's title in English");
+
+                    b.Property<string>("TitleRO")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("The section's title in Romanian");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SectionTitles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            TitleBG = "ОПИСАНИЕ",
+                            TitleEN = "DESCRIPTION",
+                            TitleRO = "DESCRIERE"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            TitleBG = "ЗА СЪСТАВКИТЕ",
+                            TitleEN = "ABOUT THE INGREDIENTS",
+                            TitleRO = "DESPRE INGREDIENTE"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            TitleBG = "УПОТРЕБА",
+                            TitleEN = "USE",
+                            TitleRO = "UTILIZARE"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            TitleBG = "ИЗПРАЩАНЕ И ДОСТАВКА",
+                            TitleEN = "PICKUP AND DELIVERY",
+                            TitleRO = "RIDICARE ȘI LIVRARE"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            TitleBG = "СЪСТАВ, INCI",
+                            TitleEN = "COMPOSITION, INCI",
+                            TitleRO = "COMPOZIȚIE, INCI"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            TitleBG = "ОПИСАНИЕ",
+                            TitleEN = "DESCRIPTION",
+                            TitleRO = "DESCRIERE"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            TitleBG = "ЗА СЪСТАВКИТЕ",
+                            TitleEN = "ABOUT THE INGREDIENTS",
+                            TitleRO = "DESPRE INGREDIENTE"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            TitleBG = "УПОТРЕБА",
+                            TitleEN = "USE",
+                            TitleRO = "UTILIZARE"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            TitleBG = "ИЗПРАЩАНЕ И ДОСТАВКА",
+                            TitleEN = "PICKUP AND DELIVERY",
+                            TitleRO = "RIDICARE ȘI LIVRARE"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            TitleBG = "СЪСТАВ, INCI",
+                            TitleEN = "COMPOSITION, INCI",
+                            TitleRO = "COMPOZIȚIE, INCI"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            TitleBG = "ОПИСАНИЕ",
+                            TitleEN = "DESCRIPTION",
+                            TitleRO = "DESCRIERE"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            TitleBG = "ЗА СЪСТАВКИТЕ",
+                            TitleEN = "ABOUT THE INGREDIENTS",
+                            TitleRO = "DESPRE INGREDIENTE"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            TitleBG = "УПОТРЕБА",
+                            TitleEN = "USE",
+                            TitleRO = "UTILIZARE"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            TitleBG = "ИЗПРАЩАНЕ И ДОСТАВКА",
+                            TitleEN = "PICKUP AND DELIVERY",
+                            TitleRO = "RIDICARE ȘI LIVRARE"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            TitleBG = "СЪСТАВ, INCI",
+                            TitleEN = "COMPOSITION, INCI",
+                            TitleRO = "COMPOZIȚIE, INCI"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            TitleBG = "ОПИСАНИЕ",
+                            TitleEN = "DESCRIPTION",
+                            TitleRO = "DESCRIERE"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            TitleBG = "ЗА СЪСТАВКИТЕ",
+                            TitleEN = "ABOUT THE INGREDIENTS",
+                            TitleRO = "DESPRE INGREDIENTE"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            TitleBG = "УПОТРЕБА",
+                            TitleEN = "USE",
+                            TitleRO = "UTILIZARE"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            TitleBG = "ИЗПРАЩАНЕ И ДОСТАВКА",
+                            TitleEN = "PICKUP AND DELIVERY",
+                            TitleRO = "RIDICARE ȘI LIVRARE"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            TitleBG = "СЪСТАВ, INCI",
+                            TitleEN = "COMPOSITION, INCI",
+                            TitleRO = "COMPOZIȚIE, INCI"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            TitleBG = "ОПИСАНИЕ",
+                            TitleEN = "DESCRIPTION",
+                            TitleRO = "DESCRIERE"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            TitleBG = "ЗА СЪСТАВКИТЕ",
+                            TitleEN = "ABOUT THE INGREDIENTS",
+                            TitleRO = "DESPRE INGREDIENTE"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            TitleBG = "УПОТРЕБА",
+                            TitleEN = "USE",
+                            TitleRO = "UTILIZARE"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            TitleBG = "ИЗПРАЩАНЕ И ДОСТАВКА",
+                            TitleEN = "PICKUP AND DELIVERY",
+                            TitleRO = "RIDICARE ȘI LIVRARE"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            TitleBG = "СЪСТАВ, INCI",
+                            TitleEN = "COMPOSITION, INCI",
+                            TitleRO = "COMPOZIȚIE, INCI"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            TitleBG = "ОПИСАНИЕ",
+                            TitleEN = "DESCRIPTION",
+                            TitleRO = "DESCRIERE"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            TitleBG = "ЗА СЪСТАВКИТЕ",
+                            TitleEN = "ABOUT THE INGREDIENTS",
+                            TitleRO = "DESPRE INGREDIENTE"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            TitleBG = "УПОТРЕБА",
+                            TitleEN = "USE",
+                            TitleRO = "UTILIZARE"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            TitleBG = "ИЗПРАЩАНЕ И ДОСТАВКА",
+                            TitleEN = "PICKUP AND DELIVERY",
+                            TitleRO = "RIDICARE ȘI LIVRARE"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            TitleBG = "СЪСТАВ, INCI",
+                            TitleEN = "COMPOSITION, INCI",
+                            TitleRO = "COMPOZIȚIE, INCI"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            TitleBG = "ОПИСАНИЕ",
+                            TitleEN = "DESCRIPTION",
+                            TitleRO = "DESCRIERE"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            TitleBG = "ЗА СЪСТАВКИТЕ",
+                            TitleEN = "ABOUT THE INGREDIENTS",
+                            TitleRO = "DESPRE INGREDIENTE"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            TitleBG = "УПОТРЕБА",
+                            TitleEN = "USE",
+                            TitleRO = "UTILIZARE"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            TitleBG = "ИЗПРАЩАНЕ И ДОСТАВКА",
+                            TitleEN = "PICKUP AND DELIVERY",
+                            TitleRO = "RIDICARE ȘI LIVRARE"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            TitleBG = "СЪСТАВ, INCI",
+                            TitleEN = "COMPOSITION, INCI",
+                            TitleRO = "COMPOZIȚIE, INCI"
                         });
                 });
 
@@ -1572,7 +2674,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasComment("Duration of shipping");
 
-                    b.Property<int?>("ShippingProviderId")
+                    b.Property<int>("ShippingProviderId")
                         .HasColumnType("int")
                         .HasComment("Shipping Provider Id");
 
@@ -1719,13 +2821,13 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasComment("Name of the status");
+                    b.Property<int>("NameId")
+                        .HasColumnType("int")
+                        .HasComment("Name of the status Id");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("NameId");
 
                     b.ToTable("StatusOrders", t =>
                         {
@@ -1736,27 +2838,96 @@ namespace LilsCareApp.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Неизпълнена"
+                            NameId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Отменена"
+                            NameId = 2
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Изпълнена"
+                            NameId = 3
                         },
                         new
                         {
                             Id = 4,
-                            Name = "Получена"
+                            NameId = 4
                         },
                         new
                         {
                             Id = 5,
-                            Name = "Върната"
+                            NameId = 5
+                        });
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.StatusOrderName", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("Status order name id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("NameBG")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("The status order name in Bulgarian");
+
+                    b.Property<string>("NameEN")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("The status order name in English");
+
+                    b.Property<string>("NameRO")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("The status order name in Romanian");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StatusOrderNames");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            NameBG = "Неизпълнена",
+                            NameEN = "Unfulfilled",
+                            NameRO = "Neîndeplinită"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            NameBG = "Отменена",
+                            NameEN = "Canceled",
+                            NameRO = "Anulat"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            NameBG = "Изпълнена",
+                            NameEN = "Fulfilled",
+                            NameRO = "Îndeplinit"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            NameBG = "Получена",
+                            NameEN = "Received",
+                            NameRO = "Primit"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            NameBG = "Върната",
+                            NameEN = "Returned",
+                            NameRO = "Returnat"
                         });
                 });
 
@@ -1963,7 +3134,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.AppUser", "AppUser")
                         .WithMany("AddressDelivery")
-                        .HasForeignKey("AppUserId");
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.ShippingOffice", "ShippingOffice")
                         .WithMany("DeliveryAddresses")
@@ -1972,15 +3145,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Navigation("AppUser");
 
                     b.Navigation("ShippingOffice");
-                });
-
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.AppUser", b =>
-                {
-                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.AddressDelivery", "DefaultAddressDelivery")
-                        .WithMany()
-                        .HasForeignKey("DefaultAddressDeliveryId");
-
-                    b.Navigation("DefaultAddressDelivery");
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.BagUser", b =>
@@ -2000,6 +3164,28 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Navigation("AppUser");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Category", b =>
+                {
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.CategoryName", "Name")
+                        .WithMany("Categories")
+                        .HasForeignKey("NameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Name");
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.DeliveryMethod", b =>
+                {
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.DeliveryName", "Name")
+                        .WithMany("DeliveryMethod")
+                        .HasForeignKey("NameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Name");
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ImageProduct", b =>
@@ -2035,21 +3221,31 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.AddressDelivery", "AddressDelivery")
                         .WithMany("Orders")
-                        .HasForeignKey("AddressDeliveryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AddressDeliveryId");
 
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.AppUser", "AppUser")
                         .WithMany("Orders")
                         .HasForeignKey("AppUserId");
 
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.DeliveryMethod", "DeliveryMethod")
+                        .WithMany("Orders")
+                        .HasForeignKey("DeliveryMethodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.PaymentMethod", "PaymentMethod")
                         .WithMany("Orders")
-                        .HasForeignKey("PaymentMethodId");
+                        .HasForeignKey("PaymentMethodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.PromoCode", "PromoCode")
                         .WithOne("Order")
                         .HasForeignKey("LilsCareApp.Infrastructure.Data.Models.Order", "PromoCodeId");
+
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.ShippingOffice", "ShippingOffice")
+                        .WithMany("Orders")
+                        .HasForeignKey("ShippingOfficeId");
 
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.StatusOrder", "StatusOrder")
                         .WithMany("Orders")
@@ -2061,11 +3257,45 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     b.Navigation("AppUser");
 
+                    b.Navigation("DeliveryMethod");
+
                     b.Navigation("PaymentMethod");
 
                     b.Navigation("PromoCode");
 
+                    b.Navigation("ShippingOffice");
+
                     b.Navigation("StatusOrder");
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.PaymentMethod", b =>
+                {
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.PaymentName", "Name")
+                        .WithMany("PaymentMethods")
+                        .HasForeignKey("NameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Name");
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Product", b =>
+                {
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.ProductName", "Name")
+                        .WithMany("Products")
+                        .HasForeignKey("NameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.ProductOptional", "Optional")
+                        .WithMany("Products")
+                        .HasForeignKey("OptionalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Name");
+
+                    b.Navigation("Optional");
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ProductCategory", b =>
@@ -2114,7 +3344,15 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.PromoCodeName", "Code")
+                        .WithMany("PromoCodes")
+                        .HasForeignKey("CodeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("AppUser");
+
+                    b.Navigation("Code");
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Review", b =>
@@ -2138,22 +3376,51 @@ namespace LilsCareApp.Infrastructure.Migrations
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Section", b =>
                 {
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.SectionDescription", "Description")
+                        .WithMany("Sections")
+                        .HasForeignKey("DescriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.Product", "Product")
                         .WithMany("Sections")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.SectionTitle", "Title")
+                        .WithMany("Sections")
+                        .HasForeignKey("TitleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Description");
+
                     b.Navigation("Product");
+
+                    b.Navigation("Title");
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ShippingOffice", b =>
                 {
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.ShippingProvider", "ShippingProvider")
                         .WithMany("ShippingOffices")
-                        .HasForeignKey("ShippingProviderId");
+                        .HasForeignKey("ShippingProviderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ShippingProvider");
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.StatusOrder", b =>
+                {
+                    b.HasOne("LilsCareApp.Infrastructure.Data.Models.StatusOrderName", "Name")
+                        .WithMany("StatusOrders")
+                        .HasForeignKey("NameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Name");
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Subscriber", b =>
@@ -2254,6 +3521,21 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Navigation("ProductsCategories");
                 });
 
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.CategoryName", b =>
+                {
+                    b.Navigation("Categories");
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.DeliveryMethod", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.DeliveryName", b =>
+                {
+                    b.Navigation("DeliveryMethod");
+                });
+
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Order", b =>
                 {
                     b.Navigation("ProductsOrders");
@@ -2262,6 +3544,11 @@ namespace LilsCareApp.Infrastructure.Migrations
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.PaymentMethod", b =>
                 {
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.PaymentName", b =>
+                {
+                    b.Navigation("PaymentMethods");
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Product", b =>
@@ -2281,9 +3568,24 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Navigation("WishesUsers");
                 });
 
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ProductName", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ProductOptional", b =>
+                {
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.PromoCode", b =>
                 {
                     b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.PromoCodeName", b =>
+                {
+                    b.Navigation("PromoCodes");
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Review", b =>
@@ -2291,9 +3593,21 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Navigation("Images");
                 });
 
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.SectionDescription", b =>
+                {
+                    b.Navigation("Sections");
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.SectionTitle", b =>
+                {
+                    b.Navigation("Sections");
+                });
+
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ShippingOffice", b =>
                 {
                     b.Navigation("DeliveryAddresses");
+
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ShippingProvider", b =>
@@ -2304,6 +3618,11 @@ namespace LilsCareApp.Infrastructure.Migrations
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.StatusOrder", b =>
                 {
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.StatusOrderName", b =>
+                {
+                    b.Navigation("StatusOrders");
                 });
 #pragma warning restore 612, 618
         }

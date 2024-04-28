@@ -5,23 +5,34 @@ using LilsCareApp.Core.Models.Products;
 using LilsCareApp.Infrastructure.Data;
 using LilsCareApp.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using static LilsCareApp.Infrastructure.DataConstants.Language;
 
 namespace LilsCareApp.Core.Services
 {
     public class ProductsService : IProductsService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IAppConfigService _appConfigService;
+        private readonly IHttpContextManager _httpContextManager;
 
-        public ProductsService(ApplicationDbContext context)
+        public ProductsService(
+            ApplicationDbContext context,
+            IAppConfigService appConfigService,
+            IHttpContextManager httpContextManager)
         {
             _context = context;
+            _appConfigService = appConfigService;
+            _httpContextManager = httpContextManager;
         }
 
-        public async Task<ProductsDTO> GetProductsQueryAsync(string userId, string? category, int currentPage, int productsPerPage)
+        public async Task<ProductsDTO> GetProductsQueryAsync(string userId, int? categoryId, int currentPage, int productsPerPage)
         {
+            var language = _httpContextManager.GetLanguage();
+            decimal exchangeRate = await _appConfigService.GetExchangeRateAsync(language);
+
             var productsFiltered = _context.Products
-                .Where(p => string.IsNullOrEmpty(category) || p.ProductsCategories.Any(pc => pc.Category.Name == category))
-                .ProjectToProductDTO(userId);
+                .Where(p => categoryId == null || p.ProductsCategories.Any(pc => pc.Category.Id == categoryId))
+                .ProjectToProductDTO(userId, language, exchangeRate);
 
             var totalProductsCount = await productsFiltered.CountAsync();
             var products = await productsFiltered
@@ -30,6 +41,11 @@ namespace LilsCareApp.Core.Services
                 .AsNoTracking()
                 .ToListAsync();
 
+            foreach (var product in products)
+            {
+                product.Price = Math.Round(product.Price, 2);
+            }
+
             return new ProductsDTO
             {
                 Products = products,
@@ -37,17 +53,24 @@ namespace LilsCareApp.Core.Services
                 TotalProductsCount = totalProductsCount,
                 ProductsPerPage = productsPerPage,
                 CurrentPage = currentPage,
-                Category = category
+                CategoryId = categoryId
             };
         }
 
         public async Task<IList<CategoryDTO>> GetCategoriesAsync()
         {
+            var language = _httpContextManager.GetLanguage();
+
             var categories = await _context.Categories
                 .Select(c => new CategoryDTO
                 {
                     Id = c.Id,
-                    Name = c.Name,
+                    Name = new Dictionary<string, string>
+                    {
+                        { Bulgarian, c.Name.NameBG },
+                        { Romanian, c.Name.NameRO },
+                        { English, c.Name.NameEN }
+                    }[language],
                 })
                 .AsNoTracking()
                 .ToListAsync();
@@ -86,19 +109,37 @@ namespace LilsCareApp.Core.Services
 
         public async Task<IEnumerable<ProductsInBagDTO>> GetProductsInBagAsync(string userId)
         {
+            var language = _httpContextManager.GetLanguage();
+            decimal exchangeRate = await _appConfigService.GetExchangeRateAsync(language);
+
             var productsInBag = await _context.BagsUsers
                 .Where(bu => bu.AppUserId == userId)
                 .Select(bu => new ProductsInBagDTO
                 {
                     Id = bu.Product.Id,
-                    Name = bu.Product.Name,
-                    Optional = bu.Product.Optional,
-                    Price = bu.Product.Price,
+                    Name = new Dictionary<string, string>
+                    {
+                        { Bulgarian, bu.Product.Name.NameBG },
+                        { Romanian, bu.Product.Name.NameRO },
+                        { English, bu.Product.Name.NameEN }
+                    }[language],
+                    Optional = new Dictionary<string, string>
+                    {
+                        { English, bu.Product.Optional.OptionalEN },
+                        { Bulgarian, bu.Product.Optional.OptionalBG },
+                        { Romanian,bu.Product.Optional.OptionalRO },
+                    }[language],
+                    Price = bu.Product.Price / exchangeRate,
                     ImageUrl = bu.Product.Images.FirstOrDefault(im => im.ImageOrder == 1).ImagePath,
                     Quantity = bu.Quantity
                 })
                 .AsNoTracking()
                 .ToArrayAsync();
+
+            foreach (var product in productsInBag)
+            {
+                product.Price = Math.Round(product.Price, 2);
+            }
 
             return productsInBag;
         }
@@ -155,19 +196,32 @@ namespace LilsCareApp.Core.Services
 
         public async Task<IEnumerable<ProductDTO>> GetMyWishesAsync(string userId)
         {
+            var language = _httpContextManager.GetLanguage();
+            decimal exchangeRate = await _appConfigService.GetExchangeRateAsync(language);
+
             var products = await _context.Products
                 .Where(p => p.WishesUsers.Any(wu => wu.AppUserId == userId))
                 .Select(p => new ProductDTO
                 {
                     Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
+                    Name = new Dictionary<string, string>
+                    {
+                        { Bulgarian, p.Name.NameBG },
+                        { Romanian, p.Name.NameRO },
+                        { English, p.Name.NameEN }
+                    }[language],
+                    Price = p.Price / exchangeRate,
                     ImageUrl = p.Images.FirstOrDefault(im => im.ImageOrder == 1).ImagePath ?? "https://via.placeholder.com/150",
                     Quantity = p.Quantity,
                     IsWish = p.WishesUsers.Any(wu => wu.AppUserId == userId)
                 })
                 .AsNoTracking()
                 .ToArrayAsync();
+
+            foreach (var product in products)
+            {
+                product.Price = Math.Round(product.Price, 2);
+            }
 
             return products;
         }
@@ -195,10 +249,20 @@ namespace LilsCareApp.Core.Services
 
         public async Task<IEnumerable<ProductDTO>> GetAllAsync(string userId)
         {
-            return await _context.Products
-                .ProjectToProductDTO(userId)
+            var language = _httpContextManager.GetLanguage();
+            decimal exchangeRate = await _appConfigService.GetExchangeRateAsync(language);
+
+            var products = await _context.Products
+                .ProjectToProductDTO(userId, language, exchangeRate)
                 .AsNoTracking()
                 .ToArrayAsync();
+
+            foreach (var product in products)
+            {
+                product.Price = Math.Round(product.Price, 2);
+            }
+
+            return products;
         }
     }
 }

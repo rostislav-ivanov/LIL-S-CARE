@@ -1,6 +1,7 @@
 ﻿@model OrderSummaryDTO
+@inject IViewLocalizer Localizer
 @{
-    ViewData["Title"] = "ПОРЪЧКА";
+    ViewData["Title"] = Localizer["SUMMARY ORDER"];
 }
 @section Styles {
     <link rel="stylesheet" href="~/css/checkout.css" />
@@ -11,7 +12,7 @@
 
     <div class="row g-5 p-3">
         <hr />
-        <h5 class="text-center">Вие направихте поръчка #<strong>@Model.OrderNumber</strong> от @Model.OrderDate.ToString("dd/MM/yyyy")</h5>
+        <h5 class="text-center">@Localizer["You have placed an order"] #<strong>@Model.OrderNumber</strong> / @Model.OrderDate.ToString("dd/MM/yyyy")</h5>
         <!-- Client's data and Delivery address Start -->
         <div class="col-lg-6">
             <hr />
@@ -19,7 +20,7 @@
             {
                 <!-- Delivery to Address Start -->
 
-                <h5 class="py-3 m-0">Доставка до адрес на клиент</h5>
+                <h5 class="py-3 m-0">@Localizer["Delivery to customer address"]</h5>
                 <div class="row" style="opacity: 0.9">
                     <span>@Model.FirstName @Model.LastName</span>
                     <span>@Model.Country</span>
@@ -38,7 +39,7 @@
             else if (Model.IsShippingToOffice)
             {
                 <!-- Delivery to Office Start -->
-                <h5 class="py-3 m-0">Доставка до офис на куриер</h5>
+                <h5 class="py-3 m-0">@Localizer["Delivery to courier office"]</h5>
                 <div class="row" style="opacity: 0.9">
                     <span>@Model.ShippingProviderName</span>
                     <span>@Model.ShippingOfficeCity</span>
@@ -55,8 +56,8 @@
             }
             <hr />
             <!-- Payment Start -->
-            <h5>Метод на плащане</h5>
-            <p style="opacity: 0.9">наложен платеж</p>
+            <h5>@Localizer["Payment method"]</h5>
+            <p style="opacity: 0.9">@Model.PaymentMethod</p>
             <!-- Payment Start -->
             <hr />
         </div>
@@ -66,7 +67,7 @@
         <div class="col-lg-6">
             <div class="container mt-4 px-4 pb-2 rounded"
                  style="background-color: rgb(var(--app-bg-secondary))">
-                    <h5 class="py-4 m-0">Резюме на поръчката (@Model.Products.Sum(p => p.Quantity))</h5>
+                <h5 class="py-4 m-0">@Localizer["Order Summary"] (@Model.Products.Sum(p => p.Quantity))</h5>
 
                 <hr class="mt-0" />
                 <!-- Product Start -->
@@ -85,15 +86,15 @@
                         <div class="col-7">
                             <div>
                                 <p>@product.Name</p>
-                                <p>Цена: @product.Price лв.</p>
+                                <p>@Localizer["Price"]: @product.Price @Localizer["Currency"]</p>
 
                             </div>
                             <div class="d-flex justify-content-between align-items-center mt-3">
                                 <div class="d-flex justify-content-start align-items-center my-2">
-                                    <span class="mx-2">Количество: @product.Quantity</span>
+                                    <span class="mx-2">@Localizer["Quantity"]: @product.Quantity</span>
                                 </div>
                                 <p class="mb-0">
-                                    <span><strong>@(product.Quantity * product.Price) лв.</strong></span>
+                                    <span><strong>@(product.Quantity * product.Price) @Localizer["Currency"]</strong></span>
                                 </p>
                             </div>
                         </div>
@@ -102,34 +103,37 @@
                 <!-- Product End -->
                 <!-- Promo Code Start -->
                 <div style="display: block">
-                    <div class="d-flex justify-content-between">
-                        <span>Промо код: @Model.PromoCode</span>
-                        <span>
-                            <strong> - @Model.Discount лв.</strong>
-                        </span>
-                    </div>
+                    @if(Model.PromoCode != null)
+                    {
+                        <div class="d-flex justify-content-between">
+                            <span>@Localizer["Promo code"]: @Model.PromoCode</span>
+                            <span>
+                                <strong> - @Model.Discount @Localizer["Currency"]</strong>
+                            </span>
+                        </div>
+                    }
                 </div>
                 <!-- Promo Code Start -->
                 <hr />
                 <!-- Subtotal Start -->
                 <div class="d-flex justify-content-between mb-3">
-                    <span>Междинна сума</span>
+                    <span>@Localizer["Subtotal"]</span>
                     <span class="mb-0">
-                        <strong>@Model.SubTotal лв.</strong>
+                        <strong>@Model.SubTotal @Localizer["Currency"]</strong>
                     </span>
                 </div>
                 <!-- Subtotal End -->
                 <!-- Delivery Start -->
                 <div class="d-flex justify-content-between mb-3">
-                    <span>Доставка</span>
+                    <span>@Localizer["Shipping"]</span>
                     <span class="mb-0">
                         @if (Model.ShippingPrice == 0)
                         {
-                            <strong>безплатна</strong>
+                            <strong>@Localizer["Free"]</strong>
                         }
                         else
                         {
-                            <strong>@Model.ShippingPrice лв.</strong>
+                            <strong>@Model.ShippingPrice @Localizer["Currency"]</strong>
                         }
                     </span>
                 </div>
@@ -137,8 +141,8 @@
                 <hr />
                 <!-- Total Price Start -->
                 <div class="d-flex justify-content-between my-3 fs-4">
-                    <span>Общо :</span>
-                    <span>@Model.Total лв.</span>
+                    <span>@Localizer["Total"]:</span>
+                    <span>@Model.Total @Localizer["Currency"]</span>
                 </div>
                 <!-- Total Price End -->
             </div>

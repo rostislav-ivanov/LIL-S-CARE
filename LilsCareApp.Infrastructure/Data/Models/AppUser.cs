@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using static LilsCareApp.Infrastructure.DataConstants.AppUser;
 
 namespace LilsCareApp.Infrastructure.Data.Models
@@ -36,15 +35,6 @@ namespace LilsCareApp.Infrastructure.Data.Models
 
         [Comment("Navigation property to Review")]
         List<Review> Reviews { get; set; } = new List<Review>();
-
-
-        [Comment("Default Address Delivery Id")]
-        public int? DefaultAddressDeliveryId { get; set; }
-
-        [Comment("Navigation property to AddressDelivery")]
-        [ForeignKey(nameof(DefaultAddressDeliveryId))]
-        public AddressDelivery? DefaultAddressDelivery { get; set; }
-
 
         [Comment("Navigation property to AddressDelivery")]
         public List<AddressDelivery> AddressDelivery { get; set; } = new List<AddressDelivery>();

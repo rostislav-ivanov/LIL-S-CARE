@@ -1,6 +1,7 @@
-﻿@model MyAddressDTO
+﻿@inject IViewLocalizer Localizer
+@model MyAddressDTO
 @{
-    ViewData["Title"] = "Акаунт";
+    ViewData["Title"] = Localizer["My Account"];
 }
 
 <div class="d-flex justify-content-center">
@@ -10,19 +11,19 @@
     <!-- My My Account Start-->
     <div class="border rounded p-2 w-50" style="margin: 50px 100px 20px 20px">
         <div class="d-flex justify-content-between align-items-center">
-            <h5 class="my-4">Моят акаунт</h5>
+            <h5 class="my-4">@Localizer["My Account"]</h5>
             <a asp-controller="Account" asp-action="UpdateMyAccount" style="color: rgb(var(--app-btn-bg))">
-                Редактиране <i class="fa-solid fa-user-pen ms-3"></i>
+                @Localizer["Edit"] <i class="fa-solid fa-user-pen ms-3"></i>
             </a>
         </div>
         <hr />
         <!-- Show My Account Start -->
-        <p>Потребителското име: @Model.UserName</p>
-        <p>Собствено име: @Model.FirstName</p>
-        <p>Фамилия: @Model.LastName</p>
-        <p>Телефон: @Model.PhoneNumber</p>
-        <p>Имейл: @Model.Email</p>
-        <p>Снимка:</p>
+        <p>@Localizer["User Name"]: @Model.UserName</p>
+        <p>@Localizer["First Name"]: @Model.FirstName</p>
+        <p>@Localizer["Last Name"]: @Model.LastName</p>
+        <p>@Localizer["Phone Number"]: @Model.PhoneNumber</p>
+        <p>@Localizer["Email"]: @Model.Email</p>
+        <p>@Localizer["Photo"]:</p>
         <div class="text-center my-3">
             <img src="@Model.ImagePath"
                  class="rounded-circle"

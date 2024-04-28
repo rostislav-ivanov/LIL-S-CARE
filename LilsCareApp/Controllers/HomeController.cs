@@ -2,6 +2,7 @@ using LilsCareApp.Core.Contracts;
 using LilsCareApp.Core.Models.Home;
 using LilsCareApp.Core.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using static LilsCareApp.Infrastructure.DataConstants.AdminConstants;
@@ -122,6 +123,19 @@ namespace LilsCareApp.Controllers
             TempData["scrollToElementId"] = "owl-carousel";
 
             return RedirectToAction(nameof(Index), "Home");
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            );
+
+            return LocalRedirect(returnUrl);
         }
 
         [AllowAnonymous]
