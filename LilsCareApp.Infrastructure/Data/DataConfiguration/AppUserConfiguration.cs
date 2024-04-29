@@ -41,7 +41,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
             var hasher = new PasswordHasher<AppUser>();
 
             users.First().PasswordHash = hasher.HashPassword(users.First(), "softuni");
-            users.Last().PasswordHash = hasher.HashPassword(users.Last(), "softuni-admin");
+            users.Last().PasswordHash = hasher.HashPassword(users.Last(), "lilia-admin-app");
 
             builder.HasData(users);
         }
