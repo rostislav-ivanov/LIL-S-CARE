@@ -147,6 +147,9 @@
   <data name="Edit" xml:space="preserve">
     <value>Редактирай</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>Имейл</value>
+  </data>
   <data name="Make this my default address" xml:space="preserve">
     <value>Направете това моя адрес по подразбиране</value>
   </data>

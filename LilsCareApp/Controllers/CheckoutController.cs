@@ -167,6 +167,7 @@ namespace LilsCareApp.Controllers
             order.Address.FirstName = addressDTO.FirstName;
             order.Address.LastName = addressDTO.LastName;
             order.Address.PhoneNumber = addressDTO.PhoneNumber;
+            order.Address.Email = addressDTO.Email;
 
             ModelState.Remove("Country");
             ModelState.Remove("PostCode");
@@ -353,16 +354,13 @@ namespace LilsCareApp.Controllers
             }
 
             OrderSummaryDTO orderSummary = await _checkoutService.OrderSummaryAsync(orderNumber);
-            var userId = User.GetUserId();
-            if (userId != null)
+
+            var emailConfirmation = order.Address.Email ?? User.GetUserEmail();
+            if (!string.IsNullOrEmpty(emailConfirmation))
             {
-                var emailUser = await _accountService.GetEmailUser(userId);
-                if (emailUser != null)
-                {
-                    string message = CreateOrderSummaryEmailMessage(orderSummary);
-                    string subject = $"{_localizer["Thank you for shopping with us"]} (#{orderNumber})";
-                    await _emailSender.SendEmailAsync(emailUser, subject, message);
-                }
+                string message = CreateOrderSummaryEmailMessage(orderSummary);
+                string subject = $"{_localizer["Thank you for shopping with us"]} (#{orderNumber})";
+                await _emailSender.SendEmailAsync(emailConfirmation, subject, message);
             }
 
 

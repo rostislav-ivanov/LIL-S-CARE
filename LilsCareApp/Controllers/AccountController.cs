@@ -272,6 +272,7 @@ namespace LilsCareApp.Controllers
             address.FirstName = model.FirstName;
             address.LastName = model.LastName;
             address.PhoneNumber = model.PhoneNumber;
+            address.Email = model.Email;
 
             ModelState.Remove("Country");
             ModelState.Remove("PostCode");

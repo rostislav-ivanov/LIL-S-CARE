@@ -141,6 +141,9 @@
   <data name="Last Name" xml:space="preserve">
     <value>Last Name</value>
   </data>
+  <data name="Order confirmation email" xml:space="preserve">
+    <value>Order confirmation email</value>
+  </data>
   <data name="Phone Number" xml:space="preserve">
     <value>Phone Number</value>
   </data>

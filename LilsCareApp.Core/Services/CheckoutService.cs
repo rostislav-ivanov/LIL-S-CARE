@@ -383,7 +383,7 @@ namespace LilsCareApp.Core.Services
         {
             order.Language = _httpContextManager.GetLanguage();
             order.ExchangeRate = await _appConfigService.GetExchangeRateAsync(order.Language);
-            decimal freeShipping = await _appConfigService.GetFreeShipping(order.Language);
+            decimal freeShipping = await _appConfigService.GetFreeShippingAsync(order.Language);
             decimal subTotal = order.ProductsInBag.Sum(p => p.Price * p.Quantity);
             decimal discount = order.PromoCodes.FirstOrDefault(pc => pc.Id == order.PromoCodeId)?.Discount ?? 0;
             order.Discount = Math.Round((subTotal * discount), 2);

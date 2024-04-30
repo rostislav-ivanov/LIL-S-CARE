@@ -141,6 +141,9 @@
   <data name="Last Name" xml:space="preserve">
     <value>Фамилия</value>
   </data>
+  <data name="Order confirmation email" xml:space="preserve">
+    <value>Имейл за потвърждение на поръчката</value>
+  </data>
   <data name="Phone Number" xml:space="preserve">
     <value>Телефонен номер</value>
   </data>

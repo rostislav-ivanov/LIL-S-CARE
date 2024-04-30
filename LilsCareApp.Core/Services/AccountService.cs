@@ -71,10 +71,7 @@ namespace LilsCareApp.Core.Services
         public async Task<string> GetUserImagePathAsync(string userId)
         {
             var user = await _context.Users.FirstOrDefaultAsync(au => au.Id == userId);
-            if (user == null)
-            {
-                return null;
-            }
+
             return user.ImagePath;
         }
 
@@ -166,8 +163,16 @@ namespace LilsCareApp.Core.Services
                 return;
             }
 
-            address.IsDeleted = true;
-            address.IsDefault = false;
+            if (await _context.Orders.AnyAsync(o => o.AddressDeliveryId == addressId))
+            {
+                address.IsDeleted = true;
+                address.IsDefault = false;
+                return;
+            }
+            else
+            {
+                _context.AddressDeliveries.Remove(address);
+            }
 
             await _context.SaveChangesAsync();
         }

@@ -115,6 +115,12 @@
                    class="form-control" />
             <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
         </div>
+        <div class="my-2">
+            <label asp-for="@Model.Email" class="form-label small">@Localizer["Order confirmation email"]</label>
+            <input asp-for="@Model.Email"
+                   class="form-control" />
+            <span asp-validation-for="@Model.Email" class="text-danger"></span>
+        </div>
         <div class="d-flex justify-content-end">
             <!-- Save Changes Start -->
             <button type="submit" class="btn btn-sm ms-3">@Localizer["Save"]</button>

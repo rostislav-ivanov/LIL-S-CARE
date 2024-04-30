@@ -45,7 +45,7 @@ namespace LilsCareApp.Core.Services
             return addressDeliveryPrice / exchangeRate;
         }
 
-        public async Task<decimal> GetFreeShipping(string language)
+        public async Task<decimal> GetFreeShippingAsync(string language)
         {
             decimal exchangeRate = await GetExchangeRateAsync(language);
 
