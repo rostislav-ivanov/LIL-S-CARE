@@ -2,6 +2,7 @@
 using LilsCareApp.Core.Models.AdminOrders;
 using LilsCareApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using static LilsCareApp.Infrastructure.DataConstants.Language;
 
 namespace LilsCareApp.Core.Services
 {
@@ -34,7 +35,8 @@ namespace LilsCareApp.Core.Services
                     Customer = o.AddressDelivery.FirstName + " " + o.AddressDelivery.LastName,
                     Payment = o.IsPaid ? "Платена" : "Неплатена",
                     StatusOrder = o.StatusOrder.Name.NameBG,
-                    //Total = o.Total
+                    Total = o.Total,
+                    Currency = o.Currency
                 });
             ;
 
@@ -61,6 +63,16 @@ namespace LilsCareApp.Core.Services
                 .Take(ordersPerPage)
                 .AsNoTracking()
                 .ToListAsync();
+
+            foreach (var order in orders)
+            {
+                order.Currency = new Dictionary<string, string>
+                {
+                    { Bulgarian, "лв." },
+                    { Romanian, "Lei" },
+                    { English, "€" }
+                }[order.Currency];
+            }
 
             return new AdminOrdersDTO
             {

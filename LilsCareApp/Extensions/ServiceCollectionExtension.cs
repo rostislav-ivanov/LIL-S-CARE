@@ -92,11 +92,11 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddAppAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAuthentication()
-                //.AddFacebook(options =>
-                //{
-                //    options.AppId = configuration.GetSection("FacebookAuth:AppId").Value;
-                //    options.AppSecret = configuration.GetSection("FacebookAuth:AppSecret").Value;
-                //})
+                .AddFacebook(options =>
+                {
+                    options.AppId = configuration.GetSection("FacebookAuth:AppId").Value;
+                    options.AppSecret = configuration.GetSection("FacebookAuth:AppSecret").Value;
+                })
                 .AddGoogle(options =>
                 {
                     options.ClientId = configuration.GetSection("GoogleAuth:ClientId").Value;
