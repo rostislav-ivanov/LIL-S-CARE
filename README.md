@@ -1,4 +1,6 @@
-# LilsCareApp
+# LilsCareApp 
+# https://lilscareapp20240428180314.azurewebsites.net/
+
 Online store
 
 ## Description:
@@ -34,7 +36,7 @@ place orders, manage account and account details, edit and manage orders and man
 
 ## Test accounts and application settings:
 - Member - UserName: test@softuni.bg, Password: softuni
-- Admin - UserName: admin@mail.com, Password: softuni-admin
+- Admin - UserName: admin@mail.com, Password: lilia-admin-app
 
 Before running the application, ensure you have the necessary configurations in the appsettings.json file. Replace every occurrence of "Your" with the actual value: connection string to MSSQL server, Google authentication, Facebook authentication, SendGrid keys and email.
 ```
