@@ -106,6 +106,39 @@
     </div>
 </div>
 <!-- Payment Order Offcanvas End -->
+<!-- Delivery Method Offcanvas Start -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="delivery-method" aria-labelledby="offcanvasLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasLabel">Изберете метод на доставка</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+
+        @foreach (var deliveryMethod in Model.DeliveryMethods)
+        {
+            <a asp-area="Admin"
+               asp-controller="OrderDetails"
+               asp-action="ChangeDeliveryMethod"
+               asp-route-id="@Model.Id"
+               asp-route-deliveryMethodId="@deliveryMethod.Id"
+               class="nav-link mb-2">
+                @if (deliveryMethod.Id == Model.DeliveryMethodId)
+                {
+                    <div style="color:rgb(var(--app-btn-bg))">
+                        <i class="fa-regular fa-square-check me-2"></i>
+                        @deliveryMethod.Name
+                    </div>
+                }
+                else
+                {
+                    <i class="fa-regular fa-square me-2"></i>
+                    @deliveryMethod.Name
+                }
+            </a>
+        }
+    </div>
+</div>
+<!-- Delivery Method Offcanvas End -->
 <!-- Add Product To Order Offcanvas Start -->
 <div class="offcanvas offcanvas-end" tabindex="-1" id="add-product-to-order" aria-labelledby="offcanvasLabel">
     <div class="offcanvas-header">
@@ -158,7 +191,7 @@
                     <div class="d-flex justify-content-between mb-3">
                         <span>Тракинг код:</span>
                         <div class="d-flex justify-content-between">
-                            <strong>@Model.TrackingNumber</strong>
+                            <strong>@(string.IsNullOrEmpty(@Model.TrackingNumber) ? "няма" : Model.TrackingNumber)</strong>
                             <a data-bs-toggle="offcanvas"
                                href="#tracking-number"
                                role="button"
@@ -220,6 +253,7 @@
                     <!-- Delivery Method End -->
                     @if (Model.DeliveryMethodId == 1)
                     {
+                        <!-- Home Delivery Start -->
                         <form asp-area="Admin" asp-controller="OrderDetails" asp-action="AddOfficeDelivery" method="post">
                             <input asp-for="@Model.Id" hidden value="@Model.Id" />
                             <div class="row my-2">
@@ -277,9 +311,11 @@
                                 <!-- Save Changes End -->
                             </div>
                         </form>
+                        <!-- Home Delivery End -->
                     }
                     else
                     {
+                        <!-- Office Delivery Start -->
                         <form asp-area="Admin" asp-controller="OrderDetails" asp-action="AddHomeDelivery" method="post">
                             <input asp-for="@Model.Id" hidden value="@Model.Id" />
                             <div class="row my-2">
@@ -355,6 +391,7 @@
                                 <!-- Save Changes End -->
                             </div>
                         </form>
+                        <!-- Office Delivery End -->
                     }
 
                     <hr />
@@ -362,7 +399,7 @@
                     <!-- Note for Delivery Start -->
                     <div class="row">
                         <h5>Изисквания за поръчката:</h5>
-                        <p>@Model.NoteForDelivery</p>
+                        <p>@(string.IsNullOrEmpty(Model.NoteForDelivery) ? "няма" : Model.NoteForDelivery)</p>
                     </div>
                     <hr />
                     <!-- Note for Delivery End -->
@@ -375,8 +412,32 @@
                     </div>
                     <hr />
                     <!-- Currency and Exchange Rate End -->
+                <!-- Send Confirmation Email Start -->
+                <div class="row">
+                    <div class="d-flex justify-content-between">
+                        <h5>Изпращане на имейл:</h5>
+                        @if(!string.IsNullOrEmpty(Model.Email) || !string.IsNullOrEmpty(Model.AppUserName))
+                        {
+                            <div class="d-flex justify-content-between">
+                                <span>@(string.IsNullOrEmpty(Model.Email) ? Model.AppUserName : Model.Email)</span>
+                                <a asp-area="Admin"
+                                   asp-controller="OrderDetails"
+                                   asp-action="SendConfirmationEmail"
+                                   asp-route-id="@Model.Id"
+                                   class="nav-link text-success">
+                                    <i class="fa-solid fa-paper-plane ms-2"></i>
+                                </a>
+                            </div>
+                        }
+                        else
+                        {
+                            <span class="text-danger">няма имейл</span>
+                        }
+                    </div>
                 </div>
-                <!-- Client's data and Delivery address End -->
+                <hr />
+                <!-- Send Confirmation Email End -->
+                </div>
                 <!-- Order Summary Start -->
                 <div class="col-lg-6">
                     <div class="container mt-4 px-4 pb-2 rounded"

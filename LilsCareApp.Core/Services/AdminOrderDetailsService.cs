@@ -27,7 +27,7 @@ namespace LilsCareApp.Core.Services
                     StatusOrderId = o.StatusOrder.Id,
                     DeliveryMethodId = o.DeliveryMethod.Id,
                     AppUserId = o.AppUserId,
-                    AppUserName = o.AppUser != null ? o.AppUser.UserName : "",
+                    AppUserName = o.AppUser != null ? o.AppUser.UserName : null,
                     DateShipping = o.DateShipping,
                     TrackingNumber = o.TrackingNumber,
                     PaymentMethodId = o.PaymentMethod.Id,
@@ -118,6 +118,26 @@ namespace LilsCareApp.Core.Services
             }
 
             order.StatusOrder = status;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task ChangeDeliveryMethodAsync(int id, int deliveryMethodId)
+        {
+            var order = await _context.Orders
+                .Where(o => o.Id == id)
+                .FirstOrDefaultAsync();
+
+            var deliveryMethod = await _context.DeliveryMethods
+                .Where(dm => dm.Id == deliveryMethodId)
+                .FirstOrDefaultAsync();
+
+            if (order == null || deliveryMethod == null)
+            {
+                return;
+            }
+
+            order.DeliveryMethod = deliveryMethod;
 
             await _context.SaveChangesAsync();
         }

@@ -78,22 +78,22 @@ namespace LilsCareApp.Core.Models.AdminOrderDetails
         [Required(ErrorMessage = RequiredField)]
         [MaxLength(CountryMaxLength, ErrorMessage = StringLengthMax)]
         [Display(Name = "държава")]
-        public string Country { get; set; } = string.Empty;
+        public string? Country { get; set; }
 
         [Required(ErrorMessage = RequiredField)]
         [MaxLength(PostCodeMaxLength, ErrorMessage = StringLengthMax)]
         [Display(Name = "пощенски код")]
-        public string PostCode { get; set; } = string.Empty;
+        public string? PostCode { get; set; }
 
         [Required(ErrorMessage = RequiredField)]
         [MaxLength(TownMaxLength, ErrorMessage = StringLengthMax)]
         [Display(Name = "град")]
-        public string Town { get; set; } = string.Empty;
+        public string? Town { get; set; }
 
         [Required(ErrorMessage = RequiredField)]
         [MaxLength(AddressMaxLength, ErrorMessage = StringLengthMax)]
         [Display(Name = "адрес")]
-        public string Address { get; set; } = string.Empty;
+        public string? Address { get; set; }
 
         [MaxLength(DistrictMaxLength, ErrorMessage = StringLengthMax)]
         [Display(Name = "район")]

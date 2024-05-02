@@ -355,12 +355,12 @@ namespace LilsCareApp.Controllers
 
             OrderSummaryDTO orderSummary = await _checkoutService.OrderSummaryAsync(orderNumber);
 
-            var emailConfirmation = order.Address.Email ?? User.GetUserEmail();
-            if (!string.IsNullOrEmpty(emailConfirmation))
+            var userEmail = order.Address.Email ?? User.GetUserEmail();
+            if (!string.IsNullOrEmpty(userEmail))
             {
                 string message = CreateOrderSummaryEmailMessage(orderSummary);
                 string subject = $"{_localizer["Thank you for shopping with us"]} (#{orderNumber})";
-                await _emailSender.SendEmailAsync(emailConfirmation, subject, message);
+                await _emailSender.SendEmailAsync(userEmail, subject, message);
             }
 
 
@@ -467,7 +467,7 @@ namespace LilsCareApp.Controllers
                                       </td>
                                       <td valign=""top"" width=""80""></td>
                                       <td align=""right"" width=""80"" valign=""top"">
-                                        - {orderSummary.Discount} лв.
+                                        - {orderSummary.Discount} {_localizer["Currency"]}
                                       </td>
                                     </tr>
                                 " : string.Empty;
