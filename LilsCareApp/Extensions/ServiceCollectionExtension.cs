@@ -73,35 +73,19 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
-        //public static IServiceCollection AddAppLocalization(this IServiceCollection services)
-        //{
-        //    services.AddLocalization(options => options.ResourcesPath = "Resources");
-
-        //    services.AddControllersWithViews()
-        //        .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-        //        .AddDataAnnotationsLocalization(options =>
-        //        {
-        //            options.DataAnnotationLocalizerProvider = (type, factory) =>
-        //                factory.Create(typeof(SharedResource));
-        //        });
-        //    services.AddMvc();
-
-        //    return services;
-        //}
-
         public static IServiceCollection AddAppAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddAuthentication()
-                .AddFacebook(options =>
-                {
-                    options.AppId = configuration.GetSection("FacebookAuth:AppId").Value;
-                    options.AppSecret = configuration.GetSection("FacebookAuth:AppSecret").Value;
-                })
-                .AddGoogle(options =>
-                {
-                    options.ClientId = configuration.GetSection("GoogleAuth:ClientId").Value;
-                    options.ClientSecret = configuration.GetSection("GoogleAuth:ClientSecret").Value;
-                });
+            //services.AddAuthentication()
+            //.AddFacebook(options =>
+            //{
+            //    options.AppId = configuration.GetSection("FacebookAuth:AppId").Value;
+            //    options.AppSecret = configuration.GetSection("FacebookAuth:AppSecret").Value;
+            //})
+            //.AddGoogle(options =>
+            //{
+            //    options.ClientId = configuration.GetSection("GoogleAuth:ClientId").Value;
+            //    options.ClientSecret = configuration.GetSection("GoogleAuth:ClientSecret").Value;
+            //});
 
             return services;
         }
