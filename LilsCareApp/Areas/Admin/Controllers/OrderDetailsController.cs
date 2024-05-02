@@ -8,11 +8,16 @@ namespace LilsCareApp.Areas.Admin.Controllers
     {
         public readonly IAdminOrderService _adminOrderService;
         public readonly IAdminOrderDetailsService _adminOrderDetailsService;
+        public readonly ICheckoutService _checkoutService;
 
-        public OrderDetailsController(IAdminOrderService adminOrderService, IAdminOrderDetailsService adminOrderDetailsService)
+        public OrderDetailsController(
+            IAdminOrderService adminOrderService,
+            IAdminOrderDetailsService adminOrderDetailsService,
+            ICheckoutService checkoutService)
         {
             _adminOrderService = adminOrderService;
             _adminOrderDetailsService = adminOrderDetailsService;
+            _checkoutService = checkoutService;
         }
 
         public async Task<IActionResult> Index(int id)
@@ -25,6 +30,8 @@ namespace LilsCareApp.Areas.Admin.Controllers
             AdminOrderDetailsDTO order = await _adminOrderDetailsService.GetOrderDetailsAsync(id);
             order.StatusesOrder = await _adminOrderService.GetStatusesOrderAsync();
             order.Products = await _adminOrderDetailsService.GetProductsNameAsync();
+            order.DeliveryMethods = await _checkoutService.GetDeliveryMethodsAsync();
+            order.PaymentMethods = await _checkoutService.GetPaymentMethodsAsync();
 
             return View(order);
         }
@@ -32,7 +39,7 @@ namespace LilsCareApp.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddTrackingCode(int id, string trackingNumber)
         {
-            if (id == 0 || string.IsNullOrWhiteSpace(trackingNumber))
+            if (id == 0)
             {
                 return BadRequest();
             }
@@ -118,6 +125,47 @@ namespace LilsCareApp.Areas.Admin.Controllers
             await _adminOrderDetailsService.EditDiscountAsync(id, discount);
 
             return RedirectToAction(nameof(Index), new { id });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddOfficeDeliveryAsync(AdminOrderDetailsDTO model)
+        {
+            ModelState.Remove("Country");
+            ModelState.Remove("PostCode");
+            ModelState.Remove("Town");
+            ModelState.Remove("Address");
+
+            if (model is null)
+            {
+                return BadRequest();
+            }
+
+            if (ModelState.IsValid)
+            {
+                await _adminOrderDetailsService.AddOfficeDeliveryAsync(model);
+            }
+
+            return RedirectToAction(nameof(Index), new { model.Id });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddHomeDeliveryAsync(AdminOrderDetailsDTO model)
+        {
+            ModelState.Remove("ShippingProviderName");
+            ModelState.Remove("OfficeCity");
+            ModelState.Remove("OfficeAddress");
+
+            if (model is null)
+            {
+                return BadRequest();
+            }
+
+            if (ModelState.IsValid)
+            {
+                await _adminOrderDetailsService.AddHomeDeliveryAsync(model);
+            }
+
+            return RedirectToAction(nameof(Index), new { model.Id });
         }
     }
 }

@@ -153,8 +153,6 @@ namespace LilsCareApp.Core.Services
                 NoteForDelivery = orderDTO.NoteForDelivery,
                 ShippingPrice = orderDTO.ShippingPrice,
                 Discount = orderDTO.Discount,
-                SubTotal = orderDTO.SubTotal,
-                Total = orderDTO.Total,
                 FirstName = orderDTO.Address.FirstName,
                 LastName = orderDTO.Address.LastName,
                 PhoneNumber = orderDTO.Address.PhoneNumber,
@@ -163,12 +161,17 @@ namespace LilsCareApp.Core.Services
                 District = orderDTO.Address.District,
                 Country = orderDTO.Address.Country,
                 Email = orderDTO.Address.Email,
-                IsShippingToOffice = orderDTO.Address.DeliveryMethodId == 1,
                 ShippingOfficeId = orderDTO.Address.ShippingOfficeId,
                 ShippingProviderName = orderDTO.Address.ShippingOffice?.ShippingProviderName,
                 ShippingOfficeCity = orderDTO.Address.ShippingOffice?.City,
                 ShippingOfficeAddress = orderDTO.Address.ShippingOffice?.OfficeAddress,
-                Currency = orderDTO.Language,
+                ExchangeRate = orderDTO.ExchangeRate,
+                Currency = new Dictionary<string, string>
+                            {
+                                { Bulgarian, "лв." },
+                                { Romanian, "Lei" },
+                                { English, "€" }
+                            }[orderDTO.Language],
                 ProductsOrders = [],
             };
 

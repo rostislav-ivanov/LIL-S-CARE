@@ -183,8 +183,6 @@ namespace LilsCareApp.Core.Services
                 NoteForDelivery = orderDTO.NoteForDelivery,
                 ShippingPrice = orderDTO.ShippingPrice,
                 Discount = orderDTO.Discount,
-                SubTotal = orderDTO.SubTotal,
-                Total = orderDTO.Total,
                 PromoCodeId = orderDTO.PromoCodeId > 0 ? orderDTO.PromoCodeId : null,
                 FirstName = orderDTO.Address.FirstName,
                 LastName = orderDTO.Address.LastName,
@@ -195,7 +193,6 @@ namespace LilsCareApp.Core.Services
                 District = orderDTO.Address.District,
                 Country = orderDTO.Address.Country,
                 Email = orderDTO.Address.Email,
-                IsShippingToOffice = orderDTO.Address.DeliveryMethodId == 1,
                 ShippingOfficeId = orderDTO.Address.ShippingOfficeId,
                 ShippingProviderName = orderDTO.Address.ShippingOffice?.ShippingProviderName,
                 ShippingOfficeCity = orderDTO.Address.ShippingOffice?.City,
@@ -337,7 +334,7 @@ namespace LilsCareApp.Core.Services
                     Town = o.Town,
                     District = o.District,
                     Country = o.Country,
-                    IsShippingToOffice = o.IsShippingToOffice,
+                    IsShippingToOffice = o.DeliveryMethodId == 1,
                     ShippingProviderName = o.ShippingProviderName,
                     ShippingOfficeCity = o.ShippingOfficeCity,
                     ShippingOfficeAddress = o.ShippingOfficeAddress,
@@ -369,9 +366,9 @@ namespace LilsCareApp.Core.Services
                         { English, o.PromoCode.Code.NameEN }
                     }[language] : string.Empty,
                     Discount = o.Discount,
-                    SubTotal = o.SubTotal,
+                    SubTotal = o.ProductsOrders.Sum(po => po.Quantity * po.Price) - o.Discount,
                     ShippingPrice = o.ShippingPrice,
-                    Total = o.Total
+                    Total = o.ProductsOrders.Sum(po => po.Quantity * po.Price) - o.Discount + o.ShippingPrice,
                 })
                 .AsNoTracking()
                 .FirstOrDefaultAsync();

@@ -87,15 +87,6 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal Discount { get; set; }
 
-        [Comment("Sub Total Price of Order")]
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal SubTotal { get; set; }
-
-
-        [Comment("Total Price of Order")]
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal Total { get; set; }
-
         [Comment("Promo Code Id")]
         public int? PromoCodeId { get; set; }
 
@@ -138,8 +129,6 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [MaxLength(EmailMaxLength)]
         [Comment("Email")]
         public string? Email { get; set; }
-
-        public bool IsShippingToOffice { get; set; }
 
         public int? ShippingOfficeId { get; set; }
 

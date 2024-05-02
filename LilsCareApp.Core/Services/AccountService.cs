@@ -113,9 +113,9 @@ namespace LilsCareApp.Core.Services
                     TrackingNumber = o.TrackingNumber,
                     Currency = o.Currency,
                     Discount = o.Discount,
-                    SubTotal = o.SubTotal,
+                    SubTotal = o.ProductsOrders.Sum(po => po.Quantity * po.Price) - o.Discount,
                     ShippingPrice = o.ShippingPrice,
-                    Total = o.Total,
+                    Total = o.ProductsOrders.Sum(po => po.Quantity * po.Price) - o.Discount + o.ShippingPrice,
                 })
                 .AsNoTracking()
                 .ToListAsync();
