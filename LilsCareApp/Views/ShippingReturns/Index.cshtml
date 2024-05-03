@@ -1,147 +1,104 @@
-﻿@{
-    ViewData["Title"] = "ДОСТАВКА И ВРЪЩАНЕ";
+﻿@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = Localizer["DELIVERY AND RETURNS"];
 }
 <div class="row justify-content-center py-5">
     <div class="col-7">
-        <h1 class="h2 text-center pb-3">ДОСТАВКА И ВРЪЩАНЕ</h1>
+        <h1 class="h2 text-center pb-3">@Localizer["DELIVERY AND RETURNS"]</h1>
         <div class="pb-3">
-            <h2 class="h4">Изпращане:</h2>
+            <h2 class="h4">@Localizer["Sending:"]</h2>
             <ol>
                 <li>
-                    След като направите поръчка в сайта ни (lilscare.com), ние я
-                    обработваме като <strong>проверяваме наличността</strong> на
-                    продуктите и старателно ги <strong>опаковаме</strong> в
-                    рециклирани картонена кутийка и хартиен пълнеж за уплътнение
+                    @Localizer["After you place an order on our site (lilscare.com), we process it by <strong>checking the availability</strong> of the products and carefully <strong>packing</strong> them in a recycled cardboard box and paper filling for sealing"]
                 </li>
                 <li>
-                    Обикновенно се свързваме по <strong>телефон</strong> (ако има
-                    посочен) или имейл за потвърждение на поръчката и даниите за
-                    доставка.
+                    @Localizer["We usually contact you by <strong>phone</strong> (if listed) or email to confirm your order and delivery details."]
                 </li>
                 <li>
-                    Ако има продукт, който не е наличен, се свързваме с Вас, за да
-                    уточним как бихте искали да постъпим: да изпълним поръчката без
-                    неналичните продукти, да ги заменим с други или да отменим
-                    поръчката.
+                    @Localizer["If there is a product that is not available, we contact you to specify how you would like us to proceed: fulfill the order without the unavailable products, replace them with others or cancel the order."]
                 </li>
                 <li>
-                    След като са уточнени детайлте, изпращаме доставка и потвърждение
-                    в имейл с <strong>проследяващия номер</strong>.
+                    @Localizer["Once the details are confirmed, we send a shipping and email confirmation with the <strong>tracking number</strong>."]
                 </li>
                 <li>
-                    Обранотваме поръчките си в срок <strong>до 2 работни</strong> дни
-                    от момента на поръчване.
+                    @Localizer["We process your orders within <strong>up to 2 working</strong> days from the moment of ordering."]
                 </li>
             </ol>
         </div>
         <div class="pb-3">
-            <h2 class="h4">Доставка:</h2>
+            <h2 class="h4">@Localizer["Delivery:"]</h2>
             <ol>
                 <li>
-                    За хигиенния комфорт на клиентите ни изпращаме поръчките
-                    <strong>с преглед, без тест</strong>.
+                    @Localizer["For the hygienic comfort of our customers, we send the orders <strong>with inspection, without test</strong>."]
                 </li>
                 <li>
-                    Изпращаме със стандартна доставка на територията на България до
-                    посочен от потребителя адрес или куриерски офис на Eконт или Спиди
-                    <strong>от полето за адрес при поръчка</strong>.
+                    @Localizer["We send with standard delivery on the territory of Bulgaria to the address specified by the user or to the courier office of Econt or Speedy <strong>from the address field when ordering</strong>."]
                 </li>
                 <li>
-                    Обикновенно куриерите не извършват доставки в неделя и на
-                    официални празници.
+                    @Localizer["Couriers usually do not make deliveries on Sundays and public holidays."]
                 </li>
                 <li>
-                    Ако потребителят не успее да получи в срок пратката си, ние се
-                    освобождаваме от задължението да изпълним доставката.
+                    @Localizer["If the customer fails to receive his shipment on time, we are released from the obligation to fulfill the delivery."]
                 </li>
                 <li>
-                    Цената на доставка се поема от потребителя и е калкулирана на
-                    базата на ценовата листа на куриерската фирма. Зависи от типа
-                    доставка, местоположение и сума на поръчката.
+                    @Localizer["The cost of delivery is borne by the user and is calculated on the basis of the price list of the courier company. It depends on the type of delivery, location and order amount."]
                 </li>
-                <li>Плащането се осъществява при доставка.</li>
+                <li>@Localizer["Payment is made upon delivery."]</li>
             </ol>
         </div>
         <div class="pb-3">
-            <h2 class="h4">Как мога да върна закупен продукт ?</h2>
+            <h2 class="h4">@Localizer["How can I return a purchased product?"]</h2>
             <p class="">
-                Ако не сте удовлетворени от поръчката си, по време на преглед можете
-                да върнете Вашият продукт и да не го заплащате (преди да сте
-                напуснали куриера/куриерския офис), като транспортните разходи в
-                двете посоки са за Ваша сметка. Продуктите трябва да са в същото
-                състояние, в което сте ги получили: неизползвани, неотвряни (напр.
-                серум, лосион и др.), неповредени, в оригиналната си опаковка, с
-                етикети и без следи от употреба.
+                @Localizer["If you are not satisfied with your order, during review you can return your product without paying for it (before you have left the courier/courier office) and the shipping costs in both directions are at your expense. Products must be in the same condition in which you received them: unused, unopened (eg serum, lotion, etc.), undamaged, in their original packaging, with tags and without signs of use."]
             </p>
         </div>
         <div class="pb-3">
-            <h2 class="h4">Замяна:</h2>
+            <h2 class="h4">@Localizer["Replacement:"]</h2>
             <p>
-                В случай че продукти са пристигнали при Вас повредени или счупени
-                при доставката, ние ще ги заменим като втората доставка ще е подарък
-                от нас.
+                @Localizer["In case products arrived at you damaged or broken during delivery, we will replace them and the second delivery will be a gift from us."]
             </p>
         </div>
 
-        <h1 class="h2 text-center pb-3">УСЛОВИЯ</h1>
+        <h1 class="h2 text-center pb-3">@Localizer["CONDITIONS"]</h1>
         <div class="pb-3">
             <p>
-                В тази декларация Ви информираме накратко за основните условия за
-                ползване на нашия уебсайт (lilscare.com) или продукт. Когато
-                използвате уебсайта ни и направите поръчка Вие се съгласявате с тези
-                условия.
+                @Localizer["In this statement, we inform you briefly about the basic terms of use of our website (lilscare.com) or product. When you use our website and place an order, you agree to these terms."]
             </p>
         </div>
 
         <div class="pb-3">
             <h2 class="h4">
-                Информацията на нашия уебсайт е само с образователна цел.
+                @Localizer["The information on our website is for educational purposes only."]
             </h2>
             <p class="">
-                Всички становища не са били оценени от отговорни институции.
-                Информацията няма за цел да диагностицира, да предлага превенция или
-                лечение на медицински състояния. При медицински проблем се свържете
-                с Вашия практикуващ лекар, медицинско лице или дерматолог.
+                @Localizer["All opinions have not been evaluated by responsible institutions. The information is not intended to diagnose, offer prevention or treatment of medical conditions. If you have a medical problem, contact your GP, medical professional or dermatologist."]
             </p>
         </div>
         <div class="pb-3">
-            <h2 class="h4">Продуктите ни не са с медицинско предназначение.</h2>
+            <h2 class="h4">@Localizer["Our products are not for medical use."]</h2>
             <p class="">
-                Всички наши продукти не са с фармацевтична цел и не са за лечение на
-                медицински състояния. За диагноза и при медицински проблем се
-                свържете с Вашия практикуващ лекар или друго медицинско лице.
+                @Localizer["All of our products are non-pharmaceutical and are not intended to treat medical conditions. For a diagnosis and for a medical problem, contact your practitioner or other medical professional."]
             </p>
         </div>
         <div class="pb-3">
             <h2 class="h4">
-                Информацията на тази страница и на уебсайта ни може да се промени.
+                @Localizer["The information on this page and on our website is subject to change."]
             </h2>
             <p class="">
-                В старанието си да подобряваме продуктите и услугите си, ние може да
-                ги променяме по всяко време. Когато направим промени или уточнения,
-                те влизат в сила веднага след като са публикувани. Може да се
-                информирате за тях от тази страница или от индивидуалните страници
-                на продуктите ни. Затова препоръчваме ги преглеждате периодично.
+                @Localizer["In our effort to improve our products and services, we may change them at any time. When we make changes or clarifications, they take effect immediately after they are posted. You can find out about them from this page or from the individual pages of our products. Therefore, we recommend that you review them periodically."]
             </p>
         </div>
         <div class="pb-3">
-            <h2 class="h4">Може да променяме продуктите си и техния състав.</h2>
+            <h2 class="h4">@Localizer["We may change our products and their composition"].</h2>
             <p class="">
-                Обръщаме специално внимание на това в допълнение към предишния
-                параграф. В старанието си да подобряваме продуктите си, ние може да
-                променим техните съставки и рецепта. Молим, преди да закупите наш
-                продукт да прегледате информацията за него независимо дали го
-                поръчвате за първи път или повторно и да следвате инструкциите за
-                употреба. Това е с цел да се избегнат индивидуална алергична
-                реакция, неудовлетвореност и други.
+                @Localizer["We pay special attention to this in addition to the previous paragraph. In our effort to improve our products, we may change their ingredients and recipe. Before purchasing our product, whether you are ordering it for the first time or re-ordering, please review the product information and follow the instructions for use. This is to avoid individual allergic reaction, dissatisfaction and others."]
             </p>
             <ol>
-                <li>Всички наши продукти са само за външна употреба.</li>
-                <li>Не ги използвайте при алергия към някоя от съставките.</li>
-                <li>Пазете ги далеч от малки деца.</li>
+                <li>@Localizer["All our products are for external use only."]</li>
+                <li>@Localizer["Do not use if you are allergic to any of the ingredients."]</li>
+                <li>@Localizer["Keep them away from small children."]</li>
                 <li>
-                    Съхранявайте ги добре затвоерени, далеч от пряка слънчева светлина
-                    и при други условия уточнени върху опаковката или на сайта.
+                    @Localizer["Store them well closed, away from direct sunlight and under other conditions specified on the packaging or on the website."]
                 </li>
             </ol>
         </div>
