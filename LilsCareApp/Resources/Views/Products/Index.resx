@@ -126,4 +126,7 @@
   <data name="Price" xml:space="preserve">
     <value>лв.</value>
   </data>
+  <data name="PRODUCTS" xml:space="preserve">
+    <value>ПРОДУКТИ</value>
+  </data>
 </root>

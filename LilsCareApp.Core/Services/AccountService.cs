@@ -80,7 +80,7 @@ namespace LilsCareApp.Core.Services
         {
             var language = _httpContextManager.GetLanguage();
 
-            return await _context.Orders
+            var orders = await _context.Orders
                 .Where(o => o.AppUserId == userId)
                 .OrderByDescending(o => o.CreatedOn)
                 .Select(o => new MyOrderDTO
@@ -119,6 +119,14 @@ namespace LilsCareApp.Core.Services
                 })
                 .AsNoTracking()
                 .ToListAsync();
+
+            foreach (var order in orders)
+            {
+                order.SubTotal = Math.Round(order.SubTotal, 2);
+                order.Total = Math.Round(order.Total, 2);
+            }
+
+            return orders;
         }
 
 
