@@ -117,49 +117,67 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Address" xml:space="preserve">
-    <value>адрес</value>
+  <data name="a light water-based serum" xml:space="preserve">
+    <value>a light water-based serum</value>
   </data>
-  <data name="Country" xml:space="preserve">
-    <value>държава</value>
+  <data name="Examples of" xml:space="preserve">
+    <value>Examples of</value>
   </data>
-  <data name="Email" xml:space="preserve">
-    <value>имейл</value>
+  <data name="FOR COMBINATION SKIN:" xml:space="preserve">
+    <value>FOR COMBINATION SKIN:</value>
   </data>
-  <data name="FirstName" xml:space="preserve">
-    <value>име</value>
+  <data name="FOR DRY SKIN:" xml:space="preserve">
+    <value>FOR DRY SKIN:</value>
   </data>
-  <data name="InvalidEmailAddress" xml:space="preserve">
-    <value>Невалиден имейл адрес.</value>
+  <data name="FOR OILY SKIN:" xml:space="preserve">
+    <value>FOR OILY SKIN:</value>
   </data>
-  <data name="InvalidPhoneNumber" xml:space="preserve">
-    <value>Невалиден телефонен номер</value>
+  <data name="hydrating Cream" xml:space="preserve">
+    <value>hydrating Cream</value>
   </data>
-  <data name="LastName" xml:space="preserve">
-    <value>фамилия</value>
+  <data name="It gets more oily than necessary and results in more pimples, blackheads and clogged pores. Light, hydrating and non-comedogenic products without a lot of oils are suitable. Also AHA/BHA peeling acids 1-2 times a week. However, they can irritate the skin and it is important to follow them with good hydration to protect the skin barrier." xml:space="preserve">
+    <value>It gets more oily than necessary and results in more pimples, blackheads and clogged pores. Light, hydrating and non-comedogenic products without a lot of oils are suitable. Also AHA/BHA peeling acids 1-2 times a week. However, they can irritate the skin and it is important to follow them with good hydration to protect the skin barrier.</value>
   </data>
-  <data name="Message" xml:space="preserve">
-    <value>съобщение</value>
+  <data name="It's easy! Cleanse your face with a gentle" xml:space="preserve">
+    <value>It's easy! Cleanse your face with a gentle, rinse-off cleanser without AHAs or other exfoliants. Rinse, gently dry and &lt;strong&gt;do not&lt;/strong&gt; apply any other products. After about 30 minutes and check how the skin feels:&lt;/p&gt;&lt;p class="mb-0"&gt;- if it tightens, pulls or flakes or just feels... dry&lt;/p&gt;&lt;p class=" mb-0"&gt;- if it got greasy... it's greasy&lt;/p&gt;&lt;p class="mb-0"&gt;- and if it's greasy in places, e.g. nose and forehead, and it's drier elsewhere, you have combination skin, which is also the most common skin type</value>
   </data>
-  <data name="PhoneNumber" xml:space="preserve">
-    <value>телефонен номер</value>
+  <data name="light serum" xml:space="preserve">
+    <value>light serum</value>
   </data>
-  <data name="Photo" xml:space="preserve">
-    <value>снимка</value>
+  <data name="moisturizing lotion" xml:space="preserve">
+    <value>moisturizing lotion</value>
   </data>
-  <data name="PostCode" xml:space="preserve">
-    <value>пощенски код</value>
+  <data name="moisturizing lotion / gel" xml:space="preserve">
+    <value>moisturizing lotion / gel</value>
   </data>
-  <data name="PrivacyPolicyCheck" xml:space="preserve">
-    <value>Моля, потвърдете съгласието с политиката за поверителност.</value>
+  <data name="NOTE: These routines are examples only. Use them and adapt them according to your needs. The information on this page and on the site is for educational purposes only. For diagnosis, prevention, or treatment of medical conditions, consult a physician." xml:space="preserve">
+    <value>NOTE: These routines are examples only. Use them and adapt them according to your needs. The information on this page and on the site is for educational purposes only. For diagnosis, prevention, or treatment of medical conditions, consult a physician.</value>
   </data>
-  <data name="ResourceRequired" xml:space="preserve">
-    <value>Моля, въведете {0}</value>
+  <data name="nourishing serum oil" xml:space="preserve">
+    <value>nourishing serum oil</value>
   </data>
-  <data name="StringLengthMax" xml:space="preserve">
-    <value>Полето {0} трябва да бъде най-много {1} символа дълго</value>
+  <data name="On the T-zone you can have a routine for oily... and on the cheeks a routine... But who wants a routine for every part of the face?! Try different products and experiment. Do not use every product on the whole face, but more or more often where it is needed. For example, AHA peeling on the T-zone and less often on the whole face. And lotion mainly mainly on the cheeks. Listen to your skin and its needs." xml:space="preserve">
+    <value>On the T-zone you can have a routine for oily... and on the cheeks a routine... But who wants a routine for every part of the face?! Try different products and experiment. Do not use every product on the whole face, but more or more often where it is needed. For example, AHA peeling on the T-zone and less often on the whole face. And lotion mainly mainly on the cheeks. Listen to your skin and its needs.</value>
   </data>
-  <data name="Town" xml:space="preserve">
-    <value>град</value>
+  <data name="SHORT ROUTINE" xml:space="preserve">
+    <value>SHORT ROUTINE</value>
+  </data>
+  <data name="SKIN" xml:space="preserve">
+    <value>SKIN</value>
+  </data>
+  <data name="sun protection" xml:space="preserve">
+    <value>sun protection</value>
+  </data>
+  <data name="To choose suitable products. There is no point in expensive cosmetics if they are not suitable for you. Skin types are &lt;strong&gt;dry&lt;/strong&gt;, &lt;strong&gt;oily&lt;/strong&gt; and &lt;strong&gt;combination&lt;/strong&gt;, and in addition it can be &lt;strong&gt;sensitive&lt;/strong&gt;. Different products are designed to help with different skin problems. Products for oily skin would exhaust dry skin and vice versa. The right products are the basis of a good routine.&lt;/p&gt;&lt;p&gt;Did you know that skin type can change? The skin grows and regenerates constantly. It adapts and changes. After prolonged use of products, the skin type may change." xml:space="preserve">
+    <value>To choose suitable products. There is no point in expensive cosmetics if they are not suitable for you. Skin types are &lt;strong&gt;dry&lt;/strong&gt;, &lt;strong&gt;oily&lt;/strong&gt; and &lt;strong&gt;combination&lt;/strong&gt;, and in addition it can be &lt;strong&gt;sensitive&lt;/strong&gt;. Different products are designed to help with different skin problems. Products for oily skin would exhaust dry skin and vice versa. The right products are the basis of a good routine.&lt;/p&gt;&lt;p&gt;Did you know that skin type can change? The skin grows and regenerates constantly. It adapts and changes. After prolonged use of products, the skin type may change.</value>
+  </data>
+  <data name="washing product" xml:space="preserve">
+    <value>washing product</value>
+  </data>
+  <data name="WHAT IS MY SKIN TYPE?" xml:space="preserve">
+    <value>WHAT IS MY SKIN TYPE?</value>
+  </data>
+  <data name="WHY IS SKIN TYPE IMPORTANT?" xml:space="preserve">
+    <value>WHY IS SKIN TYPE IMPORTANT?</value>
   </data>
 </root>

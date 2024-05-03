@@ -117,49 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Address" xml:space="preserve">
-    <value>адрес</value>
+  <data name="about the products, personal suggestions or share an opinion. Your experience will always be most important to us." xml:space="preserve">
+    <value>about the products, personal suggestions or share an opinion. Your experience will always be most important to us.</value>
   </data>
-  <data name="Country" xml:space="preserve">
-    <value>държава</value>
+  <data name="ASK US" xml:space="preserve">
+    <value>ASK US</value>
+  </data>
+  <data name="Confirm agreement with the privacy policy." xml:space="preserve">
+    <value>Confirm agreement with the privacy policy.</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>имейл</value>
+    <value>Email</value>
   </data>
-  <data name="FirstName" xml:space="preserve">
-    <value>име</value>
+  <data name="First Name" xml:space="preserve">
+    <value>First Name</value>
   </data>
-  <data name="InvalidEmailAddress" xml:space="preserve">
-    <value>Невалиден имейл адрес.</value>
+  <data name="I agree" xml:space="preserve">
+    <value>I agree</value>
   </data>
-  <data name="InvalidPhoneNumber" xml:space="preserve">
-    <value>Невалиден телефонен номер</value>
+  <data name="Last Name" xml:space="preserve">
+    <value>Last Name</value>
   </data>
-  <data name="LastName" xml:space="preserve">
-    <value>фамилия</value>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
   </data>
-  <data name="Message" xml:space="preserve">
-    <value>съобщение</value>
+  <data name="the conditions" xml:space="preserve">
+    <value>the conditions</value>
   </data>
-  <data name="PhoneNumber" xml:space="preserve">
-    <value>телефонен номер</value>
+  <data name="We send an email 1 to 2 times a month." xml:space="preserve">
+    <value>We send an email 1 to 2 times a month.</value>
   </data>
-  <data name="Photo" xml:space="preserve">
-    <value>снимка</value>
-  </data>
-  <data name="PostCode" xml:space="preserve">
-    <value>пощенски код</value>
-  </data>
-  <data name="PrivacyPolicyCheck" xml:space="preserve">
-    <value>Моля, потвърдете съгласието с политиката за поверителност.</value>
-  </data>
-  <data name="ResourceRequired" xml:space="preserve">
-    <value>Моля, въведете {0}</value>
-  </data>
-  <data name="StringLengthMax" xml:space="preserve">
-    <value>Полето {0} трябва да бъде най-много {1} символа дълго</value>
-  </data>
-  <data name="Town" xml:space="preserve">
-    <value>град</value>
+  <data name="Write a message..." xml:space="preserve">
+    <value>Write a message...</value>
   </data>
 </root>

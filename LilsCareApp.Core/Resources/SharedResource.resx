@@ -138,6 +138,9 @@
   <data name="LastName" xml:space="preserve">
     <value>last name</value>
   </data>
+  <data name="Message" xml:space="preserve">
+    <value>message</value>
+  </data>
   <data name="PhoneNumber" xml:space="preserve">
     <value>phone number</value>
   </data>
@@ -146,6 +149,9 @@
   </data>
   <data name="PostCode" xml:space="preserve">
     <value>post code</value>
+  </data>
+  <data name="PrivacyPolicyCheck" xml:space="preserve">
+    <value>Please confirm agreement with the privacy policy.</value>
   </data>
   <data name="ResourceRequired" xml:space="preserve">
     <value>The field {0} is required.</value>

@@ -1,38 +1,38 @@
-﻿@model ContactUsDTO
+﻿@inject IViewLocalizer Localizer
+@model ContactUsDTO
 @{
 }
 
-<h2 class="h1">ПОПИТАЙ НИ</h2>
+<h2 class="h1">@Localizer["ASK US"]</h2>
 <p class="fs-6 mb-0">
-    за продуктите, персонални предложения или споделете мнение. Твоето
-    изживяване винаги ще е най-важнто за нас.
+    @Localizer["about the products, personal suggestions or share an opinion. Your experience will always be most important to us."]
 </p>
 <div class="d-flex justify-content-center">
     <div style="width: 60%">
         <div>
             <input asp-for="FirstName" type="name"
                    class="form-control"
-                   placeholder="Име*"
+                   placeholder="@Localizer["First Name"]*"
                    name="FirstName" />
         </div>
         <span asp-validation-for="@Model.FirstName" class="text-danger" style="font-size: 12px"></span>
         <div class="px-0 my-3">
             <input asp-for="LastName" type="name"
                    class="form-control"
-                   placeholder="Фамилия"
+                   placeholder="@Localizer["Last Name"]"
                    name="LastName" />
         </div>
         <div>
-            <input asp-for="EmailForResponse" type="email"
+            <input asp-for="EmailForResponse" 
                    class="form-control"
-                   placeholder="Емайл*"
+                   placeholder="@Localizer["Email"]*"
                    name="EmailForResponse" />
         </div>
         <span asp-validation-for="@Model.EmailForResponse" class="text-danger" style="; font-size: 12px"></span>
         <button type="submit"
                 class="btn btn-primary mt-3"
                 style="width: 100%">
-            Изпрати
+                @Localizer["Send"]
         </button>
         <div class="form-check" style="font-size: 14px">
             <label class="form-check-label">
@@ -40,11 +40,11 @@
                        class="form-check-input"
                        name="PrivacyPolicy"
                        data-val="true"
-                       data-val-mustbetrue="Потвърдете съгласието с политиката за поверителност." />
-                Съгласенсен съм с&nbsp;
+                       data-val-mustbetrue="@Localizer["Confirm agreement with the privacy policy."]" />
+                @Localizer["I agree"] с&nbsp;
                 <a asp-controller="TermsConditions" style="color: rgb(var(--app-btn-bg))"
                    target="_blank">
-                    условията
+                    @Localizer["the conditions"]
                 </a>
             </label>
         </div>
@@ -54,11 +54,11 @@
         <textarea asp-for="Message" class="form-control"
                   rows="9"
                   name="Message"
-                  placeholder="Напишете съобщение..."></textarea>
+                  placeholder="@Localizer["Write a message..."]"></textarea>
         <span asp-validation-for="@Model.Message" class="text-danger" style="font-size: 12px"></span>
         <label for="comment"
                style="font-size: 14px">
-            Изпращаме имейл 1 до 2 пъти месечно.
+                @Localizer["We send an email 1 to 2 times a month."]
         </label>
     </div>
 </div>

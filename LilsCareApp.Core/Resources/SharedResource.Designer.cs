@@ -173,5 +173,21 @@ namespace LilsCareApp.Core.Resources {
                 return ResourceManager.GetString("photo", resourceCulture);
             }
         }
+
+        public static string PrivacyPolicyCheck
+        {
+            get
+            {
+                return ResourceManager.GetString("PrivacyPolicyCheck", resourceCulture);
+            }
+        }
+
+        public static string Message
+        {
+            get
+            {
+                return ResourceManager.GetString("Message", resourceCulture);
+            }
+        }
     }
 }
