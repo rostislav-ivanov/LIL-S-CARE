@@ -270,7 +270,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "85e7936a-f0ce-418f-8f21-d0366c7d01fc",
+                            ConcurrencyStamp = "ed0c7702-2ef0-4d10-90ab-00f6da3728c0",
                             Email = "test@softuni.bg",
                             EmailConfirmed = true,
                             FirstName = "Test",
@@ -278,9 +278,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "TEST@SOFTUNI.BG",
                             NormalizedUserName = "TEST@SOFTUNI.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAENngaKUFJ30N4leX7wbydDcJ256U0ekYQDmntFE+cYCPKTZrgGl+2G9aaj5Ez89zSg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGqp1EoBYi7lkF8aibDaeWyKPOMofS5bNaSvH3UFpNM3eELDzKaEfRybZDzKcsJfyw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bdcf1555-2ab3-4b62-8c5d-ac5be0eea0ce",
+                            SecurityStamp = "03bf68c6-5088-456d-8f6f-a7908122bfb8",
                             TwoFactorEnabled = false,
                             UserName = "test@softuni.bg"
                         },
@@ -288,7 +288,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = "45fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f5a96a9b-7ec7-447a-9980-7119186abeb8",
+                            ConcurrencyStamp = "700df44e-fb67-40df-9330-46979991415b",
                             Email = "admin@mail.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -296,9 +296,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEuBF4pDRDwhyIBQaAOo8rdgrM1TWQKLz6PZpPlESFaD7EIqv+Wt4ErXLRycoW4RqA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDyUdGenxirPyPB7k8fPW9NaWyJMS2PR8xjsa1/AB5T57hwN6DZDMC69T4tHo9i7Yg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "dbe0a365-e517-4697-bcab-39493b155812",
+                            SecurityStamp = "c61f401d-9a69-4f0b-8448-e2bc6371e509",
                             TwoFactorEnabled = false,
                             UserName = "admin@mail.com"
                         });
@@ -911,9 +911,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasColumnType("bit")
                         .HasComment("Is Paid Order");
 
-                    b.Property<bool>("IsShippingToOffice")
-                        .HasColumnType("bit");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -1008,14 +1005,13 @@ namespace LilsCareApp.Infrastructure.Migrations
                             AddressDeliveryId = 1,
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             CreatedOn = new DateTime(2023, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Currency = "bg",
+                            Currency = "лв.",
                             DateShipping = new DateTime(2023, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeliveryMethodId = 1,
                             Discount = 10.00m,
                             ExchangeRate = 1.00m,
                             FirstName = "John",
                             IsPaid = false,
-                            IsShippingToOffice = false,
                             LastName = "Doe",
                             OrderNumber = "123456",
                             PaymentMethodId = 1,
@@ -1030,13 +1026,12 @@ namespace LilsCareApp.Infrastructure.Migrations
                             AddressDeliveryId = 2,
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             CreatedOn = new DateTime(2023, 10, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Currency = "en",
+                            Currency = "€",
                             DeliveryMethodId = 2,
                             Discount = 0.00m,
                             ExchangeRate = 1.95m,
                             FirstName = "Jane",
                             IsPaid = false,
-                            IsShippingToOffice = false,
                             LastName = "Doe",
                             OrderNumber = "123456x",
                             PaymentMethodId = 2,
@@ -1634,7 +1629,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             CodeId = 1,
                             Discount = 0.1m,
-                            ExpirationDate = new DateTime(2025, 5, 1, 15, 8, 23, 388, DateTimeKind.Utc).AddTicks(5421)
+                            ExpirationDate = new DateTime(2025, 5, 3, 13, 0, 20, 26, DateTimeKind.Utc).AddTicks(2206)
                         },
                         new
                         {
@@ -1642,7 +1637,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             CodeId = 2,
                             Discount = 0.2m,
-                            ExpirationDate = new DateTime(2025, 5, 1, 15, 8, 23, 388, DateTimeKind.Utc).AddTicks(5430)
+                            ExpirationDate = new DateTime(2025, 5, 3, 13, 0, 20, 26, DateTimeKind.Utc).AddTicks(2217)
                         });
                 });
 
@@ -1737,7 +1732,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 2,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 5, 1, 18, 8, 23, 388, DateTimeKind.Local).AddTicks(4561),
+                            CreatedOn = new DateTime(2024, 5, 3, 16, 0, 20, 26, DateTimeKind.Local).AddTicks(1345),
                             Rating = 4,
                             Title = "Great product"
                         },
@@ -1746,7 +1741,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 3,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 5, 1, 18, 8, 23, 388, DateTimeKind.Local).AddTicks(4635),
+                            CreatedOn = new DateTime(2024, 5, 3, 16, 0, 20, 26, DateTimeKind.Local).AddTicks(1430),
                             Rating = 3,
                             Title = "Great product"
                         },
@@ -1755,7 +1750,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 4,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 5, 1, 18, 8, 23, 388, DateTimeKind.Local).AddTicks(4639),
+                            CreatedOn = new DateTime(2024, 5, 3, 16, 0, 20, 26, DateTimeKind.Local).AddTicks(1435),
                             Rating = 3,
                             Title = "Great product"
                         });
