@@ -355,12 +355,11 @@ namespace LilsCareApp.Controllers
 
             OrderSummaryDTO orderSummary = await _checkoutService.OrderSummaryAsync(orderNumber);
 
-            var userEmail = order.Address.Email ?? User.GetUserEmail();
-            if (!string.IsNullOrEmpty(userEmail))
+            if (!string.IsNullOrEmpty(orderSummary.Email))
             {
                 string message = CreateOrderSummaryEmailMessage(orderSummary);
                 string subject = $"{_localizer["Thank you for shopping with us"]} (#{orderNumber})";
-                await _emailSender.SendEmailAsync(userEmail, subject, message);
+                await _emailSender.SendEmailAsync(orderSummary.Email, subject, message);
             }
 
 

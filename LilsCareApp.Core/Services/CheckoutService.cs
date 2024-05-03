@@ -246,7 +246,7 @@ namespace LilsCareApp.Core.Services
                         address.Town = orderDTO.Address.Town;
                         address.District = orderDTO.Address.District;
                         address.Country = orderDTO.Address.Country;
-                        address.Email = orderDTO.Address.Email;
+                        address.Email = orderDTO.Address.Email ?? appUser.Email;
                         address.IsShippingToOffice = orderDTO.Address.DeliveryMethodId == 1;
                         address.ShippingOfficeId = orderDTO.Address.ShippingOfficeId;
                     }
@@ -334,6 +334,7 @@ namespace LilsCareApp.Core.Services
                     Town = o.Town,
                     District = o.District,
                     Country = o.Country,
+                    Email = o.Email,
                     IsShippingToOffice = o.DeliveryMethodId == 1,
                     ShippingProviderName = o.ShippingProviderName,
                     ShippingOfficeCity = o.ShippingOfficeCity,
@@ -372,6 +373,12 @@ namespace LilsCareApp.Core.Services
                 })
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
+
+            if (orderSummary != null)
+            {
+                orderSummary.SubTotal = Math.Round(orderSummary.SubTotal, 2);
+                orderSummary.Total = Math.Round(orderSummary.Total, 2);
+            }
 
             return orderSummary;
         }
