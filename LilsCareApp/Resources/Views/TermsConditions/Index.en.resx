@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="All direct payment methods provided by Wix.com and used by us adhere to the PCI-DSS standards managed by the PCI Security Standards Council, which was created by the joint efforts of brands such as Visa, MasterCard, American Express and Discover. PCI-DSS standards and requirements help ensure the secure processing of credit card information by our store and its service providers." xml:space="preserve">
+    <value>All direct payment methods provided by Wix.com and used by us adhere to the PCI-DSS standards managed by the PCI Security Standards Council, which was created by the joint efforts of brands such as Visa, MasterCard, American Express and Discover. PCI-DSS standards and requirements help ensure the secure processing of credit card information by our store and its service providers.</value>
+  </data>
+  <data name="How do we store or disclose your data and that of our website visitors?" xml:space="preserve">
+    <value>How do we store or disclose your data and that of our website visitors?</value>
+  </data>
+  <data name="If you wish us to no longer process your data:" xml:space="preserve">
+    <value>If you wish us to no longer process your data:</value>
+  </data>
+  <data name="In addition, we collect IP address, login, email, password, computer, contact information and purchase history. We may use software tools to measure and collect session information, including page and browser response times. We also collect non-personal data such as comments, likes, favorites and reviews about our products and recommendations, if any." xml:space="preserve">
+    <value>In addition, we collect IP address, login, email, password, computer, contact information and purchase history. We may use software tools to measure and collect session information, including page and browser response times. We also collect non-personal data such as comments, likes, favorites and reviews about our products and recommendations, if any.</value>
+  </data>
+  <data name="or wish to view, change, edit or delete your personal data that we have, contact us by email lils.care.handmade@gmail.com" xml:space="preserve">
+    <value>or wish to view, change, edit or delete your personal data that we have, contact us by email lils.care.handmade@gmail.com</value>
+  </data>
+  <data name="Our website is web hosted by the Wix.com platform. Wix.com provides us with the online platform that allows us to provide our products and services. Your data may be stored by Wix.com in their: data warehouse, databases or applications. They store data securely and behind a firewall." xml:space="preserve">
+    <value>Our website is web hosted by the Wix.com platform. Wix.com provides us with the online platform that allows us to provide our products and services. Your data may be stored by Wix.com in their: data warehouse, databases or applications. They store data securely and behind a firewall.</value>
+  </data>
+  <data name="PRIVACY POLICY" xml:space="preserve">
+    <value>PRIVACY POLICY</value>
+  </data>
+  <data name="The protection of personal data and the protection of the information of our customers is particularly important to us. In this declaration, we briefly inform you about the most important aspects of the processing of your data by our website" xml:space="preserve">
+    <value>The protection of personal data and the protection of the information of our customers is particularly important to us. In this declaration, we briefly inform you about the most important aspects of the processing of your data by our website</value>
+  </data>
+  <data name="to be able to contact our visitors and users regarding general or personalized notices, offers, promotional and informational emails;" xml:space="preserve">
+    <value>to be able to contact our visitors and users regarding general or personalized notices, offers, promotional and informational emails;</value>
+  </data>
+  <data name="to comply with any applicable laws and regulations;" xml:space="preserve">
+    <value>to comply with any applicable laws and regulations;</value>
+  </data>
+  <data name="to create and receive aggregate statistics that we or our business partners may use to improve our respective services;" xml:space="preserve">
+    <value>to create and receive aggregate statistics that we or our business partners may use to improve our respective services;</value>
+  </data>
+  <data name="to ensure the safety and security of its platform." xml:space="preserve">
+    <value>to ensure the safety and security of its platform.</value>
+  </data>
+  <data name="to fulfill your requests;" xml:space="preserve">
+    <value>to fulfill your requests;</value>
+  </data>
+  <data name="to identify our registered users of the website." xml:space="preserve">
+    <value>to identify our registered users of the website.</value>
+  </data>
+  <data name="to monitor and analyze performance of your platform." xml:space="preserve">
+    <value>to monitor and analyze performance of your platform.</value>
+  </data>
+  <data name="to process and ship your order successfully;" xml:space="preserve">
+    <value>to process and ship your order successfully;</value>
+  </data>
+  <data name="to provide a good experience to visitors and customers of the Website;" xml:space="preserve">
+    <value>to provide a good experience to visitors and customers of the Website;</value>
+  </data>
+  <data name="to provide you with information about your order in progress (eg availability, shipped, status, etc.);" xml:space="preserve">
+    <value>to provide you with information about your order in progress (eg availability, shipped, status, etc.);</value>
+  </data>
+  <data name="TWIPLA (previously named Visitor Analytics) is a simple website analytics service that measures traffic on our website and collects general information from our website visitors. We create statistics to improve the experience of our website visitors. We never use cookies for this purpose. As a website operator using TWIPLA to conduct reach measurement, depending on the level of data protection we have activated (level 3 of 4: GDPR Privacy), we may process information about the device you are using and its characteristics, information about technical characteristics of the website visit, the number of page visits and statistically relevant behavior of our website visitors. The technology does not use the collected data to identify individual visitors or to match the data with additional information about an individual user.Depending on the location from which you access our website, TWIPLA may not collect any information about the device you are using due to our technical settings." xml:space="preserve">
+    <value>TWIPLA (previously named Visitor Analytics) is a simple website analytics service that measures traffic on our website and collects general information from our website visitors. We create statistics to improve the experience of our website visitors. We never use cookies for this purpose. As a website operator using TWIPLA to conduct reach measurement, depending on the level of data protection we have activated (level 3 of 4: GDPR Privacy), we may process information about the device you are using and its characteristics, information about technical characteristics of the website visit, the number of page visits and statistically relevant behavior of our website visitors. The technology does not use the collected data to identify individual visitors or to match the data with additional information about an individual user.Depending on the location from which you access our website, TWIPLA may not collect any information about the device you are using due to our technical settings.</value>
+  </data>
+  <data name="We receive, collect and store your personal and non-personal information for the purpose of:" xml:space="preserve">
+    <value>We receive, collect and store your personal and non-personal information for the purpose of:</value>
+  </data>
+  <data name="We reserve the right to change this privacy policy at any time (although hardly ever,,) so please check it often (although there is no point). If we make changes and clarifications, they enter into force as soon as they are published on the website and you can find out about them from this page. (We had to write that too.)" xml:space="preserve">
+    <value>We reserve the right to change this privacy policy at any time (although hardly ever,,) so please check it often (although there is no point). If we make changes and clarifications, they enter into force as soon as they are published on the website and you can find out about them from this page. (We had to write that too.)</value>
+  </data>
+  <data name="We use cookies for important reasons such as:" xml:space="preserve">
+    <value>We use cookies for important reasons such as:</value>
+  </data>
+  <data name="What happens to your data after you contact us?" xml:space="preserve">
+    <value>What happens to your data after you contact us?</value>
+  </data>
+  <data name="What type of data do we collect?" xml:space="preserve">
+    <value>What type of data do we collect?</value>
+  </data>
+  <data name="When you place an order or contact us by email, telephone, via a form on our website or by any other method, we receive and store your details (names, address, telephone and email) for the period necessary to process your request, as well as to answer your follow-up questions and to facilitate the provision of an order. We will not share this information with third parties with the exception of the courier company through which we send you a delivery when an order is placed." xml:space="preserve">
+    <value>When you place an order or contact us by email, telephone, via a form on our website or by any other method, we receive and store your details (names, address, telephone and email) for the period necessary to process your request, as well as to answer your follow-up questions and to facilitate the provision of an order. We will not share this information with third parties with the exception of the courier company through which we send you a delivery when an order is placed.</value>
+  </data>
+  <data name="Why do we collect some personal data?" xml:space="preserve">
+    <value>Why do we collect some personal data?</value>
+  </data>
+</root>
