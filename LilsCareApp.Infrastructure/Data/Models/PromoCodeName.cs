@@ -21,8 +21,5 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("The promo code name in Romanian")]
         [MaxLength(NameMaxLength)]
         public required string NameRO { get; set; }
-
-        [Comment("Navigation Property to PromoCodes")]
-        public IEnumerable<PromoCode> PromoCodes { get; set; } = [];
     }
 }

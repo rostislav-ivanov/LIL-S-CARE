@@ -21,8 +21,5 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("The payment name in Romanian")]
         [MaxLength(NameMaxLength)]
         public required string NameRO { get; set; }
-
-        [Comment("Navigation Property to PaymentMethods")]
-        public IEnumerable<PaymentMethod> PaymentMethods { get; set; } = [];
     }
 }

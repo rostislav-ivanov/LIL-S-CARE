@@ -20,8 +20,5 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("The section's description in Romanian")]
         [MaxLength(DescriptionMaxLength)]
         public required string DescriptionRO { get; set; }
-
-        [Comment("Navigation Property to Sections")]
-        public IEnumerable<Section> Sections { get; set; } = [];
     }
 }

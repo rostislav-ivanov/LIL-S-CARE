@@ -20,9 +20,6 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("The category's name in Romanian")]
         [MaxLength(NameMaxLength)]
         public required string NameRO { get; set; }
-
-        [Comment("Navigation Property to Categories")]
-        public IEnumerable<Category> Categories { get; set; } = [];
     }
 }
 
