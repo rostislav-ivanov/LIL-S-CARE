@@ -20,6 +20,10 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("The category's name in Romanian")]
         [MaxLength(NameMaxLength)]
         public required string NameRO { get; set; }
+
+        public int CategoryId { get; set; }
+
+        public Category Category { get; set; } = null!;
     }
 }
 

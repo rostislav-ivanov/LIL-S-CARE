@@ -21,5 +21,9 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("The promo code name in Romanian")]
         [MaxLength(NameMaxLength)]
         public required string NameRO { get; set; }
+
+        public int PromoCodeId { get; set; }
+
+        public PromoCode PromoCode { get; set; } = null!;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using LilsCareApp.Core.Contracts;
 using LilsCareApp.Core.Models.AdminProducts;
 using LilsCareApp.Infrastructure.Data;
+using LilsCareApp.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace LilsCareApp.Core.Services
@@ -30,6 +31,7 @@ namespace LilsCareApp.Core.Services
                     Price = p.Price,
                     Quantity = p.Quantity,
                     IsShow = p.IsShow,
+                    IsOrdered = p.ProductsOrders.Any()
                 });
 
 
@@ -83,6 +85,8 @@ namespace LilsCareApp.Core.Services
         public async Task<bool> DeleteAsync(int id)
         {
             var product = await _context.Products
+                .Include(p => p.Sections)
+                .Include(p => p.Optional)
                 .FirstOrDefaultAsync(p => p.Id == id);
             if (product == null)
             {
@@ -96,6 +100,18 @@ namespace LilsCareApp.Core.Services
                 return false;
             }
 
+            IEnumerable<SectionDescription> sectionDescriptions = await _context.SectionDescriptions
+                .Where(sd => sd.Section.ProductId == id)
+                .ToListAsync();
+
+            IEnumerable<SectionTitle> sectionTitles = await _context.SectionTitles
+                .Where(st => st.Section.ProductId == id)
+                .ToListAsync();
+
+
+            _context.SectionDescriptions.RemoveRange(sectionDescriptions);
+            _context.SectionTitles.RemoveRange(sectionTitles);
+            _context.ProductOptionals.Remove(product.Optional);
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
 

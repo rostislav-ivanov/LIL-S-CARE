@@ -1,5 +1,6 @@
 using LilsCareApp.Core.Resources;
 using LilsCareApp.Infrastructure.Data.DataConfiguration;
+using LilsCareApp.ModelBinders;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using System.Globalization;
@@ -28,7 +29,10 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 });
 
 
-builder.Services.AddControllersWithViews()
+builder.Services.AddControllersWithViews(options =>
+    {
+        options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+    })
     .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
     .AddDataAnnotationsLocalization((options =>
     {

@@ -13,35 +13,40 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 Id = 1,
                 NameEN = "all",
                 NameBG = "всички",
-                NameRO = "toate"
+                NameRO = "toate",
+                CategoryId = 1
             },
             new ()
             {
                 Id = 2,
                 NameEN = "body",
                 NameBG = "за тяло",
-                NameRO = "pentru corp"
+                NameRO = "pentru corp",
+                CategoryId = 2
             },
             new ()
             {
                 Id = 3,
                 NameEN = "dry skin",
                 NameBG = "за суха кожа",
-                NameRO = "pentru piele uscata"
+                NameRO = "pentru piele uscata",
+                CategoryId = 3
             },
             new ()
             {
                 Id = 4,
                 NameEN = "oily skin",
                 NameBG = "за мазна кожа",
-                NameRO = "pentru piele grasa"
+                NameRO = "pentru piele grasa",
+                CategoryId = 4
             },
             new ()
             {
                 Id = 5,
                 NameEN = "face",
                 NameBG = "за лице",
-                NameRO = "pentru fata"
+                NameRO = "pentru fata",
+                CategoryId = 5
             },
         ];
 

@@ -21,5 +21,9 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("The payment name in Romanian")]
         [MaxLength(NameMaxLength)]
         public required string NameRO { get; set; }
+
+        public int PaymentMethodId { get; set; }
+
+        public PaymentMethod PaymentMethod { get; set; } = null!;
     }
 }

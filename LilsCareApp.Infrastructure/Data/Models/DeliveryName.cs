@@ -21,5 +21,9 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("The delivery name in Romanian")]
         [MaxLength(NameMaxLength)]
         public required string NameRO { get; set; }
+
+        public int DeliveryMethodId { get; set; }
+
+        public DeliveryMethod DeliveryMethod { get; set; } = null!;
     }
 }

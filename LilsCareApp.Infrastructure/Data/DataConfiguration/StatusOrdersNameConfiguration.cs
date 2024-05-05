@@ -14,6 +14,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 NameEN = "Unfulfilled",
                 NameBG = "Неизпълнена",
                 NameRO = "Neîndeplinită",
+                StatusOrderId = 1,
             },
             new ()
             {
@@ -21,6 +22,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 NameEN = "Canceled",
                 NameBG = "Отменена",
                 NameRO = "Anulat",
+                StatusOrderId = 2,
             },
             new ()
             {
@@ -28,6 +30,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 NameEN = "Fulfilled",
                 NameBG = "Изпълнена",
                 NameRO = "Îndeplinit",
+                StatusOrderId = 3,
             },
             new ()
             {
@@ -35,6 +38,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 NameEN = "Received",
                 NameBG = "Получена",
                 NameRO = "Primit",
+                StatusOrderId = 4,
             },
             new ()
             {
@@ -42,6 +46,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 NameEN = "Returned",
                 NameBG = "Върната",
                 NameRO = "Returnat",
+                StatusOrderId = 5,
             },
         ];
 

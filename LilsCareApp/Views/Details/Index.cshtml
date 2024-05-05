@@ -178,19 +178,7 @@
 <!-- Product Description Start -->
 <div class="d-flex justify-content-end">
     <div class="col-5">
-        <div class="row">
-            @foreach (var paragraph in Model.GetSection(1))
-            {
-                if (paragraph != " ")
-                {
-                    <span>@paragraph</span>
-                }
-                else
-                {
-                    <p></p>
-                }
-            }
-        </div>
+        @Html.Raw(Model.Sections[0].Description.Replace(Environment.NewLine, "<br />"))
     </div>
     <div class="col-6 px-5">
         <ul id="accordion" class="list-group list-group-flush">
@@ -207,19 +195,7 @@
                     </a>
                     <div id="collapse@(i)" class="collapse" data-bs-parent="#accordion">
                         <div class="mt-4">
-                            <div class="row">
-                                @foreach (var paragraph in Model.GetSection(i + 1))
-                                {
-                                    if (paragraph != " ")
-                                    {
-                                        <span>@paragraph</span>
-                                    }
-                                    else
-                                    {
-                                        <p></p>
-                                    }
-                                }
-                            </div>
+                            @Html.Raw(Model.Sections[i].Description.Replace(Environment.NewLine, "<br />"))
                         </div>
                     </div>
                 </li>

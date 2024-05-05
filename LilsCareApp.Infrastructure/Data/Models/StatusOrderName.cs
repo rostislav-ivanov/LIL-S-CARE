@@ -21,5 +21,9 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("The status order name in Romanian")]
         [MaxLength(NameMaxLength)]
         public required string NameRO { get; set; }
+
+        public int StatusOrderId { get; set; }
+
+        public StatusOrder StatusOrder { get; set; } = null!;
     }
 }

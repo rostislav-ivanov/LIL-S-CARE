@@ -1,15 +1,15 @@
 ﻿using LilsCareApp.Core.Contracts;
-using LilsCareApp.Core.Models.AdminProducts;
+using LilsCareApp.Core.Models.AdminProductDetails;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LilsCareApp.Areas.Admin.Controllers
 {
-    public class DetailsController : AdminController
+    public class ProductDetailsController : AdminController
     {
         private readonly IAdminDetailsService _adminDetailsService;
         private readonly IFileService _fileService;
 
-        public DetailsController(IAdminDetailsService adminDetailsService, IFileService fileService)
+        public ProductDetailsController(IAdminDetailsService adminDetailsService, IFileService fileService)
         {
             _adminDetailsService = adminDetailsService;
             _fileService = fileService;
@@ -23,10 +23,17 @@ namespace LilsCareApp.Areas.Admin.Controllers
                 return BadRequest();
             }
 
-            AdminDetailsDTO model = await _adminDetailsService.GetProductByIdAsync(id);
-            model.Categories = await _adminDetailsService.GetCategoriesAsync();
+            var language = TempData["Language"] ?? Language.Bulgarian;
+            AdminProductDetailsDTO model = await _adminDetailsService.GetProductByIdAsync(id, (Language)language);
 
             return View(model);
+        }
+
+        public IActionResult SetLanguage(int id, Language language)
+        {
+            TempData["Language"] = language;
+
+            return RedirectToAction(nameof(Index), new { id });
         }
 
         // GET: Admin/Details/Add by product id.
@@ -34,7 +41,7 @@ namespace LilsCareApp.Areas.Admin.Controllers
         // Else create a product by template of the given product's Id.
         public async Task<IActionResult> Add(int id)
         {
-            AdminDetailsDTO model = new();
+            AdminProductDetailsDTO model = new();
 
             if (id != 0)
             {
@@ -44,7 +51,6 @@ namespace LilsCareApp.Areas.Admin.Controllers
             {
                 model = await _adminDetailsService.CreateProductAsync();
             }
-            model.Categories = await _adminDetailsService.GetCategoriesAsync();
 
             return View(nameof(Index), model);
         }
@@ -60,16 +66,17 @@ namespace LilsCareApp.Areas.Admin.Controllers
                 return BadRequest();
             }
 
+            var language = TempData["Language"] ?? Language.Bulgarian;
+
             if (!ModelState.IsValid)
             {
-                var model = await _adminDetailsService.GetProductByIdAsync(id);
-                model.Categories = await _adminDetailsService.GetCategoriesAsync();
+                var model = await _adminDetailsService.GetProductByIdAsync(id, (Language)language);
                 model.Name = name;
 
                 return View(nameof(Index), model);
             }
 
-            await _adminDetailsService.EditNameAsync(id, name);
+            await _adminDetailsService.EditNameAsync(id, name, (Language)language);
 
             return RedirectToAction(nameof(Index), new { id });
         }
@@ -167,10 +174,11 @@ namespace LilsCareApp.Areas.Admin.Controllers
                 return BadRequest();
             }
 
+            var language = TempData["Language"] ?? Language.Bulgarian;
+
             if (!ModelState.IsValid)
             {
-                var model = await _adminDetailsService.GetProductByIdAsync(id);
-                model.Categories = await _adminDetailsService.GetCategoriesAsync();
+                var model = await _adminDetailsService.GetProductByIdAsync(id, (Language)language);
                 var section = model.Sections.FirstOrDefault(s => s.Id == sectionId);
                 if (section == null)
                 {
@@ -182,7 +190,7 @@ namespace LilsCareApp.Areas.Admin.Controllers
                 return View(nameof(Index), model);
             }
 
-            await _adminDetailsService.EditSectionAsync(sectionId, sectionTitle, sectionDescription);
+            await _adminDetailsService.EditSectionAsync(sectionId, sectionTitle, sectionDescription, (Language)language);
 
             return RedirectToAction(nameof(Index), new { id });
         }
@@ -250,10 +258,11 @@ namespace LilsCareApp.Areas.Admin.Controllers
                 return BadRequest();
             }
 
+            var language = TempData["Language"] ?? Language.Bulgarian;
+
             if (!ModelState.IsValid)
             {
-                var model = await _adminDetailsService.GetProductByIdAsync(id);
-                model.Categories = await _adminDetailsService.GetCategoriesAsync();
+                var model = await _adminDetailsService.GetProductByIdAsync(id, (Language)language);
                 model.Price = price;
 
                 return View(nameof(Index), model);
@@ -274,10 +283,11 @@ namespace LilsCareApp.Areas.Admin.Controllers
                 return BadRequest();
             }
 
+            var language = TempData["Language"] ?? Language.Bulgarian;
+
             if (!ModelState.IsValid)
             {
-                var model = await _adminDetailsService.GetProductByIdAsync(id);
-                model.Categories = await _adminDetailsService.GetCategoriesAsync();
+                var model = await _adminDetailsService.GetProductByIdAsync(id, (Language)language);
                 model.Quantity = quantity;
 
                 return View(nameof(Index), model);
@@ -298,16 +308,17 @@ namespace LilsCareApp.Areas.Admin.Controllers
                 return BadRequest();
             }
 
+            var language = TempData["Language"] ?? Language.Bulgarian;
+
             if (!ModelState.IsValid)
             {
-                var model = await _adminDetailsService.GetProductByIdAsync(id);
-                model.Categories = await _adminDetailsService.GetCategoriesAsync();
+                var model = await _adminDetailsService.GetProductByIdAsync(id, (Language)language);
                 model.Optional = optional;
 
                 return View(nameof(Index), model);
             }
 
-            await _adminDetailsService.EditOptionalAsync(id, optional);
+            await _adminDetailsService.EditOptionalAsync(id, optional, (Language)language);
 
             return RedirectToAction(nameof(Index), new { id });
         }
@@ -322,10 +333,11 @@ namespace LilsCareApp.Areas.Admin.Controllers
                 return BadRequest();
             }
 
+            var language = TempData["Language"] ?? Language.Bulgarian;
+
             if (!ModelState.IsValid)
             {
-                var model = await _adminDetailsService.GetProductByIdAsync(id);
-                model.Categories = await _adminDetailsService.GetCategoriesAsync();
+                var model = await _adminDetailsService.GetProductByIdAsync(id, (Language)language);
                 model.NewCategory = newCategory;
 
                 return View(nameof(Index), model);

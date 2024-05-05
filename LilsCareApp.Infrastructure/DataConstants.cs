@@ -28,10 +28,10 @@
         {
             public const int NameMinLength = 3;
             public const int NameMaxLength = 100;
-            public const string PriceMinValue = "0.00";
-            public const string PriceMaxValue = "1000.00";
-            public const string QuantityMinValue = "-1000";
-            public const string QuantityMaxValue = "1000";
+            public const double PriceMinValue = 0.00;
+            public const double PriceMaxValue = 1000.00;
+            public const int QuantityMinValue = -1000;
+            public const int QuantityMaxValue = 1000;
             public const int OptionalMinLength = 3;
             public const int OptionalMaxLength = 200;
             public const int ProductsPerPages = 6;
@@ -74,6 +74,8 @@
             public const string Unpaid = "Неплатена";
             public const int LanguageMaxLength = 10;
             public const int NoteForDeliveryMaxLength = 500;
+            public const double DiscountMinValue = 0.00;
+            public const double DiscountMaxValue = 1000.00;
         }
 
         public static class PaymentMethod

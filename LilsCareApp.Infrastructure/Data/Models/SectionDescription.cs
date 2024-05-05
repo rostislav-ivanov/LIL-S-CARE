@@ -20,5 +20,9 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [Comment("The section's description in Romanian")]
         [MaxLength(DescriptionMaxLength)]
         public required string DescriptionRO { get; set; }
+
+        public int SectionId { get; set; }
+
+        public Section Section { get; set; } = null!;
     }
 }

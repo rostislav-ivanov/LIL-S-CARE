@@ -31,7 +31,7 @@ namespace LilsCareApp.Core.Services
                     Id = o.Id,
                     OrderNumber = o.OrderNumber,
                     Date = o.CreatedOn,
-                    Customer = o.AddressDelivery.FirstName + " " + o.AddressDelivery.LastName,
+                    Customer = (o.AppUser != null ? o.AppUser.UserName : "-") + "\r\n" + o.AddressDelivery.FirstName + " " + o.AddressDelivery.LastName,
                     Payment = o.IsPaid ? "Платена" : "Неплатена",
                     StatusOrder = o.StatusOrder.Name.NameBG,
                     Total = o.ProductsOrders.Sum(p => p.Quantity * p.Price) - o.Discount + o.ShippingPrice,

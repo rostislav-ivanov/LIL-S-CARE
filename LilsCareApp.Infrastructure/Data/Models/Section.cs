@@ -34,3 +34,4 @@ namespace LilsCareApp.Infrastructure.Data.Models
         public Product Product { get; set; } = null!;
     }
 }
+

@@ -13,5 +13,7 @@
         public int Quantity { get; set; }
 
         public bool IsShow { get; set; }
+
+        public bool IsOrdered { get; set; }
     }
 }
