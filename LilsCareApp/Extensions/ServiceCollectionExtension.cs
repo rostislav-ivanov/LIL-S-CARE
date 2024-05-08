@@ -20,7 +20,10 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseSqlServer(connectionString, options =>
+                {
+                    options.EnableRetryOnFailure();
+                }));
 
             services.AddOptions<AuthMessageSenderOptions>()
                     .Bind(configuration.GetSection("AuthMessageSenderOptions"));
@@ -39,6 +42,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IGuestService, GuestService>();
             services.AddScoped<IFileService, FileService>();
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<IShippingProviderService, ShippingProviderService>();
 
             services.AddHttpContextAccessor();
 

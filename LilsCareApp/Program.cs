@@ -1,4 +1,5 @@
 using LilsCareApp.Core.Resources;
+using LilsCareApp.Core.Services;
 using LilsCareApp.Infrastructure.Data.DataConfiguration;
 using LilsCareApp.ModelBinders;
 using Microsoft.AspNetCore.Localization;
@@ -12,6 +13,7 @@ builder.Services.AddAppDbContext(builder.Configuration);
 builder.Services.AddAppIdentity();
 builder.Services.AddAppAuthentication(builder.Configuration);
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.AddHostedService<DailyDataRetrievalService>();
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     var supportedCultures = new[]
