@@ -1,5 +1,5 @@
 # LilsCareApp 
-# https://lilscareapp20240428180314.azurewebsites.net/
+
 
 Online store
 
