@@ -147,6 +147,9 @@
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
   <data name="Make this my default address" xml:space="preserve">
     <value>Make this my default address</value>
   </data>

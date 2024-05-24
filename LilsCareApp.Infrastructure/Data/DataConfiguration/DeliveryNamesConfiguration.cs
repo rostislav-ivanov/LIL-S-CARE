@@ -14,6 +14,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 NameEN = "Office delivery",
                 NameBG = "Доставка до офис на куриер",
                 NameRO = "Livrare la birou",
+                DeliveryMethodId = 1,
             },
             new ()
             {
@@ -21,6 +22,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 NameEN = "Home delivery",
                 NameBG = "Доставка до адрес на клиент",
                 NameRO = "Livrare la domiciliu",
+                DeliveryMethodId = 2,
             },
         ];
 

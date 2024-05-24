@@ -1,141 +1,87 @@
-﻿@{
-    ViewData["Title"] = "ПОЛИТИКА ЗА ПОВЕРИТЕЛНОСТ";
+﻿@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = Localizer["PRIVACY POLICY"];
 }
 <div class="row justify-content-center py-5">
     <div class="col-7">
         <div class="text-center pb-3">
-            <h1 class="h2">ПОЛИТИКА ЗА ПОВЕРИТЕЛНОСТ</h1>
+            <h1 class="h2">@Localizer["PRIVACY POLICY"]</h1>
             <p>
-                Защитата на личните данни и опазването на информацията на нашите
-                клиенти ни е особено важно. В тази декларация Ви информираме
-                накратко за най-важните аспекти от обработването на Вашите данни от
-                нашия уебсайт (lilscare.com).
+                @Localizer["The protection of personal data and the protection of the information of our customers is particularly important to us. In this declaration, we briefly inform you about the most important aspects of the processing of your data by our website"] (lilscare.com).
             </p>
         </div>
         <div class="pb-3">
             <h2 class="h4">
-                Какво се случва с данните Ви, след като се свържете се нас?
+                @Localizer["What happens to your data after you contact us?"]
             </h2>
             <p>
-                Когато направите поръчка или сесвържете по имейл, телефон, чрез
-                формуляр на нашия уебсайт или по какъвто и да е друг метод, ние
-                получаваме и съхраняваме данните Ви (имена, адрес, телефон и имейл)
-                за периода, необходим за обработване на искането Ви, както и за да
-                отговорим на Ваши последващи въпроси и за да облекчим предоставянето
-                на поръчка. Няма да споделяме тази информация с трети лица с
-                изключение на куриерската фирма чрез която Ви изпращаме доставка при
-                направена поръчка.
+                @Localizer["When you place an order or contact us by email, telephone, via a form on our website or by any other method, we receive and store your details (names, address, telephone and email) for the period necessary to process your request, as well as to answer your follow-up questions and to facilitate the provision of an order. We will not share this information with third parties with the exception of the courier company through which we send you a delivery when an order is placed."]
             </p>
         </div>
         <div class="pb-3">
-            <h2 class="h4">Какъв тип данни събираме?</h2>
+            <h2 class="h4">@Localizer["What type of data do we collect?"]</h2>
             <p>
-                В допълнение, събираме IP адрес, login, имейл, парола, компютър,
-                информация за връзка и история на покупките. Може да използваме
-                софтуерни инструменти да измерваме и събираме информация за сесията,
-                включително време за отговор на страницата и браузър. Също събираме
-                и нелични данни като коментари, харесване, добавяне в любими и
-                ревюта относно продуктите ни и препоръки, ако има такива.
+                @Localizer["In addition, we collect IP address, login, email, password, computer, contact information and purchase history. We may use software tools to measure and collect session information, including page and browser response times. We also collect non-personal data such as comments, likes, favorites and reviews about our products and recommendations, if any."]
             </p>
         </div>
         <div class="pb-3">
-            <h2 class="h4">Защо събираме някои лични данни?</h2>
+            <h2 class="h4">@Localizer["Why do we collect some personal data?"]</h2>
             <p class="">
-                Получаваме, събираме и съхраняваме Ваша лична и нелична информация с
-                цел:
+                @Localizer["We receive, collect and store your personal and non-personal information for the purpose of:"]
             </p>
             <ul class="ps-4">
-                <li>да изпъняваме исканията Ви;</li>
-                <li>да обработим и изпратим Ваша поръчка успешно;</li>
+                <li>@Localizer["to fulfill your requests;"]</li>
+                <li>@Localizer["to process and ship your order successfully;"]</li>
                 <li>
-                    да Ви преодставяме информация относно Ваша поръчка в процес (напр.
-                    наличност, изпратена, статус и т.н.);
+                    @Localizer["to provide you with information about your order in progress (eg availability, shipped, status, etc.);"]
                 </li>
                 <li>
-                    да можем да се свържем с наши постетители и потребители относно
-                    общи или персонализирани известия, предложения, рекламни и
-                    информативни имейли;
+                    @Localizer["to be able to contact our visitors and users regarding general or personalized notices, offers, promotional and informational emails;"]
                 </li>
                 <li>
-                    да създаваме и получаваме обобщени статистически данни, който ние
-                    или наши бизнес партньори може да използват с цел да подобрим
-                    съответните ни услуги;
+                    @Localizer["to create and receive aggregate statistics that we or our business partners may use to improve our respective services;"]
                 </li>
                 <li>
-                    да се съобраизим с каквито и да е приложими закони и регулации;
+                    @Localizer["to comply with any applicable laws and regulations;"]
                 </li>
             </ul>
         </div>
         <div class="pb-3">
             <h2 class="h4">
-                Как съхраняваме или разкриваме Ваши данни и тези на посетителите на
-                уебсайта ни?
+                @Localizer["How do we store or disclose your data and that of our website visitors?"]
             </h2>
             <p>
-                Нашия уебсайт е с уеб хостинг от платформата на Wix.com. Wix.com ни
-                предоставя с онлайн платформата, която ни позволява да предоставяме
-                продуктите и услугите си. Ваши данни може да се съхраняват чрез
-                Wix.com в техни: хранилище за данни, бази данни или приложения. Те
-                съхраняват данни на сигурно и зад защитна стена firewall.
+                @Localizer["Our website is web hosted by the Wix.com platform. Wix.com provides us with the online platform that allows us to provide our products and services. Your data may be stored by Wix.com in their: data warehouse, databases or applications. They store data securely and behind a firewall."]
             </p>
             <p>
-                Всички пътища за директно плащане предоставени от Wix.com и
-                използвани от нас се придържат към стандарите на PCI-DSS управляван
-                от Съвета за Стандарти за Сигърност на PCI, който е създаден от
-                общите усилия на марки като Visa, MasterCard, American Express and
-                Discover. PCI-DSS стандартите и изискванията помагат да се гарантира
-                сигурното обработване на информация за кредитни карти от нашия
-                магазин и неговите доставчици на услуги.
+                @Localizer["All direct payment methods provided by Wix.com and used by us adhere to the PCI-DSS standards managed by the PCI Security Standards Council, which was created by the joint efforts of brands such as Visa, MasterCard, American Express and Discover. PCI-DSS standards and requirements help ensure the secure processing of credit card information by our store and its service providers."]
             </p>
         </div>
         <div class="pb-3">
             <h2 class="h4">
-                Ние използваме бисквитки / cookies по важни причини като:
+                @Localizer["We use cookies for important reasons such as:"]
             </h2>
             <ul class="ps-4">
                 <li>
-                    да предостави добро изживяване на посетителите и клиентите на
-                    уебсайта;
+                    @Localizer["to provide a good experience to visitors and customers of the Website;"]
                 </li>
-                <li>да индентфицира наши регистрирани потребители на уебсайта.</li>
-                <li>да наблюдава и анализира производителностна платформата си.</li>
+                <li>@Localizer["to identify our registered users of the website."]</li>
+                <li>@Localizer["to monitor and analyze performance of your platform."]</li>
                 <li>
-                    да гарантира безопастността ис сигурноста на платформата си.
+                    @Localizer["to ensure the safety and security of its platform."]
                 </li>
             </ul>
         </div>
         <div class="pb-3">
-            <h2 class="h4">Ако желаете повече да не обработваме Ваши данни:</h2>
+            <h2 class="h4">@Localizer["If you wish us to no longer process your data:"]</h2>
             <p>
-                или желаете да прегледате, промените, редактирате или изтриете Ваши
-                лични данни, които имаме, свържете се с нас по имейл
-                lils.care.handmade@gmail.com
+                @Localizer["or wish to view, change, edit or delete your personal data that we have, contact us by email lils.care.handmade@gmail.com"]
             </p>
             <p>
-                Запазваме правото си да променяме тази политика за поверителност по
-                всяко време (макар че едва ли някога,,) затова я проверявайте често
-                (макар че няма смисъл). Ако направим промени и уточнения, то те
-                влизат в сила веднага щом са публикувани на уебсйата и от тази
-                страница може да се информирате за тях . (Бяхме длъжни да напишем и
-                това.)
+                @Localizer["We reserve the right to change this privacy policy at any time (although hardly ever,,) so please check it often (although there is no point). If we make changes and clarifications, they enter into force as soon as they are published on the website and you can find out about them from this page. (We had to write that too.)"]
             </p>
             <p>
-                TWIPLA (previously named Visitor Analytics) is a simple website
-                analytics service that measures traffic on our website and collects
-                general information from our website visitors. We create statistics
-                to improve the experience of our website visitors. We never use
-                cookies for this purpose. As a website operator using TWIPLA to
-                conduct reach measurement, depending on the level of data protection
-                we have activated (level 3 of 4: GDPR Privacy), we may process
-                information about the device you are using and its characteristics,
-                information about technical characteristics of the website visit,
-                the number of page visits and statistically relevant behavior of our
-                website visitors. The technology does not use the collected data to
-                identify individual visitors or to match the data with additional
-                information about an individual user. Depending on the location from
-                which you access our website, TWIPLA may not collect any information
-                about the device you are using due to our technical settings.
-            </p>
+                @Localizer["TWIPLA (previously named Visitor Analytics) is a simple website analytics service that measures traffic on our website and collects general information from our website visitors. We create statistics to improve the experience of our website visitors. We never use cookies for this purpose. As a website operator using TWIPLA to conduct reach measurement, depending on the level of data protection we have activated (level 3 of 4: GDPR Privacy), we may process information about the device you are using and its characteristics, information about technical characteristics of the website visit, the number of page visits and statistically relevant behavior of our website visitors. The technology does not use the collected data to identify individual visitors or to match the data with additional information about an individual user.Depending on the location from which you access our website, TWIPLA may not collect any information about the device you are using due to our technical settings."]
         </div>
     </div>
 </div>

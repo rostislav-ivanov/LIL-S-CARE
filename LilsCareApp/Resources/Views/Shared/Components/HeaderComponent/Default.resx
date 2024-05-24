@@ -127,7 +127,7 @@
     <value>Изход</value>
   </data>
   <data name="Free Delivery" xml:space="preserve">
-    <value>БЕЗПЛАТНА ДОСТАВКА НАД 35 ЛВ</value>
+    <value>БЕЗПЛАТНА ДОСТАВКА НАД</value>
   </data>
   <data name="HOME" xml:space="preserve">
     <value>НАЧАЛО</value>
@@ -152,5 +152,8 @@
   </data>
   <data name="PRODUCTS" xml:space="preserve">
     <value>ПРОДУКТИ</value>
+  </data>
+  <data name="This is a demo version that shows how the site works." xml:space="preserve">
+    <value>Това е демо версия, която показва как сайта работи .</value>
   </data>
 </root>

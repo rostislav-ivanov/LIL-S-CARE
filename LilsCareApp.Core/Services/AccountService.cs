@@ -71,10 +71,7 @@ namespace LilsCareApp.Core.Services
         public async Task<string> GetUserImagePathAsync(string userId)
         {
             var user = await _context.Users.FirstOrDefaultAsync(au => au.Id == userId);
-            if (user == null)
-            {
-                return null;
-            }
+
             return user.ImagePath;
         }
 
@@ -83,7 +80,7 @@ namespace LilsCareApp.Core.Services
         {
             var language = _httpContextManager.GetLanguage();
 
-            return await _context.Orders
+            var orders = await _context.Orders
                 .Where(o => o.AppUserId == userId)
                 .OrderByDescending(o => o.CreatedOn)
                 .Select(o => new MyOrderDTO
@@ -116,12 +113,20 @@ namespace LilsCareApp.Core.Services
                     TrackingNumber = o.TrackingNumber,
                     Currency = o.Currency,
                     Discount = o.Discount,
-                    SubTotal = o.SubTotal,
+                    SubTotal = o.ProductsOrders.Sum(po => po.Quantity * po.Price) - o.Discount,
                     ShippingPrice = o.ShippingPrice,
-                    Total = o.Total,
+                    Total = o.ProductsOrders.Sum(po => po.Quantity * po.Price) - o.Discount + o.ShippingPrice,
                 })
                 .AsNoTracking()
                 .ToListAsync();
+
+            foreach (var order in orders)
+            {
+                order.SubTotal = Math.Round(order.SubTotal, 2);
+                order.Total = Math.Round(order.Total, 2);
+            }
+
+            return orders;
         }
 
 
@@ -166,8 +171,16 @@ namespace LilsCareApp.Core.Services
                 return;
             }
 
-            address.IsDeleted = true;
-            address.IsDefault = false;
+            if (await _context.Orders.AnyAsync(o => o.AddressDeliveryId == addressId))
+            {
+                address.IsDeleted = true;
+                address.IsDefault = false;
+                return;
+            }
+            else
+            {
+                _context.AddressDeliveries.Remove(address);
+            }
 
             await _context.SaveChangesAsync();
         }

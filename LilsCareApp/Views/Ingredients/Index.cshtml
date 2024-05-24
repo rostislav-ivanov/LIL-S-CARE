@@ -1,6 +1,7 @@
-﻿@model SubscriberDTO
+﻿@inject IViewLocalizer Localizer
+@model SubscriberDTO
 @{
-    ViewData["Title"] = "Ingredients";
+    ViewData["Title"] = Localizer["INGREDIENTS"];
 }
 @section Styles {
     <link rel="stylesheet" href="~/css/ingredients.css" />
@@ -35,7 +36,7 @@
             <!-- Carousel Item 1 Start -->
             <div class="carousel-item active">
                 <img src="/files/ingredients/carousel/image-01.webp"
-                     alt="Натурална грижа за кожата ръчно изработена български съставки и някои с био произход. Еко опаковки, нежни формули, без алкохол. Натурален екстракт от шипка или невен е крем, лосион за лице и тяло."
+                     alt=""
                      width="1411"
                      height="228"
                      style="
@@ -47,8 +48,8 @@
                      fetchpriority="high" />
 
                 <div class="carousel-caption">
-                    <h2 class="h2">ЗА СЪСТАВКИТЕ</h2>
-                    <p class="fs-5">ПРОИЗХОД И ДЕЙСТВИЕ ВЪРХУ КОЖАТА И ПРОДУКТА</p>
+                    <h2 class="h2">@Localizer["ABOUT THE INGREDIENTS"]</h2>
+                    <p class="fs-5">@Localizer["ORIGIN AND ACTION ON THE SKIN AND THE PRODUCT"]</p>
                 </div>
             </div>
             <!-- Carousel Item 1 End -->
@@ -66,9 +67,9 @@
                 "
                      fetchpriority="high" />
                 <div class="carousel-caption">
-                    <h2 class="h2">ПРОИЗХОД</h2>
+                    <h2 class="h2">@Localizer["ORIGIN"]</h2>
                     <p class="fs-5">
-                        ОТ БЪЛГАРИЯ ИЛИ БИО. А НЯКОИ СЪСТАВКИ СА И ДВЕТЕ!
+                        @Localizer["FROM BULGARIA OR BIO. AND SOME INGREDIENTS ARE BOTH!"]
                     </p>
                 </div>
             </div>
@@ -87,9 +88,9 @@
                 "
                      fetchpriority="high" />
                 <div class="carousel-caption">
-                    <h2 class="h2">НЕЖНИ И НАТУРАЛНИ</h2>
+                    <h2 class="h2">@Localizer["GENTLE AND NATURAL"]</h2>
                     <p class="fs-5">
-                        БЕЗ АЛКОХОЛ. ПОДХРАНВАТ, ХИДРАТИРАТ И ЗАЩИТАВАТ
+                        @Localizer["ALCOHOL-FREE. NOURISH, HYDRATE AND PROTECT"]
                     </p>
                 </div>
             </div>
@@ -108,9 +109,9 @@
                 "
                      fetchpriority="high" />
                 <div class="carousel-caption">
-                    <h2 class="h2">ЛЕСНО Е!</h2>
+                    <h2 class="h2">@Localizer["IT'S EASY!"]</h2>
                     <p class="fs-5">
-                        ГРИЖАТА ЗА КОЖАТА ТРЯБВА ДА Е ЛЕКА И ПРИЯТНА РУТИНА
+                        @Localizer["SKIN CARE SHOULD BE AN EASY AND PLEASANT ROUTINE"]
                     </p>
                 </div>
             </div>
@@ -139,20 +140,13 @@
     <div class="d-flex justify-content-center p-0">
         <div style="width: 34%">
             <img src="/files/ingredients/section/image-section-01.webp"
-                 alt="Натурална грижа за кожата ръчно изработена български съставки и някои с био произход. Еко опаковки, нежни формули, без алкохол. Натурален дезодорант с аромат на сладък портокал и евкалипт от етерични масла и витамин Е. Био съставки."
+                 alt=""
                  style="width: 100%; object-fit: cover" />
         </div>
         <div class="ps-5 pt-2" style="width: 66%">
-            <h2 class="h2">МАСЛА</h2>
+            <h2 class="h2">@Localizer["OILS"]</h2>
             <p class="fs-5">
-                Използваме натурални масла от България като от шипка, кайсиеви
-                ядки, бадемово и от гроздови семки. Като те могат да бъдат и био.
-                А екзотичните масла като кокос, какако и жожоба естествено винаги
-                са с био произход. В грижата за кожата маслата създават защитна
-                бариера, която запазва водата хидратацията в кожата. Лятото са
-                подходящи леки и "сухи" масла, които попиват бързо и са
-                некомедогенни, а през сухите и студени месеци може по-плътни и
-                твърди масла като кокос и какао.
+                @Localizer["We use natural oils from Bulgaria such as rosehip, apricot, almond and grape seed oils. As they can also be organic. And exotic oils such as coconut, cocoa and jojoba are naturally always of organic origin. In skin care, oils create a protective barrier that keeps water hydrated in the skin. In the summer, light and \"dry\" oils are suitable, which absorb quickly and are non-comedogenic, and in the dry and cold months, thicker and harder oils such as coconut and cocoa."]
             </p>
         </div>
     </div>
@@ -163,20 +157,11 @@
 <section>
     <div class="d-flex justify-content-center p-0">
         <div class="pe-5 pt-2" style="width: 66%; text-align: right">
-            <h2 class="text-right">АНТИОКСИДАНТИ</h2>
+            <h2 class="text-right">@Localizer["ANTIOXIDANTS"]</h2>
             <p class="fs-5">
-                Имат много полезни ефекти. Накратко, забавят стареенето като
-                предпазват от оксидация и свободни радикали. Успокояват кожата и
-                раздразненията и намлят увреждането в клетките. Стимулират
-                задравяването и производството на колаген и еластин. Всички наши
-                продукти съдържат <strong>витамин Е</strong> - есетвен
-                антиоксидант. А кремовете и лосионите ни съдържат и
-                <strong>ниацинамид (витамин B3)</strong>, който помага и срещу
-                пигментация. Често ботаническите <strong>екстракти</strong> като
-                от <strong>зелен чай</strong>
-                също са богати на антииоксиданти.
+                @Localizer["They have many beneficial effects. In short, they slow down aging by protecting against oxidation and free radicals. Soothes skin and irritations and soothes cell damage. They stimulate healing and the production of collagen and elastin. All our products contain <strong>vitamin E</strong> - an essential antioxidant. And our creams and lotions also contain <strong>niacinamide (vitamin B3)</strong>, which also helps against pigmentation. Often botanical <strong>extracts</strong> such as <strong>green tea</strong> are also rich in antioxidants."]
             </p>
-            <a asp-controller="Details" asp-action="Index" asp-route-id="5" class="btn" style="float: right">МИЦЕЛАРНА ВОДА ЗЕЛЕН ЧАЙ</a>
+            <a asp-controller="Details" asp-action="Index" asp-route-id="5" class="btn" style="float: right">@Localizer["MICELLAR WATER GREEN TEA"]</a>
         </div>
         <div style="width: 34%">
             <img src="/files/ingredients/section/image-section-02.webp"
@@ -192,21 +177,15 @@
     <div class="d-flex justify-content-center p-0">
         <div style="width: 34%">
             <img src="/files/ingredients/section/image-section-03.webp"
-                 alt="Натурална грижа за кожата ръчно изработена български съставки и някои с био произход. Еко опаковки, нежни формули, без алкохол. Натурален дезодорант с аромат на сладък портокал и евкалипт от етерични масла и витамин Е. Био съставки."
+                 alt=""
                  style="width: 100%; object-fit: cover" />
         </div>
         <div class="ps-5 pt-2" style="width: 66%">
-            <h2 class="h2">ХУМЕКТАНТИ</h2>
+            <h2 class="h2">@Localizer["HUMECTANTS"]</h2>
             <p class="fs-5">
-                Привличат водата и помагат за <strong>хидратацията</strong>.
-                Използваме глицерин и хиалуронова киселина с растителен произход.
-                <strong>Глицерина</strong> има малка молекула, която действа в
-                дълбочина, а <strong>хиалуроновата киселина</strong>
-                действа на повъхността на кожата. Заедно помагат за добрата и
-                цялостна хидратация. Хумектаните често са водоразтворими и се
-                намират в продукти като кремове и лосиони.
+                @Localizer["They attract water and help with <strong>hydration</strong>. We use glycerin and hyaluronic acid of plant origin <strong>Glycerin</strong> has a small molecule that acts in depth, and <strong>hyaluronic acid</strong> acts on the surface of the skin. Together they help for good and complete hydration. Humectans are often water-soluble and are found in products such as creams and lotions."]
             </p>
-            <a asp-controller="Details" asp-action="Index" asp-route-id="3" class="btn" style="float: left">ХИДРАТИРАЩ КРЕМ С ШИПКА</a>
+            <a asp-controller="Details" asp-action="Index" asp-route-id="3" class="btn" style="float: left">@Localizer["MOISTURIZING ROSE CREAM"]</a>
         </div>
     </div>
 </section>
@@ -216,14 +195,9 @@
 <section>
     <div class="d-flex justify-content-center p-0">
         <div class="pe-5 pt-2" style="width: 66%; text-align: right">
-            <h2 class="h2">НАТУРАЛЕН КОНСЕРВАНТ</h2>
+            <h2 class="h2">@Localizer["NATURAL PRESERVATIVE"]</h2>
             <p class="fs-5">
-                Potassium Sorbate, Sodium Benzoate, Benzyl Alcohol. Звучат страшно
-                нали? Тези три състваки са едини от натуралните консерванти,
-                позволени в натурални и био продуктите. Общо са по-малко от 1%.
-                Важни са, защото предпазват от разваляне и развитието на бактерии,
-                гъбички, дрожди и мухъли в продуктите. Използват се главно в
-                продукти с вода като кремове, лосиони, емулсии и серуми.
+                @Localizer["Potassium Sorbate, Sodium Benzoate, Benzyl Alcohol. Звучат страшно нали? Тези три състваки са едини от натуралните консерванти, позволени в натурални и био продуктите. Общо са по-малко от 1%. Важни са, защото предпазват от разваляне и развитието на бактерии, гъбички, дрожди и мухъли в продуктите. Използват се главно в продукти с вода като кремове, лосиони, емулсии и серуми."]
             </p>
         </div>
         <div style="width: 34%">
@@ -240,18 +214,13 @@
     <div class="d-flex justify-content-center p-0">
         <div style="width: 34%">
             <img src="/files/ingredients/section/image-section-05.webp"
-                 alt="Натурална грижа за кожата ръчно изработена български съставки и някои с био произход. Еко опаковки, нежни формули, без алкохол. Натурален дезодорант с аромат на сладък портокал и евкалипт от етерични масла и витамин Е. Био съставки."
+                 alt=""
                  style="width: 100%; object-fit: cover" />
         </div>
         <div class="ps-5 pt-2" style="width: 66%">
-            <h2 class="h2">БОТАНИЧЕСКИ ЕКСТРАКТИ</h2>
+            <h2 class="h2">@Localizer["BOTANICAL EXTRACTS"]</h2>
             <p class="fs-5">
-                Често са глицеринови екстракти и имат различен ефект в зависимист
-                от растенията и билките от които са извлечени. На пример, невенът
-                успокоява и е подходящ за чувствителна кожа. Екстрактът от шипка
-                помага в поддържането на кожата млада и елстична. А екстрактът от
-                зелен чай е богат на антиоксиданти. Какъвто и екстракт да съдържат
-                продуктите, винаги са страхотен натурален лек.
+                @Localizer["They are often glycerine extracts and have different effects depending on the plants and herbs from which they are extracted. For example, calendula soothes and is suitable for sensitive skin. Rosehip extract helps keep the skin young and supple. And green tea extract is rich in antioxidants. Whatever extract the products contain, they are always a great natural remedy."]
             </p>
         </div>
     </div>

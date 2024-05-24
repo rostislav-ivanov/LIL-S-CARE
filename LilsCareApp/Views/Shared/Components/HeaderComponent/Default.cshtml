@@ -2,15 +2,14 @@
 @inject IViewLocalizer Localizer
 
 <!-- Top Bar Start -->
-<h1 class="text-danger text-center">This is demo version witch show how the site working.</h1>
-<h1 class="text-danger text-center">Please do not purchase.</h1>
+<h1 class="text-danger text-center">@Localizer["This is a demo version that shows how the site works."]</h1>
 <div class="text-center"
      style="
           background-color: rgb(var(--color_43));
           font-size: 13px;
           letter-spacing: 0.2em;
         ">
-    <p class="mb-0">@Localizer["Free Delivery"]</p>
+    <p class="mb-0">@Localizer["Free Delivery"] @Model.FreeShipping @Model.Currency</p>
     <p class="mb-0">@Localizer["10% Discount"]</p>
 </div>
 <!-- Top Bar End -->

@@ -126,6 +126,11 @@ namespace LilsCareApp.Core.Services
 
             details.Price = Math.Round(details.Price, 2);
 
+            foreach (var section in details.Sections)
+            {
+                section.Description = section.Description.Replace(Environment.NewLine, "<br />");
+            }
+
             return details;
         }
 

@@ -1,6 +1,7 @@
-﻿@model ContactUsDTO
+﻿@inject IViewLocalizer Localizer
+@model ContactUsDTO
 @{
-    ViewData["Title"] = "Skin";
+    ViewData["Title"] = Localizer["SKIN"];
 }
 <!-- Section 1 Start-->
 <section class="fs-5">
@@ -11,20 +12,9 @@
                  style="width: 100%; max-height: 389px; object-fit: cover" />
         </div>
         <div class="ps-5 pt-2" style="width: 66%">
-            <h2 class="h2">ЗАЩО Е ВАЖЕН ТИПА КОЖА?</h2>
+            <h2 class="h2">@Localizer["WHY IS SKIN TYPE IMPORTANT?"]</h2>
             <p>
-                За да избираш подходящи продукти. Няма смисъл от скъпа козметика,
-                ако не е подходяща за теб. Типовете кожа са <strong>суха</strong>,
-                <strong>мазна</strong> и <strong>комбинирана</strong>, а в
-                допълнение може да е и <strong>чувствителна</strong>. Различните
-                продукти са създадени да помагат с различни проблеми на кожата.
-                Продуктите за мазна кожа биха изтощили сухата кожа и обратното.
-                Подходящите продукти са в основата на добрата рутина.
-            </p>
-            <p>
-                А знаете ли, че типа на кожата може да се променя? Кожата расте и се
-                регенерира постоянно. Тя се адаптира и променя. След продължително
-                изплозване на продукти типа на кожата може да се промени.
+                @Localizer["To choose suitable products. There is no point in expensive cosmetics if they are not suitable for you. Skin types are <strong>dry</strong>, <strong>oily</strong> and <strong>combination</strong>, and in addition it can be <strong>sensitive</strong>. Different products are designed to help with different skin problems. Products for oily skin would exhaust dry skin and vice versa. The right products are the basis of a good routine.</p><p>Did you know that skin type can change? The skin grows and regenerates constantly. It adapts and changes. After prolonged use of products, the skin type may change."]
             </p>
         </div>
     </div>
@@ -36,20 +26,9 @@
     <div class="d-flex justify-content-center p-0">
         <div style="width: 66%">
             <div class="p-4">
-                <h2 class="h2">КАКЪВ Е МОЯ ТИП КОЖА?</h2>
+                <h2 class="h2">@Localizer["WHAT IS MY SKIN TYPE?"]</h2>
                 <p>
-                    Лесно е! Почисти лицето си с нежен измиващ продукт с отмиване и
-                    без AHA или друг пилинг. Изплакни, нежно подсуши и
-                    <strong>не</strong> нанасяй никакви други продукти. След около 30
-                    минути и провери как се чувства кожата:
-                </p>
-                <p class="mb-0">
-                    - ако стяга, дръпа или се лющи или просто се усеща... суха
-                </p>
-                <p class="mb-0">- ако се е омазнила... е мазна</p>
-                <p class="mb-0">
-                    - а ако на места е мазна, напр. носа и челото, а на други места е
-                    по-суха, имаш кобинирана, което е и най-често срещания тип кожа
+                    @Localizer["It's easy! Cleanse your face with a gentle"]
                 </p>
             </div>
         </div>
@@ -75,8 +54,8 @@
 
 <section class="fs-5">
     <div class="container w-75 text-center mb-5">
-        <p>Примери за</p>
-        <h1 class="h1">КРАТКА РУТИНА</h1>
+        <p>@Localizer["Examples of"]</p>
+        <h1 class="h1">@Localizer["SHORT ROUTINE"]</h1>
     </div>
     <!-- Section 3 Start-->
     <section>
@@ -87,18 +66,14 @@
                      style="width: 100%; max-height: 473px; object-fit: cover" />
             </div>
             <div class="ps-5 pt-2" style="width: 70%">
-                <h2 class="h2">ЗА СУХА КОЖА:</h2>
+                <h2 class="h2">@Localizer["FOR DRY SKIN:"]</h2>
                 <p>
-                    Тя по-трудно се омазнява сама и не отделя много себум, който е
-                    естествената защита. Това често води до чувствителност. Подходящ
-                    избор са деликатни и плътни продукти с повече масла и емолиентни
-                    съставки, които да защитават кожата и да помогнат нейното
-                    възстановяване.
+                    @Localizer["It is more difficult to get oily on its own and does not release a lot of sebum, which is the natural protection. This often leads to sensitivity. A suitable choice are delicate and dense products with more oils and emollient ingredients to protect the skin and help its recovery."]
                 </p>
                 <div class="row fs-6">
                     <div class="col">
                         <span style="display: inline-flex; align-items: center">
-                            измиващ продукт
+                            @Localizer["washing product"]
                             <img src="/files/svg/arrow-right.svg"
                                  alt=""
                                  style="width: 30px; height: 30px; opacity: 0.5" />
@@ -110,7 +85,7 @@
                     <div class="col">
                         <div class="col justify-content-between">
                             <span style="display: inline-flex; align-items: center">
-                                хидратиращ крем
+                                @Localizer["hydrating Cream"]
                                 <img src="/files/svg/arrow-right.svg"
                                      alt=""
                                      style="width: 30px; height: 30px; opacity: 0.5" />
@@ -123,7 +98,7 @@
                     <div class="col">
                         <div class="col justify-content-between">
                             <span style="display: inline-flex; align-items: center">
-                                подхранващ серум масло
+                                @Localizer["nourishing serum oil"]
                                 <img src="/files/svg/arrow-right.svg"
                                      alt=""
                                      style="width: 30px; height: 30px; opacity: 0.5" />
@@ -139,7 +114,7 @@
                     <div class="col">
                         <div class="col justify-content-between">
                             <span style="display: inline-flex; align-items: center">
-                                слъцезащита
+                                @Localizer["sun protection"]
                                 <img src="/files/svg/arrow-right.svg"
                                      alt=""
                                      style="width: 30px; height: 30px; opacity: 0.5" />
@@ -158,19 +133,14 @@
     <section style="background-color: rgb(var(--app-bg-3))">
         <div class="d-flex justify-content-center p-0">
             <div class="ps-5 pt-2" style="width: 70%">
-                <h2 class="h2">ЗА МАЗНА КОЖА:</h2>
+                <h2 class="h2">@Localizer["FOR OILY SKIN:"]</h2>
                 <p>
-                    Омазнява се повече от необходимото и се получават повече пъпчици,
-                    черни точки и запушени пори. Подходящи са леки, хидратиращи и
-                    некомедогенни продукти без много масла. Също и AHA/BHA пилинг
-                    киселини 1-2 пъти седмично. Те обаче могат да раздразнят кожата и
-                    е важно да ги последваме с добра хидратация за защита на кожната
-                    бариера.
+                    @Localizer["It gets more oily than necessary and results in more pimples, blackheads and clogged pores. Light, hydrating and non-comedogenic products without a lot of oils are suitable. Also AHA/BHA peeling acids 1-2 times a week. However, they can irritate the skin and it is important to follow them with good hydration to protect the skin barrier."]
                 </p>
                 <div class="row fs-6">
                     <div class="col">
                         <span style="display: inline-flex; align-items: center">
-                            измиващ продукт
+                            @Localizer["washing product"]
                             <img src="/files/svg/arrow-right.svg"
                                  alt=""
                                  style="width: 30px; height: 30px; opacity: 0.5" />
@@ -182,7 +152,7 @@
                     <div class="col">
                         <div class="col justify-content-between">
                             <span style="display: inline-flex; align-items: center">
-                                лек серум на водна основа
+                                @Localizer["a light water-based serum"]
                                 <img src="/files/svg/arrow-right.svg"
                                      alt=""
                                      style="width: 30px; height: 30px; opacity: 0.5" />
@@ -198,7 +168,7 @@
                     <div class="col">
                         <div class="col justify-content-between">
                             <span style="display: inline-flex; align-items: center">
-                                хидратиращ лосион / гел
+                                @Localizer["moisturizing lotion / gel"]
                                 <img src="/files/svg/arrow-right.svg"
                                      alt=""
                                      style="width: 30px; height: 30px; opacity: 0.5" />
@@ -211,7 +181,7 @@
                     <div class="col">
                         <div class="col justify-content-between">
                             <span style="display: inline-flex; align-items: center">
-                                слъцезащита
+                                @Localizer["sun protection"]
                                 <img src="/files/svg/arrow-right.svg"
                                      alt=""
                                      style="width: 30px; height: 30px; opacity: 0.5" />
@@ -240,19 +210,14 @@
                      style="width: 100%; max-height: 473px; object-fit: cover" />
             </div>
             <div class="ps-5 pt-2" style="width: 70%">
-                <h2 class="h2">ЗА КОМБИНИРАНА КОЖА:</h2>
+                <h2 class="h2">@Localizer["FOR COMBINATION SKIN:"]</h2>
                 <p>
-                    На Т-зоната може рутина за мазна... а на бузите рутина... Но кой
-                    би искал рутина за всяка част от лицето?! Пробвай различни
-                    продукти и експериментирай. Не използваи всеки продукт на цялото
-                    лице, а повече или по-често където е нужен. Например AHA пилинг на
-                    Т-зоната и по-рядко на цялото лице. А лосион основно основно на
-                    бузите. Слушай кожата си и нейните нужди.
+                    @Localizer["On the T-zone you can have a routine for oily... and on the cheeks a routine... But who wants a routine for every part of the face?! Try different products and experiment. Do not use every product on the whole face, but more or more often where it is needed. For example, AHA peeling on the T-zone and less often on the whole face. And lotion mainly mainly on the cheeks. Listen to your skin and its needs."]
                 </p>
                 <div class="row fs-6">
                     <div class="col">
                         <span style="display: inline-flex; align-items: center">
-                            измиващ продукт
+                            @Localizer["washing product"]
                             <img src="/files/svg/arrow-right.svg"
                                  alt=""
                                  style="width: 30px; height: 30px; opacity: 0.5" />
@@ -264,7 +229,7 @@
                     <div class="col">
                         <div class="col justify-content-between">
                             <span style="display: inline-flex; align-items: center">
-                                лек серум
+                                @Localizer["light serum"]
                                 <img src="/files/svg/arrow-right.svg"
                                      alt=""
                                      style="width: 30px; height: 30px; opacity: 0.5" />
@@ -280,7 +245,7 @@
                     <div class="col">
                         <div class="col justify-content-between">
                             <span style="display: inline-flex; align-items: center">
-                                хидратиращ лосион
+                                @Localizer["moisturizing lotion"]
                                 <img src="/files/svg/arrow-right.svg"
                                      alt=""
                                      style="width: 30px; height: 30px; opacity: 0.5" />
@@ -293,7 +258,7 @@
                     <div class="col">
                         <div class="col justify-content-between">
                             <span style="display: inline-flex; align-items: center">
-                                слъцезащита
+                                @Localizer["sun protection"]
                                 <img src="/files/svg/arrow-right.svg"
                                      alt=""
                                      style="width: 30px; height: 30px; opacity: 0.5" />
@@ -321,10 +286,7 @@
     </svg>
     <div class="container w-75 text-center">
         <p class="mb-0">
-            БЕЛЕЖКА: Тези рутини са само примерни. Използвайте ги и ги адаптирайте
-            съобразно нуждите Ви. Информацията на тази страница и на сайта е само
-            с образователна цел. За диагноза, превенция или лечение на медицински
-            състояния се допитайте до лекар.
+            @Localizer["NOTE: These routines are examples only. Use them and adapt them according to your needs. The information on this page and on the site is for educational purposes only. For diagnosis, prevention, or treatment of medical conditions, consult a physician."]
         </p>
     </div>
     <svg xmlns="http://www.w3.org/2000/svg"

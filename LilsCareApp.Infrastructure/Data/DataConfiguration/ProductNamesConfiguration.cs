@@ -14,6 +14,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 NameEN = "NATURAL DRY DEODORANT",
                 NameBG = "НАТУРАЛЕН СУХ ДЕЗОДОРАНТ",
                 NameRO = "DEODORANT NATURAL USCAT",
+                ProductId = 1,
             },
             new ()
             {
@@ -21,6 +22,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 NameEN = "LIP BALM WITH JOJOBA, COCOA AND BEESWAX",
                 NameBG = "БАЛСАМ ЗА УСТНИ С ЖОЖОБА, КАКАО И ПЧЕЛЕН ВОСЪК",
                 NameRO = "BALSAM DE BUZE CU JOJOBA, CACAO SI CEARA DE ALBINE",
+                ProductId = 2,
             },
             new ()
             {
@@ -28,6 +30,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 NameEN = "MOISTURIZING CREAM WITH ROSE BODY AND NIACINAMIDE",
                 NameBG = "ХИДРАТИРАЩ КРЕМ С ШИПКА И НИАЦИНАМИД",
                 NameRO = "CREMA HIDRATANTE CU CORP DE TRANDAFIRI SI NIACINAMIDA",
+                ProductId = 3,
             },
             new ()
             {
@@ -35,6 +38,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 NameEN = "TWO PHASE GREEN TEA AND JOJOBA MICELLAR WATER",
                 NameBG = "ДВУФАЗНА МИЦЕЛАРНА ВОДА ЗЕЛЕН ЧАЙ И ЖОЖОБА",
                 NameRO = "CEAI VERDE BIFAZICAL ȘI APA MICELARĂ DE JOJOBA",
+                ProductId = 4,
             },
             new ()
             {
@@ -42,6 +46,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 NameEN = "NATURAL CREAM DEODORANT",
                 NameBG = "НАТУРАЛЕН КРЕМ ДЕЗОДОРАНТ",
                 NameRO = "DEODORANT CREMA NATURAL",
+                ProductId = 5,
             },
             new ()
             {
@@ -49,6 +54,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 NameEN = "SERUM OIL WITH ROSE BODY, JOJOBA, ARGAN AND STRAWBERRY SEEDS",
                 NameBG = "СЕРУМ МАСЛО С ШИПКА, ЖОЖОБА, АРГАН И ЯГОДОВИ СЕМКИ",
                 NameRO = "ULEI DE SER CU CORP DE TRANDAFIRI, SEMINTE DE JOJOBA, ARGAN SI CAPSUNI",
+                ProductId = 6,
             },
             new ()
             {
@@ -56,6 +62,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 NameEN = "",
                 NameBG = "",
                 NameRO = "",
+                ProductId = 7,
             },
          ];
 

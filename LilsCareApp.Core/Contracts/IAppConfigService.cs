@@ -5,6 +5,6 @@ namespace LilsCareApp.Core.Contracts
     {
         Task<decimal> GetExchangeRateAsync(string language);
         Task<decimal> GetAddressDeliveryPriceAsync(string language);
-        Task<decimal> GetFreeShipping(string language);
+        Task<decimal> GetFreeShippingAsync(string language);
     }
 }

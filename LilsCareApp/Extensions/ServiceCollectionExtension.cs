@@ -20,7 +20,10 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseSqlServer(connectionString, options =>
+                {
+                    options.EnableRetryOnFailure();
+                }));
 
             services.AddOptions<AuthMessageSenderOptions>()
                     .Bind(configuration.GetSection("AuthMessageSenderOptions"));
@@ -39,6 +42,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IGuestService, GuestService>();
             services.AddScoped<IFileService, FileService>();
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<IShippingProviderService, ShippingProviderService>();
 
             services.AddHttpContextAccessor();
 
@@ -73,35 +77,19 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
-        //public static IServiceCollection AddAppLocalization(this IServiceCollection services)
-        //{
-        //    services.AddLocalization(options => options.ResourcesPath = "Resources");
-
-        //    services.AddControllersWithViews()
-        //        .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-        //        .AddDataAnnotationsLocalization(options =>
-        //        {
-        //            options.DataAnnotationLocalizerProvider = (type, factory) =>
-        //                factory.Create(typeof(SharedResource));
-        //        });
-        //    services.AddMvc();
-
-        //    return services;
-        //}
-
         public static IServiceCollection AddAppAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAuthentication()
-                .AddFacebook(options =>
-                {
-                    options.AppId = configuration.GetSection("FacebookAuth:AppId").Value;
-                    options.AppSecret = configuration.GetSection("FacebookAuth:AppSecret").Value;
-                })
-                .AddGoogle(options =>
-                {
-                    options.ClientId = configuration.GetSection("GoogleAuth:ClientId").Value;
-                    options.ClientSecret = configuration.GetSection("GoogleAuth:ClientSecret").Value;
-                });
+            .AddFacebook(options =>
+            {
+                options.AppId = configuration.GetSection("FacebookAuth:AppId").Value;
+                options.AppSecret = configuration.GetSection("FacebookAuth:AppSecret").Value;
+            })
+            .AddGoogle(options =>
+            {
+                options.ClientId = configuration.GetSection("GoogleAuth:ClientId").Value;
+                options.ClientSecret = configuration.GetSection("GoogleAuth:ClientSecret").Value;
+            });
 
             return services;
         }

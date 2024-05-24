@@ -126,4 +126,7 @@
   <data name="Price" xml:space="preserve">
     <value>€</value>
   </data>
+  <data name="PRODUCTS" xml:space="preserve">
+    <value>PRODUCTS</value>
+  </data>
 </root>

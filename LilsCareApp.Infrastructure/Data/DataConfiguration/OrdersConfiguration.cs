@@ -13,7 +13,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
             {
                 Id = 1,
                 OrderNumber = "123456",
-                Currency = "bg",
+                Currency = "лв.",
                 ExchangeRate = 1.00m,
                 CreatedOn = DateTime.ParseExact("28/10/2023", "dd/MM/yyyy", CultureInfo.InvariantCulture),
                 StatusOrderId = 1,
@@ -33,7 +33,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
              {
                 Id = 2,
                 OrderNumber = "123456x",
-                Currency = "en",
+                Currency = "€",
                 ExchangeRate = 1.95m,
                 CreatedOn = DateTime.ParseExact("25/10/2023", "dd/MM/yyyy", CultureInfo.InvariantCulture),
                 StatusOrderId = 2,

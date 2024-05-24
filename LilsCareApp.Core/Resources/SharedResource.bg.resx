@@ -138,6 +138,9 @@
   <data name="LastName" xml:space="preserve">
     <value>фамилия</value>
   </data>
+  <data name="Message" xml:space="preserve">
+    <value>съобщение</value>
+  </data>
   <data name="PhoneNumber" xml:space="preserve">
     <value>телефонен номер</value>
   </data>
@@ -146,6 +149,9 @@
   </data>
   <data name="PostCode" xml:space="preserve">
     <value>пощенски код</value>
+  </data>
+  <data name="PrivacyPolicyCheck" xml:space="preserve">
+    <value>Моля, потвърдете съгласието с политиката за поверителност.</value>
   </data>
   <data name="ResourceRequired" xml:space="preserve">
     <value>Моля, въведете {0}</value>

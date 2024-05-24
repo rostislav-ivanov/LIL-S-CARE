@@ -1,5 +1,7 @@
 using LilsCareApp.Core.Resources;
+using LilsCareApp.Core.Services;
 using LilsCareApp.Infrastructure.Data.DataConfiguration;
+using LilsCareApp.ModelBinders;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using System.Globalization;
@@ -11,6 +13,7 @@ builder.Services.AddAppDbContext(builder.Configuration);
 builder.Services.AddAppIdentity();
 builder.Services.AddAppAuthentication(builder.Configuration);
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.AddHostedService<DailyDataRetrievalService>();
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     var supportedCultures = new[]
@@ -28,7 +31,10 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 });
 
 
-builder.Services.AddControllersWithViews()
+builder.Services.AddControllersWithViews(options =>
+    {
+        options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+    })
     .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
     .AddDataAnnotationsLocalization((options =>
     {
@@ -61,6 +67,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 

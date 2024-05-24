@@ -183,8 +183,6 @@ namespace LilsCareApp.Core.Services
                 NoteForDelivery = orderDTO.NoteForDelivery,
                 ShippingPrice = orderDTO.ShippingPrice,
                 Discount = orderDTO.Discount,
-                SubTotal = orderDTO.SubTotal,
-                Total = orderDTO.Total,
                 PromoCodeId = orderDTO.PromoCodeId > 0 ? orderDTO.PromoCodeId : null,
                 FirstName = orderDTO.Address.FirstName,
                 LastName = orderDTO.Address.LastName,
@@ -195,7 +193,6 @@ namespace LilsCareApp.Core.Services
                 District = orderDTO.Address.District,
                 Country = orderDTO.Address.Country,
                 Email = orderDTO.Address.Email,
-                IsShippingToOffice = orderDTO.Address.DeliveryMethodId == 1,
                 ShippingOfficeId = orderDTO.Address.ShippingOfficeId,
                 ShippingProviderName = orderDTO.Address.ShippingOffice?.ShippingProviderName,
                 ShippingOfficeCity = orderDTO.Address.ShippingOffice?.City,
@@ -249,7 +246,7 @@ namespace LilsCareApp.Core.Services
                         address.Town = orderDTO.Address.Town;
                         address.District = orderDTO.Address.District;
                         address.Country = orderDTO.Address.Country;
-                        address.Email = orderDTO.Address.Email;
+                        address.Email = orderDTO.Address.Email ?? appUser.Email;
                         address.IsShippingToOffice = orderDTO.Address.DeliveryMethodId == 1;
                         address.ShippingOfficeId = orderDTO.Address.ShippingOfficeId;
                     }
@@ -337,7 +334,8 @@ namespace LilsCareApp.Core.Services
                     Town = o.Town,
                     District = o.District,
                     Country = o.Country,
-                    IsShippingToOffice = o.IsShippingToOffice,
+                    Email = o.Email,
+                    IsShippingToOffice = o.DeliveryMethodId == 1,
                     ShippingProviderName = o.ShippingProviderName,
                     ShippingOfficeCity = o.ShippingOfficeCity,
                     ShippingOfficeAddress = o.ShippingOfficeAddress,
@@ -369,12 +367,18 @@ namespace LilsCareApp.Core.Services
                         { English, o.PromoCode.Code.NameEN }
                     }[language] : string.Empty,
                     Discount = o.Discount,
-                    SubTotal = o.SubTotal,
+                    SubTotal = o.ProductsOrders.Sum(po => po.Quantity * po.Price) - o.Discount,
                     ShippingPrice = o.ShippingPrice,
-                    Total = o.Total
+                    Total = o.ProductsOrders.Sum(po => po.Quantity * po.Price) - o.Discount + o.ShippingPrice,
                 })
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
+
+            if (orderSummary != null)
+            {
+                orderSummary.SubTotal = Math.Round(orderSummary.SubTotal, 2);
+                orderSummary.Total = Math.Round(orderSummary.Total, 2);
+            }
 
             return orderSummary;
         }
@@ -383,7 +387,7 @@ namespace LilsCareApp.Core.Services
         {
             order.Language = _httpContextManager.GetLanguage();
             order.ExchangeRate = await _appConfigService.GetExchangeRateAsync(order.Language);
-            decimal freeShipping = await _appConfigService.GetFreeShipping(order.Language);
+            decimal freeShipping = await _appConfigService.GetFreeShippingAsync(order.Language);
             decimal subTotal = order.ProductsInBag.Sum(p => p.Price * p.Quantity);
             decimal discount = order.PromoCodes.FirstOrDefault(pc => pc.Id == order.PromoCodeId)?.Discount ?? 0;
             order.Discount = Math.Round((subTotal * discount), 2);

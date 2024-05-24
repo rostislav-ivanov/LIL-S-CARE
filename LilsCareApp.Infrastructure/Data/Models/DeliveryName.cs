@@ -22,7 +22,8 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [MaxLength(NameMaxLength)]
         public required string NameRO { get; set; }
 
-        [Comment("Navigation Property to DeliveryMethod")]
-        public IEnumerable<DeliveryMethod> DeliveryMethod { get; set; } = [];
+        public int DeliveryMethodId { get; set; }
+
+        public DeliveryMethod DeliveryMethod { get; set; } = null!;
     }
 }

@@ -21,8 +21,9 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [MaxLength(NameMaxLength)]
         public required string NameRO { get; set; }
 
-        [Comment("Navigation Property to Products")]
-        public IEnumerable<Product> Products { get; set; } = [];
+        public int ProductId { get; set; }
+
+        public Product Product { get; set; } = null!;
 
     }
 }

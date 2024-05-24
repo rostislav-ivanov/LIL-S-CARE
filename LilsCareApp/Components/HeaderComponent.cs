@@ -4,6 +4,7 @@ using LilsCareApp.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Security.Claims;
+using static LilsCareApp.Infrastructure.DataConstants.Language;
 
 namespace LilsCareApp.Components
 {
@@ -13,24 +14,40 @@ namespace LilsCareApp.Components
         private readonly IAccountService _accountService;
         private readonly IGuestService _guestService;
         private readonly IOptions<RequestLocalizationOptions> _requestLocalizationOptions;
+        private readonly IAppConfigService _appConfigService;
+        private readonly IHttpContextManager _httpContextManager;
 
 
         public HeaderComponent(
             IProductsService productsService,
             IAccountService accountService,
             IGuestService guestService,
-            IOptions<RequestLocalizationOptions> requestLocalizationOptions)
+            IOptions<RequestLocalizationOptions> requestLocalizationOptions,
+            IAppConfigService appConfigService,
+            IHttpContextManager httpContextManager)
         {
             _productsService = productsService;
             _accountService = accountService;
             _guestService = guestService;
             _requestLocalizationOptions = requestLocalizationOptions;
+            _appConfigService = appConfigService;
+            _httpContextManager = httpContextManager;
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             HeaderComponentViewModel model = new();
+
+            string language = _httpContextManager.GetLanguage();
+            model.FreeShipping = Math.Round(await _appConfigService.GetFreeShippingAsync(language), 2);
+
+            model.Currency = new Dictionary<string, string>
+                            {
+                                { Bulgarian, "лв." },
+                                { Romanian, "Lei" },
+                                { English, "€" }
+                            }[language];
 
             if (userId != null)
             {

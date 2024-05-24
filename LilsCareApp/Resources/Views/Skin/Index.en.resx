@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="a light water-based serum" xml:space="preserve">
+    <value>a light water-based serum</value>
+  </data>
+  <data name="Examples of" xml:space="preserve">
+    <value>Examples of</value>
+  </data>
+  <data name="FOR COMBINATION SKIN:" xml:space="preserve">
+    <value>FOR COMBINATION SKIN:</value>
+  </data>
+  <data name="FOR DRY SKIN:" xml:space="preserve">
+    <value>FOR DRY SKIN:</value>
+  </data>
+  <data name="FOR OILY SKIN:" xml:space="preserve">
+    <value>FOR OILY SKIN:</value>
+  </data>
+  <data name="hydrating Cream" xml:space="preserve">
+    <value>hydrating Cream</value>
+  </data>
+  <data name="It gets more oily than necessary and results in more pimples, blackheads and clogged pores. Light, hydrating and non-comedogenic products without a lot of oils are suitable. Also AHA/BHA peeling acids 1-2 times a week. However, they can irritate the skin and it is important to follow them with good hydration to protect the skin barrier." xml:space="preserve">
+    <value>It gets more oily than necessary and results in more pimples, blackheads and clogged pores. Light, hydrating and non-comedogenic products without a lot of oils are suitable. Also AHA/BHA peeling acids 1-2 times a week. However, they can irritate the skin and it is important to follow them with good hydration to protect the skin barrier.</value>
+  </data>
+  <data name="It's easy! Cleanse your face with a gentle" xml:space="preserve">
+    <value>It's easy! Cleanse your face with a gentle, rinse-off cleanser without AHAs or other exfoliants. Rinse, gently dry and &lt;strong&gt;do not&lt;/strong&gt; apply any other products. After about 30 minutes and check how the skin feels:&lt;/p&gt;&lt;p class="mb-0"&gt;- if it tightens, pulls or flakes or just feels... dry&lt;/p&gt;&lt;p class=" mb-0"&gt;- if it got greasy... it's greasy&lt;/p&gt;&lt;p class="mb-0"&gt;- and if it's greasy in places, e.g. nose and forehead, and it's drier elsewhere, you have combination skin, which is also the most common skin type</value>
+  </data>
+  <data name="light serum" xml:space="preserve">
+    <value>light serum</value>
+  </data>
+  <data name="moisturizing lotion" xml:space="preserve">
+    <value>moisturizing lotion</value>
+  </data>
+  <data name="moisturizing lotion / gel" xml:space="preserve">
+    <value>moisturizing lotion / gel</value>
+  </data>
+  <data name="NOTE: These routines are examples only. Use them and adapt them according to your needs. The information on this page and on the site is for educational purposes only. For diagnosis, prevention, or treatment of medical conditions, consult a physician." xml:space="preserve">
+    <value>NOTE: These routines are examples only. Use them and adapt them according to your needs. The information on this page and on the site is for educational purposes only. For diagnosis, prevention, or treatment of medical conditions, consult a physician.</value>
+  </data>
+  <data name="nourishing serum oil" xml:space="preserve">
+    <value>nourishing serum oil</value>
+  </data>
+  <data name="On the T-zone you can have a routine for oily... and on the cheeks a routine... But who wants a routine for every part of the face?! Try different products and experiment. Do not use every product on the whole face, but more or more often where it is needed. For example, AHA peeling on the T-zone and less often on the whole face. And lotion mainly mainly on the cheeks. Listen to your skin and its needs." xml:space="preserve">
+    <value>On the T-zone you can have a routine for oily... and on the cheeks a routine... But who wants a routine for every part of the face?! Try different products and experiment. Do not use every product on the whole face, but more or more often where it is needed. For example, AHA peeling on the T-zone and less often on the whole face. And lotion mainly mainly on the cheeks. Listen to your skin and its needs.</value>
+  </data>
+  <data name="SHORT ROUTINE" xml:space="preserve">
+    <value>SHORT ROUTINE</value>
+  </data>
+  <data name="SKIN" xml:space="preserve">
+    <value>SKIN</value>
+  </data>
+  <data name="sun protection" xml:space="preserve">
+    <value>sun protection</value>
+  </data>
+  <data name="To choose suitable products. There is no point in expensive cosmetics if they are not suitable for you. Skin types are &lt;strong&gt;dry&lt;/strong&gt;, &lt;strong&gt;oily&lt;/strong&gt; and &lt;strong&gt;combination&lt;/strong&gt;, and in addition it can be &lt;strong&gt;sensitive&lt;/strong&gt;. Different products are designed to help with different skin problems. Products for oily skin would exhaust dry skin and vice versa. The right products are the basis of a good routine.&lt;/p&gt;&lt;p&gt;Did you know that skin type can change? The skin grows and regenerates constantly. It adapts and changes. After prolonged use of products, the skin type may change." xml:space="preserve">
+    <value>To choose suitable products. There is no point in expensive cosmetics if they are not suitable for you. Skin types are &lt;strong&gt;dry&lt;/strong&gt;, &lt;strong&gt;oily&lt;/strong&gt; and &lt;strong&gt;combination&lt;/strong&gt;, and in addition it can be &lt;strong&gt;sensitive&lt;/strong&gt;. Different products are designed to help with different skin problems. Products for oily skin would exhaust dry skin and vice versa. The right products are the basis of a good routine.&lt;/p&gt;&lt;p&gt;Did you know that skin type can change? The skin grows and regenerates constantly. It adapts and changes. After prolonged use of products, the skin type may change.</value>
+  </data>
+  <data name="washing product" xml:space="preserve">
+    <value>washing product</value>
+  </data>
+  <data name="WHAT IS MY SKIN TYPE?" xml:space="preserve">
+    <value>WHAT IS MY SKIN TYPE?</value>
+  </data>
+  <data name="WHY IS SKIN TYPE IMPORTANT?" xml:space="preserve">
+    <value>WHY IS SKIN TYPE IMPORTANT?</value>
+  </data>
+</root>

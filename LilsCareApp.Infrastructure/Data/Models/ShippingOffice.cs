@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LilsCareApp.Infrastructure.Data.Models
@@ -6,10 +7,12 @@ namespace LilsCareApp.Infrastructure.Data.Models
     public class ShippingOffice
     {
 
+        [Key]
         public int Id { get; set; }
 
         public required string City { get; set; }
 
+        public int OfficeAddressId { get; set; }
 
         public required string OfficeAddress { get; set; }
 

@@ -22,7 +22,8 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [MaxLength(NameMaxLength)]
         public required string NameRO { get; set; }
 
-        [Comment("Navigation Property to StatusOrders")]
-        public IEnumerable<StatusOrder> StatusOrders { get; set; } = [];
+        public int StatusOrderId { get; set; }
+
+        public StatusOrder StatusOrder { get; set; } = null!;
     }
 }

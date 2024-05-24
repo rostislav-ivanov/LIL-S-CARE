@@ -14,6 +14,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                         OptionalEN = "Weight:  25 g.",
                         OptionalBG = "Тегло:  25 г.",
                         OptionalRO = "Greutate:  25 g.",
+                        ProductId = 1,
             },
             new ()
             {
@@ -21,6 +22,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                         OptionalEN = "Weight:  5 g.",
                         OptionalBG = "Тегло:  5 г.",
                         OptionalRO = "Greutate:  5 g.",
+                        ProductId = 2,
             },
             new ()
             {
@@ -28,6 +30,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                         OptionalEN = "Weight:  50 g.",
                         OptionalBG = "Тегло:  50 г.",
                         OptionalRO = "Greutate:  50 g.",
+                        ProductId = 3,
             },
             new ()
             {
@@ -35,6 +38,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                         OptionalEN = "Weight:  100 ml.",
                         OptionalBG = "Тегло:  100 мл.",
                         OptionalRO = "Greutate:  100 ml.",
+                        ProductId = 4,
             },
             new ()
             {
@@ -42,6 +46,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                         OptionalEN = "Weight:  50 g.",
                         OptionalBG = "Тегло:  50 г.",
                         OptionalRO = "Greutate:  50 g.",
+                        ProductId = 5,
             },
             new ()
             {
@@ -49,6 +54,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                         OptionalEN = "Weight:  20 ml.",
                         OptionalBG = "Тегло:  20 мл.",
                         OptionalRO = "Greutate:  20 ml.",
+                        ProductId = 6,
             },
             new ()
             {
@@ -56,6 +62,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                         OptionalEN = "",
                         OptionalBG = "",
                         OptionalRO = "",
+                        ProductId = 7,
             },
         ];
 

@@ -22,7 +22,8 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [MaxLength(NameMaxLength)]
         public required string NameRO { get; set; }
 
-        [Comment("Navigation Property to PromoCodes")]
-        public IEnumerable<PromoCode> PromoCodes { get; set; } = [];
+        public int PromoCodeId { get; set; }
+
+        public PromoCode PromoCode { get; set; } = null!;
     }
 }

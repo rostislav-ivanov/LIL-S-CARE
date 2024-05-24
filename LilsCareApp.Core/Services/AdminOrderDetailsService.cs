@@ -1,5 +1,4 @@
 ﻿using LilsCareApp.Core.Contracts;
-using LilsCareApp.Core.Models.Account;
 using LilsCareApp.Core.Models.AdminOrderDetails;
 using LilsCareApp.Infrastructure.Data;
 using LilsCareApp.Infrastructure.Data.Models;
@@ -26,28 +25,32 @@ namespace LilsCareApp.Core.Services
                     OrderNumber = o.OrderNumber,
                     CreatedOn = o.CreatedOn,
                     StatusOrderId = o.StatusOrder.Id,
-                    AddressDelivery = new DeliveryAddressDTO
-                    {
-                        AddressId = o.AddressDelivery.Id,
-                        FirstName = o.AddressDelivery.FirstName,
-                        LastName = o.AddressDelivery.LastName,
-                        Country = o.AddressDelivery.Country,
-                        PostCode = o.AddressDelivery.PostCode,
-                        Town = o.AddressDelivery.Town,
-                        Address = o.AddressDelivery.Address,
-                        District = o.AddressDelivery.District,
-                        Email = o.AddressDelivery.Email,
-                        PhoneNumber = o.AddressDelivery.PhoneNumber,
-                        ShippingProvider = o.AddressDelivery.ShippingOffice.ShippingProvider.Name,
-                        OfficeCity = o.AddressDelivery.ShippingOffice.City,
-                        OfficeAddress = o.AddressDelivery.ShippingOffice.OfficeAddress,
-                        IsOffice = o.AddressDelivery.IsShippingToOffice
-                    },
+                    DeliveryMethodId = o.DeliveryMethod.Id,
                     AppUserId = o.AppUserId,
+                    AppUserName = o.AppUser != null ? o.AppUser.UserName : null,
                     DateShipping = o.DateShipping,
                     TrackingNumber = o.TrackingNumber,
-                    PaymentMethod = o.PaymentMethod.Name.NameBG,
+                    PaymentMethodId = o.PaymentMethod.Id,
                     IsPaid = o.IsPaid,
+                    NoteForDelivery = o.NoteForDelivery,
+                    ExchangeRate = o.ExchangeRate,
+                    Currency = o.Currency,
+                    ShippingPrice = o.ShippingPrice,
+                    Discount = o.Discount,
+                    SubTotal = o.ProductsOrders.Sum(p => p.Quantity * p.Price) - o.Discount,
+                    Total = o.ProductsOrders.Sum(p => p.Quantity * p.Price) - o.Discount + o.ShippingPrice,
+                    FirstName = o.FirstName,
+                    LastName = o.LastName,
+                    PhoneNumber = o.PhoneNumber,
+                    PostCode = o.PostCode,
+                    Address = o.Address,
+                    Town = o.Town,
+                    District = o.District,
+                    Country = o.Country,
+                    Email = o.Email,
+                    ShippingProviderName = o.ShippingProviderName,
+                    OfficeCity = o.ShippingOfficeCity,
+                    OfficeAddress = o.ShippingOfficeAddress,
                     ProductsOrders = o.ProductsOrders
                         .Select(po => new ProductsOrdersDTO
                         {
@@ -59,11 +62,15 @@ namespace LilsCareApp.Core.Services
                             Optional = po.Product.Optional.OptionalBG,
                         })
                         .ToList(),
-                    ShippingPrice = o.ShippingPrice,
-                    Discount = o.Discount
                 })
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
+
+            if (order != null)
+            {
+                order.SubTotal = Math.Round(order.SubTotal, 2);
+                order.Total = Math.Round(order.Total, 2);
+            }
 
             return order;
         }
@@ -86,7 +93,7 @@ namespace LilsCareApp.Core.Services
                 .Where(o => o.Id == id)
                 .FirstOrDefaultAsync();
 
-            if (order == null || string.IsNullOrEmpty(trackingNumber))
+            if (order == null)
             {
                 return;
             }
@@ -111,6 +118,26 @@ namespace LilsCareApp.Core.Services
             }
 
             order.StatusOrder = status;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task ChangeDeliveryMethodAsync(int id, int deliveryMethodId)
+        {
+            var order = await _context.Orders
+                .Where(o => o.Id == id)
+                .FirstOrDefaultAsync();
+
+            var deliveryMethod = await _context.DeliveryMethods
+                .Where(dm => dm.Id == deliveryMethodId)
+                .FirstOrDefaultAsync();
+
+            if (order == null || deliveryMethod == null)
+            {
+                return;
+            }
+
+            order.DeliveryMethod = deliveryMethod;
 
             await _context.SaveChangesAsync();
         }
@@ -161,8 +188,8 @@ namespace LilsCareApp.Core.Services
                 {
                     Product = product,
                     Quantity = 1,
-                    Price = product.Price,
-                    ImagePath = product.Images.OrderBy(im => im.ImageOrder).FirstOrDefault().ImagePath
+                    Price = Math.Round((product.Price / order.ExchangeRate), 2),
+                    ImagePath = product.Images?.OrderBy(im => im.ImageOrder).FirstOrDefault()?.ImagePath
                 });
             }
 
@@ -240,6 +267,52 @@ namespace LilsCareApp.Core.Services
             }
 
             order.Discount = discount;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddOfficeDeliveryAsync(AdminOrderDetailsDTO model)
+        {
+            var order = await _context.Orders
+                .Where(o => o.Id == model.Id)
+                .FirstOrDefaultAsync();
+
+            if (order == null)
+            {
+                return;
+            }
+
+            order.ShippingProviderName = model.ShippingProviderName;
+            order.ShippingOfficeCity = model.OfficeCity;
+            order.ShippingOfficeAddress = model.OfficeAddress;
+            order.FirstName = model.FirstName;
+            order.LastName = model.LastName;
+            order.PhoneNumber = model.PhoneNumber;
+            order.Email = model.Email;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddHomeDeliveryAsync(AdminOrderDetailsDTO model)
+        {
+            var order = await _context.Orders
+                .Where(o => o.Id == model.Id)
+                .FirstOrDefaultAsync();
+
+            if (order == null)
+            {
+                return;
+            }
+
+            order.FirstName = model.FirstName;
+            order.LastName = model.LastName;
+            order.Country = model.Country;
+            order.PostCode = model.PostCode;
+            order.Address = model.Address;
+            order.Town = model.Town;
+            order.District = model.District;
+            order.PhoneNumber = model.PhoneNumber;
+            order.Email = model.Email;
+
             await _context.SaveChangesAsync();
         }
     }

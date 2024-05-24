@@ -14,6 +14,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 NameEN = "Cash on delivery",
                 NameBG = "Плащане при доставка",
                 NameRO = "Plata la livrare",
+                PaymentMethodId = 1
             },
             new ()
             {
@@ -21,6 +22,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 NameEN = "With card",
                 NameBG = "С карта",
                 NameRO = "Cu cardul",
+                PaymentMethodId = 2
             },
             new ()
             {
@@ -28,6 +30,7 @@ namespace LilsCareApp.Infrastructure.Data.DataConfiguration
                 NameEN = "Bank transfer",
                 NameBG = "Банков превод",
                 NameRO = "Transfer bancar",
+                PaymentMethodId = 3
             }
         ];
 

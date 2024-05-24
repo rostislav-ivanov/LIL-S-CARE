@@ -39,7 +39,7 @@ namespace LilsCareApp.Core.Services
 
         public string GetLanguage()
         {
-            var language = _httpContextAccessor.HttpContext?.Request.Cookies[".AspNetCore.Culture"]?.Split('=').Last() ?? Default;
+            string language = _httpContextAccessor.HttpContext?.Request.Cookies[".AspNetCore.Culture"]?.Split('=').Last() ?? Default;
 
             return language;
         }

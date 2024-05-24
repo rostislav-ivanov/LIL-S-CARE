@@ -13,5 +13,8 @@ namespace LilsCareApp.Core.Contracts
         Task RemoveProductFromOrderAsync(int id, int productId);
         Task AddQuantityToProductAsync(int id, int productId, int quantity);
         Task EditDiscountAsync(int id, decimal discount);
+        Task AddOfficeDeliveryAsync(AdminOrderDetailsDTO model);
+        Task AddHomeDeliveryAsync(AdminOrderDetailsDTO model);
+        Task ChangeDeliveryMethodAsync(int id, int deliveryMethodId);
     }
 }

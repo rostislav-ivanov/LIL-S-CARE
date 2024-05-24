@@ -22,7 +22,8 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [MaxLength(NameMaxLength)]
         public required string NameRO { get; set; }
 
-        [Comment("Navigation Property to PaymentMethods")]
-        public IEnumerable<PaymentMethod> PaymentMethods { get; set; } = [];
+        public int PaymentMethodId { get; set; }
+
+        public PaymentMethod PaymentMethod { get; set; } = null!;
     }
 }

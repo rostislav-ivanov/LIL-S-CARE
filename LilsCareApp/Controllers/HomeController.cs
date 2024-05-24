@@ -152,6 +152,11 @@ namespace LilsCareApp.Controllers
                 return View("Error401");
             }
 
+            if (statusCode == 500)
+            {
+                return View("Error500");
+            }
+
             return View();
         }
     }

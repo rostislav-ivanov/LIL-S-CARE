@@ -127,7 +127,7 @@
     <value>Exit</value>
   </data>
   <data name="Free Delivery" xml:space="preserve">
-    <value>FREE DELIVERY OVER BGN 35</value>
+    <value>FREE DELIVERY OVER</value>
   </data>
   <data name="HOME" xml:space="preserve">
     <value>HOME</value>
@@ -152,5 +152,8 @@
   </data>
   <data name="PRODUCTS" xml:space="preserve">
     <value>PRODUCTS</value>
+  </data>
+  <data name="This is a demo version that shows how the site works." xml:space="preserve">
+    <value>This is a demo version that shows how the site works.</value>
   </data>
 </root>

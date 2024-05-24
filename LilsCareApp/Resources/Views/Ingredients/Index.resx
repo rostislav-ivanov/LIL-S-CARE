@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ABOUT THE INGREDIENTS" xml:space="preserve">
+    <value>ЗА СЪСТАВКИТЕ</value>
+  </data>
+  <data name="ALCOHOL-FREE. NOURISH, HYDRATE AND PROTECT" xml:space="preserve">
+    <value>БЕЗ АЛКОХОЛ. ПОДХРАНВАТ, ХИДРАТИРАТ И ЗАЩИТАВАТ</value>
+  </data>
+  <data name="ANTIOXIDANTS" xml:space="preserve">
+    <value>АНТИОКСИДАНТИ</value>
+  </data>
+  <data name="BOTANICAL EXTRACTS" xml:space="preserve">
+    <value>БОТАНИЧЕСКИ ЕКСТРАКТИ</value>
+  </data>
+  <data name="FROM BULGARIA OR BIO. AND SOME INGREDIENTS ARE BOTH!" xml:space="preserve">
+    <value>ОТ БЪЛГАРИЯ ИЛИ БИО. А НЯКОИ СЪСТАВКИ СА И ДВЕТЕ!</value>
+  </data>
+  <data name="GENTLE AND NATURAL" xml:space="preserve">
+    <value>НЕЖНИ И НАТУРАЛНИ</value>
+  </data>
+  <data name="HUMECTANTS" xml:space="preserve">
+    <value>ХУМЕКТАНТИ</value>
+  </data>
+  <data name="INGREDIENTS" xml:space="preserve">
+    <value>СЪСТАВКИ</value>
+  </data>
+  <data name="IT'S EASY!" xml:space="preserve">
+    <value>ЛЕСНО Е!</value>
+  </data>
+  <data name="MICELLAR WATER GREEN TEA" xml:space="preserve">
+    <value>МИЦЕЛАРНА ВОДА ЗЕЛЕН ЧАЙ</value>
+  </data>
+  <data name="MOISTURIZING ROSE CREAM" xml:space="preserve">
+    <value>ХИДРАТИРАЩ КРЕМ С ШИПКА</value>
+  </data>
+  <data name="NATURAL PRESERVATIVE" xml:space="preserve">
+    <value>НАТУРАЛЕН КОНСЕРВАНТ</value>
+  </data>
+  <data name="OILS" xml:space="preserve">
+    <value>МАСЛА</value>
+  </data>
+  <data name="ORIGIN" xml:space="preserve">
+    <value>ПРОИЗХОД</value>
+  </data>
+  <data name="ORIGIN AND ACTION ON THE SKIN AND THE PRODUCT" xml:space="preserve">
+    <value>ПРОИЗХОД И ДЕЙСТВИЕ ВЪРХУ КОЖАТА И ПРОДУКТА</value>
+  </data>
+  <data name="Potassium Sorbate, Sodium Benzoate, Benzyl Alcohol. Звучат страшно нали? Тези три състваки са едини от натуралните консерванти, позволени в натурални и био продуктите. Общо са по-малко от 1%. Важни са, защото предпазват от разваляне и развитието на бактерии, гъбички, дрожди и мухъли в продуктите. Използват се главно в продукти с вода като кремове, лосиони, емулсии и серуми." xml:space="preserve">
+    <value>Potassium Sorbate, Sodium Benzoate, Benzyl Alcohol. Звучат страшно нали? Тези три състваки са едини от натуралните консерванти, позволени в натурални и био продуктите. Общо са по-малко от 1%. Важни са, защото предпазват от разваляне и развитието на бактерии, гъбички, дрожди и мухъли в продуктите. Използват се главно в продукти с вода като кремове, лосиони, емулсии и серуми.</value>
+  </data>
+  <data name="SKIN CARE SHOULD BE AN EASY AND PLEASANT ROUTINE" xml:space="preserve">
+    <value>ГРИЖАТА ЗА КОЖАТА ТРЯБВА ДА Е ЛЕКА И ПРИЯТНА РУТИНА</value>
+  </data>
+  <data name="They are often glycerine extracts and have different effects depending on the plants and herbs from which they are extracted. For example, calendula soothes and is suitable for sensitive skin. Rosehip extract helps keep the skin young and supple. And green tea extract is rich in antioxidants. Whatever extract the products contain, they are always a great natural remedy." xml:space="preserve">
+    <value>Често са глицеринови екстракти и имат различен ефект в зависимист от растенията и билките от които са извлечени. На пример, невенът успокоява и е подходящ за чувствителна кожа. Екстрактът от шипка помага в поддържането на кожата млада и елстична. А екстрактът от зелен чай е богат на антиоксиданти. Какъвто и екстракт да съдържат продуктите, винаги са страхотен натурален лек.</value>
+  </data>
+  <data name="They attract water and help with &lt;strong&gt;hydration&lt;/strong&gt;. We use glycerin and hyaluronic acid of plant origin &lt;strong&gt;Glycerin&lt;/strong&gt; has a small molecule that acts in depth, and &lt;strong&gt;hyaluronic acid&lt;/strong&gt; acts on the surface of the skin. Together they help for good and complete hydration. Humectans are often water-soluble and are found in products such as creams and lotions." xml:space="preserve">
+    <value>Привличат водата и помагат за &lt;strong&gt;хидратацията&lt;/strong&gt;. Използваме глицерин и хиалуронова киселина с растителен произход &lt;strong&gt;Глицерина&lt;/strong&gt; има малка молекула, която действа в дълбочина, а &lt;strong&gt;хиалуроновата киселина&lt;/strong&gt; действа на повъхността на кожата. Заедно помагат за добрата и цялостна хидратация. Хумектаните често са водоразтворими и се намират в продукти като кремове и лосион</value>
+  </data>
+  <data name="They have many beneficial effects. In short, they slow down aging by protecting against oxidation and free radicals. Soothes skin and irritations and soothes cell damage. They stimulate healing and the production of collagen and elastin. All our products contain &lt;strong&gt;vitamin E&lt;/strong&gt; - an essential antioxidant. And our creams and lotions also contain &lt;strong&gt;niacinamide (vitamin B3)&lt;/strong&gt;, which also helps against pigmentation. Often botanical &lt;strong&gt;extracts&lt;/strong&gt; such as &lt;strong&gt;green tea&lt;/strong&gt; are also rich in antioxidants." xml:space="preserve">
+    <value>Имат много полезни ефекти. Накратко, забавят стареенето като предпазват от оксидация и свободни радикали. Успокояват кожата и раздразненията и намлят увреждането в клетките. Стимулират задравяването и производството на колаген и еластин. Всички наши продукти съдържат &lt;strong&gt;витамин Е&lt;/strong&gt; - есетвен антиоксидант. А кремовете и лосионите ни съдържат и &lt;strong&gt;ниацинамид (витамин B3)&lt;/strong&gt;, който помага и срещу пигментация. Често ботаническите &lt;strong&gt;екстракти&lt;/strong&gt; като от &lt;strong&gt;зелен чай&lt;/strong&gt; също са богати на антииоксиданти.</value>
+  </data>
+  <data name="We use natural oils from Bulgaria such as rosehip, apricot, almond and grape seed oils. As they can also be organic. And exotic oils such as coconut, cocoa and jojoba are naturally always of organic origin. In skin care, oils create a protective barrier that keeps water hydrated in the skin. In the summer, light and &quot;dry&quot; oils are suitable, which absorb quickly and are non-comedogenic, and in the dry and cold months, thicker and harder oils such as coconut and cocoa." xml:space="preserve">
+    <value>Използваме натурални масла от България като от шипка, кайсиеви ядки, бадемово и от гроздови семки. Като те могат да бъдат и био. А екзотичните масла като кокос, какако и жожоба естествено винаги са с био произход. В грижата за кожата маслата създават защитна бариера, която запазва водата хидратацията в кожата. Лятото са подходящи леки и "сухи" масла, които попиват бързо и са некомедогенни, а през сухите и студени месеци може по-плътни и твърди масла като кокос и какао.</value>
+  </data>
+</root>

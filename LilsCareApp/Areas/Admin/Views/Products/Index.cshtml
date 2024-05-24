@@ -156,7 +156,7 @@
                            asp-route-currentPage="@(Model.CurrentPage + 1)"><i class="fa-solid fa-arrow-right-long ms-3" style="font-size: 24px;"></i></a>
                     </div>
                     <!-- Pagination End -->
-                    <a asp-area="Admin" asp-controller="Details" asp-action="Add" 
+                    <a asp-area="Admin" asp-controller="ProductDetails" asp-action="Add" 
                        class="nav-link text-primary">
                         Добави продукт <i class="fa-regular fa-square-plus"></i>
                     </a>
@@ -186,13 +186,13 @@
                             <i class="fa-regular fa-eye-slash"></i>
                         }
                     </div>
-                    <div class="col-2">
+                    <div class="col-2" style="opacity:1")>
                         <div class="row">
-                            <a asp-area="Admin" asp-controller="Details" asp-action="Index" asp-route-id="@product.Id"
+                            <a asp-area="Admin" asp-controller="ProductDetails" asp-action="Index" asp-route-id="@product.Id"
                                class="nav-link text-warning">
                                 Редактирай <i class="fa fa-edit"></i>
                             </a>
-                            <a asp-area="Admin" asp-controller="Details" asp-action="Add" asp-route-id="@product.Id"
+                            <a asp-area="Admin" asp-controller="ProductDetails" asp-action="Add" asp-route-id="@product.Id"
                                class="nav-link text-primary mt-2">
                                 Вземи като шаблон <i class="fa-regular fa-clone"></i>
                             </a>
@@ -210,10 +210,13 @@
                                     Добави в магазина <i class="fa-regular fa-eye"></i>
                                 </a>
                             }
+                            @if(!product.IsOrdered)
+                            {
                             <a asp-area="Admin" asp-controller="Products" asp-action="Delete" asp-route-id="@product.Id"
                                class="nav-link text-danger mt-2">
                                 Изтриване <i class="fa fa-xmark"></i>
                             </a>
+                            }
                         </div>
                     </div>
                 </div>

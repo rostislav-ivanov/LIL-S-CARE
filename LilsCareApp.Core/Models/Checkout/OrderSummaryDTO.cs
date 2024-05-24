@@ -20,9 +20,9 @@
 
         public string? District { get; set; }
 
-        public string? Email { get; set; }
-
         public string? Country { get; set; }
+
+        public string? Email { get; set; }
 
         public bool IsShippingToOffice { get; set; }
 

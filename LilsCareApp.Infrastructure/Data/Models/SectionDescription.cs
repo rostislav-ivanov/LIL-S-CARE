@@ -21,7 +21,8 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [MaxLength(DescriptionMaxLength)]
         public required string DescriptionRO { get; set; }
 
-        [Comment("Navigation Property to Sections")]
-        public IEnumerable<Section> Sections { get; set; } = [];
+        public int SectionId { get; set; }
+
+        public Section Section { get; set; } = null!;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace LilsCareApp.Controllers
 {
-    public class ShippingReturnsController : BaseController
+    public class ShippingProviderController : Controller
     {
         public IActionResult Index()
         {
