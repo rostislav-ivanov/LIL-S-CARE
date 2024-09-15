@@ -10,7 +10,7 @@ namespace LilsCareApp.Infrastructure.Data.Models
     {
         [Required]
         [StringLength(UserNameMaxLength)]
-        public override required string UserName { get; set; }
+        public override string UserName { get; set; } = string.Empty;
 
         [Comment("First Name")]
         [MaxLength(FirstNameMaxLength)]
