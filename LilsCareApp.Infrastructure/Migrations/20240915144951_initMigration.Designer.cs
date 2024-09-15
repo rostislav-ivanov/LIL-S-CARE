@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LilsCareApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240508134713_02")]
-    partial class _02
+    [Migration("20240915144951_initMigration")]
+    partial class initMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -273,7 +273,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0d6a3434-f42e-41cc-8281-89ca7db0301c",
+                            ConcurrencyStamp = "9afa87fa-7299-48af-8adf-72938b752e3f",
                             Email = "test@softuni.bg",
                             EmailConfirmed = true,
                             FirstName = "Test",
@@ -281,9 +281,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "TEST@SOFTUNI.BG",
                             NormalizedUserName = "TEST@SOFTUNI.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAECIYML355j0jthwBipGVTtqlxhKG86wTgY5To9W+OmQLGETUtBlqOCp9VcKJ5Zz/FQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDeF+fqOh7Qmb/jlTv536QgNJ9NRNnIeivyG51U71lGfDJSGNKKJwJVr3nNq5fUsNQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9c15bc3b-da23-44da-aa40-00b5667f95d2",
+                            SecurityStamp = "897c1b6b-10d7-4b1a-af23-9cfb90984869",
                             TwoFactorEnabled = false,
                             UserName = "test@softuni.bg"
                         },
@@ -291,7 +291,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = "45fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6cd622c4-e272-4f8f-a30d-2c51d61db128",
+                            ConcurrencyStamp = "169f226f-df98-4500-abf9-b12b0fbd4eb5",
                             Email = "admin@mail.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -299,9 +299,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJYkAzeuU7jYhqkGD/sjctIZVGvRWPiNxAkdDXwLlYaD6+4sh2K3YCVFZRZLE0XEJQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMNmqw5z7ELKcL1K5reWbokUP4zcN+XB/U+CxaqFc1eEVkoANdpMBMFt7WXwOJXLlA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f9218e29-a12f-4d7b-b73b-aba8d135d770",
+                            SecurityStamp = "3d4b9dd1-84ea-42d6-8e6f-40412abf9e21",
                             TwoFactorEnabled = false,
                             UserName = "admin@mail.com"
                         });
@@ -1677,7 +1677,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             CodeId = 1,
                             Discount = 0.1m,
-                            ExpirationDate = new DateTime(2025, 5, 8, 13, 47, 9, 919, DateTimeKind.Utc).AddTicks(1960)
+                            ExpirationDate = new DateTime(2025, 9, 15, 14, 49, 50, 259, DateTimeKind.Utc).AddTicks(4417)
                         },
                         new
                         {
@@ -1685,7 +1685,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             CodeId = 2,
                             Discount = 0.2m,
-                            ExpirationDate = new DateTime(2025, 5, 8, 13, 47, 9, 919, DateTimeKind.Utc).AddTicks(1973)
+                            ExpirationDate = new DateTime(2025, 9, 15, 14, 49, 50, 259, DateTimeKind.Utc).AddTicks(4431)
                         });
                 });
 
@@ -1785,7 +1785,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 2,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 5, 8, 16, 47, 9, 919, DateTimeKind.Local).AddTicks(1064),
+                            CreatedOn = new DateTime(2024, 9, 15, 17, 49, 50, 259, DateTimeKind.Local).AddTicks(472),
                             Rating = 4,
                             Title = "Great product"
                         },
@@ -1794,7 +1794,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 3,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 5, 8, 16, 47, 9, 919, DateTimeKind.Local).AddTicks(1296),
+                            CreatedOn = new DateTime(2024, 9, 15, 17, 49, 50, 259, DateTimeKind.Local).AddTicks(530),
                             Rating = 3,
                             Title = "Great product"
                         },
@@ -1803,7 +1803,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 4,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTime(2024, 5, 8, 16, 47, 9, 919, DateTimeKind.Local).AddTicks(1301),
+                            CreatedOn = new DateTime(2024, 9, 15, 17, 49, 50, 259, DateTimeKind.Local).AddTicks(533),
                             Rating = 3,
                             Title = "Great product"
                         });
