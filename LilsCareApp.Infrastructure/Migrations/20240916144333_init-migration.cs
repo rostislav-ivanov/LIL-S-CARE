@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LilsCareApp.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class initMigration : Migration
+    public partial class initmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -883,8 +883,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "ImagePath", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "45fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "285956b2-7c78-45c8-b008-99d37588d945", "admin@mail.com", true, "Admin", null, "Adminov", false, null, "ADMIN@MAIL.COM", "ADMIN@MAIL.COM", "AQAAAAIAAYagAAAAEKLiO1b2NXoOLdQOoMeG4mvOVbeX9GQEYQucYTgZlWx07a4NqQT7bMwO7yAWJN71CA==", null, false, "9bc11cc7-f690-4144-a94c-018199fe260c", false, "admin@mail.com" },
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "4fac56d5-72c6-4515-bb39-3f820c73efc4", "test@softuni.bg", true, "Test", null, "Testov", false, null, "TEST@SOFTUNI.BG", "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAENJoDKXybh9EqqfOgugm7ksP7t/zKy5kUwae4TF0M3h3edsyTwiwAvMUCf/DgPLnGg==", null, false, "68d78b47-b3d1-49aa-937c-49d993345c09", false, "test@softuni.bg" }
+                    { "45fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "bb2ad863-1532-4f8c-9daa-491998ca9125", "admin@mail.com", true, "Admin", null, "Adminov", false, null, "ADMIN@MAIL.COM", "ADMIN@MAIL.COM", "AQAAAAIAAYagAAAAEGaJJDYAh9/g/81DWBEh/c++JwXKHeK7V2mrbEHWfhdNrXrudHYpfjfLcnytJ7aTdw==", null, false, "9e0943b9-6037-4fe3-aae2-9958c6bb8f22", false, "admin@mail.com" },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "2ffc5988-667f-461b-bdb7-21303d8ed59c", "test@softuni.bg", true, "Test", null, "Testov", false, null, "TEST@SOFTUNI.BG", "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAEEyTTCfSis+4AxI8fNjLBDASeK/BpFm2f4AmFWVRkgV3LMPSCZb/2jk1EfFT912gNQ==", null, false, "9bd74be3-e6a9-447d-909c-e3a2dedb09e0", false, "test@softuni.bg" }
                 });
 
             migrationBuilder.InsertData(
@@ -1115,8 +1115,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "Id", "AppUserId", "AppliedDate", "CodeId", "Discount", "ExpirationDate" },
                 values: new object[,]
                 {
-                    { 1, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, 1, 0.1m, new DateTimeOffset(new DateTime(2025, 9, 15, 15, 49, 42, 991, DateTimeKind.Unspecified).AddTicks(44), new TimeSpan(0, 0, 0, 0, 0)) },
-                    { 2, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, 2, 0.2m, new DateTimeOffset(new DateTime(2025, 9, 15, 15, 49, 42, 991, DateTimeKind.Unspecified).AddTicks(57), new TimeSpan(0, 0, 0, 0, 0)) }
+                    { 1, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, 1, 0.1m, new DateTimeOffset(new DateTime(2025, 9, 16, 14, 43, 31, 999, DateTimeKind.Unspecified).AddTicks(136), new TimeSpan(0, 0, 0, 0, 0)) },
+                    { 2, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, 2, 0.2m, new DateTimeOffset(new DateTime(2025, 9, 16, 14, 43, 31, 999, DateTimeKind.Unspecified).AddTicks(150), new TimeSpan(0, 0, 0, 0, 0)) }
                 });
 
             migrationBuilder.InsertData(
@@ -1232,9 +1232,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "AuthorId", "ProductId", "Comment", "CreatedOn", "Rating", "Title" },
                 values: new object[,]
                 {
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 2, "Great product, I love it!", new DateTimeOffset(new DateTime(2024, 9, 15, 18, 49, 42, 990, DateTimeKind.Unspecified).AddTicks(7516), new TimeSpan(0, 3, 0, 0, 0)), 4, "Great product" },
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 3, "Great product, I love it!", new DateTimeOffset(new DateTime(2024, 9, 15, 18, 49, 42, 990, DateTimeKind.Unspecified).AddTicks(7615), new TimeSpan(0, 3, 0, 0, 0)), 3, "Great product" },
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 4, "Great product, I love it!", new DateTimeOffset(new DateTime(2024, 9, 15, 18, 49, 42, 990, DateTimeKind.Unspecified).AddTicks(7621), new TimeSpan(0, 3, 0, 0, 0)), 3, "Great product" }
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 2, "Great product, I love it!", new DateTimeOffset(new DateTime(2024, 9, 16, 17, 43, 31, 998, DateTimeKind.Unspecified).AddTicks(9206), new TimeSpan(0, 3, 0, 0, 0)), 4, "Great product" },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 3, "Great product, I love it!", new DateTimeOffset(new DateTime(2024, 9, 16, 17, 43, 31, 998, DateTimeKind.Unspecified).AddTicks(9307), new TimeSpan(0, 3, 0, 0, 0)), 3, "Great product" },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 4, "Great product, I love it!", new DateTimeOffset(new DateTime(2024, 9, 16, 17, 43, 31, 998, DateTimeKind.Unspecified).AddTicks(9314), new TimeSpan(0, 3, 0, 0, 0)), 3, "Great product" }
                 });
 
             migrationBuilder.InsertData(
