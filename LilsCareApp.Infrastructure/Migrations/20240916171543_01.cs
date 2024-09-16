@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LilsCareApp.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class initmigration : Migration
+    public partial class _01 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -162,8 +162,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     NameEN = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "The promo code name in English"),
                     NameBG = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "The promo code name in Bulgarian"),
-                    NameRO = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "The promo code name in Romanian"),
-                    PromoCodeId = table.Column<int>(type: "integer", nullable: false)
+                    NameRO = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "The promo code name in Romanian")
                 },
                 constraints: table =>
                 {
@@ -883,8 +882,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "ImagePath", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "45fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "bb2ad863-1532-4f8c-9daa-491998ca9125", "admin@mail.com", true, "Admin", null, "Adminov", false, null, "ADMIN@MAIL.COM", "ADMIN@MAIL.COM", "AQAAAAIAAYagAAAAEGaJJDYAh9/g/81DWBEh/c++JwXKHeK7V2mrbEHWfhdNrXrudHYpfjfLcnytJ7aTdw==", null, false, "9e0943b9-6037-4fe3-aae2-9958c6bb8f22", false, "admin@mail.com" },
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "2ffc5988-667f-461b-bdb7-21303d8ed59c", "test@softuni.bg", true, "Test", null, "Testov", false, null, "TEST@SOFTUNI.BG", "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAEEyTTCfSis+4AxI8fNjLBDASeK/BpFm2f4AmFWVRkgV3LMPSCZb/2jk1EfFT912gNQ==", null, false, "9bd74be3-e6a9-447d-909c-e3a2dedb09e0", false, "test@softuni.bg" }
+                    { "45fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "286d36fb-8b57-4038-bce1-c847485cfcc4", "admin@mail.com", true, "Admin", null, "Adminov", false, null, "ADMIN@MAIL.COM", "ADMIN@MAIL.COM", "AQAAAAIAAYagAAAAEAS3OvSHFPPkOh5NN/xg5NKy7a4JMwIMLbDpgoiT73+CRX7aD+bapXB5kqYYVTdhGg==", null, false, "91280fc0-1df8-4d9e-a909-50e9f6d6830d", false, "admin@mail.com" },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "625e2ba0-8807-4d14-bb3c-255f7874cfd8", "test@softuni.bg", true, "Test", null, "Testov", false, null, "TEST@SOFTUNI.BG", "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAEP4rY+bBdmOAJS9q/Oz7f2KZQqTqxqxaZl/g61MHTGv0tS+EuKZyKxoJZ0TeqrOAXw==", null, false, "15053052-99b7-48ce-a084-49a303b3e8f1", false, "test@softuni.bg" }
                 });
 
             migrationBuilder.InsertData(
@@ -948,11 +947,11 @@ namespace LilsCareApp.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "PromoCodeNames",
-                columns: new[] { "Id", "NameBG", "NameEN", "NameRO", "PromoCodeId" },
+                columns: new[] { "Id", "NameBG", "NameEN", "NameRO" },
                 values: new object[,]
                 {
-                    { 1, "-10 % за регистрация", "-10 % for registration", "-10 % pentru inregistrare", 1 },
-                    { 2, "-20 % отстъпка", "-20 % discount", "-20 % reducere", 2 }
+                    { 1, "-10 % за регистрация", "-10 % for registration", "-10 % pentru inregistrare" },
+                    { 2, "-20 % отстъпка", "-20 % discount", "-20 % reducere" }
                 });
 
             migrationBuilder.InsertData(
@@ -1115,8 +1114,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "Id", "AppUserId", "AppliedDate", "CodeId", "Discount", "ExpirationDate" },
                 values: new object[,]
                 {
-                    { 1, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, 1, 0.1m, new DateTimeOffset(new DateTime(2025, 9, 16, 14, 43, 31, 999, DateTimeKind.Unspecified).AddTicks(136), new TimeSpan(0, 0, 0, 0, 0)) },
-                    { 2, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, 2, 0.2m, new DateTimeOffset(new DateTime(2025, 9, 16, 14, 43, 31, 999, DateTimeKind.Unspecified).AddTicks(150), new TimeSpan(0, 0, 0, 0, 0)) }
+                    { 1, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, 1, 0.1m, new DateTimeOffset(new DateTime(2025, 9, 16, 17, 15, 41, 696, DateTimeKind.Unspecified).AddTicks(6637), new TimeSpan(0, 0, 0, 0, 0)) },
+                    { 2, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, 2, 0.2m, new DateTimeOffset(new DateTime(2025, 9, 16, 17, 15, 41, 696, DateTimeKind.Unspecified).AddTicks(6647), new TimeSpan(0, 0, 0, 0, 0)) }
                 });
 
             migrationBuilder.InsertData(
@@ -1232,9 +1231,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "AuthorId", "ProductId", "Comment", "CreatedOn", "Rating", "Title" },
                 values: new object[,]
                 {
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 2, "Great product, I love it!", new DateTimeOffset(new DateTime(2024, 9, 16, 17, 43, 31, 998, DateTimeKind.Unspecified).AddTicks(9206), new TimeSpan(0, 3, 0, 0, 0)), 4, "Great product" },
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 3, "Great product, I love it!", new DateTimeOffset(new DateTime(2024, 9, 16, 17, 43, 31, 998, DateTimeKind.Unspecified).AddTicks(9307), new TimeSpan(0, 3, 0, 0, 0)), 3, "Great product" },
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 4, "Great product, I love it!", new DateTimeOffset(new DateTime(2024, 9, 16, 17, 43, 31, 998, DateTimeKind.Unspecified).AddTicks(9314), new TimeSpan(0, 3, 0, 0, 0)), 3, "Great product" }
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 2, "Great product, I love it!", new DateTimeOffset(new DateTime(2024, 9, 16, 20, 15, 41, 696, DateTimeKind.Unspecified).AddTicks(3630), new TimeSpan(0, 3, 0, 0, 0)), 4, "Great product" },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 3, "Great product, I love it!", new DateTimeOffset(new DateTime(2024, 9, 16, 20, 15, 41, 696, DateTimeKind.Unspecified).AddTicks(3727), new TimeSpan(0, 3, 0, 0, 0)), 3, "Great product" },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 4, "Great product, I love it!", new DateTimeOffset(new DateTime(2024, 9, 16, 20, 15, 41, 696, DateTimeKind.Unspecified).AddTicks(3733), new TimeSpan(0, 3, 0, 0, 0)), 3, "Great product" }
                 });
 
             migrationBuilder.InsertData(
@@ -1456,8 +1455,7 @@ namespace LilsCareApp.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_PromoCodes_CodeId",
                 table: "PromoCodes",
-                column: "CodeId",
-                unique: true);
+                column: "CodeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_AuthorId",
