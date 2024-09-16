@@ -22,8 +22,8 @@ namespace LilsCareApp.Infrastructure.Data.Models
         [MaxLength(NameMaxLength)]
         public required string NameRO { get; set; }
 
-        public int PromoCodeId { get; set; }
+        //public int PromoCodeId { get; set; }
 
-        public PromoCode PromoCode { get; set; } = null!;
+        //public PromoCode PromoCode { get; set; } = null!;
     }
 }

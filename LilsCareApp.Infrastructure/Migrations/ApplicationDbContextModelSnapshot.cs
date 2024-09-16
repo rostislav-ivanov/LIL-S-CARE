@@ -269,7 +269,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4fac56d5-72c6-4515-bb39-3f820c73efc4",
+                            ConcurrencyStamp = "625e2ba0-8807-4d14-bb3c-255f7874cfd8",
                             Email = "test@softuni.bg",
                             EmailConfirmed = true,
                             FirstName = "Test",
@@ -277,9 +277,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "TEST@SOFTUNI.BG",
                             NormalizedUserName = "TEST@SOFTUNI.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAENJoDKXybh9EqqfOgugm7ksP7t/zKy5kUwae4TF0M3h3edsyTwiwAvMUCf/DgPLnGg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEP4rY+bBdmOAJS9q/Oz7f2KZQqTqxqxaZl/g61MHTGv0tS+EuKZyKxoJZ0TeqrOAXw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "68d78b47-b3d1-49aa-937c-49d993345c09",
+                            SecurityStamp = "15053052-99b7-48ce-a084-49a303b3e8f1",
                             TwoFactorEnabled = false,
                             UserName = "test@softuni.bg"
                         },
@@ -287,7 +287,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = "45fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "285956b2-7c78-45c8-b008-99d37588d945",
+                            ConcurrencyStamp = "286d36fb-8b57-4038-bce1-c847485cfcc4",
                             Email = "admin@mail.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -295,9 +295,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKLiO1b2NXoOLdQOoMeG4mvOVbeX9GQEYQucYTgZlWx07a4NqQT7bMwO7yAWJN71CA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAS3OvSHFPPkOh5NN/xg5NKy7a4JMwIMLbDpgoiT73+CRX7aD+bapXB5kqYYVTdhGg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9bc11cc7-f690-4144-a94c-018199fe260c",
+                            SecurityStamp = "91280fc0-1df8-4d9e-a909-50e9f6d6830d",
                             TwoFactorEnabled = false,
                             UserName = "admin@mail.com"
                         });
@@ -1657,8 +1657,7 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.HasIndex("CodeId")
-                        .IsUnique();
+                    b.HasIndex("CodeId");
 
                     b.ToTable("PromoCodes", t =>
                         {
@@ -1672,7 +1671,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             CodeId = 1,
                             Discount = 0.1m,
-                            ExpirationDate = new DateTimeOffset(new DateTime(2025, 9, 15, 15, 49, 42, 991, DateTimeKind.Unspecified).AddTicks(44), new TimeSpan(0, 0, 0, 0, 0))
+                            ExpirationDate = new DateTimeOffset(new DateTime(2025, 9, 16, 17, 15, 41, 696, DateTimeKind.Unspecified).AddTicks(6637), new TimeSpan(0, 0, 0, 0, 0))
                         },
                         new
                         {
@@ -1680,7 +1679,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             CodeId = 2,
                             Discount = 0.2m,
-                            ExpirationDate = new DateTimeOffset(new DateTime(2025, 9, 15, 15, 49, 42, 991, DateTimeKind.Unspecified).AddTicks(57), new TimeSpan(0, 0, 0, 0, 0))
+                            ExpirationDate = new DateTimeOffset(new DateTime(2025, 9, 16, 17, 15, 41, 696, DateTimeKind.Unspecified).AddTicks(6647), new TimeSpan(0, 0, 0, 0, 0))
                         });
                 });
 
@@ -1711,9 +1710,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasColumnType("character varying(100)")
                         .HasComment("The promo code name in Romanian");
 
-                    b.Property<int>("PromoCodeId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.ToTable("PromoCodeNames");
@@ -1724,16 +1720,14 @@ namespace LilsCareApp.Infrastructure.Migrations
                             Id = 1,
                             NameBG = "-10 % за регистрация",
                             NameEN = "-10 % for registration",
-                            NameRO = "-10 % pentru inregistrare",
-                            PromoCodeId = 1
+                            NameRO = "-10 % pentru inregistrare"
                         },
                         new
                         {
                             Id = 2,
                             NameBG = "-20 % отстъпка",
                             NameEN = "-20 % discount",
-                            NameRO = "-20 % reducere",
-                            PromoCodeId = 2
+                            NameRO = "-20 % reducere"
                         });
                 });
 
@@ -1780,7 +1774,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 2,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTimeOffset(new DateTime(2024, 9, 15, 18, 49, 42, 990, DateTimeKind.Unspecified).AddTicks(7516), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedOn = new DateTimeOffset(new DateTime(2024, 9, 16, 20, 15, 41, 696, DateTimeKind.Unspecified).AddTicks(3630), new TimeSpan(0, 3, 0, 0, 0)),
                             Rating = 4,
                             Title = "Great product"
                         },
@@ -1789,7 +1783,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 3,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTimeOffset(new DateTime(2024, 9, 15, 18, 49, 42, 990, DateTimeKind.Unspecified).AddTicks(7615), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedOn = new DateTimeOffset(new DateTime(2024, 9, 16, 20, 15, 41, 696, DateTimeKind.Unspecified).AddTicks(3727), new TimeSpan(0, 3, 0, 0, 0)),
                             Rating = 3,
                             Title = "Great product"
                         },
@@ -1798,7 +1792,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 4,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTimeOffset(new DateTime(2024, 9, 15, 18, 49, 42, 990, DateTimeKind.Unspecified).AddTicks(7621), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedOn = new DateTimeOffset(new DateTime(2024, 9, 16, 20, 15, 41, 696, DateTimeKind.Unspecified).AddTicks(3733), new TimeSpan(0, 3, 0, 0, 0)),
                             Rating = 3,
                             Title = "Great product"
                         });
@@ -3475,8 +3469,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("LilsCareApp.Infrastructure.Data.Models.PromoCodeName", "Code")
-                        .WithOne("PromoCode")
-                        .HasForeignKey("LilsCareApp.Infrastructure.Data.Models.PromoCode", "CodeId")
+                        .WithMany()
+                        .HasForeignKey("CodeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -3716,12 +3710,6 @@ namespace LilsCareApp.Infrastructure.Migrations
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.PromoCode", b =>
                 {
                     b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.PromoCodeName", b =>
-                {
-                    b.Navigation("PromoCode")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Review", b =>
