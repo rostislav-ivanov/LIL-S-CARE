@@ -1,0 +1,60 @@
+version: "3.8"
+services:
+  postgres:
+    container_name: postgres
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+    ports:
+      - 5432:5432
+    networks:
+      - lils_care_network
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+    image: postgres
+    restart: always
+
+  lils-care-app:
+    container_name: lils-care-app
+    image: lils-care-app:latest
+    depends_on:
+      - postgres
+    ports:
+      - 7038:8080
+    restart: always
+    networks:
+      - lils_care_network
+    environment:
+      ConnectionStrings__DefaultConnection: "${ConnectionStrings__DefaultConnection}"
+      ConnectionStrings__SendGridKey: "${ConnectionStrings__SendGridKey}"
+      EmailAdministrator: "${EmailAdministrator}"
+      GoogleAuth__ClientId: "${GoogleAuth__ClientId}"
+      GoogleAuth__ClientSecret: "${GoogleAuth__ClientSecret}"
+      FacebookAuth__AppId: "${FacebookAuth__AppId}"
+      FacebookAuth__AppSecret: "${FacebookAuth__AppSecret}"
+    command: >
+      sh -c "
+      # Wait for the Postgres container to be ready
+      while !</dev/tcp/postgres/5432; do sleep 1; done;
+
+      # Run migrations
+      dotnet ef database update;
+
+      # Start the application
+      dotnet LilsCareApp.dll"
+
+volumes:
+  postgresdata:
+
+networks:
+  lils_care_network:
+# docker network create lils_care_network
+# docker volume create postgresdata
+# docker build . -f ./LilsCareApp/Dockerfile -t lils-care-app:latest
+# Command to run the docker-compose file
+# docker-compose up -d
+# update postgres database LilsCareDB (only for the first time)
+# docker-compose down
+# docker-compose down --volumes --rmi all
+
