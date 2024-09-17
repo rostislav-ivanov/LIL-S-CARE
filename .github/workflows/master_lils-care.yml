@@ -62,3 +62,4 @@ jobs:
           app-name: "lils-care"
           slot-name: "Production"
           package: .
+          enable-logging: true
