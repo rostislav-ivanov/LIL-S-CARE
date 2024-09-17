@@ -366,3 +366,5 @@ FodyWeavers.xsd
 /LilsCareApp.Infrastructure/Migrations/20240321060237_01.cs
 /LilsCareApp.Infrastructure/Migrations/20240321060237_01.Designer.cs
 /LilsCareApp.Infrastructure/Migrations/20240302081532_InitialMigration.cs
+
+.env
