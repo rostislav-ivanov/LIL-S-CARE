@@ -12,6 +12,7 @@ namespace LilsCareApp.Core.Services
     {
         private readonly ILogger _logger;
         private readonly IConfiguration _configuration;
+        private readonly string? _sendGridKey;
 
         public EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor,
                            ILogger<EmailSender> logger,
@@ -20,17 +21,18 @@ namespace LilsCareApp.Core.Services
             Options = optionsAccessor.Value;
             _logger = logger;
             _configuration = configuration;
+            _sendGridKey = configuration.GetConnectionString("SendGridKey");
         }
 
         public AuthMessageSenderOptions Options { get; }
 
         public async Task SendEmailAsync(string toEmail, string subject, string message)
         {
-            if (string.IsNullOrEmpty(Options.SendGridKey))
+            if (string.IsNullOrEmpty(_sendGridKey))
             {
                 throw new Exception("Null SendGridKey");
             }
-            await Execute(Options.SendGridKey, subject, message, toEmail);
+            await Execute(_sendGridKey, subject, message, toEmail);
         }
 
         public async Task Execute(string apiKey, string subject, string message, string toEmail)
