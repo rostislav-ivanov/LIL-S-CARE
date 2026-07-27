@@ -20,7 +20,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(connectionString, options =>
+                options.UseSqlServer(connectionString, options =>
                 {
                     options.EnableRetryOnFailure();
                 }));
@@ -41,7 +41,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IHttpContextManager, HttpContextManager>();
             services.AddScoped<IGuestService, GuestService>();
             services.AddScoped<IFileService, FileService>();
-            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<IEmailSender, EmailSender>();
             services.AddScoped<IShippingProviderService, ShippingProviderService>();
 
             services.AddHttpContextAccessor();
@@ -82,13 +82,17 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddAuthentication()
             .AddFacebook(options =>
             {
-                options.AppId = configuration.GetSection("FacebookAuth:AppId").Value;
-                options.AppSecret = configuration.GetSection("FacebookAuth:AppSecret").Value;
+                options.AppId = configuration.GetValue<string>("FacebookAuth:AppId") ?? throw new InvalidOperationException
+                 ("Facebook AppId is not found in appsettings.json");
+                options.AppSecret = configuration.GetValue<string>("FacebookAuth:AppSecret") ?? throw new InvalidOperationException
+                 ("Facebook AppSecret is not found in appsettings.json");
             })
             .AddGoogle(options =>
             {
-                options.ClientId = configuration.GetSection("GoogleAuth:ClientId").Value;
-                options.ClientSecret = configuration.GetSection("GoogleAuth:ClientSecret").Value;
+                options.ClientId = configuration.GetValue<string>("GoogleAuth:ClientId") ?? throw new InvalidOperationException
+                    ("Google ClientId is not found in appsettings.json");
+                options.ClientSecret = configuration.GetValue<string>("GoogleAuth:ClientSecret") ?? throw new InvalidOperationException
+                    ("Google ClientSecret is not found in appsettings.json");
             });
 
             return services;

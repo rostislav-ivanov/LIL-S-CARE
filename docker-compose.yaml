@@ -27,7 +27,7 @@ services:
       - lils_care_network
     environment:
       ConnectionStrings__DefaultConnection: "${ConnectionStrings__DefaultConnection}"
-      ConnectionStrings__SendGridKey: "${ConnectionStrings__SendGridKey}"
+      AuthMessageSenderOptions__SendGridKey: "${ConnectionStrings__SendGridKey}"
       EmailAdministrator: "${EmailAdministrator}"
       GoogleAuth__ClientId: "${GoogleAuth__ClientId}"
       GoogleAuth__ClientSecret: "${GoogleAuth__ClientSecret}"

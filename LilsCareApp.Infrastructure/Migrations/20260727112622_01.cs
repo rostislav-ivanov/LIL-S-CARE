@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -14,877 +13,29 @@ namespace LilsCareApp.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "AppConfigs",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    FreeShipping = table.Column<decimal>(type: "numeric(18,2)", nullable: false, comment: "The price at which the shipping is free."),
-                    AddressDeliveryPrice = table.Column<decimal>(type: "numeric(18,2)", nullable: false, comment: "The price at which the delivery to an address is paid."),
-                    ExchangeRateEUR = table.Column<decimal>(type: "numeric(18,4)", nullable: false, comment: "The exchange rate of the euro."),
-                    ExchangeRateBGN = table.Column<decimal>(type: "numeric(18,4)", nullable: false, comment: "The exchange rate of the leva."),
-                    ExchangeRateRON = table.Column<decimal>(type: "numeric(18,4)", nullable: false, comment: "The exchange rate of the lei.")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AppConfigs", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetRoles",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "text", nullable: false),
-                    Name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "text", nullable: false),
-                    UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
-                    FirstName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true, comment: "First Name"),
-                    LastName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true, comment: "Last Name"),
-                    ImagePath = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true, comment: "The image of user"),
-                    NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "boolean", nullable: false),
-                    PasswordHash = table.Column<string>(type: "text", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "text", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "text", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "boolean", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "boolean", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "boolean", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                },
-                comment: "App User");
-
-            migrationBuilder.CreateTable(
-                name: "CategoryNames",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    NameEN = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "The category's name in English"),
-                    NameBG = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "The category's name in Bulgarian"),
-                    NameRO = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "The category's name in Romanian"),
-                    CategoryId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CategoryNames", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DeliveryNames",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false, comment: "The delivery name Id")
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    NameEN = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "The delivery name in English"),
-                    NameBG = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "The delivery name in Bulgarian"),
-                    NameRO = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "The delivery name in Romanian"),
-                    DeliveryMethodId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DeliveryNames", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PaymentNames",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false, comment: "Payment name id")
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    NameEN = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "The payment name in English"),
-                    NameBG = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "The payment name in Bulgarian"),
-                    NameRO = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "The payment name in Romanian"),
-                    PaymentMethodId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PaymentNames", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProductNames",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    NameEN = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "The product's name in English"),
-                    NameBG = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "The product's name in Bulgarian"),
-                    NameRO = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "The product's name in Romanian"),
-                    ProductId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductNames", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProductOptionals",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    OptionalEN = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false, comment: "The product's optional in English"),
-                    OptionalBG = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false, comment: "The product's optional in Bulgarian"),
-                    OptionalRO = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false, comment: "The product's optional in Romanian"),
-                    ProductId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductOptionals", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PromoCodeNames",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false, comment: "Promo code name id")
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    NameEN = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "The promo code name in English"),
-                    NameBG = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "The promo code name in Bulgarian"),
-                    NameRO = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "The promo code name in Romanian")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PromoCodeNames", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SectionDescriptions",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    DescriptionEN = table.Column<string>(type: "character varying(1500)", maxLength: 1500, nullable: false, comment: "The section's description in English"),
-                    DescriptionBG = table.Column<string>(type: "character varying(1500)", maxLength: 1500, nullable: false, comment: "The section's description in Bulgarian"),
-                    DescriptionRO = table.Column<string>(type: "character varying(1500)", maxLength: 1500, nullable: false, comment: "The section's description in Romanian"),
-                    SectionId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SectionDescriptions", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SectionTitles",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    TitleEN = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false, comment: "The section's title in English"),
-                    TitleBG = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false, comment: "The section's title in Bulgarian"),
-                    TitleRO = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false, comment: "The section's title in Romanian"),
-                    SectionId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SectionTitles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ShippingProviders",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false, comment: "Unique identifier of shipping provider")
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "Name of shipping provider")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ShippingProviders", x => x.Id);
-                },
-                comment: "Shipping providers");
-
-            migrationBuilder.CreateTable(
-                name: "StatusOrderNames",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false, comment: "Status order name id")
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    NameEN = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "The status order name in English"),
-                    NameBG = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "The status order name in Bulgarian"),
-                    NameRO = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "The status order name in Romanian"),
-                    StatusOrderId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StatusOrderNames", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetRoleClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    RoleId = table.Column<string>(type: "text", nullable: false),
-                    ClaimType = table.Column<string>(type: "text", nullable: true),
-                    ClaimValue = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserId = table.Column<string>(type: "text", nullable: false),
-                    ClaimType = table.Column<string>(type: "text", nullable: true),
-                    ClaimValue = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserLogins",
-                columns: table => new
-                {
-                    LoginProvider = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
-                    ProviderDisplayName = table.Column<string>(type: "text", nullable: true),
-                    UserId = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserRoles",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(type: "text", nullable: false),
-                    RoleId = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserTokens",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(type: "text", nullable: false),
-                    LoginProvider = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
-                    Value = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MessagesFromClients",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    FirstName = table.Column<string>(type: "text", nullable: false),
-                    LastName = table.Column<string>(type: "text", nullable: true),
-                    EmailForResponse = table.Column<string>(type: "text", nullable: false),
-                    Message = table.Column<string>(type: "text", nullable: false),
-                    DateSent = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    AppUserId = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MessagesFromClients", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_MessagesFromClients_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Subscribers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Email = table.Column<string>(type: "text", nullable: false),
-                    DateAdded = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    AppUserId = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Subscribers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Subscribers_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Categories",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false, comment: "The category's primary key")
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    NameId = table.Column<int>(type: "integer", nullable: false, comment: "The category's name Id")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Categories_CategoryNames_NameId",
-                        column: x => x.NameId,
-                        principalTable: "CategoryNames",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                },
-                comment: "The category of the product");
-
-            migrationBuilder.CreateTable(
-                name: "DeliveryMethods",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false, comment: "Delivery method id")
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    NameId = table.Column<int>(type: "integer", nullable: false, comment: "Delivery method name Id")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DeliveryMethods", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DeliveryMethods_DeliveryNames_NameId",
-                        column: x => x.NameId,
-                        principalTable: "DeliveryNames",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PaymentMethods",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false, comment: "Payment method id")
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    NameId = table.Column<int>(type: "integer", nullable: false, comment: "Payment method name Id")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PaymentMethods", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PaymentMethods_PaymentNames_NameId",
-                        column: x => x.NameId,
-                        principalTable: "PaymentNames",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                },
-                comment: "Payment methods");
-
-            migrationBuilder.CreateTable(
-                name: "Products",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false, comment: "The product's primary key")
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    NameId = table.Column<int>(type: "integer", nullable: false, comment: "The product's name Id"),
-                    Price = table.Column<decimal>(type: "numeric(18,2)", nullable: false, comment: "The product's price"),
-                    Quantity = table.Column<int>(type: "integer", nullable: false, comment: "The product's quantity"),
-                    OptionalId = table.Column<int>(type: "integer", nullable: false, comment: "The product's optional Id"),
-                    IsShow = table.Column<bool>(type: "boolean", nullable: false, comment: "Is the product show on online store")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Products_ProductNames_NameId",
-                        column: x => x.NameId,
-                        principalTable: "ProductNames",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Products_ProductOptionals_OptionalId",
-                        column: x => x.OptionalId,
-                        principalTable: "ProductOptionals",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                },
-                comment: "The product model");
-
-            migrationBuilder.CreateTable(
-                name: "PromoCodes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false, comment: "Promo Code Id")
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    CodeId = table.Column<int>(type: "integer", nullable: false, comment: "Promo Code Id"),
-                    Discount = table.Column<decimal>(type: "numeric(18,2)", nullable: false, comment: "Discount of Total Price Order"),
-                    ExpirationDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, comment: "Expiration Date of Promo Code"),
-                    AppliedDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    AppUserId = table.Column<string>(type: "text", nullable: false, comment: "Owner of Promo Code")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PromoCodes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PromoCodes_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PromoCodes_PromoCodeNames_CodeId",
-                        column: x => x.CodeId,
-                        principalTable: "PromoCodeNames",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                },
-                comment: "Promo Code for one User");
-
-            migrationBuilder.CreateTable(
-                name: "ShippingOffices",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    City = table.Column<string>(type: "text", nullable: false),
-                    OfficeAddressId = table.Column<int>(type: "integer", nullable: false),
-                    OfficeAddress = table.Column<string>(type: "text", nullable: false),
-                    Price = table.Column<decimal>(type: "numeric(18,2)", nullable: false, comment: "Price of shipping"),
-                    ShippingDuration = table.Column<int>(type: "integer", nullable: false, comment: "Duration of shipping"),
-                    ShippingProviderId = table.Column<int>(type: "integer", nullable: false, comment: "Shipping Provider Id")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ShippingOffices", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ShippingOffices_ShippingProviders_ShippingProviderId",
-                        column: x => x.ShippingProviderId,
-                        principalTable: "ShippingProviders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "StatusOrders",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false, comment: "Primary key")
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    NameId = table.Column<int>(type: "integer", nullable: false, comment: "Name of the status Id")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StatusOrders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_StatusOrders_StatusOrderNames_NameId",
-                        column: x => x.NameId,
-                        principalTable: "StatusOrderNames",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                },
-                comment: "Status of the order");
-
-            migrationBuilder.CreateTable(
-                name: "BagsUsers",
-                columns: table => new
-                {
-                    AppUserId = table.Column<string>(type: "text", nullable: false, comment: "The user id"),
-                    ProductId = table.Column<int>(type: "integer", nullable: false, comment: "The product id"),
-                    Quantity = table.Column<int>(type: "integer", nullable: false, comment: "The quantity of the product that the user has added to his bag")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BagsUsers", x => new { x.AppUserId, x.ProductId });
-                    table.ForeignKey(
-                        name: "FK_BagsUsers_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BagsUsers_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                },
-                comment: "This table contains the products that the user has added to his bag");
-
-            migrationBuilder.CreateTable(
-                name: "ImageProducts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false, comment: "The image id")
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ImagePath = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: false, comment: "The path of the image"),
-                    ProductId = table.Column<int>(type: "integer", nullable: false),
-                    ImageOrder = table.Column<int>(type: "integer", nullable: false, comment: "The order of the image in the product")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ImageProducts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ImageProducts_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                },
-                comment: "The image of the product");
-
-            migrationBuilder.CreateTable(
-                name: "ProductsCategories",
-                columns: table => new
-                {
-                    ProductId = table.Column<int>(type: "integer", nullable: false, comment: "The product id"),
-                    CategoryId = table.Column<int>(type: "integer", nullable: false, comment: "The category id")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductsCategories", x => new { x.ProductId, x.CategoryId });
-                    table.ForeignKey(
-                        name: "FK_ProductsCategories_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProductsCategories_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                },
-                comment: "Many to many relation between products and categories");
-
-            migrationBuilder.CreateTable(
-                name: "Reviews",
-                columns: table => new
-                {
-                    ProductId = table.Column<int>(type: "integer", nullable: false, comment: "The identifier of the product."),
-                    AuthorId = table.Column<string>(type: "text", nullable: false, comment: "The identifier of the user that created the review."),
-                    Rating = table.Column<int>(type: "integer", nullable: false, comment: "The rating of the review."),
-                    Title = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true, comment: "The title of the review."),
-                    Comment = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true, comment: "The comment of the review."),
-                    CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, comment: "The date when the review was created.")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Reviews", x => new { x.ProductId, x.AuthorId });
-                    table.ForeignKey(
-                        name: "FK_Reviews_AspNetUsers_AuthorId",
-                        column: x => x.AuthorId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Reviews_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                },
-                comment: "This class represents a review of a product.");
-
-            migrationBuilder.CreateTable(
-                name: "Sections",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false, comment: "The section's primary key")
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    TitleId = table.Column<int>(type: "integer", nullable: false, comment: "The section's title Id"),
-                    DescriptionId = table.Column<int>(type: "integer", nullable: false, comment: "The section's description Id"),
-                    SectionOrder = table.Column<int>(type: "integer", nullable: false, comment: "The section's order in page"),
-                    ProductId = table.Column<int>(type: "integer", nullable: false, comment: "The product's primary key")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Sections", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Sections_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Sections_SectionDescriptions_DescriptionId",
-                        column: x => x.DescriptionId,
-                        principalTable: "SectionDescriptions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Sections_SectionTitles_TitleId",
-                        column: x => x.TitleId,
-                        principalTable: "SectionTitles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                },
-                comment: "The section model. Keeping descriptions of product");
-
-            migrationBuilder.CreateTable(
-                name: "WishesUsers",
-                columns: table => new
-                {
-                    AppUserId = table.Column<string>(type: "text", nullable: false, comment: "The user id"),
-                    ProductId = table.Column<int>(type: "integer", nullable: false, comment: "The product id")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_WishesUsers", x => new { x.AppUserId, x.ProductId });
-                    table.ForeignKey(
-                        name: "FK_WishesUsers_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_WishesUsers_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                },
-                comment: "This table contains the products that the user has added to his wish list");
-
-            migrationBuilder.CreateTable(
-                name: "AddressDeliveries",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false, comment: "Address Id")
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    FirstName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "First Name Recipient"),
-                    LastName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "Last Name Recipient"),
-                    PhoneNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false, comment: "Phone Number Recipient"),
-                    PostCode = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true, comment: "Post Code"),
-                    Address = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: true, comment: "Address"),
-                    Town = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true, comment: "Town"),
-                    District = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true, comment: "District"),
-                    Country = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true, comment: "Country"),
-                    Email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true, comment: "Email"),
-                    IsShippingToOffice = table.Column<bool>(type: "boolean", nullable: false),
-                    ShippingOfficeId = table.Column<int>(type: "integer", nullable: true),
-                    AppUserId = table.Column<string>(type: "text", nullable: false, comment: "App User Id"),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    IsDefault = table.Column<bool>(type: "boolean", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AddressDeliveries", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AddressDeliveries_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AddressDeliveries_ShippingOffices_ShippingOfficeId",
-                        column: x => x.ShippingOfficeId,
-                        principalTable: "ShippingOffices",
-                        principalColumn: "Id");
-                },
-                comment: "Address Delivery");
-
-            migrationBuilder.CreateTable(
-                name: "ImageReviews",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false, comment: "The image id")
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ImagePath = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: false, comment: "The path of the image"),
-                    ProductId = table.Column<int>(type: "integer", nullable: false, comment: "The identifier of the product."),
-                    AuthorId = table.Column<string>(type: "text", nullable: true, comment: "The identifier of the author.")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ImageReviews", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ImageReviews_Reviews_ProductId_AuthorId",
-                        columns: x => new { x.ProductId, x.AuthorId },
-                        principalTable: "Reviews",
-                        principalColumns: new[] { "ProductId", "AuthorId" });
-                },
-                comment: "The image of the review");
-
-            migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false, comment: "Order Id")
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    OrderNumber = table.Column<string>(type: "text", nullable: true, comment: "Order Number"),
-                    CreatedOn = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, comment: "Date of Order Creating"),
-                    StatusOrderId = table.Column<int>(type: "integer", nullable: false, comment: "Status of Order"),
-                    DeliveryMethodId = table.Column<int>(type: "integer", nullable: false, comment: "Method of Delivery"),
-                    AddressDeliveryId = table.Column<int>(type: "integer", nullable: true, comment: "Address Delivery Id"),
-                    AppUserId = table.Column<string>(type: "text", nullable: true, comment: "App User Id"),
-                    DateShipping = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true, comment: "Date of Shipping Creating"),
-                    TrackingNumber = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: true, comment: "Tracking Number of Order"),
-                    PaymentMethodId = table.Column<int>(type: "integer", nullable: false, comment: "Payment Method Id"),
-                    IsPaid = table.Column<bool>(type: "boolean", nullable: false, comment: "Is Paid Order"),
-                    NoteForDelivery = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true, comment: "Note for Delivery"),
-                    ExchangeRate = table.Column<decimal>(type: "numeric(18,4)", nullable: false, comment: "Exchange Rate of the Prices"),
-                    Currency = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false, comment: "Language of Order, determinate the currency of the prices"),
-                    ShippingPrice = table.Column<decimal>(type: "numeric(18,2)", nullable: false, comment: "Shipping Price"),
-                    Discount = table.Column<decimal>(type: "numeric(18,2)", nullable: false, comment: "Absolute Discount value"),
-                    PromoCodeId = table.Column<int>(type: "integer", nullable: true, comment: "Promo Code Id"),
-                    FirstName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "First Name Recipient"),
-                    LastName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, comment: "Last Name Recipient"),
-                    PhoneNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false, comment: "Phone Number Recipient"),
-                    PostCode = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true, comment: "Post Code"),
-                    Address = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: true, comment: "Address"),
-                    Town = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true, comment: "Town"),
-                    District = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true, comment: "District"),
-                    Country = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true, comment: "Country"),
-                    Email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true, comment: "Email"),
-                    ShippingOfficeId = table.Column<int>(type: "integer", nullable: true),
-                    ShippingProviderName = table.Column<string>(type: "text", nullable: true),
-                    ShippingOfficeCity = table.Column<string>(type: "text", nullable: true),
-                    ShippingOfficeAddress = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Orders_AddressDeliveries_AddressDeliveryId",
-                        column: x => x.AddressDeliveryId,
-                        principalTable: "AddressDeliveries",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Orders_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Orders_DeliveryMethods_DeliveryMethodId",
-                        column: x => x.DeliveryMethodId,
-                        principalTable: "DeliveryMethods",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Orders_PaymentMethods_PaymentMethodId",
-                        column: x => x.PaymentMethodId,
-                        principalTable: "PaymentMethods",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Orders_PromoCodes_PromoCodeId",
-                        column: x => x.PromoCodeId,
-                        principalTable: "PromoCodes",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Orders_ShippingOffices_ShippingOfficeId",
-                        column: x => x.ShippingOfficeId,
-                        principalTable: "ShippingOffices",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Orders_StatusOrders_StatusOrderId",
-                        column: x => x.StatusOrderId,
-                        principalTable: "StatusOrders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                },
-                comment: "Order");
-
-            migrationBuilder.CreateTable(
-                name: "ProductsOrders",
-                columns: table => new
-                {
-                    ProductId = table.Column<int>(type: "integer", nullable: false),
-                    OrderId = table.Column<int>(type: "integer", nullable: false),
-                    Quantity = table.Column<int>(type: "integer", nullable: false, comment: "The quantity of the product in the order"),
-                    Price = table.Column<decimal>(type: "numeric(18,2)", nullable: false, comment: "The price of the product at the time of the order"),
-                    ImagePath = table.Column<string>(type: "text", nullable: true, comment: "The image path of the product at the time of the order")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductsOrders", x => new { x.ProductId, x.OrderId });
-                    table.ForeignKey(
-                        name: "FK_ProductsOrders_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProductsOrders_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                },
-                comment: "Many to many relation between products and orders");
+            migrationBuilder.InsertData(
+                table: "AddressDeliveries",
+                columns: new[] { "Id", "Address", "AppUserId", "Country", "District", "Email", "FirstName", "IsDefault", "IsDeleted", "IsShippingToOffice", "LastName", "PhoneNumber", "PostCode", "ShippingOfficeId", "Town" },
+                values: new object[] { 2, "bul. Vitosha", "85fbe739-6be0-429d-b44b-1ce6cf7eeef", "Bulgaria", "Sofia", null, "Petar", false, false, false, "Petrov", "0888888888", "1000", null, "Sofia" });
 
             migrationBuilder.InsertData(
                 table: "AppConfigs",
                 columns: new[] { "Id", "AddressDeliveryPrice", "ExchangeRateBGN", "ExchangeRateEUR", "ExchangeRateRON", "FreeShipping" },
                 values: new object[] { 1, 8.00m, 1m, 1.9558m, 0.3930m, 35.00m });
 
-            migrationBuilder.InsertData(
+            migrationBuilder.UpdateData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "ImagePath", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[,]
-                {
-                    { "45fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "286d36fb-8b57-4038-bce1-c847485cfcc4", "admin@mail.com", true, "Admin", null, "Adminov", false, null, "ADMIN@MAIL.COM", "ADMIN@MAIL.COM", "AQAAAAIAAYagAAAAEAS3OvSHFPPkOh5NN/xg5NKy7a4JMwIMLbDpgoiT73+CRX7aD+bapXB5kqYYVTdhGg==", null, false, "91280fc0-1df8-4d9e-a909-50e9f6d6830d", false, "admin@mail.com" },
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 0, "625e2ba0-8807-4d14-bb3c-255f7874cfd8", "test@softuni.bg", true, "Test", null, "Testov", false, null, "TEST@SOFTUNI.BG", "TEST@SOFTUNI.BG", "AQAAAAIAAYagAAAAEP4rY+bBdmOAJS9q/Oz7f2KZQqTqxqxaZl/g61MHTGv0tS+EuKZyKxoJZ0TeqrOAXw==", null, false, "15053052-99b7-48ce-a084-49a303b3e8f1", false, "test@softuni.bg" }
-                });
+                keyColumn: "Id",
+                keyValue: "45fbe739-6be0-429d-b44b-1ce6cf7eeef",
+                columns: new[] { "ConcurrencyStamp", "PasswordHash", "SecurityStamp" },
+                values: new object[] { "3db685b5-3170-4ce5-9eda-f98d5f298a25", "AQAAAAIAAYagAAAAEDDoicWOHKhcFECtS/ozEtq5UC1SUjL+sKPVEtFqoOuE/1AwfnG7KSSmLpztFtX0Rw==", "5295ee78-03d7-4c36-b327-0fa92acdd98b" });
+
+            migrationBuilder.UpdateData(
+                table: "AspNetUsers",
+                keyColumn: "Id",
+                keyValue: "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
+                columns: new[] { "ConcurrencyStamp", "PasswordHash", "SecurityStamp" },
+                values: new object[] { "6c73603a-1df3-48a2-a48b-d76c9ab4aa4b", "AQAAAAIAAYagAAAAECSfjJ2s1D+G6yoEm9KoEl5ekxFGxHuNt3aiJs++JdLpIXrQ+vg1v4ehvXTtdwlpvA==", "ac1b05ad-b606-4d08-8206-ef050de6deaa" });
 
             migrationBuilder.InsertData(
                 table: "CategoryNames",
@@ -1060,11 +211,6 @@ namespace LilsCareApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "AddressDeliveries",
-                columns: new[] { "Id", "Address", "AppUserId", "Country", "District", "Email", "FirstName", "IsDefault", "IsDeleted", "IsShippingToOffice", "LastName", "PhoneNumber", "PostCode", "ShippingOfficeId", "Town" },
-                values: new object[] { 2, "bul. Vitosha", "85fbe739-6be0-429d-b44b-1ce6cf7eeef", "Bulgaria", "Sofia", null, "Petar", false, false, false, "Petrov", "0888888888", "1000", null, "Sofia" });
-
-            migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "NameId" },
                 values: new object[,]
@@ -1114,8 +260,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "Id", "AppUserId", "AppliedDate", "CodeId", "Discount", "ExpirationDate" },
                 values: new object[,]
                 {
-                    { 1, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, 1, 0.1m, new DateTimeOffset(new DateTime(2025, 9, 16, 17, 15, 41, 696, DateTimeKind.Unspecified).AddTicks(6637), new TimeSpan(0, 0, 0, 0, 0)) },
-                    { 2, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, 2, 0.2m, new DateTimeOffset(new DateTime(2025, 9, 16, 17, 15, 41, 696, DateTimeKind.Unspecified).AddTicks(6647), new TimeSpan(0, 0, 0, 0, 0)) }
+                    { 1, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, 1, 0.1m, new DateTimeOffset(new DateTime(2027, 7, 27, 11, 26, 21, 294, DateTimeKind.Unspecified).AddTicks(9253), new TimeSpan(0, 0, 0, 0, 0)) },
+                    { 2, "85fbe739-6be0-429d-b44b-1ce6cf7eeef", null, 2, 0.2m, new DateTimeOffset(new DateTime(2027, 7, 27, 11, 26, 21, 294, DateTimeKind.Unspecified).AddTicks(9261), new TimeSpan(0, 0, 0, 0, 0)) }
                 });
 
             migrationBuilder.InsertData(
@@ -1231,9 +377,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                 columns: new[] { "AuthorId", "ProductId", "Comment", "CreatedOn", "Rating", "Title" },
                 values: new object[,]
                 {
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 2, "Great product, I love it!", new DateTimeOffset(new DateTime(2024, 9, 16, 20, 15, 41, 696, DateTimeKind.Unspecified).AddTicks(3630), new TimeSpan(0, 3, 0, 0, 0)), 4, "Great product" },
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 3, "Great product, I love it!", new DateTimeOffset(new DateTime(2024, 9, 16, 20, 15, 41, 696, DateTimeKind.Unspecified).AddTicks(3727), new TimeSpan(0, 3, 0, 0, 0)), 3, "Great product" },
-                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 4, "Great product, I love it!", new DateTimeOffset(new DateTime(2024, 9, 16, 20, 15, 41, 696, DateTimeKind.Unspecified).AddTicks(3733), new TimeSpan(0, 3, 0, 0, 0)), 3, "Great product" }
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 2, "Great product, I love it!", new DateTimeOffset(new DateTime(2026, 7, 27, 14, 26, 21, 294, DateTimeKind.Unspecified).AddTicks(8237), new TimeSpan(0, 3, 0, 0, 0)), 4, "Great product" },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 3, "Great product, I love it!", new DateTimeOffset(new DateTime(2026, 7, 27, 14, 26, 21, 294, DateTimeKind.Unspecified).AddTicks(8415), new TimeSpan(0, 3, 0, 0, 0)), 3, "Great product" },
+                    { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 4, "Great product, I love it!", new DateTimeOffset(new DateTime(2026, 7, 27, 14, 26, 21, 294, DateTimeKind.Unspecified).AddTicks(8421), new TimeSpan(0, 3, 0, 0, 0)), 3, "Great product" }
                 });
 
             migrationBuilder.InsertData(
@@ -1303,317 +449,1199 @@ namespace LilsCareApp.Infrastructure.Migrations
                     { 1, 2, "/files/products/product-02-image-01.webp", 6.50m, 4 },
                     { 1, 3, "/files/products/product-03-image-01.webp", 5.50m, 3 }
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AddressDeliveries_AppUserId",
-                table: "AddressDeliveries",
-                column: "AppUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AddressDeliveries_ShippingOfficeId",
-                table: "AddressDeliveries",
-                column: "ShippingOfficeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetRoleClaims_RoleId",
-                table: "AspNetRoleClaims",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "RoleNameIndex",
-                table: "AspNetRoles",
-                column: "NormalizedName",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserClaims_UserId",
-                table: "AspNetUserClaims",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserLogins_UserId",
-                table: "AspNetUserLogins",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserRoles_RoleId",
-                table: "AspNetUserRoles",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "EmailIndex",
-                table: "AspNetUsers",
-                column: "NormalizedEmail");
-
-            migrationBuilder.CreateIndex(
-                name: "UserNameIndex",
-                table: "AspNetUsers",
-                column: "NormalizedUserName",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BagsUsers_ProductId",
-                table: "BagsUsers",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Categories_NameId",
-                table: "Categories",
-                column: "NameId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DeliveryMethods_NameId",
-                table: "DeliveryMethods",
-                column: "NameId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ImageProducts_ProductId",
-                table: "ImageProducts",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ImageReviews_ProductId_AuthorId",
-                table: "ImageReviews",
-                columns: new[] { "ProductId", "AuthorId" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MessagesFromClients_AppUserId",
-                table: "MessagesFromClients",
-                column: "AppUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_AddressDeliveryId",
-                table: "Orders",
-                column: "AddressDeliveryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_AppUserId",
-                table: "Orders",
-                column: "AppUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_DeliveryMethodId",
-                table: "Orders",
-                column: "DeliveryMethodId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_PaymentMethodId",
-                table: "Orders",
-                column: "PaymentMethodId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_PromoCodeId",
-                table: "Orders",
-                column: "PromoCodeId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_ShippingOfficeId",
-                table: "Orders",
-                column: "ShippingOfficeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_StatusOrderId",
-                table: "Orders",
-                column: "StatusOrderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PaymentMethods_NameId",
-                table: "PaymentMethods",
-                column: "NameId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_NameId",
-                table: "Products",
-                column: "NameId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_OptionalId",
-                table: "Products",
-                column: "OptionalId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductsCategories_CategoryId",
-                table: "ProductsCategories",
-                column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductsOrders_OrderId",
-                table: "ProductsOrders",
-                column: "OrderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PromoCodes_AppUserId",
-                table: "PromoCodes",
-                column: "AppUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PromoCodes_CodeId",
-                table: "PromoCodes",
-                column: "CodeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Reviews_AuthorId",
-                table: "Reviews",
-                column: "AuthorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Sections_DescriptionId",
-                table: "Sections",
-                column: "DescriptionId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Sections_ProductId",
-                table: "Sections",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Sections_TitleId",
-                table: "Sections",
-                column: "TitleId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ShippingOffices_ShippingProviderId",
-                table: "ShippingOffices",
-                column: "ShippingProviderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StatusOrders_NameId",
-                table: "StatusOrders",
-                column: "NameId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Subscribers_AppUserId",
-                table: "Subscribers",
-                column: "AppUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_WishesUsers_ProductId",
-                table: "WishesUsers",
-                column: "ProductId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "AppConfigs");
+            migrationBuilder.DeleteData(
+                table: "AppConfigs",
+                keyColumn: "Id",
+                keyValue: 1);
 
-            migrationBuilder.DropTable(
-                name: "AspNetRoleClaims");
+            migrationBuilder.DeleteData(
+                table: "BagsUsers",
+                keyColumns: new[] { "AppUserId", "ProductId" },
+                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 1 });
 
-            migrationBuilder.DropTable(
-                name: "AspNetUserClaims");
+            migrationBuilder.DeleteData(
+                table: "BagsUsers",
+                keyColumns: new[] { "AppUserId", "ProductId" },
+                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 2 });
 
-            migrationBuilder.DropTable(
-                name: "AspNetUserLogins");
+            migrationBuilder.DeleteData(
+                table: "BagsUsers",
+                keyColumns: new[] { "AppUserId", "ProductId" },
+                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 3 });
 
-            migrationBuilder.DropTable(
-                name: "AspNetUserRoles");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 1);
 
-            migrationBuilder.DropTable(
-                name: "AspNetUserTokens");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 2);
 
-            migrationBuilder.DropTable(
-                name: "BagsUsers");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 3);
 
-            migrationBuilder.DropTable(
-                name: "ImageProducts");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 4);
 
-            migrationBuilder.DropTable(
-                name: "ImageReviews");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 5);
 
-            migrationBuilder.DropTable(
-                name: "MessagesFromClients");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 6);
 
-            migrationBuilder.DropTable(
-                name: "ProductsCategories");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 7);
 
-            migrationBuilder.DropTable(
-                name: "ProductsOrders");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 8);
 
-            migrationBuilder.DropTable(
-                name: "Sections");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 9);
 
-            migrationBuilder.DropTable(
-                name: "Subscribers");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 10);
 
-            migrationBuilder.DropTable(
-                name: "WishesUsers");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 11);
 
-            migrationBuilder.DropTable(
-                name: "AspNetRoles");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 12);
 
-            migrationBuilder.DropTable(
-                name: "Reviews");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 13);
 
-            migrationBuilder.DropTable(
-                name: "Categories");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 14);
 
-            migrationBuilder.DropTable(
-                name: "Orders");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 15);
 
-            migrationBuilder.DropTable(
-                name: "SectionDescriptions");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 16);
 
-            migrationBuilder.DropTable(
-                name: "SectionTitles");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 17);
 
-            migrationBuilder.DropTable(
-                name: "Products");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 18);
 
-            migrationBuilder.DropTable(
-                name: "CategoryNames");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 19);
 
-            migrationBuilder.DropTable(
-                name: "AddressDeliveries");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 20);
 
-            migrationBuilder.DropTable(
-                name: "DeliveryMethods");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 21);
 
-            migrationBuilder.DropTable(
-                name: "PaymentMethods");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 22);
 
-            migrationBuilder.DropTable(
-                name: "PromoCodes");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 23);
 
-            migrationBuilder.DropTable(
-                name: "StatusOrders");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 24);
 
-            migrationBuilder.DropTable(
-                name: "ProductNames");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 25);
 
-            migrationBuilder.DropTable(
-                name: "ProductOptionals");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 26);
 
-            migrationBuilder.DropTable(
-                name: "ShippingOffices");
+            migrationBuilder.DeleteData(
+                table: "ImageProducts",
+                keyColumn: "Id",
+                keyValue: 27);
 
-            migrationBuilder.DropTable(
-                name: "DeliveryNames");
+            migrationBuilder.DeleteData(
+                table: "PaymentMethods",
+                keyColumn: "Id",
+                keyValue: 3);
 
-            migrationBuilder.DropTable(
-                name: "PaymentNames");
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 1, 1 });
 
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 2, 1 });
 
-            migrationBuilder.DropTable(
-                name: "PromoCodeNames");
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 3, 1 });
 
-            migrationBuilder.DropTable(
-                name: "StatusOrderNames");
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 1, 2 });
 
-            migrationBuilder.DropTable(
-                name: "ShippingProviders");
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 3, 2 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 4, 2 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 1, 3 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 5, 3 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 1, 4 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 2, 4 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 3, 4 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 5, 4 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 1, 5 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 3, 5 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 5, 5 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 1, 6 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 3, 6 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsCategories",
+                keyColumns: new[] { "CategoryId", "ProductId" },
+                keyValues: new object[] { 4, 6 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsOrders",
+                keyColumns: new[] { "OrderId", "ProductId" },
+                keyValues: new object[] { 1, 1 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsOrders",
+                keyColumns: new[] { "OrderId", "ProductId" },
+                keyValues: new object[] { 2, 1 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsOrders",
+                keyColumns: new[] { "OrderId", "ProductId" },
+                keyValues: new object[] { 1, 2 });
+
+            migrationBuilder.DeleteData(
+                table: "ProductsOrders",
+                keyColumns: new[] { "OrderId", "ProductId" },
+                keyValues: new object[] { 1, 3 });
+
+            migrationBuilder.DeleteData(
+                table: "PromoCodes",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "PromoCodes",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "Reviews",
+                keyColumns: new[] { "AuthorId", "ProductId" },
+                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 2 });
+
+            migrationBuilder.DeleteData(
+                table: "Reviews",
+                keyColumns: new[] { "AuthorId", "ProductId" },
+                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 3 });
+
+            migrationBuilder.DeleteData(
+                table: "Reviews",
+                keyColumns: new[] { "AuthorId", "ProductId" },
+                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 4 });
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 6);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 7);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 8);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 9);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 10);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 11);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 12);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 13);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 14);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 15);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 16);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 17);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 18);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 19);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 20);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 21);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 22);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 23);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 24);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 25);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 26);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 27);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 28);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 29);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 30);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 31);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 32);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 33);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 34);
+
+            migrationBuilder.DeleteData(
+                table: "Sections",
+                keyColumn: "Id",
+                keyValue: 35);
+
+            migrationBuilder.DeleteData(
+                table: "ShippingOffices",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "ShippingOffices",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "ShippingOffices",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "ShippingOffices",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "ShippingOffices",
+                keyColumn: "Id",
+                keyValue: 6);
+
+            migrationBuilder.DeleteData(
+                table: "ShippingOffices",
+                keyColumn: "Id",
+                keyValue: 7);
+
+            migrationBuilder.DeleteData(
+                table: "ShippingOffices",
+                keyColumn: "Id",
+                keyValue: 8);
+
+            migrationBuilder.DeleteData(
+                table: "ShippingOffices",
+                keyColumn: "Id",
+                keyValue: 9);
+
+            migrationBuilder.DeleteData(
+                table: "ShippingOffices",
+                keyColumn: "Id",
+                keyValue: 10);
+
+            migrationBuilder.DeleteData(
+                table: "StatusOrders",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "StatusOrders",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "StatusOrders",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "WishesUsers",
+                keyColumns: new[] { "AppUserId", "ProductId" },
+                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 1 });
+
+            migrationBuilder.DeleteData(
+                table: "WishesUsers",
+                keyColumns: new[] { "AppUserId", "ProductId" },
+                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 3 });
+
+            migrationBuilder.DeleteData(
+                table: "WishesUsers",
+                keyColumns: new[] { "AppUserId", "ProductId" },
+                keyValues: new object[] { "85fbe739-6be0-429d-b44b-1ce6cf7eeef", 4 });
+
+            migrationBuilder.DeleteData(
+                table: "Categories",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "Categories",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "Categories",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "Categories",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "Categories",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "Orders",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "Orders",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "PaymentNames",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 6);
+
+            migrationBuilder.DeleteData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 7);
+
+            migrationBuilder.DeleteData(
+                table: "PromoCodeNames",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "PromoCodeNames",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 6);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 7);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 8);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 9);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 10);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 11);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 12);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 13);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 14);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 15);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 16);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 17);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 18);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 19);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 20);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 21);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 22);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 23);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 24);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 25);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 26);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 27);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 28);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 29);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 30);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 31);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 32);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 33);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 34);
+
+            migrationBuilder.DeleteData(
+                table: "SectionDescriptions",
+                keyColumn: "Id",
+                keyValue: 35);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 6);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 7);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 8);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 9);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 10);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 11);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 12);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 13);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 14);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 15);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 16);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 17);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 18);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 19);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 20);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 21);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 22);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 23);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 24);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 25);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 26);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 27);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 28);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 29);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 30);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 31);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 32);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 33);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 34);
+
+            migrationBuilder.DeleteData(
+                table: "SectionTitles",
+                keyColumn: "Id",
+                keyValue: 35);
+
+            migrationBuilder.DeleteData(
+                table: "ShippingProviders",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "StatusOrderNames",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "StatusOrderNames",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "StatusOrderNames",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "AddressDeliveries",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "AddressDeliveries",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "CategoryNames",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "CategoryNames",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "CategoryNames",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "CategoryNames",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "CategoryNames",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "DeliveryMethods",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "DeliveryMethods",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "PaymentMethods",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "PaymentMethods",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "ProductNames",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "ProductNames",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "ProductNames",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "ProductNames",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "ProductNames",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "ProductNames",
+                keyColumn: "Id",
+                keyValue: 6);
+
+            migrationBuilder.DeleteData(
+                table: "ProductNames",
+                keyColumn: "Id",
+                keyValue: 7);
+
+            migrationBuilder.DeleteData(
+                table: "ProductOptionals",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "ProductOptionals",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "ProductOptionals",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "ProductOptionals",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "ProductOptionals",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "ProductOptionals",
+                keyColumn: "Id",
+                keyValue: 6);
+
+            migrationBuilder.DeleteData(
+                table: "ProductOptionals",
+                keyColumn: "Id",
+                keyValue: 7);
+
+            migrationBuilder.DeleteData(
+                table: "StatusOrders",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "StatusOrders",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "DeliveryNames",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "DeliveryNames",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "PaymentNames",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "PaymentNames",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "ShippingOffices",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "StatusOrderNames",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "StatusOrderNames",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "ShippingProviders",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.UpdateData(
+                table: "AspNetUsers",
+                keyColumn: "Id",
+                keyValue: "45fbe739-6be0-429d-b44b-1ce6cf7eeef",
+                columns: new[] { "ConcurrencyStamp", "PasswordHash", "SecurityStamp" },
+                values: new object[] { "d0adb272-4663-4ff6-acea-b26beb922e57", "AQAAAAIAAYagAAAAECY38zGGD48Ngy/PGwmRKnlHvKGFQgGBy9/QaSPApU/2CZqz9MCodRJNrN48yFlC+g==", "42f81cf4-d65e-4958-9f0c-42382d7d4a4a" });
+
+            migrationBuilder.UpdateData(
+                table: "AspNetUsers",
+                keyColumn: "Id",
+                keyValue: "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
+                columns: new[] { "ConcurrencyStamp", "PasswordHash", "SecurityStamp" },
+                values: new object[] { "34d26c23-04a6-4a4a-a785-a7e15a273961", "AQAAAAIAAYagAAAAENzNoyhha/QRxqzurVhXqeoNL6fnLhE3lxQUk0pZga2oanoAqMU+3WAr5DcLwVfkNg==", "6be0fd47-50bb-45f5-bd8f-20a168b6c658" });
         }
     }
 }

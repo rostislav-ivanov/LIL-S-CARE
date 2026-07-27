@@ -20,11 +20,11 @@ namespace LilsCareApp.Core.Services
             string apiUrl = "https://api.speedy.bg/v1/location/office/";
 
             // Create HttpClient instance
-            using (HttpClient client = new HttpClient())
+            using (HttpClient client = new())
             {
 
                 // POST data
-                RequestBody body = new RequestBody
+                RequestBody body = new()
                 {
                     userName = "1995918",
                     password = "4148521468",
@@ -52,7 +52,7 @@ namespace LilsCareApp.Core.Services
 
                         foreach (var office in offices.offices)
                         {
-                            ShippingOffice shippingOffice = new ShippingOffice
+                            ShippingOffice shippingOffice = new()
                             {
                                 ShippingProviderId = 2,
                                 Price = 7.50m,

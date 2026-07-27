@@ -3,16 +3,16 @@ using System;
 using LilsCareApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace LilsCareApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240916171543_01")]
+    [Migration("20260727112622_01")]
     partial class _01
     {
         /// <inheritdoc />
@@ -21,82 +21,82 @@ namespace LilsCareApp.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.8")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.AddressDelivery", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("Address Id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .HasMaxLength(250)
-                        .HasColumnType("character varying(250)")
+                        .HasColumnType("nvarchar(250)")
                         .HasComment("Address");
 
                     b.Property<string>("AppUserId")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("nvarchar(450)")
                         .HasComment("App User Id");
 
                     b.Property<string>("Country")
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("Country");
 
                     b.Property<string>("District")
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("District");
 
                     b.Property<string>("Email")
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasColumnType("nvarchar(50)")
                         .HasComment("Email");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("First Name Recipient");
 
                     b.Property<bool>("IsDefault")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsShippingToOffice")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("Last Name Recipient");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasColumnType("nvarchar(50)")
                         .HasComment("Phone Number Recipient");
 
                     b.Property<string>("PostCode")
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasColumnType("nvarchar(50)")
                         .HasComment("Post Code");
 
                     b.Property<int?>("ShippingOfficeId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<string>("Town")
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("Town");
 
                     b.HasKey("Id");
@@ -145,9 +145,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("AddressDeliveryPrice")
                         .HasColumnType("decimal(18,2)")
@@ -188,70 +188,70 @@ namespace LilsCareApp.Infrastructure.Migrations
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.AppUser", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("First Name");
 
                     b.Property<string>("ImagePath")
                         .HasMaxLength(2048)
-                        .HasColumnType("character varying(2048)")
+                        .HasColumnType("nvarchar(2048)")
                         .HasComment("The image of user");
 
                     b.Property<string>("LastName")
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("Last Name");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
@@ -260,7 +260,8 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasDatabaseName("UserNameIndex");
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", null, t =>
                         {
@@ -272,7 +273,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "625e2ba0-8807-4d14-bb3c-255f7874cfd8",
+                            ConcurrencyStamp = "6c73603a-1df3-48a2-a48b-d76c9ab4aa4b",
                             Email = "test@softuni.bg",
                             EmailConfirmed = true,
                             FirstName = "Test",
@@ -280,9 +281,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "TEST@SOFTUNI.BG",
                             NormalizedUserName = "TEST@SOFTUNI.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAEP4rY+bBdmOAJS9q/Oz7f2KZQqTqxqxaZl/g61MHTGv0tS+EuKZyKxoJZ0TeqrOAXw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECSfjJ2s1D+G6yoEm9KoEl5ekxFGxHuNt3aiJs++JdLpIXrQ+vg1v4ehvXTtdwlpvA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "15053052-99b7-48ce-a084-49a303b3e8f1",
+                            SecurityStamp = "ac1b05ad-b606-4d08-8206-ef050de6deaa",
                             TwoFactorEnabled = false,
                             UserName = "test@softuni.bg"
                         },
@@ -290,7 +291,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         {
                             Id = "45fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "286d36fb-8b57-4038-bce1-c847485cfcc4",
+                            ConcurrencyStamp = "3db685b5-3170-4ce5-9eda-f98d5f298a25",
                             Email = "admin@mail.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -298,9 +299,9 @@ namespace LilsCareApp.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAS3OvSHFPPkOh5NN/xg5NKy7a4JMwIMLbDpgoiT73+CRX7aD+bapXB5kqYYVTdhGg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDDoicWOHKhcFECtS/ozEtq5UC1SUjL+sKPVEtFqoOuE/1AwfnG7KSSmLpztFtX0Rw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "91280fc0-1df8-4d9e-a909-50e9f6d6830d",
+                            SecurityStamp = "5295ee78-03d7-4c36-b327-0fa92acdd98b",
                             TwoFactorEnabled = false,
                             UserName = "admin@mail.com"
                         });
@@ -309,15 +310,15 @@ namespace LilsCareApp.Infrastructure.Migrations
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.BagUser", b =>
                 {
                     b.Property<string>("AppUserId")
-                        .HasColumnType("text")
+                        .HasColumnType("nvarchar(450)")
                         .HasComment("The user id");
 
                     b.Property<int>("ProductId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The product id");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The quantity of the product that the user has added to his bag");
 
                     b.HasKey("AppUserId", "ProductId");
@@ -354,13 +355,13 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The category's primary key");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("NameId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The category's name Id");
 
                     b.HasKey("Id");
@@ -405,29 +406,29 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CategoryId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<string>("NameBG")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("The category's name in Bulgarian");
 
                     b.Property<string>("NameEN")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("The category's name in English");
 
                     b.Property<string>("NameRO")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("The category's name in Romanian");
 
                     b.HasKey("Id");
@@ -481,13 +482,13 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("Delivery method id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("NameId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("Delivery method name Id");
 
                     b.HasKey("Id");
@@ -514,30 +515,30 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The delivery name Id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("DeliveryMethodId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<string>("NameBG")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("The delivery name in Bulgarian");
 
                     b.Property<string>("NameEN")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("The delivery name in English");
 
                     b.Property<string>("NameRO")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("The delivery name in Romanian");
 
                     b.HasKey("Id");
@@ -567,23 +568,23 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The image id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("ImageOrder")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The order of the image in the product");
 
                     b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasMaxLength(2048)
-                        .HasColumnType("character varying(2048)")
+                        .HasColumnType("nvarchar(2048)")
                         .HasComment("The path of the image");
 
                     b.Property<int>("ProductId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -790,23 +791,23 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The image id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AuthorId")
-                        .HasColumnType("text")
+                        .HasColumnType("nvarchar(450)")
                         .HasComment("The identifier of the author.");
 
                     b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasMaxLength(2048)
-                        .HasColumnType("character varying(2048)")
+                        .HasColumnType("nvarchar(2048)")
                         .HasComment("The path of the image");
 
                     b.Property<int>("ProductId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The identifier of the product.");
 
                     b.HasKey("Id");
@@ -823,30 +824,30 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AppUserId")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTimeOffset>("DateSent")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("EmailForResponse")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Message")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -859,45 +860,45 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("Order Id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .HasMaxLength(250)
-                        .HasColumnType("character varying(250)")
+                        .HasColumnType("nvarchar(250)")
                         .HasComment("Address");
 
                     b.Property<int?>("AddressDeliveryId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("Address Delivery Id");
 
                     b.Property<string>("AppUserId")
-                        .HasColumnType("text")
+                        .HasColumnType("nvarchar(450)")
                         .HasComment("App User Id");
 
                     b.Property<string>("Country")
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("Country");
 
                     b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("datetimeoffset")
                         .HasComment("Date of Order Creating");
 
                     b.Property<string>("Currency")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("character varying(10)")
+                        .HasColumnType("nvarchar(10)")
                         .HasComment("Language of Order, determinate the currency of the prices");
 
                     b.Property<DateTimeOffset?>("DateShipping")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("datetimeoffset")
                         .HasComment("Date of Shipping Creating");
 
                     b.Property<int>("DeliveryMethodId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("Method of Delivery");
 
                     b.Property<decimal>("Discount")
@@ -906,12 +907,12 @@ namespace LilsCareApp.Infrastructure.Migrations
 
                     b.Property<string>("District")
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("District");
 
                     b.Property<string>("Email")
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasColumnType("nvarchar(50)")
                         .HasComment("Email");
 
                     b.Property<decimal>("ExchangeRate")
@@ -921,75 +922,75 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("First Name Recipient");
 
                     b.Property<bool>("IsPaid")
-                        .HasColumnType("boolean")
+                        .HasColumnType("bit")
                         .HasComment("Is Paid Order");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("Last Name Recipient");
 
                     b.Property<string>("NoteForDelivery")
                         .HasMaxLength(500)
-                        .HasColumnType("character varying(500)")
+                        .HasColumnType("nvarchar(500)")
                         .HasComment("Note for Delivery");
 
                     b.Property<string>("OrderNumber")
-                        .HasColumnType("text")
+                        .HasColumnType("nvarchar(max)")
                         .HasComment("Order Number");
 
                     b.Property<int>("PaymentMethodId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("Payment Method Id");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasColumnType("nvarchar(50)")
                         .HasComment("Phone Number Recipient");
 
                     b.Property<string>("PostCode")
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasColumnType("nvarchar(50)")
                         .HasComment("Post Code");
 
                     b.Property<int?>("PromoCodeId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("Promo Code Id");
 
                     b.Property<string>("ShippingOfficeAddress")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ShippingOfficeCity")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ShippingOfficeId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<decimal>("ShippingPrice")
                         .HasColumnType("decimal(18,2)")
                         .HasComment("Shipping Price");
 
                     b.Property<string>("ShippingProviderName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StatusOrderId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("Status of Order");
 
                     b.Property<string>("Town")
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("Town");
 
                     b.Property<string>("TrackingNumber")
                         .HasMaxLength(30)
-                        .HasColumnType("character varying(30)")
+                        .HasColumnType("nvarchar(30)")
                         .HasComment("Tracking Number of Order");
 
                     b.HasKey("Id");
@@ -1003,7 +1004,8 @@ namespace LilsCareApp.Infrastructure.Migrations
                     b.HasIndex("PaymentMethodId");
 
                     b.HasIndex("PromoCodeId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[PromoCodeId] IS NOT NULL");
 
                     b.HasIndex("ShippingOfficeId");
 
@@ -1061,13 +1063,13 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("Payment method id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("NameId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("Payment method name Id");
 
                     b.HasKey("Id");
@@ -1102,31 +1104,31 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("Payment name id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("NameBG")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("The payment name in Bulgarian");
 
                     b.Property<string>("NameEN")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("The payment name in English");
 
                     b.Property<string>("NameRO")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("The payment name in Romanian");
 
                     b.Property<int>("PaymentMethodId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -1163,21 +1165,21 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The product's primary key");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("IsShow")
-                        .HasColumnType("boolean")
+                        .HasColumnType("bit")
                         .HasComment("Is the product show on online store");
 
                     b.Property<int>("NameId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The product's name Id");
 
                     b.Property<int>("OptionalId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The product's optional Id");
 
                     b.Property<decimal>("Price")
@@ -1185,7 +1187,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasComment("The product's price");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The product's quantity");
 
                     b.HasKey("Id");
@@ -1270,11 +1272,11 @@ namespace LilsCareApp.Infrastructure.Migrations
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ProductCategory", b =>
                 {
                     b.Property<int>("ProductId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The product id");
 
                     b.Property<int>("CategoryId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The category id");
 
                     b.HasKey("ProductId", "CategoryId");
@@ -1383,30 +1385,30 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("NameBG")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("The product's name in Bulgarian");
 
                     b.Property<string>("NameEN")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("The product's name in English");
 
                     b.Property<string>("NameRO")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("The product's name in Romanian");
 
                     b.Property<int>("ProductId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -1475,30 +1477,30 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("OptionalBG")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("character varying(200)")
+                        .HasColumnType("nvarchar(200)")
                         .HasComment("The product's optional in Bulgarian");
 
                     b.Property<string>("OptionalEN")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("character varying(200)")
+                        .HasColumnType("nvarchar(200)")
                         .HasComment("The product's optional in English");
 
                     b.Property<string>("OptionalRO")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("character varying(200)")
+                        .HasColumnType("nvarchar(200)")
                         .HasComment("The product's optional in Romanian");
 
                     b.Property<int>("ProductId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -1566,13 +1568,13 @@ namespace LilsCareApp.Infrastructure.Migrations
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.ProductOrder", b =>
                 {
                     b.Property<int>("ProductId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<int>("OrderId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<string>("ImagePath")
-                        .HasColumnType("text")
+                        .HasColumnType("nvarchar(max)")
                         .HasComment("The image path of the product at the time of the order");
 
                     b.Property<decimal>("Price")
@@ -1580,7 +1582,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasComment("The price of the product at the time of the order");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The quantity of the product in the order");
 
                     b.HasKey("ProductId", "OrderId");
@@ -1631,21 +1633,21 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("Promo Code Id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AppUserId")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("nvarchar(450)")
                         .HasComment("Owner of Promo Code");
 
                     b.Property<DateTimeOffset?>("AppliedDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<int>("CodeId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("Promo Code Id");
 
                     b.Property<decimal>("Discount")
@@ -1653,7 +1655,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                         .HasComment("Discount of Total Price Order");
 
                     b.Property<DateTimeOffset>("ExpirationDate")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("datetimeoffset")
                         .HasComment("Expiration Date of Promo Code");
 
                     b.HasKey("Id");
@@ -1674,7 +1676,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             CodeId = 1,
                             Discount = 0.1m,
-                            ExpirationDate = new DateTimeOffset(new DateTime(2025, 9, 16, 17, 15, 41, 696, DateTimeKind.Unspecified).AddTicks(6637), new TimeSpan(0, 0, 0, 0, 0))
+                            ExpirationDate = new DateTimeOffset(new DateTime(2027, 7, 27, 11, 26, 21, 294, DateTimeKind.Unspecified).AddTicks(9253), new TimeSpan(0, 0, 0, 0, 0))
                         },
                         new
                         {
@@ -1682,7 +1684,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             AppUserId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             CodeId = 2,
                             Discount = 0.2m,
-                            ExpirationDate = new DateTimeOffset(new DateTime(2025, 9, 16, 17, 15, 41, 696, DateTimeKind.Unspecified).AddTicks(6647), new TimeSpan(0, 0, 0, 0, 0))
+                            ExpirationDate = new DateTimeOffset(new DateTime(2027, 7, 27, 11, 26, 21, 294, DateTimeKind.Unspecified).AddTicks(9261), new TimeSpan(0, 0, 0, 0, 0))
                         });
                 });
 
@@ -1690,27 +1692,27 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("Promo code name id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("NameBG")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("The promo code name in Bulgarian");
 
                     b.Property<string>("NameEN")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("The promo code name in English");
 
                     b.Property<string>("NameRO")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("The promo code name in Romanian");
 
                     b.HasKey("Id");
@@ -1737,29 +1739,29 @@ namespace LilsCareApp.Infrastructure.Migrations
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.Review", b =>
                 {
                     b.Property<int>("ProductId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The identifier of the product.");
 
                     b.Property<string>("AuthorId")
-                        .HasColumnType("text")
+                        .HasColumnType("nvarchar(450)")
                         .HasComment("The identifier of the user that created the review.");
 
                     b.Property<string>("Comment")
                         .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)")
+                        .HasColumnType("nvarchar(1000)")
                         .HasComment("The comment of the review.");
 
                     b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("datetimeoffset")
                         .HasComment("The date when the review was created.");
 
                     b.Property<int>("Rating")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The rating of the review.");
 
                     b.Property<string>("Title")
                         .HasMaxLength(200)
-                        .HasColumnType("character varying(200)")
+                        .HasColumnType("nvarchar(200)")
                         .HasComment("The title of the review.");
 
                     b.HasKey("ProductId", "AuthorId");
@@ -1777,7 +1779,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 2,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTimeOffset(new DateTime(2024, 9, 16, 20, 15, 41, 696, DateTimeKind.Unspecified).AddTicks(3630), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedOn = new DateTimeOffset(new DateTime(2026, 7, 27, 14, 26, 21, 294, DateTimeKind.Unspecified).AddTicks(8237), new TimeSpan(0, 3, 0, 0, 0)),
                             Rating = 4,
                             Title = "Great product"
                         },
@@ -1786,7 +1788,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 3,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTimeOffset(new DateTime(2024, 9, 16, 20, 15, 41, 696, DateTimeKind.Unspecified).AddTicks(3727), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedOn = new DateTimeOffset(new DateTime(2026, 7, 27, 14, 26, 21, 294, DateTimeKind.Unspecified).AddTicks(8415), new TimeSpan(0, 3, 0, 0, 0)),
                             Rating = 3,
                             Title = "Great product"
                         },
@@ -1795,7 +1797,7 @@ namespace LilsCareApp.Infrastructure.Migrations
                             ProductId = 4,
                             AuthorId = "85fbe739-6be0-429d-b44b-1ce6cf7eeef",
                             Comment = "Great product, I love it!",
-                            CreatedOn = new DateTimeOffset(new DateTime(2024, 9, 16, 20, 15, 41, 696, DateTimeKind.Unspecified).AddTicks(3733), new TimeSpan(0, 3, 0, 0, 0)),
+                            CreatedOn = new DateTimeOffset(new DateTime(2026, 7, 27, 14, 26, 21, 294, DateTimeKind.Unspecified).AddTicks(8421), new TimeSpan(0, 3, 0, 0, 0)),
                             Rating = 3,
                             Title = "Great product"
                         });
@@ -1805,25 +1807,25 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The section's primary key");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("DescriptionId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The section's description Id");
 
                     b.Property<int>("ProductId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The product's primary key");
 
                     b.Property<int>("SectionOrder")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The section's order in page");
 
                     b.Property<int>("TitleId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The section's title Id");
 
                     b.HasKey("Id");
@@ -2128,30 +2130,30 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("DescriptionBG")
                         .IsRequired()
                         .HasMaxLength(1500)
-                        .HasColumnType("character varying(1500)")
+                        .HasColumnType("nvarchar(1500)")
                         .HasComment("The section's description in Bulgarian");
 
                     b.Property<string>("DescriptionEN")
                         .IsRequired()
                         .HasMaxLength(1500)
-                        .HasColumnType("character varying(1500)")
+                        .HasColumnType("nvarchar(1500)")
                         .HasComment("The section's description in English");
 
                     b.Property<string>("DescriptionRO")
                         .IsRequired()
                         .HasMaxLength(1500)
-                        .HasColumnType("character varying(1500)")
+                        .HasColumnType("nvarchar(1500)")
                         .HasComment("The section's description in Romanian");
 
                     b.Property<int>("SectionId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -2444,29 +2446,29 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("SectionId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<string>("TitleBG")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasColumnType("nvarchar(50)")
                         .HasComment("The section's title in Bulgarian");
 
                     b.Property<string>("TitleEN")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasColumnType("nvarchar(50)")
                         .HasComment("The section's title in English");
 
                     b.Property<string>("TitleRO")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasColumnType("nvarchar(50)")
                         .HasComment("The section's title in Romanian");
 
                     b.HasKey("Id");
@@ -2760,31 +2762,31 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OfficeAddress")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("OfficeAddressId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)")
                         .HasComment("Price of shipping");
 
                     b.Property<int>("ShippingDuration")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("Duration of shipping");
 
                     b.Property<int>("ShippingProviderId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("Shipping Provider Id");
 
                     b.HasKey("Id");
@@ -2900,15 +2902,15 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("Unique identifier of shipping provider");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("Name of shipping provider");
 
                     b.HasKey("Id");
@@ -2935,13 +2937,13 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("Primary key");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("NameId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("Name of the status Id");
 
                     b.HasKey("Id");
@@ -2986,31 +2988,31 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("Status order name id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("NameBG")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("The status order name in Bulgarian");
 
                     b.Property<string>("NameEN")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("The status order name in English");
 
                     b.Property<string>("NameRO")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasColumnType("nvarchar(100)")
                         .HasComment("The status order name in Romanian");
 
                     b.Property<int>("StatusOrderId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -3063,19 +3065,19 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AppUserId")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTimeOffset>("DateAdded")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -3087,11 +3089,11 @@ namespace LilsCareApp.Infrastructure.Migrations
             modelBuilder.Entity("LilsCareApp.Infrastructure.Data.Models.WishUser", b =>
                 {
                     b.Property<string>("AppUserId")
-                        .HasColumnType("text")
+                        .HasColumnType("nvarchar(450)")
                         .HasComment("The user id");
 
                     b.Property<int>("ProductId")
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasComment("The product id");
 
                     b.HasKey("AppUserId", "ProductId");
@@ -3124,25 +3126,26 @@ namespace LilsCareApp.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasDatabaseName("RoleNameIndex");
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
                 });
@@ -3151,19 +3154,19 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -3176,19 +3179,19 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -3201,18 +3204,18 @@ namespace LilsCareApp.Infrastructure.Migrations
                 {
                     b.Property<string>("LoginProvider")
                         .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
                         .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -3224,10 +3227,10 @@ namespace LilsCareApp.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -3239,18 +3242,18 @@ namespace LilsCareApp.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
                         .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
                         .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
